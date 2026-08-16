@@ -155,14 +155,31 @@ if (loginForm) {
       try {
 
         const { data, error } =
-        await db.auth.signInWithPassword({
+    await db.auth.signUp({
 
-          email: email,
+        email: email,
 
-          password: password
+        password: password,
 
-        });
+        options: {
 
+            emailRedirectTo:
+                "https://vinciorg.github.io/Vinci/login.html",
+
+            data: {
+
+                name: name,
+
+                username: username
+
+            }
+
+        }
+
+    });
+
+console.log("SIGNUP DATA:", data);
+console.log("SIGNUP ERROR:", error);
 
         if (error) {
           throw error;
