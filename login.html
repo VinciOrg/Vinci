@@ -1,87 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>Entrar — Vinci</title>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
-
     <main class="auth-page">
-
         <div class="auth-box">
-
             <div class="logo">
                 Vinci
             </div>
-
             <h1>Bem-vindo de volta</h1>
-
             <p class="auth-subtitle">
                 Entre na sua conta.
             </p>
-
             <form id="loginForm">
-
                 <label>
                     E-mail
                 </label>
-
                 <input
                     type="email"
                     id="email"
                     placeholder="seu@email.com"
                     required
                 >
-
                 <label>
                     Senha
                 </label>
-
                 <input
                     type="password"
                     id="password"
                     placeholder="Sua senha"
                     required
                 >
-
+                <div class="forgot-password">
+                    <button
+                        type="button"
+                        id="forgotPassword"
+                    >
+                        Esqueceu a senha?
+                    </button>
+                </div>
                 <button
                     type="submit"
                     class="button primary"
                 >
                     Entrar
                 </button>
-
             </form>
-
-            <p id="message" class="message"></p>
-
+            <p
+                id="message"
+                class="message"
+            ></p>
             <p class="switch-auth">
                 Ainda não tem uma conta?
                 <a href="signup.html">
                     Criar conta
                 </a>
             </p>
-
         </div>
-
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- ===============================
+         MODAL — RECUPERAR SENHA
+    ================================ -->
+    <div
+        id="forgotPasswordModal"
+        class="modal hidden"
+    >
+        <div class="modal-box forgot-password-box">
+            <div class="modal-header">
+                <h2>
+                    Recuperar senha
+                </h2>
+                <button
+                    type="button"
+                    id="closeForgotModal"
+                    class="close-button"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+            </div>
+            <p class="forgot-description">
+                Digite o e-mail da sua conta.
+                Vamos enviar um link para você
+                criar uma nova senha.
+            </p>
+            <label for="resetEmail">
+                E-mail
+            </label>
+            <input
+                type="email"
+                id="resetEmail"
+                placeholder="seu@email.com"
+                autocomplete="email"
+            >
+            <button
+                type="button"
+                id="sendReset"
+                class="button primary forgot-submit"
+            >
+                Enviar link de recuperação
+            </button>
+            <p
+                id="resetMessage"
+                class="message"
+            ></p>
+        </div>
+    </div>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
     <script src="supabase.js"></script>
     <script src="auth.js"></script>
-
 </body>
-
 </html>
