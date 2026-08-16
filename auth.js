@@ -1,411 +1,450 @@
 // ===============================
+// VINCI AUTH
+// ===============================
 
 
-// -------------------------------
+// ==================================================
 // CADASTRO
-// -------------------------------
+// ==================================================
 
 const signupForm =
-  document.getElementById("signupForm");
+    document.getElementById("signupForm");
 
 
 if (signupForm) {
 
-  signupForm.addEventListener(
-    "submit",
-    async function(event) {
+    signupForm.addEventListener(
+        "submit",
+        async function(event) {
 
-      event.preventDefault();
-
-
-      const name =
-        document
-        .getElementById("name")
-        .value
-        .trim();
+            event.preventDefault();
 
 
-      const username =
-        document
-        .getElementById("username")
-        .value
-        .trim()
-        .toLowerCase()
-        .replace("@", "");
+            const name =
+                document
+                .getElementById("name")
+                .value
+                .trim();
 
 
-      const email =
-        document
-        .getElementById("email")
-        .value
-        .trim();
+            const username =
+                document
+                .getElementById("username")
+                .value
+                .trim()
+                .toLowerCase()
+                .replace("@", "");
 
 
-      const password =
-        document
-        .getElementById("password")
-        .value;
+            const email =
+                document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
 
 
-      const message =
-        document.getElementById("message");
+            const password =
+                document
+                .getElementById("password")
+                .value;
 
 
-      message.textContent =
-        "Criando sua conta...";
+            const message =
+                document.getElementById("message");
 
 
-      try {
+            message.textContent =
+                "Criando sua conta...";
 
-       const { data, error } =
-    await db.auth.signUp({
 
-        email: email,
+            try {
 
-        password: password,
+                const { data, error } =
+                    await db.auth.signUp({
 
-        options: {
+                        email: email,
 
-            emailRedirectTo:
-                "https://vinciorg.github.io/Vinci/",
+                        password: password,
 
-            data: {
+                        options: {
 
-                name: name,
+                            emailRedirectTo:
+                                "https://vinciorg.github.io/Vinci/",
 
-                username: username
+                            data: {
+
+                                name: name,
+
+                                username: username
+
+                            }
+
+                        }
+
+                    });
+
+
+                console.log(
+                    "SIGNUP DATA:",
+                    data
+                );
+
+
+                console.log(
+                    "SIGNUP ERROR:",
+                    error
+                );
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                message.textContent =
+                    "Conta criada! Verifique seu e-mail para confirmar.";
+
+                signupForm.reset();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erro no cadastro:",
+                    error
+                );
+
+
+                message.textContent =
+                    error.message ||
+                    "Não foi possível criar sua conta.";
 
             }
 
         }
-
-    });
-
-
-        if (error) {
-          throw error;
-        }
-
-
-        message.textContent =
-          "Conta criada! Verifique seu e-mail para confirmar.";
-
-
-        setTimeout(() => {
-
-          window.location.href =
-            "login.html";
-
-        }, 2500);
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-          error.message;
-
-      }
-
-    }
-  );
+    );
 
 }
 
 
-// -------------------------------
+// ==================================================
 // LOGIN
-// -------------------------------
+// ==================================================
 
 const loginForm =
-  document.getElementById("loginForm");
+    document.getElementById("loginForm");
 
 
 if (loginForm) {
 
-  loginForm.addEventListener(
-    "submit",
-    async function(event) {
+    loginForm.addEventListener(
+        "submit",
+        async function(event) {
 
-      event.preventDefault();
-
-
-      const email =
-        document
-        .getElementById("email")
-        .value
-        .trim();
+            event.preventDefault();
 
 
-      const password =
-        document
-        .getElementById("password")
-        .value;
+            const email =
+                document
+                .getElementById("email")
+                .value
+                .trim()
+                .toLowerCase();
 
 
-      const message =
-        document.getElementById("message");
+            const password =
+                document
+                .getElementById("password")
+                .value;
 
 
-      message.textContent =
-        "Entrando...";
+            const message =
+                document.getElementById("message");
 
 
-      try {
+            message.textContent =
+                "Entrando...";
 
-        const { data, error } =
-    await db.auth.signUp({
 
-        email: email,
+            try {
 
-        password: password,
+                // IMPORTANTE:
+                // Aqui é SIGN IN, não SIGN UP.
 
-        options: {
+                const { data, error } =
+                    await db.auth.signInWithPassword({
 
-            emailRedirectTo:
-                "https://vinciorg.github.io/Vinci/",
+                        email: email,
 
-            data: {
+                        password: password
 
-                name: name,
+                    });
 
-                username: username
+
+                console.log(
+                    "LOGIN DATA:",
+                    data
+                );
+
+
+                console.log(
+                    "LOGIN ERROR:",
+                    error
+                );
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                message.textContent =
+                    "Login realizado!";
+
+
+                window.location.href =
+                    "profile.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erro no login:",
+                    error
+                );
+
+
+                message.textContent =
+                    "E-mail ou senha incorretos.";
 
             }
 
         }
-
-    });
-
-console.log("SIGNUP DATA:", data);
-console.log("SIGNUP ERROR:", error);
-
-        if (error) {
-          throw error;
-        }
-
-
-        message.textContent =
-          "Login realizado!";
-
-
-        window.location.href =
-          "profile.html";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-          "E-mail ou senha incorretos.";
-
-      }
-
-    }
-  );
+    );
 
 }
 
 
-// -------------------------------
+// ==================================================
 // RECUPERAÇÃO DE SENHA
-// -------------------------------
+// ==================================================
 
 const forgotPasswordButton =
-  document.getElementById("forgotPassword");
+    document.getElementById("forgotPassword");
 
 
 const forgotPasswordModal =
-  document.getElementById("forgotPasswordModal");
+    document.getElementById("forgotPasswordModal");
 
 
 const closeForgotModal =
-  document.getElementById("closeForgotModal");
+    document.getElementById("closeForgotModal");
 
 
 const sendReset =
-  document.getElementById("sendReset");
+    document.getElementById("sendReset");
 
 
 const resetEmail =
-  document.getElementById("resetEmail");
+    document.getElementById("resetEmail");
 
 
 const resetMessage =
-  document.getElementById("resetMessage");
+    document.getElementById("resetMessage");
 
 
-// -------------------------------
+// ==================================================
 // ABRIR MODAL
-// -------------------------------
+// ==================================================
 
 if (forgotPasswordButton) {
 
-  forgotPasswordButton.addEventListener(
-    "click",
-    function() {
+    forgotPasswordButton.addEventListener(
+        "click",
+        function() {
 
-      forgotPasswordModal.classList.remove(
-        "hidden"
-      );
-
-
-      resetMessage.textContent = "";
+            forgotPasswordModal.classList.remove(
+                "hidden"
+            );
 
 
-      resetEmail.value =
-        document
-        .getElementById("email")
-        .value
-        .trim();
+            resetMessage.textContent =
+                "";
 
 
-      setTimeout(() => {
+            const loginEmail =
+                document.getElementById("email");
 
-        resetEmail.focus();
 
-      }, 100);
+            if (loginEmail) {
 
-    }
-  );
+                resetEmail.value =
+                    loginEmail.value.trim();
+
+            }
+
+
+            setTimeout(() => {
+
+                resetEmail.focus();
+
+            }, 100);
+
+        }
+    );
 
 }
 
 
-// -------------------------------
+// ==================================================
 // FECHAR MODAL
-// -------------------------------
+// ==================================================
 
 if (closeForgotModal) {
 
-  closeForgotModal.addEventListener(
-    "click",
-    function() {
+    closeForgotModal.addEventListener(
+        "click",
+        function() {
 
-      forgotPasswordModal.classList.add(
-        "hidden"
-      );
+            forgotPasswordModal.classList.add(
+                "hidden"
+            );
 
-      resetMessage.textContent = "";
 
-    }
-  );
+            resetMessage.textContent = "";
+
+        }
+    );
 
 }
 
 
-// -------------------------------
+// ==================================================
 // FECHAR CLICANDO FORA
-// -------------------------------
+// ==================================================
 
 if (forgotPasswordModal) {
 
-  forgotPasswordModal.addEventListener(
-    "click",
-    function(event) {
+    forgotPasswordModal.addEventListener(
+        "click",
+        function(event) {
 
-      if (
-        event.target ===
-        forgotPasswordModal
-      ) {
+            if (
+                event.target ===
+                forgotPasswordModal
+            ) {
 
-        forgotPasswordModal.classList.add(
-          "hidden"
-        );
+                forgotPasswordModal.classList.add(
+                    "hidden"
+                );
 
-        resetMessage.textContent = "";
 
-      }
+                resetMessage.textContent =
+                    "";
 
-    }
-  );
+            }
+
+        }
+    );
 
 }
 
 
-// -------------------------------
-// ENVIAR LINK
-// -------------------------------
+// ==================================================
+// ENVIAR LINK DE RECUPERAÇÃO
+// ==================================================
 
 if (sendReset) {
 
-  sendReset.addEventListener(
-    "click",
-    async function() {
+    sendReset.addEventListener(
+        "click",
+        async function() {
 
-      const email =
-        resetEmail.value
-        .trim()
-        .toLowerCase();
-
-
-      if (!email) {
-
-        resetMessage.textContent =
-          "Digite seu e-mail.";
-
-        resetEmail.focus();
-
-        return;
-
-      }
+            const email =
+                resetEmail.value
+                .trim()
+                .toLowerCase();
 
 
-      sendReset.disabled = true;
+            if (!email) {
 
-      sendReset.textContent =
-        "Enviando...";
-
-      resetMessage.textContent = "";
+                resetMessage.textContent =
+                    "Digite seu e-mail.";
 
 
-      try {
+                resetEmail.focus();
 
-        const { error } =
-          await db.auth.resetPasswordForEmail(
-            email,
-            {
-
-              redirectTo:
-                `${window.location.origin}/Vinci/reset-password.html`
+                return;
 
             }
-          );
 
 
-        if (error) {
-          throw error;
+            sendReset.disabled =
+                true;
+
+
+            sendReset.textContent =
+                "Enviando...";
+
+
+            resetMessage.textContent =
+                "";
+
+
+            try {
+
+                const { error } =
+                    await db.auth.resetPasswordForEmail(
+                        email,
+                        {
+
+                            redirectTo:
+                                "https://vinciorg.github.io/Vinci/reset-password.html"
+
+                        }
+                    );
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                resetMessage.textContent =
+                    "Link enviado! Verifique seu e-mail.";
+
+
+                sendReset.textContent =
+                    "Link enviado";
+
+
+                resetEmail.value =
+                    "";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erro na recuperação:",
+                    error
+                );
+
+
+                resetMessage.textContent =
+                    "Não foi possível enviar o link. Tente novamente.";
+
+
+                sendReset.disabled =
+                    false;
+
+
+                sendReset.textContent =
+                    "Enviar link de recuperação";
+
+            }
+
         }
-
-
-        resetMessage.textContent =
-          "Link enviado! Verifique seu e-mail.";
-
-
-        sendReset.textContent =
-          "Link enviado";
-
-
-        resetEmail.value = "";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        resetMessage.textContent =
-          "Não foi possível enviar o link. Tente novamente.";
-
-        sendReset.disabled = false;
-
-        sendReset.textContent =
-          "Enviar link de recuperação";
-
-      }
-
-    }
-  );
+    );
 
 }
