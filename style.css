@@ -2621,3 +2621,379 @@ button:disabled {
     font-size: 12px;
 
 }
+
+/* =====================================
+   VINCI 0.5.3 — NOVO LAYOUT DO PERFIL
+===================================== */
+
+/* =====================================
+   PERFIL
+===================================== */
+
+.profile-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 25px 16px 110px;
+}
+
+
+/* =====================================
+   CABEÇALHO
+===================================== */
+
+.profile {
+    padding-top: 10px;
+}
+
+
+/* =====================================
+   TOPO DO PERFIL
+===================================== */
+
+.profile-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+
+/* =====================================
+   AVATAR
+===================================== */
+
+.profile-avatar {
+    width: 92px;
+    height: 92px;
+    min-width: 92px;
+
+    border-radius: 50%;
+
+    background: var(--orange);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+}
+
+
+/* =====================================
+   INFORMAÇÕES
+===================================== */
+
+.profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.profile-info h1 {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 750;
+
+    letter-spacing: -0.7px;
+}
+
+
+.profile-info p {
+    margin-top: 5px;
+
+    font-size: 15px;
+
+    color: var(--muted);
+}
+
+
+/* =====================================
+   BIO
+===================================== */
+
+.profile-bio {
+    margin-top: 18px;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    color: #444;
+
+    max-width: 600px;
+}
+
+
+/* =====================================
+   EDITAR PERFIL
+===================================== */
+
+.profile > .button {
+    width: auto;
+
+    margin-top: 18px;
+
+    padding: 10px 20px;
+
+    border-radius: 13px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    color: var(--text);
+
+    font-weight: 500;
+}
+
+
+/* =====================================
+   ESCONDER A ESTATÍSTICA CRIADA
+   PELO JAVASCRIPT NO TOPO
+===================================== */
+
+#profileStats {
+    display: none !important;
+}
+
+
+/* =====================================
+   ESTATÍSTICAS ORIGINAIS
+===================================== */
+
+.profile .profile-stats {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 10px;
+
+    margin-top: 28px;
+
+    padding: 20px 5px;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+
+.profile .profile-stats > div {
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    text-align: center;
+}
+
+
+.profile .profile-stats strong {
+    font-size: 21px;
+
+    font-weight: 700;
+
+    color: var(--text);
+}
+
+
+.profile .profile-stats span {
+    font-size: 13px;
+
+    color: var(--muted);
+}
+
+
+/* =====================================
+   POSTS
+===================================== */
+
+.profile-posts-section {
+    width: 100%;
+
+    margin-top: 28px;
+
+    padding: 0 0 110px;
+}
+
+
+.profile-section-header {
+    margin-bottom: 15px;
+}
+
+
+.profile-section-header h2,
+.profile-posts-title {
+    margin: 0;
+
+    padding: 0;
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    color: var(--text);
+}
+
+
+/* =====================================
+   POSTS DE TEXTO
+===================================== */
+
+.profile-posts {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.profile-text-post {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 17px;
+
+    padding: 17px;
+
+    box-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.035);
+}
+
+
+.profile-text-post-content {
+    font-size: 15px;
+
+    line-height: 1.55;
+
+    color: var(--text);
+}
+
+
+.profile-text-post-date {
+    margin-top: 10px;
+
+    font-size: 11px;
+
+    color: #999;
+}
+
+
+/* =====================================
+   POSTS DE FOTOGRAFIA
+===================================== */
+
+.profile-posts-grid {
+    margin-top: 5px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 3px;
+}
+
+
+.profile-post {
+    aspect-ratio: 1 / 1;
+
+    border-radius: 0;
+
+    overflow: hidden;
+}
+
+
+.profile-post img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 500px) {
+
+    .profile-page {
+        padding:
+            22px 16px 105px;
+    }
+
+
+    .profile-top {
+        gap: 15px;
+    }
+
+
+    .profile-avatar {
+        width: 82px;
+        height: 82px;
+        min-width: 82px;
+    }
+
+
+    .profile-info h1 {
+        font-size: 22px;
+    }
+
+
+    .profile-info p {
+        font-size: 14px;
+    }
+
+
+    .profile-bio {
+        margin-top: 16px;
+
+        font-size: 15px;
+    }
+
+
+    .profile .profile-stats {
+        margin-top: 25px;
+
+        padding:
+            18px 0;
+    }
+
+
+    .profile .profile-stats strong {
+        font-size: 20px;
+    }
+
+
+    .profile .profile-stats span {
+        font-size: 12px;
+    }
+
+
+    .profile-posts-section {
+        margin-top: 25px;
+    }
+
+
+    .profile-section-header h2,
+    .profile-posts-title {
+        font-size: 19px;
+    }
+
+}
