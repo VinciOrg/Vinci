@@ -1,9 +1,10 @@
 // =====================================
-// VINCI — PROFILE 0.5.3
+// VINCI — PROFILE 0.6
 // =====================================
 
 let currentUser = null;
 let currentProfile = null;
+
 
 // =====================================
 // ELEMENTOS
@@ -64,179 +65,46 @@ const profileMessage =
         "profileMessage"
     );
 
-const profilePostsSection =
-    document.getElementById(
-        "profilePostsSection"
-    );
+
+// =====================================
+// POSTS
+// =====================================
 
 const profilePosts =
     document.getElementById(
         "profilePosts"
     );
 
-// =====================================
-// ÁREAS DO PERFIL
-// =====================================
-
-let profileStats = null;
-let postsGrid = null;
-let postsTitle = null;
-
-// =====================================
-// CRIAR ÁREA DE PUBLICAÇÕES
-// =====================================
-
-function createPostsArea() {
-
-    postsGrid =
-        document.getElementById(
-            "profilePostsGrid"
-        );
-
-    if (postsGrid) {
-
-        postsTitle =
-            document.querySelector(
-                ".profile-posts-title"
-            );
-
-        return;
-
-    }
-
-    const container =
-        document.createElement(
-            "section"
-        );
-
-    container.className =
-        "profile-posts-section";
-
-    postsTitle =
-        document.createElement(
-            "h2"
-        );
-
-    postsTitle.className =
-        "profile-posts-title";
-
-    postsTitle.textContent =
-        "Publicações";
-
-    postsGrid =
-        document.createElement(
-            "div"
-        );
-
-    postsGrid.id =
-        "profilePostsGrid";
-
-    postsGrid.className =
-        "profile-posts-grid";
-
-    container.appendChild(
-        postsTitle
+const profilePostsSection =
+    document.getElementById(
+        "profilePostsSection"
     );
 
-    container.appendChild(
-        postsGrid
+const profilePhotosSection =
+    document.getElementById(
+        "profilePhotosSection"
     );
 
-    const bottomNav =
-        document.querySelector(
-            ".bottom-nav"
-        );
+const profilePostsGrid =
+    document.getElementById(
+        "profilePostsGrid"
+    );
 
-    if (bottomNav) {
-
-        document.body.insertBefore(
-            container,
-            bottomNav
-        );
-
-    }
-
-    else {
-
-        document.body.appendChild(
-            container
-        );
-
-    }
-
-}
 
 // =====================================
-// CRIAR ESTATÍSTICAS
+// ABAS
 // =====================================
 
-function createStatsArea() {
+const textPostsTab =
+    document.getElementById(
+        "textPostsTab"
+    );
 
-    const existing =
-        document.getElementById(
-            "profileStats"
-        );
+const photoPostsTab =
+    document.getElementById(
+        "photoPostsTab"
+    );
 
-    if (existing) {
-
-        profileStats =
-            existing;
-
-        return;
-
-    }
-
-    profileStats =
-        document.createElement(
-            "div"
-        );
-
-    profileStats.id =
-        "profileStats";
-
-    profileStats.className =
-        "profile-stats";
-
-    profileStats.innerHTML = `
-
-        <div class="profile-stat">
-
-            <strong id="postsCount">
-                0
-            </strong>
-
-            <span>
-                publicações
-            </span>
-
-        </div>
-
-    `;
-
-    const editParent =
-        editProfileButton?.parentElement;
-
-    if (
-        editParent &&
-        editParent.parentElement
-    ) {
-
-        editParent.parentElement.insertBefore(
-            profileStats,
-            editParent
-        );
-
-    }
-
-    else {
-
-        document.body.appendChild(
-            profileStats
-        );
-
-    }
-
-}
 
 // =====================================
 // VERIFICAR LOGIN
@@ -248,6 +116,7 @@ async function loadUser() {
         data,
         error
     } = await db.auth.getUser();
+
 
     if (
         error ||
@@ -261,12 +130,15 @@ async function loadUser() {
 
     }
 
+
     currentUser =
         data.user;
+
 
     await loadProfile();
 
 }
+
 
 // =====================================
 // CARREGAR PERFIL
@@ -286,6 +158,7 @@ async function loadProfile() {
         )
         .maybeSingle();
 
+
     if (error) {
 
         console.error(
@@ -297,6 +170,7 @@ async function loadProfile() {
 
     }
 
+
     // =================================
     // PERFIL NÃO EXISTE
     // =================================
@@ -306,12 +180,14 @@ async function loadProfile() {
         const metadata =
             currentUser.user_metadata || {};
 
+
         let username =
             metadata.username ||
             "usuario" +
             Math.floor(
                 Math.random() * 99999
             );
+
 
         username =
             username
@@ -321,9 +197,11 @@ async function loadProfile() {
                     ""
                 );
 
+
         const name =
             metadata.name ||
             "Usuário";
+
 
         const {
             data: newProfile,
@@ -351,6 +229,7 @@ async function loadProfile() {
             .select()
             .single();
 
+
         if (createError) {
 
             console.error(
@@ -361,6 +240,7 @@ async function loadProfile() {
             return;
 
         }
+
 
         currentProfile =
             newProfile;
@@ -374,13 +254,6 @@ async function loadProfile() {
 
     }
 
-    // =================================
-    // CRIAR INTERFACE
-    // =================================
-
-    createStatsArea();
-
-    createPostsArea();
 
     // =================================
     // RENDERIZAR
@@ -390,22 +263,20 @@ async function loadProfile() {
 
     updateChangeInfo();
 
+
     // =================================
-    // CARREGAR PUBLICAÇÕES
+    // CARREGAR CONTEÚDO
     // =================================
 
     await loadUserPosts();
-
-    // =================================
-    // CARREGAR POSTS DE TEXTO
-    // =================================
 
     await loadProfilePosts();
 
 }
 
+
 // =====================================
-// MOSTRAR PERFIL
+// RENDERIZAR PERFIL
 // =====================================
 
 function renderProfile() {
@@ -417,6 +288,7 @@ function renderProfile() {
 
     }
 
+
     if (profileUsername) {
 
         profileUsername.textContent =
@@ -424,6 +296,7 @@ function renderProfile() {
             currentProfile.username;
 
     }
+
 
     // =================================
     // BIO
@@ -448,6 +321,7 @@ function renderProfile() {
         }
 
     }
+
 
     // =================================
     // AVATAR
@@ -479,6 +353,7 @@ function renderProfile() {
         avatarLetter.style.display =
             "block";
 
+
         avatarLetter.textContent =
             currentProfile.name
                 .charAt(0)
@@ -488,19 +363,21 @@ function renderProfile() {
 
 }
 
+
 // =====================================
-// CARREGAR PUBLICAÇÕES DE FOTOS
+// CARREGAR PUBLICAÇÕES
 // =====================================
 
 async function loadUserPosts() {
 
-    if (!postsGrid) {
+    if (!profilePostsGrid) {
 
         return;
 
     }
 
-    postsGrid.innerHTML = `
+
+    profilePostsGrid.innerHTML = `
 
         <div class="profile-posts-loading">
 
@@ -509,6 +386,7 @@ async function loadUserPosts() {
         </div>
 
     `;
+
 
     const {
         data,
@@ -532,14 +410,16 @@ async function loadUserPosts() {
             }
         );
 
+
     if (error) {
 
         console.error(
-            "Erro ao carregar posts:",
+            "Erro ao carregar publicações:",
             error
         );
 
-        postsGrid.innerHTML = `
+
+        profilePostsGrid.innerHTML = `
 
             <div class="profile-posts-empty">
 
@@ -565,6 +445,7 @@ async function loadUserPosts() {
 
     }
 
+
     // =================================
     // CONTADOR
     // =================================
@@ -574,6 +455,7 @@ async function loadUserPosts() {
             "postsCount"
         );
 
+
     if (postsCount) {
 
         postsCount.textContent =
@@ -581,21 +463,9 @@ async function loadUserPosts() {
 
     }
 
-    // =================================
-    // TÍTULO
-    // =================================
-
-    if (postsTitle) {
-
-        postsTitle.textContent =
-            data.length === 1
-                ? "Publicação"
-                : "Publicações";
-
-    }
 
     // =================================
-    // NENHUMA PUBLICAÇÃO
+    // NENHUMA FOTO
     // =================================
 
     if (
@@ -603,7 +473,7 @@ async function loadUserPosts() {
         data.length === 0
     ) {
 
-        postsGrid.innerHTML = `
+        profilePostsGrid.innerHTML = `
 
             <div class="profile-posts-empty">
 
@@ -627,12 +497,14 @@ async function loadUserPosts() {
 
     }
 
+
     // =================================
     // GRID
     // =================================
 
-    postsGrid.innerHTML =
+    profilePostsGrid.innerHTML =
         "";
+
 
     data.forEach(
         function (post) {
@@ -642,34 +514,42 @@ async function loadUserPosts() {
                     "article"
                 );
 
+
             postElement.className =
                 "profile-post";
+
 
             const image =
                 document.createElement(
                     "img"
                 );
 
+
             image.src =
                 post.image_url;
+
 
             image.alt =
                 post.caption ||
                 "Fotografia";
 
+
             image.loading =
                 "lazy";
+
 
             const date =
                 new Date(
                     post.created_at
                 );
 
+
             postElement.title =
                 post.caption ||
                 `Publicado em ${date.toLocaleDateString(
                     "pt-BR"
                 )}`;
+
 
             postElement.addEventListener(
                 "click",
@@ -682,11 +562,13 @@ async function loadUserPosts() {
                 }
             );
 
+
             postElement.appendChild(
                 image
             );
 
-            postsGrid.appendChild(
+
+            profilePostsGrid.appendChild(
                 postElement
             );
 
@@ -695,8 +577,9 @@ async function loadUserPosts() {
 
 }
 
+
 // =====================================
-// VISUALIZAR PUBLICAÇÃO
+// VISUALIZAR FOTOGRAFIA
 // =====================================
 
 function openPostViewer(
@@ -708,22 +591,27 @@ function openPostViewer(
             "postViewer"
         );
 
+
     if (existing) {
 
         existing.remove();
 
     }
 
+
     const viewer =
         document.createElement(
             "div"
         );
 
+
     viewer.id =
         "postViewer";
 
+
     viewer.className =
         "post-viewer";
+
 
     viewer.innerHTML = `
 
@@ -732,6 +620,7 @@ function openPostViewer(
             <button
                 class="post-viewer-close"
                 id="closePostViewer"
+                type="button"
             >
                 ×
             </button>
@@ -773,9 +662,11 @@ function openPostViewer(
 
     `;
 
+
     document.body.appendChild(
         viewer
     );
+
 
     document
         .getElementById(
@@ -789,6 +680,7 @@ function openPostViewer(
 
             }
         );
+
 
     viewer.addEventListener(
         "click",
@@ -808,6 +700,7 @@ function openPostViewer(
 
 }
 
+
 // =====================================
 // CARREGAR POSTS DE TEXTO
 // =====================================
@@ -816,13 +709,10 @@ async function loadProfilePosts() {
 
     if (!profilePosts) {
 
-        console.warn(
-            "Área de posts do perfil não encontrada."
-        );
-
         return;
 
     }
+
 
     profilePosts.innerHTML = `
 
@@ -833,6 +723,7 @@ async function loadProfilePosts() {
         </div>
 
     `;
+
 
     try {
 
@@ -858,11 +749,13 @@ async function loadProfilePosts() {
                 }
             );
 
+
         if (error) {
 
             throw error;
 
         }
+
 
         // =================================
         // NENHUM POST
@@ -897,12 +790,14 @@ async function loadProfilePosts() {
 
         }
 
+
         // =================================
         // LIMPAR
         // =================================
 
         profilePosts.innerHTML =
             "";
+
 
         // =================================
         // CRIAR POSTS
@@ -916,48 +811,50 @@ async function loadProfilePosts() {
                         "article"
                     );
 
+
                 article.className =
                     "profile-text-post";
 
-                // =================================
-                // CONTEÚDO
-                // =================================
 
                 const content =
                     document.createElement(
                         "p"
                     );
 
+
                 content.className =
                     "profile-text-post-content";
+
 
                 content.textContent =
                     post.content;
 
-                // =================================
-                // DATA
-                // =================================
 
                 const date =
                     document.createElement(
                         "time"
                     );
 
+
                 date.className =
                     "profile-text-post-date";
+
 
                 date.textContent =
                     formatPostDate(
                         post.created_at
                     );
 
+
                 article.appendChild(
                     content
                 );
 
+
                 article.appendChild(
                     date
                 );
+
 
                 profilePosts.appendChild(
                     article
@@ -974,6 +871,7 @@ async function loadProfilePosts() {
             "Erro ao carregar posts do perfil:",
             error
         );
+
 
         profilePosts.innerHTML = `
 
@@ -999,8 +897,9 @@ async function loadProfilePosts() {
 
 }
 
+
 // =====================================
-// FORMATAR DATA DO POST
+// FORMATAR DATA
 // =====================================
 
 function formatPostDate(
@@ -1010,17 +909,21 @@ function formatPostDate(
     const postDate =
         new Date(date);
 
+
     const now =
         new Date();
+
 
     const difference =
         now.getTime() -
         postDate.getTime();
 
+
     const seconds =
         Math.floor(
             difference / 1000
         );
+
 
     if (seconds < 60) {
 
@@ -1028,10 +931,12 @@ function formatPostDate(
 
     }
 
+
     const minutes =
         Math.floor(
             seconds / 60
         );
+
 
     if (minutes < 60) {
 
@@ -1043,10 +948,12 @@ function formatPostDate(
 
     }
 
+
     const hours =
         Math.floor(
             minutes / 60
         );
+
 
     if (hours < 24) {
 
@@ -1058,10 +965,12 @@ function formatPostDate(
 
     }
 
+
     const days =
         Math.floor(
             hours / 24
         );
+
 
     if (days < 7) {
 
@@ -1073,6 +982,7 @@ function formatPostDate(
 
     }
 
+
     return postDate.toLocaleDateString(
         "pt-BR",
         {
@@ -1083,6 +993,7 @@ function formatPostDate(
     );
 
 }
+
 
 // =====================================
 // ESCAPAR HTML
@@ -1097,15 +1008,18 @@ function escapeHTML(
             "div"
         );
 
+
     div.textContent =
         text;
+
 
     return div.innerHTML;
 
 }
 
+
 // =====================================
-// CALCULAR TEMPO RESTANTE
+// TEMPO RESTANTE
 // =====================================
 
 function getTimeRemaining(
@@ -1119,8 +1033,10 @@ function getTimeRemaining(
 
     }
 
+
     const changedAt =
         new Date(date).getTime();
+
 
     const availableAt =
         changedAt +
@@ -1130,9 +1046,11 @@ function getTimeRemaining(
         60 *
         1000;
 
+
     const remaining =
         availableAt -
         Date.now();
+
 
     if (remaining <= 0) {
 
@@ -1140,26 +1058,32 @@ function getTimeRemaining(
 
     }
 
+
     const totalMinutes =
         Math.ceil(
             remaining / 60000
         );
+
 
     const totalHours =
         Math.floor(
             totalMinutes / 60
         );
 
+
     const minutes =
         totalMinutes % 60;
+
 
     const totalDays =
         Math.floor(
             totalHours / 24
         );
 
+
     const hours =
         totalHours % 24;
+
 
     if (totalDays > 0) {
 
@@ -1167,31 +1091,31 @@ function getTimeRemaining(
 
     }
 
+
     if (totalHours > 0) {
 
         return `${totalHours}h ${minutes}min`;
 
     }
 
+
     return `${minutes}min`;
 
 }
 
+
 // =====================================
-// ATUALIZAR AVISOS
+// AVISOS DE ALTERAÇÃO
 // =====================================
 
 function updateChangeInfo() {
-
-    // =================================
-    // USERNAME
-    // =================================
 
     const usernameRemaining =
         getTimeRemaining(
             currentProfile.username_changed_at,
             20
         );
+
 
     if (usernameRemaining) {
 
@@ -1215,15 +1139,13 @@ function updateChangeInfo() {
 
     }
 
-    // =================================
-    // NOME
-    // =================================
 
     const nameRemaining =
         getTimeRemaining(
             currentProfile.name_changed_at,
             1
         );
+
 
     if (nameRemaining) {
 
@@ -1249,6 +1171,7 @@ function updateChangeInfo() {
 
 }
 
+
 // =====================================
 // EDITAR PERFIL
 // =====================================
@@ -1262,16 +1185,21 @@ if (editProfileButton) {
             editName.value =
                 currentProfile.name;
 
+
             editUsername.value =
                 currentProfile.username;
+
 
             editBio.value =
                 currentProfile.bio || "";
 
+
             profileMessage.textContent =
                 "";
 
+
             updateChangeInfo();
+
 
             editModal
                 .classList
@@ -1283,6 +1211,7 @@ if (editProfileButton) {
     );
 
 }
+
 
 // =====================================
 // FECHAR MODAL
@@ -1305,9 +1234,6 @@ if (closeModal) {
 
 }
 
-// =====================================
-// FECHAR CLICANDO FORA
-// =====================================
 
 if (editModal) {
 
@@ -1333,8 +1259,9 @@ if (editModal) {
 
 }
 
+
 // =====================================
-// USERNAME AUTOMÁTICO
+// USERNAME
 // =====================================
 
 if (editUsername) {
@@ -1356,6 +1283,7 @@ if (editUsername) {
 
 }
 
+
 // =====================================
 // SALVAR PERFIL
 // =====================================
@@ -1368,20 +1296,20 @@ if (profileForm) {
 
             event.preventDefault();
 
+
             const name =
                 editName.value.trim();
+
 
             const username =
                 editUsername.value
                     .trim()
                     .toLowerCase();
 
+
             const bio =
                 editBio.value.trim();
 
-            // =================================
-            // VALIDAÇÕES
-            // =================================
 
             if (!name) {
 
@@ -1392,6 +1320,7 @@ if (profileForm) {
 
             }
 
+
             if (!username) {
 
                 profileMessage.textContent =
@@ -1400,6 +1329,7 @@ if (profileForm) {
                 return;
 
             }
+
 
             if (
                 !/^[a-z0-9._]+$/.test(
@@ -1414,6 +1344,7 @@ if (profileForm) {
 
             }
 
+
             if (
                 username.length < 3
             ) {
@@ -1425,12 +1356,10 @@ if (profileForm) {
 
             }
 
+
             profileMessage.textContent =
                 "Salvando...";
 
-            // =================================
-            // SUPABASE RPC
-            // =================================
 
             const {
                 data,
@@ -1451,9 +1380,6 @@ if (profileForm) {
                 }
             );
 
-            // =================================
-            // ERRO
-            // =================================
 
             if (error) {
 
@@ -1462,8 +1388,10 @@ if (profileForm) {
                     error
                 );
 
+
                 const errorMessage =
                     error.message || "";
+
 
                 if (
                     errorMessage.includes(
@@ -1478,6 +1406,7 @@ if (profileForm) {
 
                 }
 
+
                 if (
                     errorMessage.includes(
                         "24 horas"
@@ -1490,6 +1419,7 @@ if (profileForm) {
                     return;
 
                 }
+
 
                 if (
                     errorMessage.includes(
@@ -1510,6 +1440,7 @@ if (profileForm) {
 
                 }
 
+
                 profileMessage.textContent =
                     "Não foi possível salvar as alterações.";
 
@@ -1517,19 +1448,19 @@ if (profileForm) {
 
             }
 
-            // =================================
-            // ATUALIZOU
-            // =================================
 
             currentProfile =
                 data;
+
 
             renderProfile();
 
             updateChangeInfo();
 
+
             profileMessage.textContent =
                 "Perfil atualizado!";
+
 
             setTimeout(
                 function () {
@@ -1549,8 +1480,9 @@ if (profileForm) {
 
 }
 
+
 // =====================================
-// ALTERAR FOTO DE PERFIL
+// ALTERAR FOTO
 // =====================================
 
 if (
@@ -1567,6 +1499,7 @@ if (
         }
     );
 
+
     avatarInput.addEventListener(
         "change",
         async function () {
@@ -1574,21 +1507,20 @@ if (
             const file =
                 this.files[0];
 
+
             if (!file) {
 
                 return;
 
             }
 
-            // =================================
-            // FORMATOS
-            // =================================
 
             const allowedTypes = [
                 "image/jpeg",
                 "image/png",
                 "image/webp"
             ];
+
 
             if (
                 !allowedTypes.includes(
@@ -1604,9 +1536,6 @@ if (
 
             }
 
-            // =================================
-            // LIMITE
-            // =================================
 
             if (
                 file.size >
@@ -1621,17 +1550,16 @@ if (
 
             }
 
+
             changeAvatar.disabled =
                 true;
+
 
             changeAvatar.textContent =
                 "Enviando...";
 
-            try {
 
-                // =================================
-                // EXTENSÃO
-                // =================================
+            try {
 
                 const extension =
                     file.name
@@ -1639,16 +1567,10 @@ if (
                         .pop()
                         .toLowerCase();
 
-                // =================================
-                // CAMINHO
-                // =================================
 
                 const filePath =
                     `${currentUser.id}/avatar.${extension}`;
 
-                // =================================
-                // UPLOAD
-                // =================================
 
                 const {
                     error: uploadError
@@ -1669,15 +1591,13 @@ if (
                         }
                     );
 
+
                 if (uploadError) {
 
                     throw uploadError;
 
                 }
 
-                // =================================
-                // URL PÚBLICA
-                // =================================
 
                 const {
                     data: publicURL
@@ -1687,19 +1607,14 @@ if (
                         filePath
                     );
 
+
                 const avatarURL =
                     publicURL.publicUrl;
 
-                // =================================
-                // CACHE BUSTER
-                // =================================
 
                 const finalURL =
                     `${avatarURL}?t=${Date.now()}`;
 
-                // =================================
-                // ATUALIZAR PERFIL
-                // =================================
 
                 const {
                     error: updateError
@@ -1716,23 +1631,24 @@ if (
                         currentUser.id
                     );
 
+
                 if (updateError) {
 
                     throw updateError;
 
                 }
 
-                // =================================
-                // ATUALIZAR LOCAL
-                // =================================
 
                 currentProfile.avatar_url =
                     finalURL;
 
+
                 renderProfile();
+
 
                 changeAvatar.textContent =
                     "Foto atualizada! ✓";
+
 
                 setTimeout(
                     function () {
@@ -1753,17 +1669,21 @@ if (
                     error
                 );
 
+
                 alert(
                     "Não foi possível alterar a foto."
                 );
+
 
                 changeAvatar.textContent =
                     "Alterar foto";
 
             }
 
+
             changeAvatar.disabled =
                 false;
+
 
             avatarInput.value =
                 "";
@@ -1773,8 +1693,73 @@ if (
 
 }
 
+
 // =====================================
-// INICIAR VINCI
+// ABAS
+// =====================================
+
+function showTextPosts() {
+
+    profilePostsSection
+        ?.classList
+        .remove("hidden");
+
+
+    profilePhotosSection
+        ?.classList
+        .add("hidden");
+
+
+    textPostsTab
+        ?.classList
+        .add("active");
+
+
+    photoPostsTab
+        ?.classList
+        .remove("active");
+
+}
+
+
+function showPhotoPosts() {
+
+    profilePostsSection
+        ?.classList
+        .add("hidden");
+
+
+    profilePhotosSection
+        ?.classList
+        .remove("hidden");
+
+
+    textPostsTab
+        ?.classList
+        .remove("active");
+
+
+    photoPostsTab
+        ?.classList
+        .add("active");
+
+}
+
+
+textPostsTab?.addEventListener(
+    "click",
+    showTextPosts
+);
+
+
+photoPostsTab?.addEventListener(
+    "click",
+    showPhotoPosts
+);
+
+
+// =====================================
+// INICIAR
 // =====================================
 
 loadUser();
