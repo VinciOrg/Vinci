@@ -1,0 +1,430 @@
+:root {
+
+    --orange: #f4a261;
+    --orange-dark: #e88b45;
+
+    --background: #faf9f7;
+
+    --text: #181818;
+
+    --muted: #777;
+
+    --border: #e8e5e1;
+
+    --white: #ffffff;
+
+}
+
+
+* {
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+body {
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        var(--background);
+
+    color:
+        var(--text);
+
+    min-height: 100vh;
+
+}
+
+
+a {
+
+    text-decoration: none;
+
+    color:
+        var(--orange-dark);
+
+}
+
+
+button,
+input {
+
+    font: inherit;
+
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+
+    font-size: 42px;
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+
+    color:
+        var(--orange-dark);
+
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 24px;
+
+}
+
+
+.subtitle {
+
+    color: var(--muted);
+
+    margin-top: 8px;
+
+    font-size: 16px;
+
+}
+
+
+.buttons {
+
+    width: 100%;
+
+    max-width: 320px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 36px;
+
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 15px 20px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s,
+        opacity 0.15s;
+
+}
+
+
+.button:active {
+
+    transform:
+        scale(0.98);
+
+}
+
+
+.primary {
+
+    background:
+        var(--orange);
+
+    color:
+        white;
+
+    font-weight: 700;
+
+}
+
+
+.secondary {
+
+    background:
+        white;
+
+    color:
+        var(--text);
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
+.auth-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+}
+
+
+.auth-box {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 24px;
+
+    padding: 32px;
+
+}
+
+
+.auth-box .logo {
+
+    font-size: 36px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.auth-box h1 {
+
+    font-size: 26px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.auth-subtitle {
+
+    color: var(--muted);
+
+    margin-bottom: 28px;
+
+}
+
+
+form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+label {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    margin-top: 8px;
+
+}
+
+
+input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background:
+        #fff;
+
+}
+
+
+input:focus {
+
+    border-color:
+        var(--orange);
+
+}
+
+
+form .button {
+
+    margin-top: 14px;
+
+}
+
+
+.message {
+
+    min-height: 22px;
+
+    margin-top: 16px;
+
+    font-size: 14px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.switch-auth {
+
+    text-align: center;
+
+    margin-top: 22px;
+
+    font-size: 14px;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-page {
+
+    max-width: 700px;
+
+    margin: auto;
+
+    padding: 40px 20px;
+
+}
+
+
+.profile-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.avatar {
+
+    width: 80px;
+
+    height: 80px;
+
+    border-radius: 50%;
+
+    background:
+        var(--orange);
+
+    color:
+        white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+}
+
+
+.profile-header h1 {
+
+    font-size: 24px;
+
+}
+
+
+.profile-header p {
+
+    color:
+        var(--muted);
+
+    margin-top: 4px;
+
+}
+
+
+@media (max-width: 500px) {
+
+    .auth-box {
+
+        border: none;
+
+        padding: 20px;
+
+        background:
+            transparent;
+
+    }
+
+}

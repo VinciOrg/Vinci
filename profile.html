@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Perfil — Vinci</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <main class="profile-page">
+
+        <div class="profile-header">
+
+            <div class="avatar">
+                V
+            </div>
+
+            <div>
+
+                <h1 id="name">
+                    Carregando...
+                </h1>
+
+                <p id="username">
+                    @...
+                </p>
+
+            </div>
+
+        </div>
+
+        <button
+            id="logout"
+            class="button secondary"
+        >
+            Sair
+        </button>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+
+    <script>
+
+        async function loadProfile() {
+
+            const {
+                data: {
+                    user
+                }
+            } = await db.auth.getUser();
+
+
+            if (!user) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            const metadata =
+                user.user_metadata || {};
+
+
+            document.getElementById("name")
+                .textContent =
+                metadata.name ||
+                "Usuário";
+
+
+            document.getElementById("username")
+                .textContent =
+                "@" +
+                (
+                    metadata.username ||
+                    "usuario"
+                );
+
+        }
+
+
+        document
+            .getElementById("logout")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    await db.auth.signOut();
+
+                    window.location.href =
+                        "index.html";
+
+                }
+            );
+
+
+        loadProfile();
+
+    </script>
+
+</body>
+
+</html>

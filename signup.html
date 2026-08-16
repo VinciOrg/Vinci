@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Criar conta — Vinci</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <div class="auth-box">
+
+            <div class="logo">
+                Vinci
+            </div>
+
+            <h1>Crie sua conta</h1>
+
+            <p class="auth-subtitle">
+                Comece sua história no Vinci.
+            </p>
+
+            <form id="signupForm">
+
+                <label>
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Seu nome"
+                    maxlength="40"
+                    required
+                >
+
+                <label>
+                    Nome de usuário
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="@seuusuario"
+                    maxlength="20"
+                    required
+                >
+
+                <label>
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="seu@email.com"
+                    required
+                >
+
+                <label>
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Mínimo de 6 caracteres"
+                    minlength="6"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="button primary"
+                >
+                    Criar conta
+                </button>
+
+            </form>
+
+            <p id="message" class="message"></p>
+
+            <p class="switch-auth">
+                Já possui uma conta?
+                <a href="login.html">
+                    Entrar
+                </a>
+            </p>
+
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="auth.js"></script>
+
+</body>
+
+</html>
