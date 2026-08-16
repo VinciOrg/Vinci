@@ -2027,3 +2027,283 @@ button:disabled {
     }
 
 }
+
+/* =====================================
+   VINCI 0.5 — MENU DE CRIAÇÃO
+===================================== */
+
+.nav-create {
+    appearance: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+
+    background: transparent;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================
+   FUNDO
+===================================== */
+
+.create-menu {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.38);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* =====================================
+   PAINEL
+===================================== */
+
+.create-menu-content {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 24px;
+
+    border-radius: 26px;
+
+    background: #faf9f7;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+
+    animation:
+        createMenuUp
+        0.25s ease;
+}
+
+
+@keyframes createMenuUp {
+
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+}
+
+
+/* =====================================
+   FECHAR
+===================================== */
+
+.create-menu-close {
+    position: absolute;
+
+    top: 16px;
+    right: 18px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.06);
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================
+   TÍTULO
+===================================== */
+
+.create-menu-title {
+    margin-bottom: 22px;
+}
+
+
+.create-menu-title span {
+    font-size: 13px;
+
+    color: #e8944f;
+
+    font-weight: 600;
+}
+
+
+.create-menu-title h2 {
+    margin: 4px 0 0;
+
+    font-size: 22px;
+
+    color: #191919;
+}
+
+
+/* =====================================
+   OPÇÕES
+===================================== */
+
+.create-option {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 16px;
+
+    margin-top: 10px;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    border-radius: 18px;
+
+    background: white;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+
+.create-option:active {
+    transform: scale(0.98);
+}
+
+
+.create-option:hover {
+    border-color: rgba(232, 148, 79, 0.45);
+
+    background: #fffaf5;
+}
+
+
+/* =====================================
+   ÍCONE
+===================================== */
+
+.create-option-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #fff1e5;
+
+    font-size: 23px;
+}
+
+
+/* =====================================
+   TEXTO
+===================================== */
+
+.create-option-text {
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.create-option-text strong {
+    font-size: 15px;
+
+    color: #191919;
+}
+
+
+.create-option-text span {
+    font-size: 12px;
+
+    color: #777;
+}
+
+
+/* =====================================
+   SETA
+===================================== */
+
+.create-option-arrow {
+    font-size: 20px;
+
+    color: #e8944f;
+}
+
+
+/* =====================================
+   CANCELAR
+===================================== */
+
+.create-cancel {
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 13px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #777;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+/* =====================================
+   HIDDEN
+===================================== */
+
+.create-menu.hidden {
+    display: none;
+}
