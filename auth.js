@@ -50,6 +50,7 @@ if (signupForm) {
       message.textContent =
         "Criando sua conta...";
 
+
       try {
 
         const { data, error } =
@@ -73,12 +74,15 @@ if (signupForm) {
 
           });
 
+
         if (error) {
           throw error;
         }
 
+
         message.textContent =
           "Conta criada! Verifique seu e-mail para confirmar.";
+
 
         setTimeout(() => {
 
@@ -86,6 +90,7 @@ if (signupForm) {
             "login.html";
 
         }, 2500);
+
 
       } catch (error) {
 
@@ -104,6 +109,7 @@ if (signupForm) {
 
 // -------------------------------
 // LOGIN
+// E-MAIL OU USERNAME
 // -------------------------------
 
 const loginForm =
@@ -118,26 +124,84 @@ if (loginForm) {
 
       event.preventDefault();
 
-      const email =
+
+      const loginValue =
         document
         .getElementById("email")
         .value
-        .trim();
+        .trim()
+        .toLowerCase();
+
 
       const password =
         document
         .getElementById("password")
         .value;
 
+
       const message =
         document.getElementById("message");
+
 
       message.textContent =
         "Entrando...";
 
+
       try {
 
-        const { data, error } =
+        let email =
+          loginValue;
+
+
+        // -------------------------------
+        // SE NÃO FOR E-MAIL,
+        // PROCURAR PELO USERNAME
+        // -------------------------------
+
+        if (
+          !loginValue.includes("@")
+        ) {
+
+          const {
+            data,
+            error
+          } =
+            await db.rpc(
+              "get_email_by_username",
+              {
+                input_username:
+                  loginValue
+              }
+            );
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          if (!data) {
+
+            throw new Error(
+              "Usuário não encontrado."
+            );
+
+          }
+
+
+          email = data;
+
+        }
+
+
+        // -------------------------------
+        // LOGIN SUPABASE
+        // -------------------------------
+
+        const {
+          data,
+          error
+        } =
           await db.auth.signInWithPassword({
 
             email: email,
@@ -146,22 +210,30 @@ if (loginForm) {
 
           });
 
+
         if (error) {
           throw error;
         }
 
+
         message.textContent =
           "Login realizado!";
+
 
         window.location.href =
           "profile.html";
 
+
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "ERRO LOGIN:",
+          error
+        );
+
 
         message.textContent =
-          "E-mail ou senha incorretos.";
+          "E-mail, usuário ou senha incorretos.";
 
       }
 
@@ -178,20 +250,31 @@ if (loginForm) {
 const forgotPasswordButton =
   document.getElementById("forgotPassword");
 
+
 const forgotPasswordModal =
-  document.getElementById("forgotPasswordModal");
+  document.getElementById(
+    "forgotPasswordModal"
+  );
+
 
 const closeForgotModal =
-  document.getElementById("closeForgotModal");
+  document.getElementById(
+    "closeForgotModal"
+  );
+
 
 const sendReset =
   document.getElementById("sendReset");
 
+
 const resetEmail =
   document.getElementById("resetEmail");
 
+
 const resetMessage =
-  document.getElementById("resetMessage");
+  document.getElementById(
+    "resetMessage"
+  );
 
 
 // -------------------------------
@@ -208,13 +291,16 @@ if (forgotPasswordButton) {
         "hidden"
       );
 
+
       resetMessage.textContent = "";
+
 
       resetEmail.value =
         document
         .getElementById("email")
         .value
         .trim();
+
 
       setTimeout(() => {
 
@@ -241,6 +327,7 @@ if (closeForgotModal) {
       forgotPasswordModal.classList.add(
         "hidden"
       );
+
 
       resetMessage.textContent = "";
 
@@ -269,6 +356,7 @@ if (forgotPasswordModal) {
           "hidden"
         );
 
+
         resetMessage.textContent = "";
 
       }
@@ -280,7 +368,7 @@ if (forgotPasswordModal) {
 
 
 // -------------------------------
-// ENVIAR LINK
+// ENVIAR LINK DE RECUPERAÇÃO
 // -------------------------------
 
 if (sendReset) {
@@ -294,6 +382,7 @@ if (sendReset) {
         .trim()
         .toLowerCase();
 
+
       if (!email) {
 
         resetMessage.textContent =
@@ -305,12 +394,16 @@ if (sendReset) {
 
       }
 
+
       sendReset.disabled = true;
+
 
       sendReset.textContent =
         "Enviando...";
 
+
       resetMessage.textContent = "";
+
 
       try {
 
@@ -325,17 +418,22 @@ if (sendReset) {
             }
           );
 
+
         if (error) {
           throw error;
         }
 
+
         resetMessage.textContent =
           "Link enviado! Verifique seu e-mail.";
+
 
         sendReset.textContent =
           "Link enviado";
 
+
         resetEmail.value = "";
+
 
       } catch (error) {
 
@@ -344,11 +442,14 @@ if (sendReset) {
           error
         );
 
+
         resetMessage.textContent =
           error.message ||
           "Não foi possível enviar o link.";
 
+
         sendReset.disabled = false;
+
 
         sendReset.textContent =
           "Enviar link de recuperação";
