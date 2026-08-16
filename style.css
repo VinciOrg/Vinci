@@ -1,33 +1,33 @@
-style.css bb:
-
 :root {
-
     --orange: #f4a261;
     --orange-dark: #e88b45;
 
     --background: #faf9f7;
-
     --text: #181818;
-
     --muted: #777;
 
     --border: #e8e5e1;
-
     --white: #ffffff;
 
+    --soft-orange: #fff3e8;
 }
 
+/* =====================================
+   RESET
+===================================== */
+
 * {
-
     box-sizing: border-box;
-
     margin: 0;
-
     padding: 0;
+}
 
+html {
+    min-height: 100%;
 }
 
 body {
+    min-height: 100vh;
 
     font-family:
         -apple-system,
@@ -35,2438 +35,90 @@ body {
         "Segoe UI",
         sans-serif;
 
-    background:
-        var(--background);
+    background: var(--background);
+    color: var(--text);
 
-    color:
-        var(--text);
-
-    min-height: 100vh;
-
-}
-
-a {
-
-    text-decoration: none;
-
-    color:
-        var(--orange-dark);
-
+    -webkit-font-smoothing: antialiased;
 }
 
 button,
-input {
-
+input,
+textarea {
     font: inherit;
-
 }
 
-/* =========================
-   LOGO
-========================= */
-
-.logo {
-
-    font-size: 42px;
-
-    font-weight: 800;
-
-    letter-spacing: -2px;
-
-    color:
-        var(--orange-dark);
-
+button {
+    cursor: pointer;
 }
 
-/* =========================
-   WELCOME
-========================= */
-
-.welcome {
-
-    min-height: 100vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 24px;
-
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.subtitle {
-
-    color: var(--muted);
-
-    margin-top: 8px;
-
-    font-size: 16px;
-
-}
-
-.buttons {
-
-    width: 100%;
-
-    max-width: 320px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-
-    margin-top: 36px;
-
-}
-
-/* =========================
-   BUTTONS
-========================= */
+/* =====================================
+   BOTÕES GERAIS
+===================================== */
 
 .button {
-
-    width: 100%;
-
     border: none;
-
-    border-radius: 14px;
-
-    padding: 15px 20px;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.15s,
-        opacity 0.15s;
-
-}
-
-.button:active {
-
-    transform:
-        scale(0.98);
-
-}
-
-.primary {
-
-    background:
-        var(--orange);
-
-    color:
-        white;
-
-    font-weight: 700;
-
-}
-
-.secondary {
-
-    background:
-        white;
-
-    color:
-        var(--text);
-
-    border:
-        1px solid var(--border);
-
-}
-
-/* =========================
-   AUTH
-========================= */
-
-.auth-page {
-
-    min-height: 100vh;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 24px;
-
-}
-
-.auth-box {
-
-    width: 100%;
-
-    max-width: 420px;
-
-    background:
-        white;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 24px;
-
-    padding: 32px;
-
-}
-
-.auth-box .logo {
-
-    font-size: 36px;
-
-    margin-bottom: 28px;
-
-}
-
-.auth-box h1 {
-
-    font-size: 26px;
-
-    margin-bottom: 8px;
-
-}
-
-.auth-subtitle {
-
-    color: var(--muted);
-
-    margin-bottom: 28px;
-
-}
-
-form {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-
-}
-
-label {
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    margin-top: 8px;
-
-}
-
-input {
-
-    width: 100%;
-
-    padding: 14px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 12px;
-
-    outline: none;
-
-    background:
-        #fff;
-
-}
-
-input:focus {
-
-    border-color:
-        var(--orange);
-
-}
-
-form .button {
-
-    margin-top: 14px;
-
-}
-
-.message {
-
-    min-height: 22px;
-
-    margin-top: 16px;
-
-    font-size: 14px;
-
-    color:
-        var(--muted);
-
-}
-
-.switch-auth {
-
-    text-align: center;
-
-    margin-top: 22px;
-
-    font-size: 14px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =========================
-   PROFILE
-========================= */
-
-.profile-page {
-
-    max-width: 700px;
-
-    margin: auto;
-
-    padding: 40px 20px;
-
-}
-
-.profile-header {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-
-    margin-bottom: 30px;
-
-}
-
-.avatar {
-
-    width: 80px;
-
-    height: 80px;
-
-    border-radius: 50%;
-
-    background:
-        var(--orange);
-
-    color:
-        white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 30px;
-
-    font-weight: 700;
-
-}
-
-.profile-header h1 {
-
-    font-size: 24px;
-
-}
-
-.profile-header p {
-
-    color:
-        var(--muted);
-
-    margin-top: 4px;
-
-}
-
-@media (max-width: 500px) {
-
-    .auth-box {
-
-        border: none;
-
-        padding: 20px;
-
-        background:
-            transparent;
-
-    }
-
-}
-
-/* =====================================
-   VINCI — PROFILE
-===================================== */
-
-.profile-page {
-
-    max-width: 760px;
-
-    margin: 0 auto;
-
-    padding: 40px 20px 110px;
-
-}
-
-/* =====================================
-   PROFILE HEADER
-===================================== */
-
-.profile {
-
-    padding-top: 20px;
-
-}
-
-.profile-top {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-
-}
-
-.profile-avatar {
-
-    width: 96px;
-
-    height: 96px;
-
-    min-width: 96px;
-
-    border-radius: 50%;
-
-    background:
-        var(--orange);
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 36px;
-
-    font-weight: 700;
-
-    overflow: hidden;
-
-}
-
-.profile-info h1 {
-
-    font-size: 25px;
-
-    letter-spacing: -0.5px;
-
-}
-
-.profile-info p {
-
-    margin-top: 4px;
-
-    color:
-        var(--muted);
-
-}
-
-.profile-bio {
-
-    margin-top: 20px;
-
-    line-height: 1.5;
-
-    color:
-        #444;
-
-    max-width: 500px;
-
-}
-
-.profile > .button {
-
-    width: auto;
-
-    margin-top: 18px;
-
-    padding:
-        11px 22px;
-
-}
-
-/* =====================================
-   STATS
-===================================== */
-
-.profile-stats {
-
-    display: flex;
-
-    gap: 35px;
-
-    margin-top: 30px;
-
-    padding:
-        20px 0;
-
-    border-top:
-        1px solid var(--border);
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-.profile-stats div {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 4px;
-
-}
-
-.profile-stats strong {
-
-    font-size: 19px;
-
-}
-
-.profile-stats span {
-
-    font-size: 13px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   POSTS
-===================================== */
-
-.profile-posts {
-
-    margin-top: 30px;
-
-}
-
-.posts-title {
-
-    font-size: 17px;
-
-    font-weight: 700;
-
-    margin-bottom: 18px;
-
-}
-
-.posts-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 4px;
-
-}
-
-.empty-posts {
-
-    grid-column:
-        1 / -1;
-
-    min-height: 220px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color:
-        var(--muted);
-
-    text-align: center;
-
-}
-
-.empty-posts div {
-
-    font-size: 42px;
-
-    margin-bottom: 12px;
-
-}
-
-/* =====================================
-   MODAL
-===================================== */
-
-.modal {
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(0, 0, 0, 0.35);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 20px;
-
-    z-index: 100;
-
-}
-
-.modal.hidden {
-
-    display: none;
-
-}
-
-.modal-box {
-
-    width: 100%;
-
-    max-width: 440px;
-
-    background:
-        white;
-
-    border-radius: 24px;
-
-    padding: 28px;
-
-    box-shadow:
-        0 20px 60px
-        rgba(0, 0, 0, 0.15);
-
-}
-
-.modal-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 20px;
-
-}
-
-.modal-header h2 {
-
-    font-size: 22px;
-
-}
-
-.close-button {
-
-    border: none;
-
-    background: none;
-
-    font-size: 30px;
-
-    color:
-        var(--muted);
-
-    cursor: pointer;
-
-}
-
-textarea {
-
-    width: 100%;
-
-    min-height: 100px;
-
-    resize: vertical;
-
-    padding: 14px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 12px;
-
-    outline: none;
-
-}
-
-textarea:focus {
-
-    border-color:
-        var(--orange);
-
-}
-
-/* =====================================
-   BOTTOM NAV
-===================================== */
-
-.bottom-nav {
-
-    position: fixed;
-
-    bottom: 0;
-
-    left: 0;
-
-    right: 0;
-
-    height: 70px;
-
-    background:
-        rgba(255,255,255,0.94);
-
-    backdrop-filter:
-        blur(16px);
-
-    border-top:
-        1px solid var(--border);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 80px;
-
-    z-index: 50;
-
-}
-
-.bottom-nav a {
-
-    color:
-        #888;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 4px;
-
-    font-size: 12px;
-
-}
-
-.bottom-nav a.active {
-
-    color:
-        var(--orange-dark);
-
-}
-
-.bottom-nav a span {
-
-    font-size: 22px;
-
-    line-height: 1;
-
-}
-
-.bottom-nav .nav-post {
-
-    width: 42px;
-
-    height: 42px;
 
     border-radius: 13px;
 
-    background:
-        var(--orange);
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 26px;
-
-    margin-top: -16px;
-
-    box-shadow:
-        0 6px 18px
-        rgba(244, 162, 97, 0.35);
-
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 500px) {
-
-    .profile-page {
-
-        padding:
-            25px 16px 100px;
-
-    }
-
-    .profile-avatar {
-
-        width: 82px;
-
-        height: 82px;
-
-        min-width: 82px;
-
-        font-size: 30px;
-
-    }
-
-    .profile-info h1 {
-
-        font-size: 21px;
-
-    }
-
-    .profile-stats {
-
-        justify-content: space-between;
-
-        gap: 10px;
-
-    }
-
-    .bottom-nav {
-
-        gap: 60px;
-
-    }
-
-}
-
-/* =====================================
-   PROFILE EDIT INFO
-===================================== */
-
-.change-info {
-
-    font-size: 12px;
-
-    color:
-        #6f9f78;
-
-    margin-top: 2px;
-
-    margin-bottom: 4px;
-
-}
-
-.change-info.locked {
-
-    color:
-        #999;
-
-}
-
-.username-input {
-
-    display: flex;
-
-    align-items: center;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 12px;
-
-    background:
-        white;
-
-    padding-left: 14px;
-
-}
-
-.username-input span {
-
-    color:
-        var(--muted);
-
-    font-weight: 600;
-
-}
-
-.username-input input {
-
-    border: none;
-
-    padding-left: 5px;
-
-}
-
-.username-input:focus-within {
-
-    border-color:
-        var(--orange);
-
-}
-
-/* =====================================
-   VINCI — CREATE POST
-===================================== */
-
-.post-page {
-
-    max-width: 700px;
-
-    margin: 0 auto;
-
-    padding:
-        25px 20px 110px;
-
-}
-
-.post-header {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    margin-bottom: 30px;
-
-}
-
-.post-header h1 {
-
-    font-size: 23px;
-
-}
-
-.back-button {
-
-    border: none;
-
-    background: none;
-
-    font-size: 28px;
-
-    cursor: pointer;
-
-    color: #444;
-
-}
-
-/* =====================================
-   SELECIONAR FOTO
-===================================== */
-
-.image-selector {
-
-    width: 100%;
-
-    aspect-ratio: 1 / 1;
-
-    max-height: 550px;
-
-    border:
-        2px dashed var(--border);
-
-    border-radius: 22px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    cursor: pointer;
-
-    transition:
-        0.2s ease;
-
-}
-
-.image-selector:hover {
-
-    border-color:
-        var(--orange);
-
-}
-
-.image-selector-icon {
-
-    width: 65px;
-
-    height: 65px;
-
-    border-radius: 20px;
-
-    background:
-        var(--orange);
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 40px;
-
-    margin-bottom: 15px;
-
-}
-
-.image-selector strong {
-
-    font-size: 17px;
-
-}
-
-.image-selector span {
-
-    margin-top: 7px;
-
-    font-size: 13px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   EDITOR
-===================================== */
-
-.hidden {
-
-    display: none !important;
-
-}
-
-.post-preview {
-
-    width: 100%;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    background:
-        #eee;
-
-}
-
-.post-preview img {
-
-    width: 100%;
-
-    max-height: 650px;
-
-    object-fit: contain;
-
-    display: block;
-
-}
-
-/* =====================================
-   LEGENDA
-===================================== */
-
-.caption-area {
-
-    margin-top: 25px;
-
-    position: relative;
-
-}
-
-.caption-area label {
-
-    display: block;
-
-    margin-bottom: 8px;
-
-    font-weight: 600;
-
-}
-
-.caption-area textarea {
-
-    width: 100%;
-
-    min-height: 120px;
-
-    padding: 14px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 14px;
-
-    resize: vertical;
-
-    font-family: inherit;
-
-    font-size: 15px;
-
-    outline: none;
-
-}
-
-.caption-area textarea:focus {
-
-    border-color:
-        var(--orange);
-
-}
-
-.caption-counter {
-
-    text-align: right;
-
-    font-size: 12px;
-
-    color:
-        var(--muted);
-
-    margin-top: 5px;
-
-}
-
-/* =====================================
-   MENSAGEM
-===================================== */
-
-.post-message {
-
-    min-height: 22px;
-
-    margin-top: 15px;
+    padding: 13px 18px;
 
     text-align: center;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   BOTÕES
-===================================== */
-
-.post-actions {
-
-    display: flex;
-
-    gap: 12px;
-
-    margin-top: 10px;
-
-}
-
-.post-actions button {
-
-    flex: 1;
-
-}
-
-button:disabled {
-
-    opacity: 0.6;
-
-    cursor: not-allowed;
-
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 500px) {
-
-    .post-page {
-
-        padding:
-            20px 15px 100px;
-
-    }
-
-    .post-header h1 {
-
-        font-size: 20px;
-
-    }
-
-    .image-selector {
-
-        aspect-ratio: 1 / 1;
-
-    }
-
-    .post-preview img {
-
-        max-height: 500px;
-
-    }
-
-}
-
-/* =====================================
-   VINCI — FEED
-===================================== */
-
-.feed-page {
-
-    max-width: 650px;
-
-    margin: 0 auto;
-
-    padding:
-        20px 15px 100px;
-
-}
-
-/* =====================================
-   HEADER
-===================================== */
-
-.feed-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding:
-        10px 0 25px;
-
-}
-
-.vinci-logo {
-
-    font-size: 30px;
-
-    font-weight: 700;
-
-    letter-spacing: -1px;
-
-}
-
-/* =====================================
-   FEED
-===================================== */
-
-.feed {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 35px;
-
-}
-
-/* =====================================
-   POST
-===================================== */
-
-.vinci-post {
-
-    overflow: hidden;
-
-    border-radius: 18px;
-
-    background:
-        var(--panel);
-
-    border:
-        1px solid var(--border);
-
-}
-
-/* =====================================
-   USUÁRIO
-===================================== */
-
-.post-user {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 11px;
-
-    padding:
-        13px 14px;
-
-}
-
-.post-avatar {
-
-    width: 40px;
-
-    height: 40px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-    background:
-        #eeeeee;
-
-}
-
-.post-user-info {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 2px;
-
-}
-
-.post-user-info strong {
-
-    font-size: 14px;
-
-}
-
-.post-user-info span {
-
-    font-size: 12px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   FOTO
-===================================== */
-
-.post-image {
-
-    display: block;
-
-    width: 100%;
-
-    max-height: 750px;
-
-    object-fit: cover;
-
-    background:
-        #eeeeee;
-
-}
-
-/* =====================================
-   CONTEÚDO
-===================================== */
-
-.post-content {
-
-    padding:
-        13px 15px 15px;
-
-}
-
-.post-caption {
-
-    margin: 0 0 8px;
-
-    font-size: 15px;
-
-    line-height: 1.45;
-
-    white-space: pre-wrap;
-
-    overflow-wrap: anywhere;
-
-}
-
-.post-date {
-
-    display: block;
-
-    font-size: 12px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   STATUS
-===================================== */
-
-.feed-status {
-
-    text-align: center;
-
-    padding:
-        50px 20px;
-
-    color:
-        var(--muted);
-
-}
-
-.empty-icon {
-
-    font-size: 40px;
-
-    margin-bottom: 10px;
-
-}
-
-.feed-status h2 {
-
-    margin:
-        0 0 7px;
-
-    color:
-        var(--text);
-
-    font-size: 20px;
-
-}
-
-.feed-status p {
-
-    margin: 0;
-
-    font-size: 14px;
-
-}
-
-/* =====================================
-   VINCI 0.3.5 — PROFILE POSTS
-===================================== */
-
-.profile-stats {
-
-    display: flex;
-
-    justify-content: center;
-
-    margin: 20px 0;
-
-}
-
-.profile-stat {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 3px;
-
-}
-
-.profile-stat strong {
-
-    font-size: 21px;
-
-}
-
-.profile-stat span {
-
-    font-size: 12px;
-
-    color: var(--muted);
-
-}
-
-/* =====================================
-   POSTS
-===================================== */
-
-.profile-posts-section {
-
-    width: 100%;
-
-    margin-top: 35px;
-
-    padding-bottom: 110px;
-
-}
-
-.profile-posts-title {
-
-    margin: 0 0 15px;
-
-    padding: 0 15px;
-
-    font-size: 18px;
-
-}
-
-/* =====================================
-   GRID
-===================================== */
-
-.profile-posts-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 3px;
-
-}
-
-.profile-post {
-
-    position: relative;
-
-    aspect-ratio: 1 / 1;
-
-    overflow: hidden;
-
-    cursor: pointer;
-
-    background: #eeeeee;
-
-}
-
-.profile-post img {
-
-    width: 100%;
-
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-
-    transition:
-        transform 0.25s ease;
-
-}
-
-.profile-post:hover img {
-
-    transform:
-        scale(1.04);
-
-}
-
-/* =====================================
-   VAZIO / LOADING
-===================================== */
-
-.profile-posts-loading,
-.profile-posts-empty {
-
-    grid-column:
-        1 / -1;
-
-    min-height: 180px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 7px;
-
-    text-align: center;
-
-    color: var(--muted);
-
-    padding: 30px;
-
-}
-
-.profile-empty-icon {
-
-    font-size: 38px;
-
-}
-
-/* =====================================
-   VISUALIZADOR
-===================================== */
-
-.post-viewer {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 9999;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 20px;
-
-    background:
-        rgba(0, 0, 0, 0.82);
-
-}
-
-.post-viewer-content {
-
-    position: relative;
-
-    max-width: 900px;
-
-    width: 100%;
-
-    max-height: 95vh;
-
-    overflow: auto;
-
-    border-radius: 18px;
-
-    background:
-        var(--panel);
-
-}
-
-.post-viewer-image {
-
-    width: 100%;
-
-    max-height: 75vh;
-
-    display: block;
-
-    object-fit: contain;
-
-    background: #000;
-
-}
-
-.post-viewer-close {
-
-    position: absolute;
-
-    top: 10px;
-
-    right: 10px;
-
-    z-index: 2;
-
-    width: 38px;
-
-    height: 38px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background:
-        rgba(0, 0, 0, 0.6);
-
-    color: white;
-
-    font-size: 26px;
-
-    cursor: pointer;
-
-}
-
-.post-viewer-caption {
-
-    margin: 15px 18px 5px;
-
-    line-height: 1.5;
-
-}
-
-.post-viewer-date {
-
-    display: block;
-
-    margin: 0 18px 18px;
-
-    font-size: 12px;
-
-    color: var(--muted);
-
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 500px) {
-
-    .profile-posts-section {
-
-        margin-top: 25px;
-
-    }
-
-    .profile-posts-grid {
-
-        gap: 2px;
-
-    }
-
-}
-
-/* =====================================
-   VINCI 0.4 — VISIBILIDADE DO POST
-===================================== */
-
-.post-visibility {
-    margin-top: 20px;
-    padding: 18px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.post-visibility h3 {
-    margin: 0 0 14px;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-/* =====================================
-   OPÇÕES
-===================================== */
-
-.visibility-option {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-
-    padding: 14px;
-    margin-top: 10px;
-
-    border-radius: 14px;
-
-    cursor: pointer;
-
-    background: rgba(255, 255, 255, 0.035);
-
-    border: 1px solid rgba(255, 255, 255, 0.07);
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.visibility-option:hover {
-    background: rgba(255, 255, 255, 0.06);
-}
-
-/* =====================================
-   RADIO
-===================================== */
-
-.visibility-option input {
-    appearance: none;
-
-    width: 20px;
-    height: 20px;
-
-    min-width: 20px;
-
-    border-radius: 50%;
-
-    border: 2px solid rgba(255, 255, 255, 0.35);
-
-    position: relative;
-
-    cursor: pointer;
-}
-
-.visibility-option input:checked {
-    border-color: #ffb36b;
-}
-
-.visibility-option input:checked::after {
-    content: "";
-
-    position: absolute;
-
-    width: 10px;
-    height: 10px;
-
-    border-radius: 50%;
-
-    background: #ffb36b;
-
-    top: 3px;
-    left: 3px;
-}
-
-/* =====================================
-   TEXTO
-===================================== */
-
-.visibility-option div {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 3px;
-}
-
-.visibility-option strong {
-    font-size: 14px;
-
-    font-weight: 600;
-}
-
-.visibility-option span {
-    font-size: 12px;
-
-    line-height: 1.4;
-
-    color: rgba(255, 255, 255, 0.55);
-}
-
-/* =====================================
-   OPÇÃO SELECIONADA
-===================================== */
-
-.visibility-option:has(
-    input:checked
-) {
-    border-color: rgba(255, 179, 107, 0.5);
-
-    background: rgba(255, 179, 107, 0.08);
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 600px) {
-
-    .post-visibility {
-        padding: 15px;
-    }
-
-    .visibility-option {
-        padding: 13px;
-    }
-
-}
-
-/* =====================================
-   VINCI 0.5 — MENU DE CRIAÇÃO
-===================================== */
-
-.nav-create {
-    appearance: none;
-    border: none;
-    font: inherit;
-    color: inherit;
-
-    background: transparent;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 4px;
-
-    cursor: pointer;
-}
-
-/* =====================================
-   FUNDO
-===================================== */
-
-.create-menu {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 9999;
-
-    display: flex;
-
-    align-items: flex-end;
-    justify-content: center;
-
-    padding: 20px;
-
-    background: rgba(0, 0, 0, 0.38);
-
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-/* =====================================
-   PAINEL
-===================================== */
-
-.create-menu-content {
-    width: 100%;
-    max-width: 480px;
-
-    padding: 24px;
-
-    border-radius: 26px;
-
-    background: #faf9f7;
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.2);
-
-    position: relative;
-
-    animation:
-        createMenuUp
-        0.25s ease;
-}
-
-@keyframes createMenuUp {
-
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-}
-
-/* =====================================
-   FECHAR
-===================================== */
-
-.create-menu-close {
-    position: absolute;
-
-    top: 16px;
-    right: 18px;
-
-    width: 36px;
-    height: 36px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.06);
-
-    font-size: 25px;
-
-    cursor: pointer;
-}
-
-/* =====================================
-   TÍTULO
-===================================== */
-
-.create-menu-title {
-    margin-bottom: 22px;
-}
-
-.create-menu-title span {
-    font-size: 13px;
-
-    color: #e8944f;
-
-    font-weight: 600;
-}
-
-.create-menu-title h2 {
-    margin: 4px 0 0;
-
-    font-size: 22px;
-
-    color: #191919;
-}
-
-/* =====================================
-   OPÇÕES
-===================================== */
-
-.create-option {
-    width: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 16px;
-
-    margin-top: 10px;
-
-    border: 1px solid rgba(0, 0, 0, 0.08);
-
-    border-radius: 18px;
-
-    background: white;
-
-    text-align: left;
-
-    cursor: pointer;
 
     transition:
         transform 0.15s ease,
-        background 0.15s ease,
-        border-color 0.15s ease;
+        opacity 0.15s ease,
+        background 0.15s ease;
 }
 
-.create-option:active {
+.button:active {
     transform: scale(0.98);
 }
 
-.create-option:hover {
-    border-color: rgba(232, 148, 79, 0.45);
-
-    background: #fffaf5;
-}
-
-/* =====================================
-   ÍCONE
-===================================== */
-
-.create-option-icon {
-    width: 48px;
-    height: 48px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 14px;
-
-    background: #fff1e5;
-
-    font-size: 23px;
-}
-
-/* =====================================
-   TEXTO
-===================================== */
-
-.create-option-text {
-    flex: 1;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 4px;
-}
-
-.create-option-text strong {
-    font-size: 15px;
-
-    color: #191919;
-}
-
-.create-option-text span {
-    font-size: 12px;
-
-    color: #777;
-}
-
-/* =====================================
-   SETA
-===================================== */
-
-.create-option-arrow {
-    font-size: 20px;
-
-    color: #e8944f;
-}
-
-/* =====================================
-   CANCELAR
-===================================== */
-
-.create-cancel {
-    width: 100%;
-
-    margin-top: 14px;
-
-    padding: 13px;
-
-    border: none;
-
-    background: transparent;
-
-    color: #777;
-
-    font-size: 14px;
-
-    cursor: pointer;
-}
-
-/* =====================================
-   HIDDEN
-===================================== */
-
-.create-menu.hidden {
-    display: none;
-}
-
-/* =====================================
-   VINCI 0.5 — PROFILE POST
-===================================== */
-
-.profile-post-page {
-    min-height: calc(100vh - 80px);
-}
-
-/* =====================================
-   CABEÇALHO
-===================================== */
-
-.create-post-header {
-    height: 64px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 0 18px;
-
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-
-    background: #faf9f7;
-}
-
-.create-post-header h1 {
-    margin: 0;
-
-    font-size: 17px;
-
-    font-weight: 650;
-
-    color: #191919;
-}
-
-.create-back {
-    border: none;
-
-    background: transparent;
-
-    font-size: 25px;
-
-    color: #191919;
-
-    cursor: pointer;
-
-    width: 42px;
-}
-
-.create-publish {
-    border: none;
-
-    background: #e8944f;
-
+.button.primary {
+    background: var(--orange);
     color: white;
+    font-weight: 700;
+}
 
-    padding: 9px 15px;
+.button.primary:hover {
+    background: var(--orange-dark);
+}
 
-    border-radius: 12px;
+.button.secondary {
+    background: white;
 
-    font-size: 13px;
+    color: var(--text);
+
+    border: 1px solid var(--border);
 
     font-weight: 600;
-
-    cursor: pointer;
-
-    transition: opacity 0.2s ease;
 }
 
-.create-publish:disabled {
-    opacity: 0.5;
-
-    cursor: default;
+.button.secondary:hover {
+    background: #fffaf6;
 }
-
-/* =====================================
-   EDITOR
-===================================== */
-
-.profile-post-editor {
-    padding: 24px 18px;
-}
-
-.profile-post-editor textarea {
-    width: 100%;
-
-    min-height: 220px;
-
-    resize: none;
-
-    border: none;
-
-    outline: none;
-
-    background: transparent;
-
-    color: #191919;
-
-    font-family: inherit;
-
-    font-size: 18px;
-
-    line-height: 1.6;
-}
-
-.profile-post-editor textarea::placeholder {
-    color: #aaa;
-}
-
-/* =====================================
-   RODAPÉ DO EDITOR
-===================================== */
-
-.profile-post-footer {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-top: 8px;
-
-    font-size: 12px;
-
-    color: #999;
-}
-
-#profilePostMessage {
-    color: #e8944f;
-
-    text-align: right;
-}
-
-/* =====================================
-   VINCI 0.5.3 — PROFILE POSTS
-===================================== */
-
-.profile-posts-section {
-
-    width: 100%;
-
-    padding: 24px 16px 100px;
-
-}
-
-.profile-section-header {
-
-    display: flex;
-
-    align-items: center;
-
-    margin-bottom: 14px;
-
-}
-
-.profile-section-header h2 {
-
-    margin: 0;
-
-    font-size: 18px;
-
-    font-weight: 650;
-
-    color: #191919;
-
-}
-
-/* =====================================
-   LISTA
-===================================== */
-
-.profile-posts {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-
-}
-
-/* =====================================
-   POST
-===================================== */
-
-.profile-text-post {
-
-    background: #ffffff;
-
-    border: 1px solid rgba(0, 0, 0, 0.07);
-
-    border-radius: 16px;
-
-    padding: 16px;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.04);
-
-}
-
-.profile-text-post-content {
-
-    margin: 0;
-
-    color: #191919;
-
-    font-size: 15px;
-
-    line-height: 1.55;
-
-    white-space: pre-wrap;
-
-    overflow-wrap: anywhere;
-
-}
-
-.profile-text-post-date {
-
-    display: block;
-
-    margin-top: 10px;
-
-    color: #999;
-
-    font-size: 11px;
-
-}
-
-/* =====================================
-   LOADING
-===================================== */
-
-.profile-posts-loading {
-
-    padding: 24px 0;
-
-    text-align: center;
-
-    color: #999;
-
-    font-size: 13px;
-
-}
-
-/* =====================================
-   VAZIO
-===================================== */
-
-.profile-posts-empty {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 35px 20px;
-
-    color: #888;
-
-}
-
-.profile-empty-icon {
-
-    font-size: 30px;
-
-    margin-bottom: 10px;
-
-}
-
-.profile-posts-empty strong {
-
-    color: #555;
-
-    font-size: 14px;
-
-}
-
-.profile-posts-empty span {
-
-    margin-top: 5px;
-
-    font-size: 12px;
-
-}
-
-/* =====================================
-   VINCI 0.5.3 — NOVO LAYOUT DO PERFIL
-===================================== */
 
 /* =====================================
    PERFIL
 ===================================== */
 
 .profile-page {
-    max-width: 760px;
+    width: 100%;
+    max-width: 720px;
+
     margin: 0 auto;
-    padding: 25px 16px 110px;
+
+    padding:
+        24px 18px 105px;
 }
 
-/* =====================================
-   CABEÇALHO
-===================================== */
-
 .profile {
-    padding-top: 10px;
+    width: 100%;
 }
 
 /* =====================================
@@ -2475,8 +127,10 @@ button:disabled {
 
 .profile-top {
     display: flex;
+
     align-items: center;
-    gap: 18px;
+
+    gap: 16px;
 }
 
 /* =====================================
@@ -2484,21 +138,39 @@ button:disabled {
 ===================================== */
 
 .profile-avatar {
-    width: 92px;
-    height: 92px;
-    min-width: 92px;
+    width: 84px;
+    height: 84px;
+
+    min-width: 84px;
 
     border-radius: 50%;
 
     background: var(--orange);
 
+    color: white;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     overflow: hidden;
 
-    border: 1px solid var(--border);
+    font-size: 31px;
+    font-weight: 700;
+
+    border: 1px solid rgba(0, 0, 0, 0.05);
+
+    user-select: none;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
 }
 
 /* =====================================
@@ -2506,25 +178,31 @@ button:disabled {
 ===================================== */
 
 .profile-info {
-    flex: 1;
     min-width: 0;
+    flex: 1;
 }
 
 .profile-info h1 {
     margin: 0;
 
-    font-size: 25px;
+    font-size: 24px;
+    line-height: 1.15;
+
     font-weight: 750;
 
-    letter-spacing: -0.7px;
+    letter-spacing: -0.5px;
+
+    overflow-wrap: anywhere;
 }
 
 .profile-info p {
     margin-top: 5px;
 
-    font-size: 15px;
+    font-size: 14px;
 
     color: var(--muted);
+
+    overflow-wrap: anywhere;
 }
 
 /* =====================================
@@ -2532,127 +210,178 @@ button:disabled {
 ===================================== */
 
 .profile-bio {
-    margin-top: 18px;
+    margin-top: 15px;
 
-    font-size: 15px;
-
-    line-height: 1.5;
+    max-width: 580px;
 
     color: #444;
 
-    max-width: 600px;
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
 }
 
 /* =====================================
-   EDITAR PERFIL
+   AÇÕES DO PERFIL
 ===================================== */
 
-.profile > .button {
-    width: auto;
-
-    margin-top: 18px;
-
-    padding: 10px 20px;
-
-    border-radius: 13px;
-
-    background: white;
-
-    border: 1px solid var(--border);
-
-    color: var(--text);
-
-    font-weight: 500;
-}
-
-/* =====================================
-   ESCONDER A ESTATÍSTICA CRIADA
-   PELO JAVASCRIPT NO TOPO
-===================================== */
-
-#profileStats {
-    display: none !important;
-}
-
-/* =====================================
-   ESTATÍSTICAS ORIGINAIS
-===================================== */
-
-.profile .profile-stats {
-    width: 100%;
-
+.profile-actions {
     display: flex;
 
     align-items: center;
-    justify-content: space-around;
 
-    gap: 10px;
+    gap: 8px;
 
-    margin-top: 28px;
-
-    padding: 20px 5px;
-
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    margin-top: 14px;
 }
 
-.profile .profile-stats > div {
-    flex: 1;
+.profile-actions .button {
+    width: auto;
 
+    padding:
+        9px 15px;
+
+    border-radius: 11px;
+
+    font-size: 13px;
+}
+
+/* =====================================
+   ESTATÍSTICAS
+===================================== */
+
+.profile-stats {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+
+    margin-top: 22px;
+
+    padding:
+        15px 0;
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.profile-stat {
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 5px;
+    gap: 4px;
 
     text-align: center;
 }
 
-.profile .profile-stats strong {
-    font-size: 21px;
+.profile-stat strong {
+    font-size: 20px;
+
+    line-height: 1;
 
     font-weight: 700;
 
     color: var(--text);
 }
 
-.profile .profile-stats span {
-    font-size: 13px;
+.profile-stat span {
+    font-size: 12px;
 
     color: var(--muted);
 }
 
 /* =====================================
-   POSTS
+   ABAS
 ===================================== */
 
-.profile-posts-section {
+.profile-tabs {
     width: 100%;
 
-    margin-top: 28px;
+    display: grid;
 
-    padding: 0 0 110px;
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    margin-top: 12px;
+
+    border-bottom:
+        1px solid var(--border);
 }
 
-.profile-section-header {
-    margin-bottom: 15px;
+.profile-tab {
+    position: relative;
+
+    border: none;
+
+    background: transparent;
+
+    padding:
+        13px 10px;
+
+    color: #999;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        color 0.15s ease;
 }
 
-.profile-section-header h2,
-.profile-posts-title {
-    margin: 0;
+.profile-tab:hover {
+    color: #555;
+}
 
-    padding: 0;
-
-    font-size: 20px;
-
-    font-weight: 700;
-
+.profile-tab.active {
     color: var(--text);
+}
+
+.profile-tab.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+
+    bottom: -1px;
+
+    height: 2px;
+
+    background: var(--orange-dark);
+
+    border-radius: 10px;
+}
+
+/* =====================================
+   CONTEÚDO DAS ABAS
+===================================== */
+
+.profile-content-section {
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding-bottom: 20px;
+}
+
+.profile-content-section.hidden {
+    display: none !important;
 }
 
 /* =====================================
@@ -2660,447 +389,19 @@ button:disabled {
 ===================================== */
 
 .profile-posts {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-}
-
-.profile-text-post {
-    background: white;
-
-    border: 1px solid var(--border);
-
-    border-radius: 17px;
-
-    padding: 17px;
-
-    box-shadow:
-        0 3px 15px rgba(0, 0, 0, 0.035);
-}
-
-.profile-text-post-content {
-    font-size: 15px;
-
-    line-height: 1.55;
-
-    color: var(--text);
-}
-
-.profile-text-post-date {
-    margin-top: 10px;
-
-    font-size: 11px;
-
-    color: #999;
-}
-
-/* =====================================
-   POSTS DE FOTOGRAFIA
-===================================== */
-
-.profile-posts-grid {
-    margin-top: 5px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 3px;
-}
-
-.profile-post {
-    aspect-ratio: 1 / 1;
-
-    border-radius: 0;
-
-    overflow: hidden;
-}
-
-.profile-post img {
     width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 500px) {
-
-    .profile-page {
-        padding:
-            22px 16px 105px;
-    }
-
-    .profile-top {
-        gap: 15px;
-    }
-
-    .profile-avatar {
-        width: 82px;
-        height: 82px;
-        min-width: 82px;
-    }
-
-    .profile-info h1 {
-        font-size: 22px;
-    }
-
-    .profile-info p {
-        font-size: 14px;
-    }
-
-    .profile-bio {
-        margin-top: 16px;
-
-        font-size: 15px;
-    }
-
-    .profile .profile-stats {
-        margin-top: 25px;
-
-        padding:
-            18px 0;
-    }
-
-    .profile .profile-stats strong {
-        font-size: 20px;
-    }
-
-    .profile .profile-stats span {
-        font-size: 12px;
-    }
-
-    .profile-posts-section {
-        margin-top: 25px;
-    }
-
-    .profile-section-header h2,
-    .profile-posts-title {
-        font-size: 19px;
-    }
-
-}
-
-/* =====================================
-   VINCI 0.6 — PROFILE REDESIGN
-===================================== */
-
-/* =====================================
-   PERFIL
-===================================== */
-
-.profile-page {
-
-    max-width: 720px;
-
-    margin: 0 auto;
-
-    padding:
-        20px 18px 100px;
-
-}
-
-.profile {
-
-    padding-top: 5px;
-
-}
-
-/* =====================================
-   TOPO
-===================================== */
-
-.profile-top {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 16px;
-
-}
-
-.profile-info {
-
-    min-width: 0;
-
-}
-
-.profile-info h1 {
-
-    margin: 0;
-
-    font-size: 24px;
-
-    line-height: 1.15;
-
-}
-
-.profile-info p {
-
-    margin-top: 5px;
-
-    font-size: 14px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   AVATAR
-===================================== */
-
-.profile-avatar {
-
-    width: 82px;
-
-    height: 82px;
-
-    min-width: 82px;
-
-    border-radius: 50%;
-
-    background:
-        var(--orange);
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    font-size: 30px;
-
-    font-weight: 700;
-
-}
-
-/* =====================================
-   BIO
-===================================== */
-
-.profile-bio {
-
-    margin-top: 13px;
-
-    max-width: 560px;
-
-    color: #444;
-
-    font-size: 14px;
-
-    line-height: 1.45;
-
-}
-
-/* =====================================
-   AÇÕES
-===================================== */
-
-.profile-actions {
-
-    display: flex;
-
-    gap: 8px;
-
-    margin-top: 13px;
-
-}
-
-.profile-actions .button {
-
-    width: auto;
-
-    padding:
-        8px 15px;
-
-    border-radius: 10px;
-
-    font-size: 13px;
-
-}
-
-/* =====================================
-   ESTATÍSTICAS
-===================================== */
-
-.profile-stats {
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 8px;
-
-    margin-top: 20px;
-
-    padding:
-        14px 0;
-
-    border-top:
-        1px solid var(--border);
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-.profile-stat {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 3px;
-
-}
-
-.profile-stat strong {
-
-    font-size: 19px;
-
-    line-height: 1;
-
-    font-weight: 700;
-
-}
-
-.profile-stat span {
-
-    font-size: 12px;
-
-    color:
-        var(--muted);
-
-}
-
-/* =====================================
-   ABAS
-===================================== */
-
-.profile-tabs {
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    margin-top: 10px;
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-.profile-tab {
-
-    position: relative;
-
-    border: none;
-
-    background: transparent;
-
-    padding:
-        13px 10px;
-
-    color: #999;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-}
-
-.profile-tab.active {
-
-    color:
-        var(--text);
-
-}
-
-.profile-tab.active::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 25%;
-
-    right: 25%;
-
-    bottom: -1px;
-
-    height: 2px;
-
-    background:
-        var(--orange-dark);
-
-    border-radius: 10px;
-
-}
-
-/* =====================================
-   ÁREAS DE CONTEÚDO
-===================================== */
-
-.profile-content-section {
-
-    width: 100%;
-
-    margin-top: 12px;
-
-    padding-bottom: 20px;
-
-}
-
-.profile-content-section.hidden {
-
-    display: none !important;
-
-}
-
-/* =====================================
-   POSTS
-===================================== */
-
-.profile-posts {
 
     display: flex;
 
     flex-direction: column;
 
     gap: 10px;
-
 }
 
 .profile-text-post {
+    width: 100%;
 
-    background:
-        #ffffff;
+    background: var(--white);
 
     border:
         1px solid var(--border);
@@ -3111,46 +412,106 @@ button:disabled {
         15px 16px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0,0,0,0.025);
-
+        0 2px 10px
+        rgba(0, 0, 0, 0.035);
 }
 
 .profile-text-post-content {
-
     margin: 0;
 
-    color:
-        #191919;
+    color: var(--text);
 
     font-size: 15px;
 
-    line-height: 1.5;
+    line-height: 1.55;
 
     white-space: pre-wrap;
 
     overflow-wrap: anywhere;
-
 }
 
 .profile-text-post-date {
-
     display: block;
 
-    margin-top: 8px;
+    margin-top: 9px;
 
-    color:
-        #999;
+    color: #999;
 
     font-size: 11px;
-
 }
 
 /* =====================================
-   GRID DE PUBLICAÇÕES
+   CARREGANDO
+===================================== */
+
+.profile-posts-loading {
+    width: 100%;
+
+    min-height: 150px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    padding: 25px;
+}
+
+/* =====================================
+   VAZIO
+===================================== */
+
+.profile-posts-empty {
+    width: 100%;
+
+    min-height: 180px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    padding: 30px 20px;
+}
+
+.profile-empty-icon {
+    font-size: 34px;
+
+    margin-bottom: 4px;
+}
+
+.profile-posts-empty strong {
+    color: #555;
+
+    font-size: 14px;
+}
+
+.profile-posts-empty span {
+    font-size: 12px;
+
+    color: #888;
+}
+
+/* =====================================
+   GRID DE FOTOGRAFIAS
 ===================================== */
 
 .profile-posts-grid {
+    width: 100%;
 
     display: grid;
 
@@ -3158,30 +519,28 @@ button:disabled {
         repeat(3, 1fr);
 
     gap: 3px;
-
-    width: 100%;
-
 }
 
-.profile-post {
+/* =====================================
+   FOTO INDIVIDUAL
+===================================== */
 
+.profile-post {
     position: relative;
+
+    width: 100%;
 
     aspect-ratio: 1 / 1;
 
     overflow: hidden;
 
-    background:
-        #eeeeee;
+    background: #eeeeee;
 
     cursor: pointer;
-
 }
 
 .profile-post img {
-
     width: 100%;
-
     height: 100%;
 
     display: block;
@@ -3190,804 +549,345 @@ button:disabled {
 
     transition:
         transform 0.2s ease;
-
 }
 
 .profile-post:hover img {
-
-    transform:
-        scale(1.03);
-
+    transform: scale(1.03);
 }
-
-/* =====================================
-   ESTADOS
-===================================== */
-
-.profile-posts-loading,
-.profile-posts-empty {
-
-    min-height: 150px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 6px;
-
-    text-align: center;
-
-    color:
-        var(--muted);
-
-    padding:
-        25px;
-
-}
-
-.profile-empty-icon {
-
-    font-size: 32px;
-
-}
-
-.profile-posts-empty strong {
-
-    color:
-        #555;
-
-    font-size: 14px;
-
-}
-
-.profile-posts-empty span {
-
-    font-size: 12px;
-
-}
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 500px) {
-
-    .profile-page {
-
-        padding:
-            16px 14px 100px;
-
-    }
-
-    .profile-top {
-
-        gap: 14px;
-
-    }
-
-    .profile-avatar {
-
-        width: 76px;
-
-        height: 76px;
-
-        min-width: 76px;
-
-        font-size: 28px;
-
-    }
-
-    .profile-info h1 {
-
-        font-size: 21px;
-
-    }
-
-    .profile-info p {
-
-        font-size: 13px;
-
-    }
-
-    .profile-bio {
-
-        margin-top: 11px;
-
-        font-size: 14px;
-
-    }
-
-    .profile-actions {
-
-        margin-top: 11px;
-
-    }
-
-    .profile-actions .button {
-
-        padding:
-            8px 13px;
-
-        font-size: 12px;
-
-    }
-
-    .profile-stats {
-
-        margin-top: 17px;
-
-        padding:
-            13px 0;
-
-    }
-
-    .profile-stat strong {
-
-        font-size: 18px;
-
-    }
-
-    .profile-stat span {
-
-        font-size: 11px;
-
-    }
-
-    .profile-tabs {
-
-        margin-top: 8px;
-
-    }
-
-    .profile-tab {
-
-        padding:
-            12px 8px;
-
-        font-size: 13px;
-
-    }
-
-    .profile-content-section {
-
-        margin-top: 10px;
-
-    }
-
-    .profile-posts-grid {
-
-        gap: 2px;
-
-    }
-
-}
-
-/* =====================================
-   VINCI — RECUPERAÇÃO DE SENHA
-===================================== */
-
-
-/* =====================================
-   LINK
-===================================== */
-
-.forgot-password {
-
-    display: flex;
-
-    justify-content: flex-end;
-
-    margin-top: 2px;
-
-}
-
-
-.forgot-password button {
-
-    border: none;
-
-    background: transparent;
-
-    padding: 0;
-
-    color:
-        var(--orange-dark);
-
-    font-size: 13px;
-
-    cursor: pointer;
-
-    transition:
-        opacity 0.2s ease;
-
-}
-
-
-.forgot-password button:hover {
-
-    opacity: 0.7;
-
-}
-
 
 /* =====================================
    MODAL
 ===================================== */
 
-.forgot-password-box {
+.modal {
+    position: fixed;
 
-    max-width: 420px;
+    inset: 0;
 
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0, 0, 0, 0.35);
+
+    backdrop-filter:
+        blur(5px);
+
+    -webkit-backdrop-filter:
+        blur(5px);
 }
 
+.modal.hidden {
+    display: none;
+}
+
+.modal-box {
+    width: 100%;
+
+    max-width: 440px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 24px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.15);
+}
 
 /* =====================================
-   DESCRIÇÃO
+   CABEÇALHO DO MODAL
 ===================================== */
 
-.forgot-description {
+.modal-header {
+    display: flex;
 
-    margin:
-        -5px 0 22px;
+    align-items: center;
+    justify-content: space-between;
 
-    color:
-        var(--muted);
+    margin-bottom: 22px;
+}
+
+.modal-header h2 {
+    font-size: 22px;
+
+    font-weight: 700;
+}
+
+.close-button {
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 29px;
+
+    line-height: 1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    background: #f3f1ef;
+}
+
+/* =====================================
+   FORMULÁRIO
+===================================== */
+
+form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+label {
+    margin-top: 8px;
 
     font-size: 14px;
 
+    font-weight: 600;
+}
+
+input,
+textarea {
+    width: 100%;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background: white;
+
+    color: var(--text);
+}
+
+input {
+    padding: 14px;
+}
+
+textarea {
+    min-height: 110px;
+
+    resize: vertical;
+
+    padding: 14px;
+
     line-height: 1.5;
-
 }
 
+input:focus,
+textarea:focus {
+    border-color: var(--orange);
 
-/* =====================================
-   INPUT
-===================================== */
-
-.forgot-password-box input {
-
-    margin-top: 8px;
-
-}
-
-
-/* =====================================
-   BOTÃO
-===================================== */
-
-.forgot-submit {
-
-    margin-top: 18px;
-
-}
-
-
-/* =====================================
-   MENSAGEM
-===================================== */
-
-#resetMessage {
-
-    text-align: center;
-
-    margin-bottom: 0;
-
-}
-
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 500px) {
-
-    .forgot-password-box {
-
-        padding: 24px;
-
-        border-radius: 20px;
-
-    }
-
+    box-shadow:
+        0 0 0 3px
+        rgba(244, 162, 97, 0.12);
 }
 
 /* =====================================
-   VINCI 0.6 — PROFILE REDESIGN
+   USERNAME
 ===================================== */
 
-
-/* =====================================
-   PERFIL
-===================================== */
-
-.profile-page {
-
-    max-width: 720px;
-
-    margin: 0 auto;
-
-    padding:
-        20px 18px 100px;
-
-}
-
-
-.profile {
-
-    padding-top: 5px;
-
-}
-
-
-/* =====================================
-   TOPO
-===================================== */
-
-.profile-top {
+.username-input {
+    width: 100%;
 
     display: flex;
 
     align-items: center;
 
-    gap: 16px;
+    border:
+        1px solid var(--border);
 
+    border-radius: 12px;
+
+    background: white;
+
+    padding-left: 14px;
+
+    overflow: hidden;
 }
 
+.username-input:focus-within {
+    border-color: var(--orange);
 
-.profile-info {
-
-    min-width: 0;
-
+    box-shadow:
+        0 0 0 3px
+        rgba(244, 162, 97, 0.12);
 }
 
+.username-input span {
+    color: var(--muted);
 
-.profile-info h1 {
-
-    margin: 0;
-
-    font-size: 24px;
-
-    line-height: 1.15;
-
+    font-weight: 600;
 }
 
+.username-input input {
+    border: none;
 
-.profile-info p {
+    box-shadow: none;
 
-    margin-top: 5px;
+    padding-left: 5px;
+}
+
+.username-input input:focus {
+    border: none;
+
+    box-shadow: none;
+}
+
+/* =====================================
+   AVISOS DE ALTERAÇÃO
+===================================== */
+
+.change-info {
+    margin-top: 0;
+
+    margin-bottom: 3px;
+
+    font-size: 12px;
+
+    color: #6f9f78;
+}
+
+.change-info.locked {
+    color: #999;
+}
+
+/* =====================================
+   MENSAGEM
+===================================== */
+
+.message {
+    min-height: 22px;
+
+    margin-top: 8px;
 
     font-size: 14px;
 
-    color:
-        var(--muted);
+    color: var(--muted);
 
+    text-align: center;
 }
 
-
 /* =====================================
-   AVATAR
+   NAVEGAÇÃO INFERIOR
 ===================================== */
 
-.profile-avatar {
+.bottom-nav {
+    position: fixed;
 
-    width: 82px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    height: 82px;
+    z-index: 500;
 
-    min-width: 82px;
+    height: 70px;
 
-    border-radius: 50%;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 80px;
 
     background:
-        var(--orange);
+        rgba(255, 255, 255, 0.94);
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+
+    border-top:
+        1px solid var(--border);
+}
+
+.bottom-nav a {
+    min-width: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    color: #888;
+
+    font-size: 12px;
+
+    transition:
+        color 0.15s ease;
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+    color: var(--orange-dark);
+}
+
+.bottom-nav a span {
+    font-size: 22px;
+
+    line-height: 1;
+}
+
+.bottom-nav .nav-post {
+    width: 42px;
+    height: 42px;
+
+    margin-top: -16px;
+
+    border-radius: 13px;
+
+    background: var(--orange);
 
     color: white;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
-    overflow: hidden;
-
-    font-size: 30px;
-
-    font-weight: 700;
-
-}
-
-
-/* =====================================
-   BIO
-===================================== */
-
-.profile-bio {
-
-    margin-top: 13px;
-
-    max-width: 560px;
-
-    color: #444;
-
-    font-size: 14px;
-
-    line-height: 1.45;
-
-}
-
-
-/* =====================================
-   AÇÕES
-===================================== */
-
-.profile-actions {
-
-    display: flex;
-
-    gap: 8px;
-
-    margin-top: 13px;
-
-}
-
-
-.profile-actions .button {
-
-    width: auto;
-
-    padding:
-        8px 15px;
-
-    border-radius: 10px;
-
-    font-size: 13px;
-
-}
-
-
-/* =====================================
-   ESTATÍSTICAS
-===================================== */
-
-.profile-stats {
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 8px;
-
-    margin-top: 20px;
-
-    padding:
-        14px 0;
-
-    border-top:
-        1px solid var(--border);
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-
-.profile-stat {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 3px;
-
-}
-
-
-.profile-stat strong {
-
-    font-size: 19px;
-
-    line-height: 1;
-
-    font-weight: 700;
-
-}
-
-
-.profile-stat span {
-
-    font-size: 12px;
-
-    color:
-        var(--muted);
-
-}
-
-
-/* =====================================
-   ABAS
-===================================== */
-
-.profile-tabs {
-
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    margin-top: 10px;
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-
-.profile-tab {
-
-    position: relative;
-
-    border: none;
-
-    background: transparent;
-
-    padding:
-        13px 10px;
-
-    color: #999;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-}
-
-
-.profile-tab.active {
-
-    color:
-        var(--text);
-
-}
-
-
-.profile-tab.active::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 25%;
-
-    right: 25%;
-
-    bottom: -1px;
-
-    height: 2px;
-
-    background:
-        var(--orange-dark);
-
-    border-radius: 10px;
-
-}
-
-
-/* =====================================
-   ÁREAS DE CONTEÚDO
-===================================== */
-
-.profile-content-section {
-
-    width: 100%;
-
-    margin-top: 12px;
-
-    padding-bottom: 20px;
-
-}
-
-
-.profile-content-section.hidden {
-
-    display: none !important;
-
-}
-
-
-/* =====================================
-   POSTS
-===================================== */
-
-.profile-posts {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-
-}
-
-
-.profile-text-post {
-
-    background:
-        #ffffff;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 16px;
-
-    padding:
-        15px 16px;
+    font-size: 26px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0,0,0,0.025);
-
+        0 6px 18px
+        rgba(244, 162, 97, 0.35);
 }
-
-
-.profile-text-post-content {
-
-    margin: 0;
-
-    color:
-        #191919;
-
-    font-size: 15px;
-
-    line-height: 1.5;
-
-    white-space: pre-wrap;
-
-    overflow-wrap: anywhere;
-
-}
-
-
-.profile-text-post-date {
-
-    display: block;
-
-    margin-top: 8px;
-
-    color:
-        #999;
-
-    font-size: 11px;
-
-}
-
-
-/* =====================================
-   GRID DE PUBLICAÇÕES
-===================================== */
-
-.profile-posts-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 3px;
-
-    width: 100%;
-
-}
-
-
-.profile-post {
-
-    position: relative;
-
-    aspect-ratio: 1 / 1;
-
-    overflow: hidden;
-
-    background:
-        #eeeeee;
-
-    cursor: pointer;
-
-}
-
-
-.profile-post img {
-
-    width: 100%;
-
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-
-    transition:
-        transform 0.2s ease;
-
-}
-
-
-.profile-post:hover img {
-
-    transform:
-        scale(1.03);
-
-}
-
-
-/* =====================================
-   ESTADOS
-===================================== */
-
-.profile-posts-loading,
-.profile-posts-empty {
-
-    min-height: 150px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 6px;
-
-    text-align: center;
-
-    color:
-        var(--muted);
-
-    padding:
-        25px;
-
-}
-
-
-.profile-empty-icon {
-
-    font-size: 32px;
-
-}
-
-
-.profile-posts-empty strong {
-
-    color:
-        #555;
-
-    font-size: 14px;
-
-}
-
-
-.profile-posts-empty span {
-
-    font-size: 12px;
-
-}
-
 
 /* =====================================
    MOBILE
@@ -3995,128 +895,123 @@ button:disabled {
 
 @media (max-width: 500px) {
 
-
     .profile-page {
-
         padding:
-            16px 14px 100px;
-
+            20px 14px 100px;
     }
-
 
     .profile-top {
-
         gap: 14px;
-
     }
 
-
     .profile-avatar {
-
         width: 76px;
-
         height: 76px;
 
         min-width: 76px;
 
         font-size: 28px;
-
     }
-
 
     .profile-info h1 {
-
         font-size: 21px;
-
     }
-
 
     .profile-info p {
-
         font-size: 13px;
-
     }
-
 
     .profile-bio {
-
-        margin-top: 11px;
+        margin-top: 12px;
 
         font-size: 14px;
-
     }
-
 
     .profile-actions {
-
-        margin-top: 11px;
-
+        margin-top: 12px;
     }
 
-
     .profile-actions .button {
-
         padding:
             8px 13px;
 
         font-size: 12px;
-
     }
 
-
     .profile-stats {
-
-        margin-top: 17px;
+        margin-top: 18px;
 
         padding:
             13px 0;
-
     }
-
 
     .profile-stat strong {
-
         font-size: 18px;
-
     }
-
 
     .profile-stat span {
-
         font-size: 11px;
-
     }
-
 
     .profile-tabs {
-
-        margin-top: 8px;
-
+        margin-top: 9px;
     }
 
-
     .profile-tab {
-
         padding:
             12px 8px;
 
         font-size: 13px;
-
     }
-
 
     .profile-content-section {
-
         margin-top: 10px;
-
     }
-
 
     .profile-posts-grid {
-
         gap: 2px;
-
     }
 
+    .bottom-nav {
+        gap: 58px;
+    }
+
+    .modal {
+        padding: 14px;
+    }
+
+    .modal-box {
+        padding: 22px;
+
+        border-radius: 20px;
+    }
+
+}
+
+/* =====================================
+   MOBILE PEQUENO
+===================================== */
+
+@media (max-width: 360px) {
+
+    .profile-page {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .profile-avatar {
+        width: 70px;
+        height: 70px;
+
+        min-width: 70px;
+    }
+
+    .profile-info h1 {
+        font-size: 19px;
+    }
+
+    .bottom-nav {
+        gap: 42px;
+    }
 
 }
