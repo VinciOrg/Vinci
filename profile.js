@@ -1,9 +1,10 @@
 // =====================================
-// VINCI — PROFILE 0.6
+// VINCI — PROFILE 0.6.2
 // =====================================
 
 let currentUser = null;
 let currentProfile = null;
+let viewingProfileId = null;
 
 
 // =====================================
@@ -135,6 +136,40 @@ async function loadUser() {
         data.user;
 
 
+    // =================================
+    // VERIFICAR PERFIL DA URL
+    // =================================
+
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const profileId =
+        urlParams.get("id");
+
+
+    // Se tiver ?id=..., abre esse perfil.
+    // Se não tiver, abre o próprio perfil.
+
+    viewingProfileId =
+        profileId ||
+        currentUser.id;
+
+
+    console.log(
+        "VINCI — USUÁRIO LOGADO:",
+        currentUser.id
+    );
+
+
+    console.log(
+        "VINCI — PERFIL ABERTO:",
+        viewingProfileId
+    );
+
+
     await loadProfile();
 
 }
@@ -154,7 +189,7 @@ async function loadProfile() {
         .select("*")
         .eq(
             "id",
-            currentUser.id
+            viewingProfileId
         )
         .maybeSingle();
 
@@ -176,6 +211,23 @@ async function loadProfile() {
     // =================================
 
     if (!data) {
+
+        // Só cria perfil se for
+        // o próprio usuário.
+
+        if (
+            viewingProfileId !==
+            currentUser.id
+        ) {
+
+            console.error(
+                "VINCI — PERFIL NÃO ENCONTRADO"
+            );
+
+            return;
+
+        }
+
 
         const metadata =
             currentUser.user_metadata || {};
@@ -361,6 +413,38 @@ function renderProfile() {
 
     }
 
+
+    // =================================
+    // EDITAR SOMENTE O PRÓPRIO PERFIL
+    // =================================
+
+    const isOwnProfile =
+        viewingProfileId ===
+        currentUser.id;
+
+
+    if (editProfileButton) {
+
+        editProfileButton.style.display =
+            isOwnProfile
+                ? ""
+                : "none";
+
+    }
+
+
+    // Alterar foto também só no
+    // próprio perfil.
+
+    if (changeAvatar) {
+
+        changeAvatar.style.display =
+            isOwnProfile
+                ? ""
+                : "none";
+
+    }
+
 }
 
 
@@ -401,7 +485,7 @@ async function loadUserPosts() {
         `)
         .eq(
             "user_id",
-            currentUser.id
+            viewingProfileId
         )
         .order(
             "created_at",
@@ -486,7 +570,7 @@ async function loadUserPosts() {
                 </strong>
 
                 <span>
-                    Suas publicações aparecerão aqui.
+                    As publicações aparecerão aqui.
                 </span>
 
             </div>
@@ -740,7 +824,7 @@ async function loadProfilePosts() {
             `)
             .eq(
                 "user_id",
-                currentUser.id
+                viewingProfileId
             )
             .order(
                 "created_at",
@@ -756,10 +840,6 @@ async function loadProfilePosts() {
 
         }
 
-
-        // =================================
-        // NENHUM POST
-        // =================================
 
         if (
             !data ||
@@ -779,7 +859,7 @@ async function loadProfilePosts() {
                     </strong>
 
                     <span>
-                        Seus posts aparecerão aqui.
+                        Os posts aparecerão aqui.
                     </span>
 
                 </div>
@@ -791,17 +871,9 @@ async function loadProfilePosts() {
         }
 
 
-        // =================================
-        // LIMPAR
-        // =================================
-
         profilePosts.innerHTML =
             "";
 
-
-        // =================================
-        // CRIAR POSTS
-        // =================================
 
         data.forEach(
             function (post) {
@@ -886,7 +958,7 @@ async function loadProfilePosts() {
                 </strong>
 
                 <span>
-                    Não foi possível carregar seus posts.
+                    Não foi possível carregar os posts.
                 </span>
 
             </div>
@@ -1110,6 +1182,13 @@ function getTimeRemaining(
 
 function updateChangeInfo() {
 
+    if (!currentProfile) {
+
+        return;
+
+    }
+
+
     const usernameRemaining =
         getTimeRemaining(
             currentProfile.username_changed_at,
@@ -1117,25 +1196,29 @@ function updateChangeInfo() {
         );
 
 
-    if (usernameRemaining) {
+    if (usernameChangeInfo) {
 
-        usernameChangeInfo.textContent =
-            `Você poderá alterar novamente em ${usernameRemaining}.`;
+        if (usernameRemaining) {
 
-        usernameChangeInfo.classList.add(
-            "locked"
-        );
+            usernameChangeInfo.textContent =
+                `Você poderá alterar novamente em ${usernameRemaining}.`;
 
-    }
+            usernameChangeInfo.classList.add(
+                "locked"
+            );
 
-    else {
+        }
 
-        usernameChangeInfo.textContent =
-            "✓ Disponível para alteração";
+        else {
 
-        usernameChangeInfo.classList.remove(
-            "locked"
-        );
+            usernameChangeInfo.textContent =
+                "✓ Disponível para alteração";
+
+            usernameChangeInfo.classList.remove(
+                "locked"
+            );
+
+        }
 
     }
 
@@ -1147,25 +1230,29 @@ function updateChangeInfo() {
         );
 
 
-    if (nameRemaining) {
+    if (nameChangeInfo) {
 
-        nameChangeInfo.textContent =
-            `Você poderá alterar novamente em ${nameRemaining}.`;
+        if (nameRemaining) {
 
-        nameChangeInfo.classList.add(
-            "locked"
-        );
+            nameChangeInfo.textContent =
+                `Você poderá alterar novamente em ${nameRemaining}.`;
 
-    }
+            nameChangeInfo.classList.add(
+                "locked"
+            );
 
-    else {
+        }
 
-        nameChangeInfo.textContent =
-            "✓ Disponível para alteração";
+        else {
 
-        nameChangeInfo.classList.remove(
-            "locked"
-        );
+            nameChangeInfo.textContent =
+                "✓ Disponível para alteração";
+
+            nameChangeInfo.classList.remove(
+                "locked"
+            );
+
+        }
 
     }
 
@@ -1181,6 +1268,16 @@ if (editProfileButton) {
     editProfileButton.addEventListener(
         "click",
         function () {
+
+            if (
+                viewingProfileId !==
+                currentUser.id
+            ) {
+
+                return;
+
+            }
+
 
             editName.value =
                 currentProfile.name;
@@ -1295,6 +1392,16 @@ if (profileForm) {
         async function (event) {
 
             event.preventDefault();
+
+
+            if (
+                viewingProfileId !==
+                currentUser.id
+            ) {
+
+                return;
+
+            }
 
 
             const name =
@@ -1494,6 +1601,16 @@ if (
         "click",
         function () {
 
+            if (
+                viewingProfileId !==
+                currentUser.id
+            ) {
+
+                return;
+
+            }
+
+
             avatarInput.click();
 
         }
@@ -1503,6 +1620,16 @@ if (
     avatarInput.addEventListener(
         "change",
         async function () {
+
+            if (
+                viewingProfileId !==
+                currentUser.id
+            ) {
+
+                return;
+
+            }
+
 
             const file =
                 this.files[0];
@@ -1763,3 +1890,8 @@ photoPostsTab?.addEventListener(
 // =====================================
 
 loadUser();
+
+
+console.log(
+    "VINCI — profile.js 0.6.2 CARREGADO"
+);
