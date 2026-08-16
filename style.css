@@ -1874,3 +1874,156 @@ button:disabled {
     }
 
 }
+
+/* =====================================
+   VINCI 0.4 — VISIBILIDADE DO POST
+===================================== */
+
+.post-visibility {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.post-visibility h3 {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* =====================================
+   OPÇÕES
+===================================== */
+
+.visibility-option {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 14px;
+    margin-top: 10px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.visibility-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* =====================================
+   RADIO
+===================================== */
+
+.visibility-option input {
+    appearance: none;
+
+    width: 20px;
+    height: 20px;
+
+    min-width: 20px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255, 255, 255, 0.35);
+
+    position: relative;
+
+    cursor: pointer;
+}
+
+
+.visibility-option input:checked {
+    border-color: #ffb36b;
+}
+
+
+.visibility-option input:checked::after {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #ffb36b;
+
+    top: 3px;
+    left: 3px;
+}
+
+
+/* =====================================
+   TEXTO
+===================================== */
+
+.visibility-option div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.visibility-option strong {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.visibility-option span {
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    color: rgba(255, 255, 255, 0.55);
+}
+
+
+/* =====================================
+   OPÇÃO SELECIONADA
+===================================== */
+
+.visibility-option:has(
+    input:checked
+) {
+    border-color: rgba(255, 179, 107, 0.5);
+
+    background: rgba(255, 179, 107, 0.08);
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .post-visibility {
+        padding: 15px;
+    }
+
+    .visibility-option {
+        padding: 13px;
+    }
+
+}
