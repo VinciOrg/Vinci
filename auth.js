@@ -67,7 +67,7 @@ if (signupForm) {
         options: {
 
             emailRedirectTo:
-                "https://vinciorg.github.io/Vinci/login.html",
+                "https://vinciorg.github.io/Vinci/",
 
             data: {
 
@@ -164,7 +164,7 @@ if (loginForm) {
         options: {
 
             emailRedirectTo:
-                "https://vinciorg.github.io/Vinci/login.html",
+                "https://vinciorg.github.io/Vinci/",
 
             data: {
 
