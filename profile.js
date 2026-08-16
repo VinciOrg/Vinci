@@ -570,24 +570,34 @@ async function loadUserPosts() {
 
     if (error) {
 
-        console.error(
-            "Erro ao carregar posts:",
-            error
-        );
+    console.error(
+        "Erro ao carregar posts:",
+        error
+    );
 
+    postsGrid.innerHTML = `
 
-        postsGrid.innerHTML = `
+        <div class="profile-posts-empty">
 
-            <div class="profile-posts-empty">
-
-                Não foi possível carregar
-                suas fotografias.
-
+            <div class="profile-empty-icon">
+                ⚠️
             </div>
 
-        `;
+            <strong>
+                Erro ao carregar publicações
+            </strong>
 
-        return;
+            <span>
+                ${escapeHTML(error.message)}
+            </span>
+
+        </div>
+
+    `;
+
+    return;
+
+}
 
     }
 
