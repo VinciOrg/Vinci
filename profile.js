@@ -599,8 +599,6 @@ async function loadUserPosts() {
 
 }
 
-    }
-
 
     // =================================
     // ATUALIZAR CONTADOR
