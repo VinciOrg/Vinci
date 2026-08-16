@@ -1,6 +1,4 @@
 // ===============================
-// VINCI AUTH
-// ===============================
 
 
 // -------------------------------
@@ -59,26 +57,29 @@ if (signupForm) {
 
       try {
 
-        const { data, error } =
-        await db.auth.signUp({
+       const { data, error } =
+    await db.auth.signUp({
 
-          email: email,
+        email: email,
 
-          password: password,
+        password: password,
 
-          options: {
+        options: {
+
+            emailRedirectTo:
+                "https://vinciorg.github.io/Vinci/login.html",
 
             data: {
 
-              name: name,
+                name: name,
 
-              username: username
+                username: username
 
             }
 
-          }
+        }
 
-        });
+    });
 
 
         if (error) {
