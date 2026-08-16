@@ -10,29 +10,49 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="theme-color"
+        content="#faf9f7"
+    >
+
     <title>Perfil — Vinci</title>
 
     <link rel="stylesheet" href="style.css">
 
 </head>
 
+
 <body>
+
 
     <main class="profile-page">
 
-        <!-- PERFIL -->
+
+        <!-- =========================
+             PERFIL
+        ========================== -->
 
         <section class="profile">
 
+
             <div class="profile-top">
 
-                <div class="profile-avatar" id="avatar">
+
+                <!-- FOTO -->
+
+                <div
+                    class="profile-avatar"
+                    id="avatar"
+                >
 
                     <span id="avatarLetter">
                         V
                     </span>
 
                 </div>
+
+
+                <!-- INFORMAÇÕES -->
 
                 <div class="profile-info">
 
@@ -46,8 +66,11 @@
 
                 </div>
 
+
             </div>
 
+
+            <!-- BIO -->
 
             <p
                 id="profileBio"
@@ -57,6 +80,8 @@
             </p>
 
 
+            <!-- EDITAR -->
+
             <button
                 id="editProfile"
                 class="button secondary"
@@ -65,11 +90,15 @@
             </button>
 
 
-            <!-- ESTATÍSTICAS -->
+            <!-- =========================
+                 ESTATÍSTICAS
+            ========================== -->
 
             <div class="profile-stats">
 
+
                 <div>
+
                     <strong id="postsCount">
                         0
                     </strong>
@@ -77,10 +106,12 @@
                     <span>
                         Posts
                     </span>
+
                 </div>
 
 
                 <div>
+
                     <strong>
                         0
                     </strong>
@@ -88,10 +119,12 @@
                     <span>
                         Seguidores
                     </span>
+
                 </div>
 
 
                 <div>
+
                     <strong>
                         0
                     </strong>
@@ -99,25 +132,34 @@
                     <span>
                         Seguindo
                     </span>
+
                 </div>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- POSTS -->
+
+        <!-- =========================
+             POSTS
+        ========================== -->
 
         <section class="profile-posts">
+
 
             <div class="posts-title">
                 Posts
             </div>
 
+
             <div
                 id="postsGrid"
                 class="posts-grid"
             >
+
 
                 <div class="empty-posts">
 
@@ -131,19 +173,28 @@
 
                 </div>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- MODAL EDITAR -->
+
+        <!-- =========================
+             MODAL EDITAR PERFIL
+        ========================== -->
 
         <div
             id="editModal"
             class="modal hidden"
         >
 
+
             <div class="modal-box">
+
+
+                <!-- CABEÇALHO -->
 
                 <div class="modal-header">
 
@@ -151,9 +202,11 @@
                         Editar perfil
                     </h2>
 
+
                     <button
                         id="closeModal"
                         class="close-button"
+                        type="button"
                     >
                         ×
                     </button>
@@ -161,35 +214,79 @@
                 </div>
 
 
+
+                <!-- FORMULÁRIO -->
+
                 <form id="profileForm">
 
-                    <label>
+
+                    <!-- NOME -->
+
+                    <label for="editName">
                         Nome
                     </label>
+
 
                     <input
                         type="text"
                         id="editName"
                         maxlength="40"
+                        autocomplete="name"
                         required
                     >
 
 
-                    <label>
+                    <p
+                        id="nameChangeInfo"
+                        class="change-info"
+                    >
+                        Disponível para alteração
+                    </p>
+
+
+
+                    <!-- USERNAME -->
+
+                    <label for="editUsername">
                         Nome de usuário
                     </label>
 
-                    <input
-                        type="text"
-                        id="editUsername"
-                        maxlength="20"
-                        required
+
+                    <div class="username-input">
+
+                        <span>
+                            @
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="editUsername"
+                            maxlength="20"
+                            autocomplete="username"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            required
+                        >
+
+                    </div>
+
+
+                    <p
+                        id="usernameChangeInfo"
+                        class="change-info"
                     >
+                        Disponível para alteração
+                    </p>
 
 
-                    <label>
+
+                    <!-- BIO -->
+
+                    <label for="editBio">
                         Bio
                     </label>
+
 
                     <textarea
                         id="editBio"
@@ -204,6 +301,8 @@
                     ></p>
 
 
+                    <!-- SALVAR -->
+
                     <button
                         type="submit"
                         class="button primary"
@@ -211,47 +310,90 @@
                         Salvar alterações
                     </button>
 
+
                 </form>
 
+
             </div>
+
 
         </div>
 
 
-        <!-- NAVEGAÇÃO -->
-
-        <nav class="bottom-nav">
-
-            <a href="index.html">
-                <span>⌂</span>
-                Posts
-            </a>
-
-            <a href="index.html">
-                <span class="nav-post">
-                    +
-                </span>
-                Postar
-            </a>
-
-            <a
-                href="profile.html"
-                class="active"
-            >
-                <span>◯</span>
-                Perfil
-            </a>
-
-        </nav>
 
     </main>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- =========================
+         NAVEGAÇÃO INFERIOR
+    ========================== -->
+
+    <nav class="bottom-nav">
+
+
+        <!-- POSTS -->
+
+        <a href="index.html">
+
+            <span>
+                ⌂
+            </span>
+
+            Posts
+
+        </a>
+
+
+
+        <!-- POSTAR -->
+
+        <a href="index.html">
+
+            <span class="nav-post">
+                +
+            </span>
+
+            Postar
+
+        </a>
+
+
+
+        <!-- PERFIL -->
+
+        <a
+            href="profile.html"
+            class="active"
+        >
+
+            <span>
+                ◯
+            </span>
+
+            Perfil
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- =========================
+         SCRIPTS
+    ========================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
 
     <script src="supabase.js"></script>
 
+
     <script src="profile.js"></script>
+
 
 </body>
 
