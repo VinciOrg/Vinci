@@ -356,29 +356,16 @@ document
 
 
             const {
-                data,
-                error
-            } = await db
-                .from("profiles")
-                .update({
-
-                    name: name,
-
-                    username: username,
-
-                    bio: bio,
-
-                    updated_at:
-                        new Date()
-                            .toISOString()
-
-                })
-                .eq(
-                    "id",
-                    currentUser.id
-                )
-                .select()
-                .single();
+    data,
+    error
+} = await db.rpc(
+    "update_profile",
+    {
+        new_name: name,
+        new_username: username,
+        new_bio: bio
+    }
+);
 
 
             if (error) {
