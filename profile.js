@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — PROFILE 0.6.1
+// VINCI — PROFILE 0.6
 // =====================================
 
 let currentUser = null;
@@ -56,27 +56,39 @@ const nameChangeInfo =
     document.getElementById("nameChangeInfo");
 
 const usernameChangeInfo =
-    document.getElementById("usernameChangeInfo");
+    document.getElementById(
+        "usernameChangeInfo"
+    );
 
 const profileMessage =
-    document.getElementById("profileMessage");
+    document.getElementById(
+        "profileMessage"
+    );
 
 
 // =====================================
-// CONTEÚDO
+// POSTS
 // =====================================
 
 const profilePosts =
-    document.getElementById("profilePosts");
+    document.getElementById(
+        "profilePosts"
+    );
 
 const profilePostsSection =
-    document.getElementById("profilePostsSection");
+    document.getElementById(
+        "profilePostsSection"
+    );
 
 const profilePhotosSection =
-    document.getElementById("profilePhotosSection");
+    document.getElementById(
+        "profilePhotosSection"
+    );
 
 const profilePostsGrid =
-    document.getElementById("profilePostsGrid");
+    document.getElementById(
+        "profilePostsGrid"
+    );
 
 
 // =====================================
@@ -84,74 +96,49 @@ const profilePostsGrid =
 // =====================================
 
 const textPostsTab =
-    document.getElementById("textPostsTab");
+    document.getElementById(
+        "textPostsTab"
+    );
 
 const photoPostsTab =
-    document.getElementById("photoPostsTab");
+    document.getElementById(
+        "photoPostsTab"
+    );
 
 
 // =====================================
-// ESTATÍSTICAS
-// =====================================
-
-const postsCount =
-    document.getElementById("postsCount");
-
-
-// =====================================
-// USUÁRIO ATUAL
+// VERIFICAR LOGIN
 // =====================================
 
 async function loadUser() {
 
-    try {
+    const {
+        data,
+        error
+    } = await db.auth.getUser();
 
-        // O auth-guard já verifica a sessão.
-        // Aqui apenas pegamos o usuário atual.
 
-        const {
-            data,
-            error
-        } = await db.auth.getUser();
+    if (
+        error ||
+        !data.user
+    ) {
 
-        if (error) {
+        window.location.href =
+            "login.html";
 
-            console.error(
-                "Vinci: erro ao obter usuário:",
-                error
-            );
-
-            return;
-
-        }
-
-        if (!data?.user) {
-
-            console.error(
-                "Vinci: nenhum usuário encontrado."
-            );
-
-            return;
-
-        }
-
-        currentUser =
-            data.user;
-
-        await loadProfile();
+        return;
 
     }
 
-    catch (error) {
 
-        console.error(
-            "Vinci: erro ao carregar usuário:",
-            error
-        );
+    currentUser =
+        data.user;
 
-    }
+
+    await loadProfile();
 
 }
+
 
 // =====================================
 // CARREGAR PERFIL
@@ -179,17 +166,13 @@ async function loadProfile() {
             error
         );
 
-        showProfileError(
-            "Não foi possível carregar seu perfil."
-        );
-
         return;
 
     }
 
 
     // =================================
-    // CRIAR PERFIL CASO NÃO EXISTA
+    // PERFIL NÃO EXISTE
     // =================================
 
     if (!data) {
@@ -200,32 +183,23 @@ async function loadProfile() {
 
         let username =
             metadata.username ||
-            `usuario${Math.floor(
+            "usuario" +
+            Math.floor(
                 Math.random() * 99999
-            )}`;
-
-
-        username =
-            sanitizeUsername(
-                username
             );
 
 
-        if (
-            username.length < 3
-        ) {
-
-            username =
-                `usuario${Math.floor(
-                    Math.random() * 99999
-                )}`;
-
-        }
+        username =
+            username
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9._]/g,
+                    ""
+                );
 
 
         const name =
             metadata.name ||
-            currentUser.email?.split("@")[0] ||
             "Usuário";
 
 
@@ -263,10 +237,6 @@ async function loadProfile() {
                 createError
             );
 
-            showProfileError(
-                "Não foi possível criar seu perfil."
-            );
-
             return;
 
         }
@@ -285,9 +255,18 @@ async function loadProfile() {
     }
 
 
+    // =================================
+    // RENDERIZAR
+    // =================================
+
     renderProfile();
 
     updateChangeInfo();
+
+
+    // =================================
+    // CARREGAR CONTEÚDO
+    // =================================
 
     await loadUserPosts();
 
@@ -302,38 +281,19 @@ async function loadProfile() {
 
 function renderProfile() {
 
-    if (!currentProfile) {
-
-        return;
-
-    }
-
-
-    // =================================
-    // NOME
-    // =================================
-
     if (profileName) {
 
         profileName.textContent =
-            currentProfile.name ||
-            "Usuário";
+            currentProfile.name;
 
     }
 
-
-    // =================================
-    // USERNAME
-    // =================================
 
     if (profileUsername) {
 
         profileUsername.textContent =
             "@" +
-            (
-                currentProfile.username ||
-                "usuario"
-            );
+            currentProfile.username;
 
     }
 
@@ -344,13 +304,21 @@ function renderProfile() {
 
     if (profileBio) {
 
-        const bio =
-            currentProfile.bio?.trim();
+        if (
+            currentProfile.bio
+        ) {
 
+            profileBio.textContent =
+                currentProfile.bio;
 
-        profileBio.textContent =
-            bio ||
-            "Sua bio ainda está vazia.";
+        }
+
+        else {
+
+            profileBio.textContent =
+                "Sua bio ainda está vazia.";
+
+        }
 
     }
 
@@ -360,51 +328,36 @@ function renderProfile() {
     // =================================
 
     if (
-        avatar &&
-        avatarLetter
+        currentProfile.avatar_url
     ) {
 
-        if (
-            currentProfile.avatar_url
-        ) {
+        avatar.style.backgroundImage =
+            `url("${currentProfile.avatar_url}")`;
 
-            avatar.style.backgroundImage =
-                `url("${currentProfile.avatar_url}")`;
+        avatar.style.backgroundSize =
+            "cover";
 
-            avatar.style.backgroundSize =
-                "cover";
+        avatar.style.backgroundPosition =
+            "center";
 
-            avatar.style.backgroundPosition =
-                "center";
+        avatarLetter.style.display =
+            "none";
 
-            avatarLetter.style.display =
-                "none";
+    }
 
-        }
+    else {
 
-        else {
+        avatar.style.backgroundImage =
+            "none";
 
-            avatar.style.backgroundImage =
-                "none";
-
-            avatarLetter.style.display =
-                "block";
+        avatarLetter.style.display =
+            "block";
 
 
-            const firstLetter =
-                (
-                    currentProfile.name ||
-                    "U"
-                )
-                    .trim()
-                    .charAt(0)
-                    .toUpperCase();
-
-
-            avatarLetter.textContent =
-                firstLetter;
-
-        }
+        avatarLetter.textContent =
+            currentProfile.name
+                .charAt(0)
+                .toUpperCase();
 
     }
 
@@ -412,7 +365,7 @@ function renderProfile() {
 
 
 // =====================================
-// CARREGAR FOTOGRAFIAS
+// CARREGAR PUBLICAÇÕES
 // =====================================
 
 async function loadUserPosts() {
@@ -461,7 +414,7 @@ async function loadUserPosts() {
     if (error) {
 
         console.error(
-            "Erro ao carregar fotografias:",
+            "Erro ao carregar publicações:",
             error
         );
 
@@ -479,7 +432,9 @@ async function loadUserPosts() {
                 </strong>
 
                 <span>
-                    Não foi possível carregar suas fotografias.
+                    ${escapeHTML(
+                        error.message
+                    )}
                 </span>
 
             </div>
@@ -491,17 +446,22 @@ async function loadUserPosts() {
     }
 
 
-    const photos =
-        data || [];
-
-
     // =================================
     // CONTADOR
     // =================================
 
-    updatePostsCounter(
-        photos.length
-    );
+    const postsCount =
+        document.getElementById(
+            "postsCount"
+        );
+
+
+    if (postsCount) {
+
+        postsCount.textContent =
+            data?.length || 0;
+
+    }
 
 
     // =================================
@@ -509,7 +469,8 @@ async function loadUserPosts() {
     // =================================
 
     if (
-        photos.length === 0
+        !data ||
+        data.length === 0
     ) {
 
         profilePostsGrid.innerHTML = `
@@ -545,16 +506,16 @@ async function loadUserPosts() {
         "";
 
 
-    photos.forEach(
+    data.forEach(
         function (post) {
 
-            const article =
+            const postElement =
                 document.createElement(
                     "article"
                 );
 
 
-            article.className =
+            postElement.className =
                 "profile-post";
 
 
@@ -570,25 +531,11 @@ async function loadUserPosts() {
 
             image.alt =
                 post.caption ||
-                "Fotografia publicada";
+                "Fotografia";
 
 
             image.loading =
                 "lazy";
-
-
-            image.addEventListener(
-                "error",
-                function () {
-
-                    image.style.display =
-                        "none";
-
-                    article.style.background =
-                        "#eeeeee";
-
-                }
-            );
 
 
             const date =
@@ -597,14 +544,14 @@ async function loadUserPosts() {
                 );
 
 
-            article.title =
+            postElement.title =
                 post.caption ||
                 `Publicado em ${date.toLocaleDateString(
                     "pt-BR"
                 )}`;
 
 
-            article.addEventListener(
+            postElement.addEventListener(
                 "click",
                 function () {
 
@@ -616,13 +563,13 @@ async function loadUserPosts() {
             );
 
 
-            article.appendChild(
+            postElement.appendChild(
                 image
             );
 
 
             profilePostsGrid.appendChild(
-                article
+                postElement
             );
 
         }
@@ -632,28 +579,7 @@ async function loadUserPosts() {
 
 
 // =====================================
-// CONTADOR DE PUBLICAÇÕES
-// =====================================
-
-function updatePostsCounter(
-    photoCount
-) {
-
-    if (!postsCount) {
-
-        return;
-
-    }
-
-
-    postsCount.textContent =
-        photoCount;
-
-}
-
-
-// =====================================
-// VISUALIZADOR DE FOTO
+// VISUALIZAR FOTOGRAFIA
 // =====================================
 
 function openPostViewer(
@@ -687,112 +613,54 @@ function openPostViewer(
         "post-viewer";
 
 
-    const content =
-        document.createElement(
-            "div"
-        );
+    viewer.innerHTML = `
 
+        <div class="post-viewer-content">
 
-    content.className =
-        "post-viewer-content";
+            <button
+                class="post-viewer-close"
+                id="closePostViewer"
+                type="button"
+            >
+                ×
+            </button>
 
+            <img
+                src="${post.image_url}"
+                alt=""
+                class="post-viewer-image"
+            >
 
-    const closeButton =
-        document.createElement(
-            "button"
-        );
-
-
-    closeButton.className =
-        "post-viewer-close";
-
-    closeButton.type =
-        "button";
-
-    closeButton.textContent =
-        "×";
-
-
-    const image =
-        document.createElement(
-            "img"
-        );
-
-
-    image.className =
-        "post-viewer-image";
-
-    image.src =
-        post.image_url;
-
-    image.alt =
-        post.caption ||
-        "Fotografia";
-
-
-    content.appendChild(
-        closeButton
-    );
-
-    content.appendChild(
-        image
-    );
-
-
-    if (post.caption) {
-
-        const caption =
-            document.createElement(
-                "p"
-            );
-
-
-        caption.className =
-            "post-viewer-caption";
-
-
-        caption.textContent =
-            post.caption;
-
-
-        content.appendChild(
-            caption
-        );
-
-    }
-
-
-    const date =
-        document.createElement(
-            "time"
-        );
-
-
-    date.className =
-        "post-viewer-date";
-
-
-    date.textContent =
-        new Date(
-            post.created_at
-        ).toLocaleDateString(
-            "pt-BR",
-            {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
+            ${
+                post.caption
+                    ? `
+                        <p class="post-viewer-caption">
+                            ${escapeHTML(
+                                post.caption
+                            )}
+                        </p>
+                    `
+                    : ""
             }
-        );
 
+            <time class="post-viewer-date">
 
-    content.appendChild(
-        date
-    );
+                ${new Date(
+                    post.created_at
+                ).toLocaleDateString(
+                    "pt-BR",
+                    {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    }
+                )}
 
+            </time>
 
-    viewer.appendChild(
-        content
-    );
+        </div>
+
+    `;
 
 
     document.body.appendChild(
@@ -800,14 +668,18 @@ function openPostViewer(
     );
 
 
-    closeButton.addEventListener(
-        "click",
-        function () {
+    document
+        .getElementById(
+            "closePostViewer"
+        )
+        .addEventListener(
+            "click",
+            function () {
 
-            viewer.remove();
+                viewer.remove();
 
-        }
-    );
+            }
+        );
 
 
     viewer.addEventListener(
@@ -820,28 +692,6 @@ function openPostViewer(
             ) {
 
                 viewer.remove();
-
-            }
-
-        }
-    );
-
-
-    document.addEventListener(
-        "keydown",
-        function escapeViewer(event) {
-
-            if (
-                event.key ===
-                "Escape"
-            ) {
-
-                viewer.remove();
-
-                document.removeEventListener(
-                    "keydown",
-                    escapeViewer
-                );
 
             }
 
@@ -907,16 +757,13 @@ async function loadProfilePosts() {
         }
 
 
-        const posts =
-            data || [];
-
-
         // =================================
         // NENHUM POST
         // =================================
 
         if (
-            posts.length === 0
+            !data ||
+            data.length === 0
         ) {
 
             profilePosts.innerHTML = `
@@ -944,11 +791,19 @@ async function loadProfilePosts() {
         }
 
 
+        // =================================
+        // LIMPAR
+        // =================================
+
         profilePosts.innerHTML =
             "";
 
 
-        posts.forEach(
+        // =================================
+        // CRIAR POSTS
+        // =================================
+
+        data.forEach(
             function (post) {
 
                 const article =
@@ -972,7 +827,7 @@ async function loadProfilePosts() {
 
 
                 content.textContent =
-                    post.content || "";
+                    post.content;
 
 
                 const date =
@@ -1013,7 +868,7 @@ async function loadProfilePosts() {
     catch (error) {
 
         console.error(
-            "Erro ao carregar posts:",
+            "Erro ao carregar posts do perfil:",
             error
         );
 
@@ -1055,17 +910,6 @@ function formatPostDate(
         new Date(date);
 
 
-    if (
-        Number.isNaN(
-            postDate.getTime()
-        )
-    ) {
-
-        return "";
-
-    }
-
-
     const now =
         new Date();
 
@@ -1096,9 +940,11 @@ function formatPostDate(
 
     if (minutes < 60) {
 
-        return minutes === 1
-            ? "há 1 minuto"
-            : `há ${minutes} minutos`;
+        return (
+            minutes === 1
+                ? "há 1 minuto"
+                : `há ${minutes} minutos`
+        );
 
     }
 
@@ -1111,9 +957,11 @@ function formatPostDate(
 
     if (hours < 24) {
 
-        return hours === 1
-            ? "há 1 hora"
-            : `há ${hours} horas`;
+        return (
+            hours === 1
+                ? "há 1 hora"
+                : `há ${hours} horas`
+        );
 
     }
 
@@ -1126,9 +974,11 @@ function formatPostDate(
 
     if (days < 7) {
 
-        return days === 1
-            ? "ontem"
-            : `há ${days} dias`;
+        return (
+            days === 1
+                ? "ontem"
+                : `há ${days} dias`
+        );
 
     }
 
@@ -1146,21 +996,24 @@ function formatPostDate(
 
 
 // =====================================
-// USERNAME
+// ESCAPAR HTML
 // =====================================
 
-function sanitizeUsername(
-    username
+function escapeHTML(
+    text
 ) {
 
-    return String(
-        username || ""
-    )
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9._]/g,
-            ""
+    const div =
+        document.createElement(
+            "div"
         );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
 
 }
 
@@ -1185,17 +1038,6 @@ function getTimeRemaining(
         new Date(date).getTime();
 
 
-    if (
-        Number.isNaN(
-            changedAt
-        )
-    ) {
-
-        return null;
-
-    }
-
-
     const availableAt =
         changedAt +
         days *
@@ -1210,9 +1052,7 @@ function getTimeRemaining(
         Date.now();
 
 
-    if (
-        remaining <= 0
-    ) {
+    if (remaining <= 0) {
 
         return null;
 
@@ -1245,18 +1085,14 @@ function getTimeRemaining(
         totalHours % 24;
 
 
-    if (
-        totalDays > 0
-    ) {
+    if (totalDays > 0) {
 
         return `${totalDays}d ${hours}h`;
 
     }
 
 
-    if (
-        totalHours > 0
-    ) {
+    if (totalHours > 0) {
 
         return `${totalHours}h ${minutes}min`;
 
@@ -1274,19 +1110,6 @@ function getTimeRemaining(
 
 function updateChangeInfo() {
 
-    if (
-        !currentProfile
-    ) {
-
-        return;
-
-    }
-
-
-    // =================================
-    // USERNAME
-    // =================================
-
     const usernameRemaining =
         getTimeRemaining(
             currentProfile.username_changed_at,
@@ -1294,9 +1117,7 @@ function updateChangeInfo() {
         );
 
 
-    if (
-        usernameRemaining
-    ) {
+    if (usernameRemaining) {
 
         usernameChangeInfo.textContent =
             `Você poderá alterar novamente em ${usernameRemaining}.`;
@@ -1319,10 +1140,6 @@ function updateChangeInfo() {
     }
 
 
-    // =================================
-    // NOME
-    // =================================
-
     const nameRemaining =
         getTimeRemaining(
             currentProfile.name_changed_at,
@@ -1330,9 +1147,7 @@ function updateChangeInfo() {
         );
 
 
-    if (
-        nameRemaining
-    ) {
+    if (nameRemaining) {
 
         nameChangeInfo.textContent =
             `Você poderá alterar novamente em ${nameRemaining}.`;
@@ -1358,39 +1173,25 @@ function updateChangeInfo() {
 
 
 // =====================================
-// ABRIR EDITOR
+// EDITAR PERFIL
 // =====================================
 
-if (
-    editProfileButton
-) {
+if (editProfileButton) {
 
     editProfileButton.addEventListener(
         "click",
         function () {
 
-            if (
-                !currentProfile
-            ) {
-
-                return;
-
-            }
-
-
             editName.value =
-                currentProfile.name ||
-                "";
+                currentProfile.name;
 
 
             editUsername.value =
-                currentProfile.username ||
-                "";
+                currentProfile.username;
 
 
             editBio.value =
-                currentProfile.bio ||
-                "";
+                currentProfile.bio || "";
 
 
             profileMessage.textContent =
@@ -1402,17 +1203,9 @@ if (
 
             editModal
                 .classList
-                .remove("hidden");
-
-
-            setTimeout(
-                function () {
-
-                    editName.focus();
-
-                },
-                100
-            );
+                .remove(
+                    "hidden"
+                );
 
         }
     );
@@ -1424,27 +1217,19 @@ if (
 // FECHAR MODAL
 // =====================================
 
-function closeEditModal() {
-
-    if (!editModal) {
-
-        return;
-
-    }
-
-
-    editModal
-        .classList
-        .add("hidden");
-
-}
-
-
 if (closeModal) {
 
     closeModal.addEventListener(
         "click",
-        closeEditModal
+        function () {
+
+            editModal
+                .classList
+                .add(
+                    "hidden"
+                );
+
+        }
     );
 
 }
@@ -1461,7 +1246,11 @@ if (editModal) {
                 editModal
             ) {
 
-                closeEditModal();
+                editModal
+                    .classList
+                    .add(
+                        "hidden"
+                    );
 
             }
 
@@ -1472,31 +1261,7 @@ if (editModal) {
 
 
 // =====================================
-// ESC FECHA MODAL
-// =====================================
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            event.key === "Escape" &&
-            editModal &&
-            !editModal.classList.contains(
-                "hidden"
-            )
-        ) {
-
-            closeEditModal();
-
-        }
-
-    }
-);
-
-
-// =====================================
-// USERNAME — LIMPEZA
+// USERNAME
 // =====================================
 
 if (editUsername) {
@@ -1506,9 +1271,12 @@ if (editUsername) {
         function () {
 
             this.value =
-                sanitizeUsername(
-                    this.value
-                );
+                this.value
+                    .toLowerCase()
+                    .replace(
+                        /[^a-z0-9._]/g,
+                        ""
+                    );
 
         }
     );
@@ -1529,32 +1297,19 @@ if (profileForm) {
             event.preventDefault();
 
 
-            if (
-                !currentProfile
-            ) {
-
-                return;
-
-            }
-
-
             const name =
                 editName.value.trim();
 
 
             const username =
-                sanitizeUsername(
-                    editUsername.value.trim()
-                );
+                editUsername.value
+                    .trim()
+                    .toLowerCase();
 
 
             const bio =
                 editBio.value.trim();
 
-
-            // =================================
-            // VALIDAÇÃO
-            // =================================
 
             if (!name) {
 
@@ -1566,34 +1321,10 @@ if (profileForm) {
             }
 
 
-            if (
-                name.length > 40
-            ) {
-
-                profileMessage.textContent =
-                    "O nome pode ter no máximo 40 caracteres.";
-
-                return;
-
-            }
-
-
             if (!username) {
 
                 profileMessage.textContent =
                     "Digite um nome de usuário.";
-
-                return;
-
-            }
-
-
-            if (
-                username.length < 3
-            ) {
-
-                profileMessage.textContent =
-                    "O nome de usuário precisa ter pelo menos 3 caracteres.";
 
                 return;
 
@@ -1615,121 +1346,55 @@ if (profileForm) {
 
 
             if (
-                bio.length > 150
+                username.length < 3
             ) {
 
                 profileMessage.textContent =
-                    "A bio pode ter no máximo 150 caracteres.";
+                    "O nome de usuário precisa ter pelo menos 3 caracteres.";
 
                 return;
 
             }
 
 
-            // =================================
-            // BOTÃO
-            // =================================
-
-            const submitButton =
-                profileForm.querySelector(
-                    'button[type="submit"]'
-                );
-
-
-            if (submitButton) {
-
-                submitButton.disabled =
-                    true;
-
-                submitButton.textContent =
-                    "Salvando...";
-
-            }
-
-
             profileMessage.textContent =
-                "";
+                "Salvando...";
 
 
-            try {
+            const {
+                data,
+                error
+            } = await db.rpc(
+                "update_profile",
+                {
 
-                const {
-                    data,
-                    error
-                } = await db.rpc(
-                    "update_profile",
-                    {
+                    new_name:
+                        name,
 
-                        new_name:
-                            name,
+                    new_username:
+                        username,
 
-                        new_username:
-                            username,
-
-                        new_bio:
-                            bio
-
-                    }
-                );
-
-
-                if (error) {
-
-                    throw error;
+                    new_bio:
+                        bio
 
                 }
+            );
 
 
-                if (!data) {
-
-                    throw new Error(
-                        "O servidor não retornou o perfil atualizado."
-                    );
-
-                }
-
-
-                currentProfile =
-                    data;
-
-
-                renderProfile();
-
-                updateChangeInfo();
-
-
-                profileMessage.textContent =
-                    "Perfil atualizado! ✓";
-
-
-                setTimeout(
-                    function () {
-
-                        closeEditModal();
-
-                    },
-                    700
-                );
-
-            }
-
-            catch (error) {
+            if (error) {
 
                 console.error(
-                    "Erro ao atualizar perfil:",
+                    "Erro ao atualizar:",
                     error
                 );
 
 
-                const message =
-                    String(
-                        error?.message ||
-                        ""
-                    ).toLowerCase();
+                const errorMessage =
+                    error.message || "";
 
 
                 if (
-                    message.includes(
+                    errorMessage.includes(
                         "20 dias"
                     )
                 ) {
@@ -1737,10 +1402,13 @@ if (profileForm) {
                     profileMessage.textContent =
                         "Você só pode alterar o nome de usuário a cada 20 dias.";
 
+                    return;
+
                 }
 
-                else if (
-                    message.includes(
+
+                if (
+                    errorMessage.includes(
                         "24 horas"
                     )
                 ) {
@@ -1748,53 +1416,64 @@ if (profileForm) {
                     profileMessage.textContent =
                         "Você só pode alterar o nome a cada 24 horas.";
 
+                    return;
+
                 }
 
-                else if (
-                    message.includes(
+
+                if (
+                    errorMessage.includes(
                         "duplicate"
                     ) ||
-                    message.includes(
+                    errorMessage.includes(
                         "unique"
                     ) ||
-                    message.includes(
+                    errorMessage.includes(
                         "profiles_username_key"
-                    ) ||
-                    message.includes(
-                        "username"
-                    ) &&
-                    message.includes(
-                        "already"
                     )
                 ) {
 
                     profileMessage.textContent =
                         "Esse nome de usuário já está sendo usado.";
 
-                }
-
-                else {
-
-                    profileMessage.textContent =
-                        "Não foi possível salvar as alterações.";
+                    return;
 
                 }
+
+
+                profileMessage.textContent =
+                    "Não foi possível salvar as alterações.";
+
+                return;
 
             }
 
-            finally {
 
-                if (submitButton) {
+            currentProfile =
+                data;
 
-                    submitButton.disabled =
-                        false;
 
-                    submitButton.textContent =
-                        "Salvar alterações";
+            renderProfile();
 
-                }
+            updateChangeInfo();
 
-            }
+
+            profileMessage.textContent =
+                "Perfil atualizado!";
+
+
+            setTimeout(
+                function () {
+
+                    editModal
+                        .classList
+                        .add(
+                            "hidden"
+                        );
+
+                },
+                800
+            );
 
         }
     );
@@ -1803,7 +1482,7 @@ if (profileForm) {
 
 
 // =====================================
-// ALTERAR AVATAR
+// ALTERAR FOTO
 // =====================================
 
 if (
@@ -1814,15 +1493,6 @@ if (
     changeAvatar.addEventListener(
         "click",
         function () {
-
-            if (
-                changeAvatar.disabled
-            ) {
-
-                return;
-
-            }
-
 
             avatarInput.click();
 
@@ -1835,7 +1505,7 @@ if (
         async function () {
 
             const file =
-                this.files?.[0];
+                this.files[0];
 
 
             if (!file) {
@@ -1862,9 +1532,6 @@ if (
                     "Escolha uma imagem JPG, PNG ou WEBP."
                 );
 
-                this.value =
-                    "";
-
                 return;
 
             }
@@ -1878,9 +1545,6 @@ if (
                 alert(
                     "A foto precisa ter no máximo 5 MB."
                 );
-
-                this.value =
-                    "";
 
                 return;
 
@@ -1897,10 +1561,6 @@ if (
 
             try {
 
-                // =================================
-                // CAMINHO FIXO
-                // =================================
-
                 const extension =
                     file.name
                         .split(".")
@@ -1912,10 +1572,6 @@ if (
                     `${currentUser.id}/avatar.${extension}`;
 
 
-                // =================================
-                // UPLOAD
-                // =================================
-
                 const {
                     error: uploadError
                 } = await db.storage
@@ -1924,7 +1580,6 @@ if (
                         filePath,
                         file,
                         {
-
                             contentType:
                                 file.type,
 
@@ -1933,7 +1588,6 @@ if (
 
                             upsert:
                                 true
-
                         }
                     );
 
@@ -1945,12 +1599,8 @@ if (
                 }
 
 
-                // =================================
-                // URL
-                // =================================
-
                 const {
-                    data: publicData
+                    data: publicURL
                 } = db.storage
                     .from("avatars")
                     .getPublicUrl(
@@ -1958,28 +1608,13 @@ if (
                     );
 
 
-                if (
-                    !publicData?.publicUrl
-                ) {
-
-                    throw new Error(
-                        "Não foi possível obter a URL da imagem."
-                    );
-
-                }
-
-
                 const avatarURL =
-                    publicData.publicUrl;
+                    publicURL.publicUrl;
 
 
                 const finalURL =
                     `${avatarURL}?t=${Date.now()}`;
 
-
-                // =================================
-                // SALVAR NO PERFIL
-                // =================================
 
                 const {
                     error: updateError
@@ -2045,16 +1680,13 @@ if (
 
             }
 
-            finally {
 
-                changeAvatar.disabled =
-                    false;
+            changeAvatar.disabled =
+                false;
 
 
-                avatarInput.value =
-                    "";
-
-            }
+            avatarInput.value =
+                "";
 
         }
     );
@@ -2124,40 +1756,6 @@ photoPostsTab?.addEventListener(
     "click",
     showPhotoPosts
 );
-
-
-// =====================================
-// ERRO DE PERFIL
-// =====================================
-
-function showProfileError(
-    message
-) {
-
-    if (profileName) {
-
-        profileName.textContent =
-            "Erro";
-
-    }
-
-
-    if (profileUsername) {
-
-        profileUsername.textContent =
-            "";
-
-    }
-
-
-    if (profileBio) {
-
-        profileBio.textContent =
-            message;
-
-    }
-
-}
 
 
 // =====================================
