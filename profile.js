@@ -1641,6 +1641,315 @@ if (changeAvatar && avatarInput) {
 }
 
 // =====================================
+// VINCI 0.5.3 — CARREGAR POSTS
+// =====================================
+
+async function loadProfilePosts() {
+
+    if (!profilePosts) {
+
+        console.warn(
+            "Área de posts do perfil não encontrada."
+        );
+
+        return;
+
+    }
+
+
+    profilePosts.innerHTML = `
+
+        <div class="profile-posts-loading">
+
+            Carregando posts...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await db
+            .from("profile_posts")
+            .select(`
+                id,
+                user_id,
+                content,
+                created_at
+            `)
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        // =================================
+        // NENHUM POST
+        // =================================
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            profilePosts.innerHTML = `
+
+                <div class="profile-posts-empty">
+
+                    <div class="profile-empty-icon">
+                        💬
+                    </div>
+
+                    <strong>
+                        Nenhum post ainda
+                    </strong>
+
+                    <span>
+                        Seus posts aparecerão aqui.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        // =================================
+        // LIMPAR
+        // =================================
+
+        profilePosts.innerHTML = "";
+
+
+        // =================================
+        // CRIAR POSTS
+        // =================================
+
+        data.forEach(
+            function (post) {
+
+                const article =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                article.className =
+                    "profile-text-post";
+
+
+                // =================================
+                // CONTEÚDO
+                // =================================
+
+                const content =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                content.className =
+                    "profile-text-post-content";
+
+
+                content.textContent =
+                    post.content;
+
+
+                // =================================
+                // DATA
+                // =================================
+
+                const date =
+                    document.createElement(
+                        "time"
+                    );
+
+
+                date.className =
+                    "profile-text-post-date";
+
+
+                date.textContent =
+                    formatPostDate(
+                        post.created_at
+                    );
+
+
+                // =================================
+                // MONTAR
+                // =================================
+
+                article.appendChild(
+                    content
+                );
+
+
+                article.appendChild(
+                    date
+                );
+
+
+                profilePosts.appendChild(
+                    article
+                );
+
+            }
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Erro ao carregar posts do perfil:",
+            error
+        );
+
+
+        profilePosts.innerHTML = `
+
+            <div class="profile-posts-empty">
+
+                <div class="profile-empty-icon">
+                    ⚠️
+                </div>
+
+                <strong>
+                    Erro ao carregar posts
+                </strong>
+
+                <span>
+                    Não foi possível carregar suas publicações de texto.
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================
+// FORMATAR DATA DO POST
+// =====================================
+
+function formatPostDate(
+    date
+) {
+
+    const postDate =
+        new Date(date);
+
+
+    const now =
+        new Date();
+
+
+    const difference =
+        now.getTime() -
+        postDate.getTime();
+
+
+    const seconds =
+        Math.floor(
+            difference / 1000
+        );
+
+
+    if (seconds < 60) {
+
+        return "agora";
+
+    }
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    if (minutes < 60) {
+
+        return (
+            minutes === 1
+                ? "há 1 minuto"
+                : `há ${minutes} minutos`
+        );
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if (hours < 24) {
+
+        return (
+            hours === 1
+                ? "há 1 hora"
+                : `há ${hours} horas`
+        );
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if (days < 7) {
+
+        return (
+            days === 1
+                ? "ontem"
+                : `há ${days} dias`
+        );
+
+    }
+
+
+    return postDate.toLocaleDateString(
+        "pt-BR",
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+// =====================================
 // INICIAR
 // =====================================
 
