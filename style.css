@@ -428,3 +428,505 @@ form .button {
     }
 
 }
+
+/* =====================================
+   VINCI — PROFILE
+===================================== */
+
+
+.profile-page {
+
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding: 40px 20px 110px;
+
+}
+
+
+/* =====================================
+   PROFILE HEADER
+===================================== */
+
+.profile {
+
+    padding-top: 20px;
+
+}
+
+
+.profile-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+
+.profile-avatar {
+
+    width: 96px;
+
+    height: 96px;
+
+    min-width: 96px;
+
+    border-radius: 50%;
+
+    background:
+        var(--orange);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 36px;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+}
+
+
+.profile-info h1 {
+
+    font-size: 25px;
+
+    letter-spacing: -0.5px;
+
+}
+
+
+.profile-info p {
+
+    margin-top: 4px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.profile-bio {
+
+    margin-top: 20px;
+
+    line-height: 1.5;
+
+    color:
+        #444;
+
+    max-width: 500px;
+
+}
+
+
+.profile > .button {
+
+    width: auto;
+
+    margin-top: 18px;
+
+    padding:
+        11px 22px;
+
+}
+
+
+/* =====================================
+   STATS
+===================================== */
+
+.profile-stats {
+
+    display: flex;
+
+    gap: 35px;
+
+    margin-top: 30px;
+
+    padding:
+        20px 0;
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.profile-stats div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+.profile-stats strong {
+
+    font-size: 19px;
+
+}
+
+
+.profile-stats span {
+
+    font-size: 13px;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* =====================================
+   POSTS
+===================================== */
+
+.profile-posts {
+
+    margin-top: 30px;
+
+}
+
+
+.posts-title {
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    margin-bottom: 18px;
+
+}
+
+
+.posts-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 4px;
+
+}
+
+
+.empty-posts {
+
+    grid-column:
+        1 / -1;
+
+    min-height: 220px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        var(--muted);
+
+    text-align: center;
+
+}
+
+
+.empty-posts div {
+
+    font-size: 42px;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* =====================================
+   MODAL
+===================================== */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.35);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 100;
+
+}
+
+
+.modal.hidden {
+
+    display: none;
+
+}
+
+
+.modal-box {
+
+    width: 100%;
+
+    max-width: 440px;
+
+    background:
+        white;
+
+    border-radius: 24px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.15);
+
+}
+
+
+.modal-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+
+}
+
+
+.modal-header h2 {
+
+    font-size: 22px;
+
+}
+
+
+.close-button {
+
+    border: none;
+
+    background: none;
+
+    font-size: 30px;
+
+    color:
+        var(--muted);
+
+    cursor: pointer;
+
+}
+
+
+textarea {
+
+    width: 100%;
+
+    min-height: 100px;
+
+    resize: vertical;
+
+    padding: 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+    outline: none;
+
+}
+
+
+textarea:focus {
+
+    border-color:
+        var(--orange);
+
+}
+
+
+/* =====================================
+   BOTTOM NAV
+===================================== */
+
+.bottom-nav {
+
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 70px;
+
+    background:
+        rgba(255,255,255,0.94);
+
+    backdrop-filter:
+        blur(16px);
+
+    border-top:
+        1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 80px;
+
+    z-index: 50;
+
+}
+
+
+.bottom-nav a {
+
+    color:
+        #888;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+
+    font-size: 12px;
+
+}
+
+
+.bottom-nav a.active {
+
+    color:
+        var(--orange-dark);
+
+}
+
+
+.bottom-nav a span {
+
+    font-size: 22px;
+
+    line-height: 1;
+
+}
+
+
+.bottom-nav .nav-post {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 13px;
+
+    background:
+        var(--orange);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 26px;
+
+    margin-top: -16px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(244, 162, 97, 0.35);
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 500px) {
+
+    .profile-page {
+
+        padding:
+            25px 16px 100px;
+
+    }
+
+
+    .profile-avatar {
+
+        width: 82px;
+
+        height: 82px;
+
+        min-width: 82px;
+
+        font-size: 30px;
+
+    }
+
+
+    .profile-info h1 {
+
+        font-size: 21px;
+
+    }
+
+
+    .profile-stats {
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+    }
+
+
+    .bottom-nav {
+
+        gap: 60px;
+
+    }
+
+}
