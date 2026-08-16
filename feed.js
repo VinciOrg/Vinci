@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — FEED
+// VINCI — FEED 0.4
 // =====================================
 
 
@@ -57,7 +57,6 @@ function createPostElement(
     post
 ) {
 
-
     const article =
         document.createElement(
             "article"
@@ -82,7 +81,9 @@ function createPostElement(
         "post-user";
 
 
+    // =================================
     // AVATAR
+    // =================================
 
     const avatar =
         document.createElement(
@@ -103,7 +104,18 @@ function createPostElement(
         "";
 
 
+    avatar.onerror =
+        function () {
+
+            this.src =
+                "assets/default-avatar.png";
+
+        };
+
+
+    // =================================
     // INFORMAÇÕES
+    // =================================
 
     const userInfo =
         document.createElement(
@@ -207,6 +219,10 @@ function createPostElement(
         "post-content";
 
 
+    // =================================
+    // LEGENDA
+    // =================================
+
     if (
         post.caption
     ) {
@@ -232,6 +248,10 @@ function createPostElement(
     }
 
 
+    // =================================
+    // DATA
+    // =================================
+
     const date =
         document.createElement(
             "time"
@@ -254,7 +274,7 @@ function createPostElement(
 
 
     // =================================
-    // MONTAR
+    // MONTAR POST
     // =================================
 
     article.appendChild(
@@ -283,7 +303,6 @@ function createPostElement(
 
 async function loadFeed() {
 
-
     feedLoading
         .classList
         .remove(
@@ -307,6 +326,9 @@ async function loadFeed() {
 
     try {
 
+        // =================================
+        // BUSCAR SOMENTE POSTS DO FEED
+        // =================================
 
         const {
             data,
@@ -319,12 +341,17 @@ async function loadFeed() {
                 image_url,
                 caption,
                 created_at,
+                visibility,
                 profiles (
                     username,
                     name,
                     avatar_url
                 )
             `)
+            .eq(
+                "visibility",
+                "feed"
+            )
             .order(
                 "created_at",
                 {
