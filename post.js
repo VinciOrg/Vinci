@@ -5,7 +5,7 @@
 
 let currentUser = null;
 let selectedFile = null;
-
+let selectedVisibility = "feed";
 
 // =====================================
 // ELEMENTOS
