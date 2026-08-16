@@ -3,13 +3,12 @@
 // ===============================
 
 
-// ==================================================
+// -------------------------------
 // CADASTRO
-// ==================================================
+// -------------------------------
 
 const signupForm =
     document.getElementById("signupForm");
-
 
 if (signupForm) {
 
@@ -19,13 +18,11 @@ if (signupForm) {
 
             event.preventDefault();
 
-
             const name =
                 document
                 .getElementById("name")
                 .value
                 .trim();
-
 
             const username =
                 document
@@ -35,7 +32,6 @@ if (signupForm) {
                 .toLowerCase()
                 .replace("@", "");
 
-
             const email =
                 document
                 .getElementById("email")
@@ -43,20 +39,16 @@ if (signupForm) {
                 .trim()
                 .toLowerCase();
 
-
             const password =
                 document
                 .getElementById("password")
                 .value;
 
-
             const message =
                 document.getElementById("message");
 
-
             message.textContent =
                 "Criando sua conta...";
-
 
             try {
 
@@ -85,16 +77,8 @@ if (signupForm) {
                     });
 
 
-                console.log(
-                    "SIGNUP DATA:",
-                    data
-                );
-
-
-                console.log(
-                    "SIGNUP ERROR:",
-                    error
-                );
+                console.log("SIGNUP DATA:", data);
+                console.log("SIGNUP ERROR:", error);
 
 
                 if (error) {
@@ -105,20 +89,20 @@ if (signupForm) {
                 message.textContent =
                     "Conta criada! Verifique seu e-mail para confirmar.";
 
-                signupForm.reset();
 
+                // Não redireciona imediatamente.
+                // O usuário precisa confirmar o e-mail primeiro.
 
             } catch (error) {
 
                 console.error(
-                    "Erro no cadastro:",
+                    "ERRO NO CADASTRO:",
                     error
                 );
 
-
                 message.textContent =
                     error.message ||
-                    "Não foi possível criar sua conta.";
+                    "Não foi possível criar a conta.";
 
             }
 
@@ -128,13 +112,12 @@ if (signupForm) {
 }
 
 
-// ==================================================
+// -------------------------------
 // LOGIN
-// ==================================================
+// -------------------------------
 
 const loginForm =
     document.getElementById("loginForm");
-
 
 if (loginForm) {
 
@@ -169,9 +152,6 @@ if (loginForm) {
 
             try {
 
-                // IMPORTANTE:
-                // Aqui é SIGN IN, não SIGN UP.
-
                 const { data, error } =
                     await db.auth.signInWithPassword({
 
@@ -182,16 +162,8 @@ if (loginForm) {
                     });
 
 
-                console.log(
-                    "LOGIN DATA:",
-                    data
-                );
-
-
-                console.log(
-                    "LOGIN ERROR:",
-                    error
-                );
+                console.log("LOGIN DATA:", data);
+                console.log("LOGIN ERROR:", error);
 
 
                 if (error) {
@@ -210,13 +182,27 @@ if (loginForm) {
             } catch (error) {
 
                 console.error(
-                    "Erro no login:",
+                    "ERRO NO LOGIN:",
                     error
                 );
 
 
-                message.textContent =
-                    "E-mail ou senha incorretos.";
+                if (
+                    error.message &&
+                    error.message
+                    .toLowerCase()
+                    .includes("email not confirmed")
+                ) {
+
+                    message.textContent =
+                        "Confirme seu e-mail antes de entrar.";
+
+                } else {
+
+                    message.textContent =
+                        "E-mail ou senha incorretos.";
+
+                }
 
             }
 
@@ -226,37 +212,32 @@ if (loginForm) {
 }
 
 
-// ==================================================
+// -------------------------------
 // RECUPERAÇÃO DE SENHA
-// ==================================================
+// -------------------------------
 
 const forgotPasswordButton =
     document.getElementById("forgotPassword");
 
-
 const forgotPasswordModal =
     document.getElementById("forgotPasswordModal");
-
 
 const closeForgotModal =
     document.getElementById("closeForgotModal");
 
-
 const sendReset =
     document.getElementById("sendReset");
 
-
 const resetEmail =
     document.getElementById("resetEmail");
-
 
 const resetMessage =
     document.getElementById("resetMessage");
 
 
-// ==================================================
+// -------------------------------
 // ABRIR MODAL
-// ==================================================
+// -------------------------------
 
 if (forgotPasswordButton) {
 
@@ -268,21 +249,14 @@ if (forgotPasswordButton) {
                 "hidden"
             );
 
-
-            resetMessage.textContent =
-                "";
+            resetMessage.textContent = "";
 
 
-            const loginEmail =
-                document.getElementById("email");
-
-
-            if (loginEmail) {
-
-                resetEmail.value =
-                    loginEmail.value.trim();
-
-            }
+            resetEmail.value =
+                document
+                .getElementById("email")
+                .value
+                .trim();
 
 
             setTimeout(() => {
@@ -297,9 +271,9 @@ if (forgotPasswordButton) {
 }
 
 
-// ==================================================
+// -------------------------------
 // FECHAR MODAL
-// ==================================================
+// -------------------------------
 
 if (closeForgotModal) {
 
@@ -311,7 +285,6 @@ if (closeForgotModal) {
                 "hidden"
             );
 
-
             resetMessage.textContent = "";
 
         }
@@ -320,9 +293,9 @@ if (closeForgotModal) {
 }
 
 
-// ==================================================
+// -------------------------------
 // FECHAR CLICANDO FORA
-// ==================================================
+// -------------------------------
 
 if (forgotPasswordModal) {
 
@@ -339,9 +312,7 @@ if (forgotPasswordModal) {
                     "hidden"
                 );
 
-
-                resetMessage.textContent =
-                    "";
+                resetMessage.textContent = "";
 
             }
 
@@ -351,9 +322,9 @@ if (forgotPasswordModal) {
 }
 
 
-// ==================================================
+// -------------------------------
 // ENVIAR LINK DE RECUPERAÇÃO
-// ==================================================
+// -------------------------------
 
 if (sendReset) {
 
@@ -372,7 +343,6 @@ if (sendReset) {
                 resetMessage.textContent =
                     "Digite seu e-mail.";
 
-
                 resetEmail.focus();
 
                 return;
@@ -380,16 +350,12 @@ if (sendReset) {
             }
 
 
-            sendReset.disabled =
-                true;
-
+            sendReset.disabled = true;
 
             sendReset.textContent =
                 "Enviando...";
 
-
-            resetMessage.textContent =
-                "";
+            resetMessage.textContent = "";
 
 
             try {
@@ -418,15 +384,13 @@ if (sendReset) {
                 sendReset.textContent =
                     "Link enviado";
 
-
-                resetEmail.value =
-                    "";
+                resetEmail.value = "";
 
 
             } catch (error) {
 
                 console.error(
-                    "Erro na recuperação:",
+                    "ERRO NA RECUPERAÇÃO:",
                     error
                 );
 
@@ -435,9 +399,7 @@ if (sendReset) {
                     "Não foi possível enviar o link. Tente novamente.";
 
 
-                sendReset.disabled =
-                    false;
-
+                sendReset.disabled = false;
 
                 sendReset.textContent =
                     "Enviar link de recuperação";
