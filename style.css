@@ -2307,3 +2307,149 @@ button:disabled {
 .create-menu.hidden {
     display: none;
 }
+
+/* =====================================
+   VINCI 0.5 — PROFILE POST
+===================================== */
+
+.profile-post-page {
+    min-height: calc(100vh - 80px);
+}
+
+
+/* =====================================
+   CABEÇALHO
+===================================== */
+
+.create-post-header {
+    height: 64px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+    background: #faf9f7;
+}
+
+
+.create-post-header h1 {
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 650;
+
+    color: #191919;
+}
+
+
+.create-back {
+    border: none;
+
+    background: transparent;
+
+    font-size: 25px;
+
+    color: #191919;
+
+    cursor: pointer;
+
+    width: 42px;
+}
+
+
+.create-publish {
+    border: none;
+
+    background: #e8944f;
+
+    color: white;
+
+    padding: 9px 15px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: opacity 0.2s ease;
+}
+
+
+.create-publish:disabled {
+    opacity: 0.5;
+
+    cursor: default;
+}
+
+
+/* =====================================
+   EDITOR
+===================================== */
+
+.profile-post-editor {
+    padding: 24px 18px;
+}
+
+
+.profile-post-editor textarea {
+    width: 100%;
+
+    min-height: 220px;
+
+    resize: none;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #191919;
+
+    font-family: inherit;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+}
+
+
+.profile-post-editor textarea::placeholder {
+    color: #aaa;
+}
+
+
+/* =====================================
+   RODAPÉ DO EDITOR
+===================================== */
+
+.profile-post-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    color: #999;
+}
+
+
+#profilePostMessage {
+    color: #e8944f;
+
+    text-align: right;
+}
