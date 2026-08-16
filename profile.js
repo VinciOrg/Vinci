@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — PROFILE 0.5.3
+// VINCI — PROFILE 0.6
 // =====================================
 
 let currentUser = null;
@@ -65,202 +65,45 @@ const profileMessage =
         "profileMessage"
     );
 
-const profilePostsSection =
-    document.getElementById(
-        "profilePostsSection"
-    );
+
+// =====================================
+// POSTS
+// =====================================
 
 const profilePosts =
     document.getElementById(
         "profilePosts"
     );
 
+const profilePostsSection =
+    document.getElementById(
+        "profilePostsSection"
+    );
 
-// =====================================
-// ÁREAS DO PERFIL
-// =====================================
+const profilePhotosSection =
+    document.getElementById(
+        "profilePhotosSection"
+    );
 
-let profileStats = null;
-let postsGrid = null;
-let postsTitle = null;
-
-
-// =====================================
-// CRIAR ÁREA DE PUBLICAÇÕES
-// =====================================
-
-function createPostsArea() {
-
-    postsGrid =
-        document.getElementById(
-            "profilePostsGrid"
-        );
-
-
-    if (postsGrid) {
-
-        postsTitle =
-            document.querySelector(
-                ".profile-posts-title"
-            );
-
-        return;
-
-    }
-
-
-    const container =
-        document.createElement(
-            "section"
-        );
-
-
-    container.className =
-        "profile-posts-section";
-
-
-    postsTitle =
-        document.createElement(
-            "h2"
-        );
-
-
-    postsTitle.className =
-        "profile-posts-title";
-
-
-    postsTitle.textContent =
-        "Publicações";
-
-
-    postsGrid =
-        document.createElement(
-            "div"
-        );
-
-
-    postsGrid.id =
-        "profilePostsGrid";
-
-
-    postsGrid.className =
-        "profile-posts-grid";
-
-
-    container.appendChild(
-        postsTitle
+const profilePostsGrid =
+    document.getElementById(
+        "profilePostsGrid"
     );
 
 
-    container.appendChild(
-        postsGrid
+// =====================================
+// ABAS
+// =====================================
+
+const textPostsTab =
+    document.getElementById(
+        "textPostsTab"
     );
 
-
-    const bottomNav =
-        document.querySelector(
-            ".bottom-nav"
-        );
-
-
-    if (bottomNav) {
-
-        document.body.insertBefore(
-            container,
-            bottomNav
-        );
-
-    }
-
-    else {
-
-        document.body.appendChild(
-            container
-        );
-
-    }
-
-}
-
-
-// =====================================
-// CRIAR ESTATÍSTICAS
-// =====================================
-
-function createStatsArea() {
-
-    const existing =
-        document.getElementById(
-            "profileStats"
-        );
-
-
-    if (existing) {
-
-        profileStats =
-            existing;
-
-        return;
-
-    }
-
-
-    profileStats =
-        document.createElement(
-            "div"
-        );
-
-
-    profileStats.id =
-        "profileStats";
-
-
-    profileStats.className =
-        "profile-stats";
-
-
-    profileStats.innerHTML = `
-
-        <div class="profile-stat">
-
-            <strong id="postsCount">
-                0
-            </strong>
-
-            <span>
-                publicações
-            </span>
-
-        </div>
-
-    `;
-
-
-    const editParent =
-        editProfileButton?.parentElement;
-
-
-    if (
-        editParent &&
-        editParent.parentElement
-    ) {
-
-        editParent.parentElement.insertBefore(
-            profileStats,
-            editParent
-        );
-
-    }
-
-    else {
-
-        document.body.appendChild(
-            profileStats
-        );
-
-    }
-
-}
+const photoPostsTab =
+    document.getElementById(
+        "photoPostsTab"
+    );
 
 
 // =====================================
@@ -413,34 +256,19 @@ async function loadProfile() {
 
 
     // =================================
-    // CRIAR INTERFACE
-    // =================================
-
-    createStatsArea();
-
-    createPostsArea();
-
-
-    // =================================
     // RENDERIZAR
     // =================================
 
     renderProfile();
 
-
     updateChangeInfo();
 
 
     // =================================
-    // CARREGAR PUBLICAÇÕES
+    // CARREGAR CONTEÚDO
     // =================================
 
     await loadUserPosts();
-
-
-    // =================================
-    // CARREGAR POSTS DE TEXTO
-    // =================================
 
     await loadProfilePosts();
 
@@ -448,7 +276,7 @@ async function loadProfile() {
 
 
 // =====================================
-// MOSTRAR PERFIL
+// RENDERIZAR PERFIL
 // =====================================
 
 function renderProfile() {
@@ -537,19 +365,19 @@ function renderProfile() {
 
 
 // =====================================
-// CARREGAR PUBLICAÇÕES DE FOTOS
+// CARREGAR PUBLICAÇÕES
 // =====================================
 
 async function loadUserPosts() {
 
-    if (!postsGrid) {
+    if (!profilePostsGrid) {
 
         return;
 
     }
 
 
-    postsGrid.innerHTML = `
+    profilePostsGrid.innerHTML = `
 
         <div class="profile-posts-loading">
 
@@ -586,12 +414,12 @@ async function loadUserPosts() {
     if (error) {
 
         console.error(
-            "Erro ao carregar posts:",
+            "Erro ao carregar publicações:",
             error
         );
 
 
-        postsGrid.innerHTML = `
+        profilePostsGrid.innerHTML = `
 
             <div class="profile-posts-empty">
 
@@ -637,21 +465,7 @@ async function loadUserPosts() {
 
 
     // =================================
-    // TÍTULO
-    // =================================
-
-    if (postsTitle) {
-
-        postsTitle.textContent =
-            data.length === 1
-                ? "Publicação"
-                : "Publicações";
-
-    }
-
-
-    // =================================
-    // NENHUMA PUBLICAÇÃO
+    // NENHUMA FOTO
     // =================================
 
     if (
@@ -659,7 +473,7 @@ async function loadUserPosts() {
         data.length === 0
     ) {
 
-        postsGrid.innerHTML = `
+        profilePostsGrid.innerHTML = `
 
             <div class="profile-posts-empty">
 
@@ -688,7 +502,7 @@ async function loadUserPosts() {
     // GRID
     // =================================
 
-    postsGrid.innerHTML =
+    profilePostsGrid.innerHTML =
         "";
 
 
@@ -754,7 +568,7 @@ async function loadUserPosts() {
             );
 
 
-            postsGrid.appendChild(
+            profilePostsGrid.appendChild(
                 postElement
             );
 
@@ -765,7 +579,7 @@ async function loadUserPosts() {
 
 
 // =====================================
-// VISUALIZAR PUBLICAÇÃO
+// VISUALIZAR FOTOGRAFIA
 // =====================================
 
 function openPostViewer(
@@ -806,6 +620,7 @@ function openPostViewer(
             <button
                 class="post-viewer-close"
                 id="closePostViewer"
+                type="button"
             >
                 ×
             </button>
@@ -893,10 +708,6 @@ function openPostViewer(
 async function loadProfilePosts() {
 
     if (!profilePosts) {
-
-        console.warn(
-            "Área de posts do perfil não encontrada."
-        );
 
         return;
 
@@ -1005,10 +816,6 @@ async function loadProfilePosts() {
                     "profile-text-post";
 
 
-                // =================================
-                // CONTEÚDO
-                // =================================
-
                 const content =
                     document.createElement(
                         "p"
@@ -1022,10 +829,6 @@ async function loadProfilePosts() {
                 content.textContent =
                     post.content;
 
-
-                // =================================
-                // DATA
-                // =================================
 
                 const date =
                     document.createElement(
@@ -1096,7 +899,7 @@ async function loadProfilePosts() {
 
 
 // =====================================
-// FORMATAR DATA DO POST
+// FORMATAR DATA
 // =====================================
 
 function formatPostDate(
@@ -1216,7 +1019,7 @@ function escapeHTML(
 
 
 // =====================================
-// CALCULAR TEMPO RESTANTE
+// TEMPO RESTANTE
 // =====================================
 
 function getTimeRemaining(
@@ -1302,14 +1105,10 @@ function getTimeRemaining(
 
 
 // =====================================
-// ATUALIZAR AVISOS
+// AVISOS DE ALTERAÇÃO
 // =====================================
 
 function updateChangeInfo() {
-
-    // =================================
-    // USERNAME
-    // =================================
 
     const usernameRemaining =
         getTimeRemaining(
@@ -1340,10 +1139,6 @@ function updateChangeInfo() {
 
     }
 
-
-    // =================================
-    // NOME
-    // =================================
 
     const nameRemaining =
         getTimeRemaining(
@@ -1440,10 +1235,6 @@ if (closeModal) {
 }
 
 
-// =====================================
-// FECHAR CLICANDO FORA
-// =====================================
-
 if (editModal) {
 
     editModal.addEventListener(
@@ -1470,7 +1261,7 @@ if (editModal) {
 
 
 // =====================================
-// USERNAME AUTOMÁTICO
+// USERNAME
 // =====================================
 
 if (editUsername) {
@@ -1519,10 +1310,6 @@ if (profileForm) {
             const bio =
                 editBio.value.trim();
 
-
-            // =================================
-            // VALIDAÇÕES
-            // =================================
 
             if (!name) {
 
@@ -1574,10 +1361,6 @@ if (profileForm) {
                 "Salvando...";
 
 
-            // =================================
-            // SUPABASE RPC
-            // =================================
-
             const {
                 data,
                 error
@@ -1597,10 +1380,6 @@ if (profileForm) {
                 }
             );
 
-
-            // =================================
-            // ERRO
-            // =================================
 
             if (error) {
 
@@ -1670,16 +1449,11 @@ if (profileForm) {
             }
 
 
-            // =================================
-            // ATUALIZOU
-            // =================================
-
             currentProfile =
                 data;
 
 
             renderProfile();
-
 
             updateChangeInfo();
 
@@ -1708,7 +1482,7 @@ if (profileForm) {
 
 
 // =====================================
-// ALTERAR FOTO DE PERFIL
+// ALTERAR FOTO
 // =====================================
 
 if (
@@ -1741,10 +1515,6 @@ if (
             }
 
 
-            // =================================
-            // FORMATOS
-            // =================================
-
             const allowedTypes = [
                 "image/jpeg",
                 "image/png",
@@ -1766,10 +1536,6 @@ if (
 
             }
 
-
-            // =================================
-            // LIMITE
-            // =================================
 
             if (
                 file.size >
@@ -1795,10 +1561,6 @@ if (
 
             try {
 
-                // =================================
-                // EXTENSÃO
-                // =================================
-
                 const extension =
                     file.name
                         .split(".")
@@ -1806,17 +1568,9 @@ if (
                         .toLowerCase();
 
 
-                // =================================
-                // CAMINHO
-                // =================================
-
                 const filePath =
                     `${currentUser.id}/avatar.${extension}`;
 
-
-                // =================================
-                // UPLOAD
-                // =================================
 
                 const {
                     error: uploadError
@@ -1845,10 +1599,6 @@ if (
                 }
 
 
-                // =================================
-                // URL PÚBLICA
-                // =================================
-
                 const {
                     data: publicURL
                 } = db.storage
@@ -1862,17 +1612,9 @@ if (
                     publicURL.publicUrl;
 
 
-                // =================================
-                // CACHE BUSTER
-                // =================================
-
                 const finalURL =
                     `${avatarURL}?t=${Date.now()}`;
 
-
-                // =================================
-                // ATUALIZAR PERFIL
-                // =================================
 
                 const {
                     error: updateError
@@ -1896,10 +1638,6 @@ if (
 
                 }
 
-
-                // =================================
-                // ATUALIZAR LOCAL
-                // =================================
 
                 currentProfile.avatar_url =
                     finalURL;
@@ -1957,7 +1695,71 @@ if (
 
 
 // =====================================
-// INICIAR VINCI
+// ABAS
+// =====================================
+
+function showTextPosts() {
+
+    profilePostsSection
+        ?.classList
+        .remove("hidden");
+
+
+    profilePhotosSection
+        ?.classList
+        .add("hidden");
+
+
+    textPostsTab
+        ?.classList
+        .add("active");
+
+
+    photoPostsTab
+        ?.classList
+        .remove("active");
+
+}
+
+
+function showPhotoPosts() {
+
+    profilePostsSection
+        ?.classList
+        .add("hidden");
+
+
+    profilePhotosSection
+        ?.classList
+        .remove("hidden");
+
+
+    textPostsTab
+        ?.classList
+        .remove("active");
+
+
+    photoPostsTab
+        ?.classList
+        .add("active");
+
+}
+
+
+textPostsTab?.addEventListener(
+    "click",
+    showTextPosts
+);
+
+
+photoPostsTab?.addEventListener(
+    "click",
+    showPhotoPosts
+);
+
+
+// =====================================
+// INICIAR
 // =====================================
 
 loadUser();
