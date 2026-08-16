@@ -20,99 +20,238 @@
 
     <main class="profile-page">
 
-        <div class="profile-header">
+        <!-- PERFIL -->
 
-            <div class="avatar">
-                V
+        <section class="profile">
+
+            <div class="profile-top">
+
+                <div class="profile-avatar" id="avatar">
+
+                    <span id="avatarLetter">
+                        V
+                    </span>
+
+                </div>
+
+                <div class="profile-info">
+
+                    <h1 id="profileName">
+                        Carregando...
+                    </h1>
+
+                    <p id="profileUsername">
+                        @usuario
+                    </p>
+
+                </div>
+
             </div>
 
-            <div>
 
-                <h1 id="name">
-                    Carregando...
-                </h1>
+            <p
+                id="profileBio"
+                class="profile-bio"
+            >
+                Sua bio ainda está vazia.
+            </p>
 
-                <p id="username">
-                    @...
-                </p>
+
+            <button
+                id="editProfile"
+                class="button secondary"
+            >
+                Editar perfil
+            </button>
+
+
+            <!-- ESTATÍSTICAS -->
+
+            <div class="profile-stats">
+
+                <div>
+                    <strong id="postsCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Posts
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>
+                        0
+                    </strong>
+
+                    <span>
+                        Seguidores
+                    </span>
+                </div>
+
+
+                <div>
+                    <strong>
+                        0
+                    </strong>
+
+                    <span>
+                        Seguindo
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- POSTS -->
+
+        <section class="profile-posts">
+
+            <div class="posts-title">
+                Posts
+            </div>
+
+            <div
+                id="postsGrid"
+                class="posts-grid"
+            >
+
+                <div class="empty-posts">
+
+                    <div>
+                        📸
+                    </div>
+
+                    <p>
+                        Você ainda não publicou nada.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MODAL EDITAR -->
+
+        <div
+            id="editModal"
+            class="modal hidden"
+        >
+
+            <div class="modal-box">
+
+                <div class="modal-header">
+
+                    <h2>
+                        Editar perfil
+                    </h2>
+
+                    <button
+                        id="closeModal"
+                        class="close-button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <form id="profileForm">
+
+                    <label>
+                        Nome
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editName"
+                        maxlength="40"
+                        required
+                    >
+
+
+                    <label>
+                        Nome de usuário
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editUsername"
+                        maxlength="20"
+                        required
+                    >
+
+
+                    <label>
+                        Bio
+                    </label>
+
+                    <textarea
+                        id="editBio"
+                        maxlength="150"
+                        placeholder="Conte um pouco sobre você..."
+                    ></textarea>
+
+
+                    <p
+                        id="profileMessage"
+                        class="message"
+                    ></p>
+
+
+                    <button
+                        type="submit"
+                        class="button primary"
+                    >
+                        Salvar alterações
+                    </button>
+
+                </form>
 
             </div>
 
         </div>
 
-        <button
-            id="logout"
-            class="button secondary"
-        >
-            Sair
-        </button>
+
+        <!-- NAVEGAÇÃO -->
+
+        <nav class="bottom-nav">
+
+            <a href="index.html">
+                <span>⌂</span>
+                Posts
+            </a>
+
+            <a href="index.html">
+                <span class="nav-post">
+                    +
+                </span>
+                Postar
+            </a>
+
+            <a
+                href="profile.html"
+                class="active"
+            >
+                <span>◯</span>
+                Perfil
+            </a>
+
+        </nav>
 
     </main>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script src="supabase.js"></script>
 
-    <script>
-
-        async function loadProfile() {
-
-            const {
-                data: {
-                    user
-                }
-            } = await db.auth.getUser();
-
-
-            if (!user) {
-
-                window.location.href =
-                    "login.html";
-
-                return;
-
-            }
-
-
-            const metadata =
-                user.user_metadata || {};
-
-
-            document.getElementById("name")
-                .textContent =
-                metadata.name ||
-                "Usuário";
-
-
-            document.getElementById("username")
-                .textContent =
-                "@" +
-                (
-                    metadata.username ||
-                    "usuario"
-                );
-
-        }
-
-
-        document
-            .getElementById("logout")
-            .addEventListener(
-                "click",
-                async function () {
-
-                    await db.auth.signOut();
-
-                    window.location.href =
-                        "index.html";
-
-                }
-            );
-
-
-        loadProfile();
-
-    </script>
+    <script src="profile.js"></script>
 
 </body>
 
