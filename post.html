@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#faf9f7"
+    >
+
+    <title>Nova publicação — Vinci</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <main class="post-page">
+
+
+        <!-- CABEÇALHO -->
+
+        <header class="post-header">
+
+            <button
+                id="cancelPost"
+                class="back-button"
+                type="button"
+            >
+                ←
+            </button>
+
+
+            <h1>
+                Nova publicação
+            </h1>
+
+        </header>
+
+
+
+        <!-- =========================
+             SELECIONAR FOTO
+        ========================== -->
+
+        <section
+            id="selectSection"
+            class="post-section"
+        >
+
+
+            <label
+                for="imageInput"
+                class="image-selector"
+            >
+
+                <div class="image-selector-icon">
+                    +
+                </div>
+
+                <strong>
+                    Escolher fotografia
+                </strong>
+
+                <span>
+                    JPG, PNG ou WEBP
+                </span>
+
+            </label>
+
+
+            <input
+                type="file"
+                id="imageInput"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
+            >
+
+
+        </section>
+
+
+
+        <!-- =========================
+             EDITAR POST
+        ========================== -->
+
+        <section
+            id="editorSection"
+            class="post-editor hidden"
+        >
+
+
+            <!-- PREVIEW -->
+
+            <div class="post-preview">
+
+                <img
+                    id="imagePreview"
+                    src=""
+                    alt="Pré-visualização"
+                >
+
+            </div>
+
+
+
+            <!-- LEGENDA -->
+
+            <div class="caption-area">
+
+                <label for="caption">
+                    Legenda
+                </label>
+
+
+                <textarea
+                    id="caption"
+                    maxlength="500"
+                    placeholder="Escreva uma legenda..."
+                ></textarea>
+
+
+                <div
+                    id="captionCounter"
+                    class="caption-counter"
+                >
+                    0 / 500
+                </div>
+
+            </div>
+
+
+
+            <!-- MENSAGEM -->
+
+            <p
+                id="postMessage"
+                class="post-message"
+            ></p>
+
+
+
+            <!-- BOTÕES -->
+
+            <div class="post-actions">
+
+
+                <button
+                    id="changeImage"
+                    type="button"
+                    class="button secondary"
+                >
+                    Trocar foto
+                </button>
+
+
+                <button
+                    id="publishPost"
+                    type="button"
+                    class="button primary"
+                >
+                    Publicar
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+    </main>
+
+
+
+    <!-- NAVEGAÇÃO -->
+
+    <nav class="bottom-nav">
+
+
+        <a href="index.html">
+
+            <span>
+                ⌂
+            </span>
+
+            Posts
+
+        </a>
+
+
+        <a
+            href="post.html"
+            class="active"
+        >
+
+            <span class="nav-post">
+                +
+            </span>
+
+            Postar
+
+        </a>
+
+
+        <a href="profile.html">
+
+            <span>
+                ◯
+            </span>
+
+            Perfil
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- SCRIPTS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <script src="supabase.js"></script>
+
+
+    <script src="post.js"></script>
+
+
+</body>
+
+</html>
