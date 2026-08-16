@@ -10,77 +10,167 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Entrar — Vinci</title>
+    <meta
+        name="theme-color"
+        content="#faf9f7"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>Vinci</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
+
 <body>
 
-    <main class="auth-page">
 
-        <div class="auth-box">
+    <main class="feed-page">
 
-            <div class="logo">
+
+        <!-- CABEÇALHO -->
+
+        <header class="feed-header">
+
+            <div class="vinci-logo">
                 Vinci
             </div>
 
-            <h1>Bem-vindo de volta</h1>
+        </header>
 
-            <p class="auth-subtitle">
-                Entre na sua conta.
-            </p>
 
-            <form id="loginForm">
 
-                <label>
-                    E-mail
-                </label>
+        <!-- FEED -->
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="seu@email.com"
-                    required
-                >
+        <section
+            id="feed"
+            class="feed"
+        >
 
-                <label>
-                    Senha
-                </label>
+            <!--
+                Os posts serão inseridos
+                automaticamente pelo feed.js
+            -->
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Sua senha"
-                    required
-                >
+        </section>
 
-                <button
-                    type="submit"
-                    class="button primary"
-                >
-                    Entrar
-                </button>
 
-            </form>
 
-            <p id="message" class="message"></p>
+        <!-- LOADING -->
 
-            <p class="switch-auth">
-                Ainda não tem uma conta?
-                <a href="signup.html">
-                    Criar conta
-                </a>
+        <div
+            id="feedLoading"
+            class="feed-status"
+        >
+
+            Carregando publicações...
+
+        </div>
+
+
+
+        <!-- FEED VAZIO -->
+
+        <div
+            id="feedEmpty"
+            class="feed-status hidden"
+        >
+
+            <div class="empty-icon">
+                📸
+            </div>
+
+            <h2>
+                Ainda não há publicações
+            </h2>
+
+            <p>
+                Seja a primeira pessoa a postar uma fotografia.
             </p>
 
         </div>
 
+
+
+        <!-- ERRO -->
+
+        <div
+            id="feedError"
+            class="feed-status hidden"
+        >
+
+            Não foi possível carregar as publicações.
+
+        </div>
+
+
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <!-- NAVEGAÇÃO -->
+
+    <nav class="bottom-nav">
+
+
+        <a
+            href="index.html"
+            class="active"
+        >
+
+            <span>
+                ⌂
+            </span>
+
+            Posts
+
+        </a>
+
+
+        <a href="post.html">
+
+            <span class="nav-post">
+                +
+            </span>
+
+            Postar
+
+        </a>
+
+
+        <a href="profile.html">
+
+            <span>
+                ◯
+            </span>
+
+            Perfil
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
     <script src="supabase.js"></script>
-    <script src="auth.js"></script>
+
+
+    <script src="auth-guard.js"></script>
+
+
+    <script src="feed.js"></script>
+
 
 </body>
 
