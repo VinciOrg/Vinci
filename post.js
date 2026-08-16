@@ -81,7 +81,9 @@ async function loadUser() {
         data,
         error
     } = await db.auth.getUser();
-
+    
+console.log("USER:", data.user);
+console.log("AUTH ERROR:", error);
 
     if (
         error ||
