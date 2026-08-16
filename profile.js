@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — PROFILE
+// VINCI — PROFILE 0.3.5
 // =====================================
 
 let currentUser = null;
@@ -61,6 +61,217 @@ const profileMessage =
 
 
 // =====================================
+// ELEMENTOS DO 0.3.5
+// =====================================
+
+let profileStats = null;
+let postsGrid = null;
+let postsTitle = null;
+
+
+// =====================================
+// CRIAR ÁREA DE POSTS
+// =====================================
+
+function createPostsArea() {
+
+    /*
+        Se já existir uma área de posts
+        no HTML, usamos ela.
+    */
+
+    postsGrid =
+        document.getElementById(
+            "profilePostsGrid"
+        );
+
+
+    if (postsGrid) {
+
+        return;
+
+    }
+
+
+    // =================================
+    // CONTAINER
+    // =================================
+
+    const container =
+        document.createElement(
+            "section"
+        );
+
+
+    container.className =
+        "profile-posts-section";
+
+
+    // =================================
+    // TÍTULO
+    // =================================
+
+    postsTitle =
+        document.createElement(
+            "h2"
+        );
+
+
+    postsTitle.className =
+        "profile-posts-title";
+
+
+    postsTitle.textContent =
+        "Publicações";
+
+
+    // =================================
+    // GRID
+    // =================================
+
+    postsGrid =
+        document.createElement(
+            "div"
+        );
+
+
+    postsGrid.id =
+        "profilePostsGrid";
+
+
+    postsGrid.className =
+        "profile-posts-grid";
+
+
+    // =================================
+    // MONTAR
+    // =================================
+
+    container.appendChild(
+        postsTitle
+    );
+
+
+    container.appendChild(
+        postsGrid
+    );
+
+
+    /*
+        Coloca a seção antes da
+        navegação inferior.
+    */
+
+    const bottomNav =
+        document.querySelector(
+            ".bottom-nav"
+        );
+
+
+    if (bottomNav) {
+
+        document.body.insertBefore(
+            container,
+            bottomNav
+        );
+
+    }
+
+    else {
+
+        document.body.appendChild(
+            container
+        );
+
+    }
+
+}
+
+
+// =====================================
+// CRIAR ESTATÍSTICAS
+// =====================================
+
+function createStatsArea() {
+
+    if (
+        document.getElementById(
+            "profileStats"
+        )
+    ) {
+
+        profileStats =
+            document.getElementById(
+                "profileStats"
+            );
+
+        return;
+
+    }
+
+
+    profileStats =
+        document.createElement(
+            "div"
+        );
+
+
+    profileStats.id =
+        "profileStats";
+
+
+    profileStats.className =
+        "profile-stats";
+
+
+    profileStats.innerHTML = `
+
+        <div class="profile-stat">
+
+            <strong id="postsCount">
+                0
+            </strong>
+
+            <span>
+                publicações
+            </span>
+
+        </div>
+
+    `;
+
+
+    /*
+        Tenta colocar as estatísticas
+        perto das informações do perfil.
+    */
+
+    const editParent =
+        editProfileButton?.parentElement;
+
+
+    if (editParent) {
+
+        editParent.parentElement
+            ?.insertBefore(
+                profileStats,
+                editParent
+            );
+
+    }
+
+    else {
+
+        document.body.appendChild(
+            profileStats
+        );
+
+    }
+
+}
+
+
+// =====================================
 // VERIFICAR LOGIN
 // =====================================
 
@@ -72,7 +283,10 @@ async function loadUser() {
     } = await db.auth.getUser();
 
 
-    if (error || !data.user) {
+    if (
+        error ||
+        !data.user
+    ) {
 
         window.location.href =
             "login.html";
@@ -103,7 +317,10 @@ async function loadProfile() {
     } = await db
         .from("profiles")
         .select("*")
-        .eq("id", currentUser.id)
+        .eq(
+            "id",
+            currentUser.id
+        )
         .maybeSingle();
 
 
@@ -203,7 +420,26 @@ async function loadProfile() {
     }
 
 
+    // =================================
+    // CRIAR INTERFACE DO 0.3.5
+    // =================================
+
+    createStatsArea();
+
+    createPostsArea();
+
+
+    // =================================
+    // RENDERIZAR
+    // =================================
+
     renderProfile();
+
+
+    updateChangeInfo();
+
+
+    await loadUserPosts();
 
 }
 
@@ -227,7 +463,9 @@ function renderProfile() {
     // BIO
     // =================================
 
-    if (currentProfile.bio) {
+    if (
+        currentProfile.bio
+    ) {
 
         profileBio.textContent =
             currentProfile.bio;
@@ -246,7 +484,9 @@ function renderProfile() {
     // FOTO / LETRA DO AVATAR
     // =================================
 
-    if (currentProfile.avatar_url) {
+    if (
+        currentProfile.avatar_url
+    ) {
 
         avatar.style.backgroundImage =
             `url("${currentProfile.avatar_url}")`;
@@ -277,6 +517,380 @@ function renderProfile() {
                 .toUpperCase();
 
     }
+
+}
+
+
+// =====================================
+// CARREGAR POSTS DO USUÁRIO
+// =====================================
+
+async function loadUserPosts() {
+
+    if (!postsGrid) {
+
+        return;
+
+    }
+
+
+    postsGrid.innerHTML = `
+
+        <div class="profile-posts-loading">
+
+            Carregando fotografias...
+
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } = await db
+        .from("posts")
+        .select(`
+            id,
+            image_url,
+            caption,
+            created_at
+        `)
+        .eq(
+            "user_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar posts:",
+            error
+        );
+
+
+        postsGrid.innerHTML = `
+
+            <div class="profile-posts-empty">
+
+                Não foi possível carregar
+                suas fotografias.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // =================================
+    // ATUALIZAR CONTADOR
+    // =================================
+
+    const postsCount =
+        document.getElementById(
+            "postsCount"
+        );
+
+
+    if (postsCount) {
+
+        postsCount.textContent =
+            data.length;
+
+    }
+
+
+    // =================================
+    // TÍTULO
+    // =================================
+
+    if (postsTitle) {
+
+        postsTitle.textContent =
+            data.length === 1
+                ? "Publicação"
+                : "Publicações";
+
+    }
+
+
+    // =================================
+    // NENHUM POST
+    // =================================
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        postsGrid.innerHTML = `
+
+            <div class="profile-posts-empty">
+
+                <div class="profile-empty-icon">
+                    📸
+                </div>
+
+                <strong>
+                    Nenhuma fotografia ainda
+                </strong>
+
+                <span>
+                    Suas publicações aparecerão aqui.
+                </span>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // =================================
+    // GRID
+    // =================================
+
+    postsGrid.innerHTML =
+        "";
+
+
+    data.forEach(
+        function (post) {
+
+            const postElement =
+                document.createElement(
+                    "article"
+                );
+
+
+            postElement.className =
+                "profile-post";
+
+
+            // =================================
+            // IMAGEM
+            // =================================
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+
+            image.src =
+                post.image_url;
+
+
+            image.alt =
+                post.caption ||
+                "Fotografia";
+
+
+            image.loading =
+                "lazy";
+
+
+            // =================================
+            // DATA
+            // =================================
+
+            const date =
+                new Date(
+                    post.created_at
+                );
+
+
+            postElement.title =
+                post.caption ||
+                `Publicado em ${date.toLocaleDateString("pt-BR")}`;
+
+
+            // =================================
+            // CLIQUE
+            // =================================
+
+            postElement.addEventListener(
+                "click",
+                function () {
+
+                    openPostViewer(
+                        post
+                    );
+
+                }
+            );
+
+
+            postElement.appendChild(
+                image
+            );
+
+
+            postsGrid.appendChild(
+                postElement
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================
+// VISUALIZAR POST
+// =====================================
+
+function openPostViewer(
+    post
+) {
+
+    const existing =
+        document.getElementById(
+            "postViewer"
+        );
+
+
+    if (existing) {
+
+        existing.remove();
+
+    }
+
+
+    const viewer =
+        document.createElement(
+            "div"
+        );
+
+
+    viewer.id =
+        "postViewer";
+
+
+    viewer.className =
+        "post-viewer";
+
+
+    viewer.innerHTML = `
+
+        <div class="post-viewer-content">
+
+            <button
+                class="post-viewer-close"
+                id="closePostViewer"
+            >
+                ×
+            </button>
+
+            <img
+                src="${post.image_url}"
+                alt=""
+                class="post-viewer-image"
+            >
+
+            ${
+                post.caption
+                    ? `
+                        <p class="post-viewer-caption">
+                            ${escapeHTML(post.caption)}
+                        </p>
+                    `
+                    : ""
+            }
+
+            <time class="post-viewer-date">
+
+                ${new Date(
+                    post.created_at
+                ).toLocaleDateString(
+                    "pt-BR",
+                    {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    }
+                )}
+
+            </time>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        viewer
+    );
+
+
+    // =================================
+    // FECHAR
+    // =================================
+
+    document
+        .getElementById(
+            "closePostViewer"
+        )
+        .addEventListener(
+            "click",
+            function () {
+
+                viewer.remove();
+
+            }
+        );
+
+
+    viewer.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                viewer
+            ) {
+
+                viewer.remove();
+
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================
+// ESCAPAR HTML
+// =====================================
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
 
 }
 
@@ -368,11 +982,10 @@ function getTimeRemaining(
 
 
 // =====================================
-// ATUALIZAR AVISOS DE ALTERAÇÃO
+// ATUALIZAR AVISOS
 // =====================================
 
 function updateChangeInfo() {
-
 
     // =================================
     // USERNAME
@@ -452,7 +1065,6 @@ editProfileButton.addEventListener(
     "click",
     function () {
 
-
         editName.value =
             currentProfile.name;
 
@@ -474,7 +1086,9 @@ editProfileButton.addEventListener(
 
         editModal
             .classList
-            .remove("hidden");
+            .remove(
+                "hidden"
+            );
 
     }
 );
@@ -490,7 +1104,9 @@ closeModal.addEventListener(
 
         editModal
             .classList
-            .add("hidden");
+            .add(
+                "hidden"
+            );
 
     }
 );
@@ -511,7 +1127,9 @@ editModal.addEventListener(
 
             editModal
                 .classList
-                .add("hidden");
+                .add(
+                    "hidden"
+                );
 
         }
 
@@ -619,7 +1237,7 @@ profileForm.addEventListener(
 
 
         // =================================
-        // ATUALIZAR PELO SUPABASE
+        // ATUALIZAR SUPABASE
         // =================================
 
         const {
@@ -737,7 +1355,9 @@ profileForm.addEventListener(
 
                 editModal
                     .classList
-                    .add("hidden");
+                    .add(
+                        "hidden"
+                    );
 
             },
             800
