@@ -2453,3 +2453,171 @@ button:disabled {
 
     text-align: right;
 }
+
+/* =====================================
+   VINCI 0.5.3 — PROFILE POSTS
+===================================== */
+
+.profile-posts-section {
+
+    width: 100%;
+
+    padding: 24px 16px 100px;
+
+}
+
+
+.profile-section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+
+}
+
+
+.profile-section-header h2 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 650;
+
+    color: #191919;
+
+}
+
+
+/* =====================================
+   LISTA
+===================================== */
+
+.profile-posts {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+/* =====================================
+   POST
+===================================== */
+
+.profile-text-post {
+
+    background: #ffffff;
+
+    border: 1px solid rgba(0, 0, 0, 0.07);
+
+    border-radius: 16px;
+
+    padding: 16px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.04);
+
+}
+
+
+.profile-text-post-content {
+
+    margin: 0;
+
+    color: #191919;
+
+    font-size: 15px;
+
+    line-height: 1.55;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+.profile-text-post-date {
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: #999;
+
+    font-size: 11px;
+
+}
+
+
+/* =====================================
+   LOADING
+===================================== */
+
+.profile-posts-loading {
+
+    padding: 24px 0;
+
+    text-align: center;
+
+    color: #999;
+
+    font-size: 13px;
+
+}
+
+
+/* =====================================
+   VAZIO
+===================================== */
+
+.profile-posts-empty {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 35px 20px;
+
+    color: #888;
+
+}
+
+
+.profile-empty-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.profile-posts-empty strong {
+
+    color: #555;
+
+    font-size: 14px;
+
+}
+
+
+.profile-posts-empty span {
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+}
