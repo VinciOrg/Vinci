@@ -2,13 +2,66 @@
 // VINCI — PROFILE
 // =====================================
 
-
 let currentUser = null;
 let currentProfile = null;
 
 
 // =====================================
-// CARREGAR USUÁRIO
+// ELEMENTOS
+// =====================================
+
+const profileName =
+    document.getElementById("profileName");
+
+const profileUsername =
+    document.getElementById("profileUsername");
+
+const profileBio =
+    document.getElementById("profileBio");
+
+const avatar =
+    document.getElementById("avatar");
+
+const avatarLetter =
+    document.getElementById("avatarLetter");
+
+const editProfileButton =
+    document.getElementById("editProfile");
+
+const editModal =
+    document.getElementById("editModal");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const profileForm =
+    document.getElementById("profileForm");
+
+const editName =
+    document.getElementById("editName");
+
+const editUsername =
+    document.getElementById("editUsername");
+
+const editBio =
+    document.getElementById("editBio");
+
+const nameChangeInfo =
+    document.getElementById("nameChangeInfo");
+
+const usernameChangeInfo =
+    document.getElementById(
+        "usernameChangeInfo"
+    );
+
+const profileMessage =
+    document.getElementById(
+        "profileMessage"
+    );
+
+
+// =====================================
+// VERIFICAR LOGIN
 // =====================================
 
 async function loadUser() {
@@ -56,7 +109,10 @@ async function loadProfile() {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Erro ao carregar perfil:",
+            error
+        );
 
         return;
 
@@ -64,7 +120,7 @@ async function loadProfile() {
 
 
     // =================================
-    // PERFIL AINDA NÃO EXISTE
+    // PERFIL NÃO EXISTE
     // =================================
 
     if (!data) {
@@ -73,12 +129,21 @@ async function loadProfile() {
             currentUser.user_metadata || {};
 
 
-        const username =
+        let username =
             metadata.username ||
             "usuario" +
             Math.floor(
                 Math.random() * 99999
             );
+
+
+        username =
+            username
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9._]/g,
+                    ""
+                );
 
 
         const name =
@@ -93,15 +158,20 @@ async function loadProfile() {
             .from("profiles")
             .insert({
 
-                id: currentUser.id,
+                id:
+                    currentUser.id,
 
-                username: username,
+                username:
+                    username,
 
-                name: name,
+                name:
+                    name,
 
-                bio: "",
+                bio:
+                    "",
 
-                avatar_url: null
+                avatar_url:
+                    null
 
             })
             .select()
@@ -110,12 +180,10 @@ async function loadProfile() {
 
         if (createError) {
 
-            console.error(createError);
-
-            document.getElementById(
-                "profileMessage"
-            ).textContent =
-                "Não foi possível criar seu perfil.";
+            console.error(
+                "Erro ao criar perfil:",
+                createError
+            );
 
             return;
 
@@ -146,55 +214,37 @@ async function loadProfile() {
 
 function renderProfile() {
 
-    document.getElementById(
-        "profileName"
-    ).textContent =
+    profileName.textContent =
         currentProfile.name;
 
 
-    document.getElementById(
-        "profileUsername"
-    ).textContent =
+    profileUsername.textContent =
         "@" +
         currentProfile.username;
 
 
-    const bio =
-        document.getElementById(
-            "profileBio"
-        );
-
+    // =================================
+    // BIO
+    // =================================
 
     if (currentProfile.bio) {
 
-        bio.textContent =
+        profileBio.textContent =
             currentProfile.bio;
 
     }
 
     else {
 
-        bio.textContent =
+        profileBio.textContent =
             "Sua bio ainda está vazia.";
 
     }
 
 
     // =================================
-    // AVATAR
+    // FOTO / LETRA DO AVATAR
     // =================================
-
-    const avatar =
-        document.getElementById(
-            "avatar"
-        );
-
-
-    const avatarLetter =
-        document.getElementById(
-            "avatarLetter"
-        );
-
 
     if (currentProfile.avatar_url) {
 
@@ -232,105 +282,390 @@ function renderProfile() {
 
 
 // =====================================
-// ABRIR EDITOR
+// CALCULAR TEMPO RESTANTE
 // =====================================
 
-document
-    .getElementById("editProfile")
-    .addEventListener(
-        "click",
-        function () {
+function getTimeRemaining(
+    date,
+    days
+) {
 
-            document.getElementById(
-                "editName"
-            ).value =
-                currentProfile.name;
+    if (!date) {
 
+        return null;
 
-            document.getElementById(
-                "editUsername"
-            ).value =
-                currentProfile.username;
+    }
 
 
-            document.getElementById(
-                "editBio"
-            ).value =
-                currentProfile.bio || "";
+    const changedAt =
+        new Date(date).getTime();
 
 
-            document
-                .getElementById("editModal")
-                .classList
-                .remove("hidden");
+    const availableAt =
+        changedAt +
+        days *
+        24 *
+        60 *
+        60 *
+        1000;
 
-        }
-    );
+
+    const remaining =
+        availableAt -
+        Date.now();
+
+
+    if (remaining <= 0) {
+
+        return null;
+
+    }
+
+
+    const totalMinutes =
+        Math.ceil(
+            remaining / 60000
+        );
+
+
+    const totalHours =
+        Math.floor(
+            totalMinutes / 60
+        );
+
+
+    const minutes =
+        totalMinutes % 60;
+
+
+    const totalDays =
+        Math.floor(
+            totalHours / 24
+        );
+
+
+    const hours =
+        totalHours % 24;
+
+
+    if (totalDays > 0) {
+
+        return `${totalDays}d ${hours}h`;
+
+    }
+
+
+    if (totalHours > 0) {
+
+        return `${totalHours}h ${minutes}min`;
+
+    }
+
+
+    return `${minutes}min`;
+
+}
+
+
+// =====================================
+// ATUALIZAR AVISOS DE ALTERAÇÃO
+// =====================================
+
+function updateChangeInfo() {
+
+
+    // =================================
+    // USERNAME
+    // =================================
+
+    const usernameRemaining =
+        getTimeRemaining(
+            currentProfile.username_changed_at,
+            20
+        );
+
+
+    if (usernameRemaining) {
+
+        usernameChangeInfo.textContent =
+            `Você poderá alterar novamente em ${usernameRemaining}.`;
+
+        usernameChangeInfo.classList.add(
+            "locked"
+        );
+
+    }
+
+    else {
+
+        usernameChangeInfo.textContent =
+            "✓ Disponível para alteração";
+
+        usernameChangeInfo.classList.remove(
+            "locked"
+        );
+
+    }
+
+
+    // =================================
+    // NOME
+    // =================================
+
+    const nameRemaining =
+        getTimeRemaining(
+            currentProfile.name_changed_at,
+            1
+        );
+
+
+    if (nameRemaining) {
+
+        nameChangeInfo.textContent =
+            `Você poderá alterar novamente em ${nameRemaining}.`;
+
+        nameChangeInfo.classList.add(
+            "locked"
+        );
+
+    }
+
+    else {
+
+        nameChangeInfo.textContent =
+            "✓ Disponível para alteração";
+
+        nameChangeInfo.classList.remove(
+            "locked"
+        );
+
+    }
+
+}
+
+
+// =====================================
+// ABRIR EDITAR PERFIL
+// =====================================
+
+editProfileButton.addEventListener(
+    "click",
+    function () {
+
+
+        editName.value =
+            currentProfile.name;
+
+
+        editUsername.value =
+            currentProfile.username;
+
+
+        editBio.value =
+            currentProfile.bio || "";
+
+
+        profileMessage.textContent =
+            "";
+
+
+        updateChangeInfo();
+
+
+        editModal
+            .classList
+            .remove("hidden");
+
+    }
+);
 
 
 // =====================================
 // FECHAR MODAL
 // =====================================
 
-document
-    .getElementById("closeModal")
-    .addEventListener(
-        "click",
-        function () {
+closeModal.addEventListener(
+    "click",
+    function () {
 
-            document
-                .getElementById("editModal")
+        editModal
+            .classList
+            .add("hidden");
+
+    }
+);
+
+
+// =====================================
+// FECHAR CLICANDO FORA
+// =====================================
+
+editModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            editModal
+        ) {
+
+            editModal
                 .classList
                 .add("hidden");
 
         }
-    );
+
+    }
+);
 
 
 // =====================================
-// SALVAR PERFIL
+// USERNAME AUTOMÁTICO
 // =====================================
 
-document
-    .getElementById("profileForm")
-    .addEventListener(
-        "submit",
-        async function (event) {
+editUsername.addEventListener(
+    "input",
+    function () {
 
-            event.preventDefault();
-
-
-            const message =
-                document.getElementById(
-                    "profileMessage"
+        this.value =
+            this.value
+                .toLowerCase()
+                .replace(
+                    /[^a-z0-9._]/g,
+                    ""
                 );
 
-
-            const name =
-                document.getElementById(
-                    "editName"
-                ).value.trim();
+    }
+);
 
 
-            const username =
-                document.getElementById(
-                    "editUsername"
-                ).value
-                    .trim()
-                    .toLowerCase()
-                    .replace("@", "");
+// =====================================
+// SALVAR ALTERAÇÕES
+// =====================================
+
+profileForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
 
 
-            const bio =
-                document.getElementById(
-                    "editBio"
-                ).value.trim();
+        const name =
+            editName.value.trim();
 
 
-            if (!name || !username) {
+        const username =
+            editUsername.value
+                .trim()
+                .toLowerCase();
 
-                message.textContent =
-                    "Preencha seu nome e username.";
+
+        const bio =
+            editBio.value.trim();
+
+
+        // =================================
+        // VALIDAÇÕES
+        // =================================
+
+        if (!name) {
+
+            profileMessage.textContent =
+                "Digite seu nome.";
+
+            return;
+
+        }
+
+
+        if (!username) {
+
+            profileMessage.textContent =
+                "Digite um nome de usuário.";
+
+            return;
+
+        }
+
+
+        if (
+            !/^[a-z0-9._]+$/.test(
+                username
+            )
+        ) {
+
+            profileMessage.textContent =
+                "Use apenas letras, números, ponto e _.";
+
+            return;
+
+        }
+
+
+        if (
+            username.length < 3
+        ) {
+
+            profileMessage.textContent =
+                "O nome de usuário precisa ter pelo menos 3 caracteres.";
+
+            return;
+
+        }
+
+
+        profileMessage.textContent =
+            "Salvando...";
+
+
+        // =================================
+        // ATUALIZAR PELO SUPABASE
+        // =================================
+
+        const {
+            data,
+            error
+        } = await db.rpc(
+            "update_profile",
+            {
+
+                new_name:
+                    name,
+
+                new_username:
+                    username,
+
+                new_bio:
+                    bio
+
+            }
+        );
+
+
+        // =================================
+        // ERRO
+        // =================================
+
+        if (error) {
+
+            console.error(
+                "Erro ao atualizar:",
+                error
+            );
+
+
+            const errorMessage =
+                error.message || "";
+
+
+            if (
+                errorMessage.includes(
+                    "20 dias"
+                )
+            ) {
+
+                profileMessage.textContent =
+                    "Você só pode alterar o nome de usuário a cada 20 dias.";
 
                 return;
 
@@ -338,90 +673,78 @@ document
 
 
             if (
-                !/^[a-z0-9._]+$/.test(
-                    username
+                errorMessage.includes(
+                    "24 horas"
                 )
             ) {
 
-                message.textContent =
-                    "Use apenas letras, números, ponto e _.";
+                profileMessage.textContent =
+                    "Você só pode alterar o nome a cada 24 horas.";
 
                 return;
 
             }
 
 
-            message.textContent =
-                "Salvando...";
+            if (
+                errorMessage.includes(
+                    "duplicate"
+                ) ||
+                errorMessage.includes(
+                    "unique"
+                ) ||
+                errorMessage.includes(
+                    "profiles_username_key"
+                )
+            ) {
 
-
-            const {
-    data,
-    error
-} = await db.rpc(
-    "update_profile",
-    {
-        new_name: name,
-        new_username: username,
-        new_bio: bio
-    }
-);
-
-
-            if (error) {
-
-                console.error(error);
-
-
-                if (
-                    error.code ===
-                    "23505"
-                ) {
-
-                    message.textContent =
-                        "Esse nome de usuário já está sendo usado.";
-
-                }
-
-                else {
-
-                    message.textContent =
-                        "Não foi possível salvar as alterações.";
-
-                }
+                profileMessage.textContent =
+                    "Esse nome de usuário já está sendo usado.";
 
                 return;
 
             }
 
 
-            currentProfile =
-                data;
+            profileMessage.textContent =
+                "Não foi possível salvar as alterações.";
 
-
-            renderProfile();
-
-
-            message.textContent =
-                "Perfil atualizado!";
-
-
-            setTimeout(
-                function () {
-
-                    document
-                        .getElementById(
-                            "editModal"
-                        )
-                        .classList
-                        .add("hidden");
-
-                },
-                700
-            );
+            return;
 
         }
-    );
+
+
+        // =================================
+        // ATUALIZOU
+        // =================================
+
+        currentProfile =
+            data;
+
+
+        renderProfile();
+
+
+        updateChangeInfo();
+
+
+        profileMessage.textContent =
+            "Perfil atualizado!";
+
+
+        setTimeout(
+            function () {
+
+                editModal
+                    .classList
+                    .add("hidden");
+
+            },
+            800
+        );
+
+    }
+);
 
 
 // =====================================
@@ -429,68 +752,3 @@ document
 // =====================================
 
 loadUser();
-
-// =====================================
-// TEMPO PARA PRÓXIMA ALTERAÇÃO
-// =====================================
-
-function getTimeRemaining(date, days) {
-
-    if (!date) {
-        return null;
-    }
-
-    const changedAt =
-        new Date(date).getTime();
-
-    const availableAt =
-        changedAt +
-        days * 24 * 60 * 60 * 1000;
-
-    const remaining =
-        availableAt -
-        Date.now();
-
-    if (remaining <= 0) {
-        return null;
-    }
-
-    const totalMinutes =
-        Math.ceil(
-            remaining / 60000
-        );
-
-    const totalHours =
-        Math.floor(
-            totalMinutes / 60
-        );
-
-    const remainingMinutes =
-        totalMinutes % 60;
-
-    const totalDays =
-        Math.floor(
-            totalHours / 24
-        );
-
-    const remainingHours =
-        totalHours % 24;
-
-
-    if (totalDays > 0) {
-
-        return `${totalDays}d ${remainingHours}h`;
-
-    }
-
-
-    if (totalHours > 0) {
-
-        return `${totalHours}h ${remainingMinutes}min`;
-
-    }
-
-
-    return `${remainingMinutes}min`;
-
-}
