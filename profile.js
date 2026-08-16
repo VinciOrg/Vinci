@@ -19,6 +19,16 @@ const profileUsername =
 const profileBio =
     document.getElementById("profileBio");
 
+const avatarInput =
+    document.getElementById(
+        "avatarInput"
+    );
+
+const changeAvatar =
+    document.getElementById(
+        "changeAvatar"
+    );
+
 const avatar =
     document.getElementById("avatar");
 
@@ -1374,6 +1384,251 @@ profileForm.addEventListener(
     }
 );
 
+// =====================================
+// ALTERAR FOTO DE PERFIL
+// =====================================
+
+if (changeAvatar && avatarInput) {
+
+    changeAvatar.addEventListener(
+        "click",
+        function () {
+
+            avatarInput.click();
+
+        }
+    );
+
+
+    avatarInput.addEventListener(
+        "change",
+        async function () {
+
+            const file =
+                this.files[0];
+
+
+            if (!file) {
+
+                return;
+
+            }
+
+
+            // =================================
+            // VALIDAR FORMATO
+            // =================================
+
+            const allowedTypes = [
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            ];
+
+
+            if (
+                !allowedTypes.includes(
+                    file.type
+                )
+            ) {
+
+                alert(
+                    "Escolha uma imagem JPG, PNG ou WEBP."
+                );
+
+                return;
+
+            }
+
+
+            // =================================
+            // LIMITE
+            // =================================
+
+            if (
+                file.size >
+                5 * 1024 * 1024
+            ) {
+
+                alert(
+                    "A foto precisa ter no máximo 5 MB."
+                );
+
+                return;
+
+            }
+
+
+            changeAvatar.disabled =
+                true;
+
+
+            changeAvatar.textContent =
+                "Enviando...";
+
+
+            try {
+
+                // =================================
+                // EXTENSÃO
+                // =================================
+
+                const extension =
+                    file.name
+                        .split(".")
+                        .pop()
+                        .toLowerCase();
+
+
+                // =================================
+                // CAMINHO
+                // =================================
+
+                const filePath =
+                    `${currentUser.id}/avatar.${extension}`;
+
+
+                // =================================
+                // UPLOAD
+                // =================================
+
+                const {
+                    error: uploadError
+                } = await db.storage
+                    .from("avatars")
+                    .upload(
+                        filePath,
+                        file,
+                        {
+                            contentType:
+                                file.type,
+
+                            cacheControl:
+                                "3600",
+
+                            upsert:
+                                true
+                        }
+                    );
+
+
+                if (uploadError) {
+
+                    throw uploadError;
+
+                }
+
+
+                // =================================
+                // URL PÚBLICA
+                // =================================
+
+                const {
+                    data: publicURL
+                } = db.storage
+                    .from("avatars")
+                    .getPublicUrl(
+                        filePath
+                    );
+
+
+                const avatarURL =
+                    publicURL.publicUrl;
+
+
+                // =================================
+                // CACHE BUSTER
+                // =================================
+
+                const finalURL =
+                    `${avatarURL}?t=${Date.now()}`;
+
+
+                // =================================
+                // ATUALIZAR PERFIL
+                // =================================
+
+                const {
+                    error: updateError
+                } = await db
+                    .from("profiles")
+                    .update({
+
+                        avatar_url:
+                            finalURL
+
+                    })
+                    .eq(
+                        "id",
+                        currentUser.id
+                    );
+
+
+                if (updateError) {
+
+                    throw updateError;
+
+                }
+
+
+                // =================================
+                // ATUALIZAR LOCALMENTE
+                // =================================
+
+                currentProfile.avatar_url =
+                    finalURL;
+
+
+                renderProfile();
+
+
+                changeAvatar.textContent =
+                    "Foto atualizada! ✓";
+
+
+                setTimeout(
+                    function () {
+
+                        changeAvatar.textContent =
+                            "Alterar foto";
+
+                    },
+                    1500
+                );
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Erro ao alterar avatar:",
+                    error
+                );
+
+
+                alert(
+                    "Não foi possível alterar a foto."
+                );
+
+
+                changeAvatar.textContent =
+                    "Alterar foto";
+
+            }
+
+
+            changeAvatar.disabled =
+                false;
+
+
+            avatarInput.value =
+                "";
+
+        }
+    );
+
+}
 
 // =====================================
 // INICIAR
