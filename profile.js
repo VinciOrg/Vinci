@@ -429,3 +429,68 @@ document
 // =====================================
 
 loadUser();
+
+// =====================================
+// TEMPO PARA PRÓXIMA ALTERAÇÃO
+// =====================================
+
+function getTimeRemaining(date, days) {
+
+    if (!date) {
+        return null;
+    }
+
+    const changedAt =
+        new Date(date).getTime();
+
+    const availableAt =
+        changedAt +
+        days * 24 * 60 * 60 * 1000;
+
+    const remaining =
+        availableAt -
+        Date.now();
+
+    if (remaining <= 0) {
+        return null;
+    }
+
+    const totalMinutes =
+        Math.ceil(
+            remaining / 60000
+        );
+
+    const totalHours =
+        Math.floor(
+            totalMinutes / 60
+        );
+
+    const remainingMinutes =
+        totalMinutes % 60;
+
+    const totalDays =
+        Math.floor(
+            totalHours / 24
+        );
+
+    const remainingHours =
+        totalHours % 24;
+
+
+    if (totalDays > 0) {
+
+        return `${totalDays}d ${remainingHours}h`;
+
+    }
+
+
+    if (totalHours > 0) {
+
+        return `${totalHours}h ${remainingMinutes}min`;
+
+    }
+
+
+    return `${remainingMinutes}min`;
+
+}
