@@ -1,11 +1,11 @@
 // =====================================
-// VINCI — CREATE POST
+// VINCI — CREATE POST 0.4
 // =====================================
-
 
 let currentUser = null;
 let selectedFile = null;
 let selectedVisibility = "feed";
+
 
 // =====================================
 // ELEMENTOS
@@ -72,6 +72,37 @@ const cancelPost =
 
 
 // =====================================
+// VISIBILIDADE
+// =====================================
+
+const visibilityInputs =
+    document.querySelectorAll(
+        'input[name="visibility"]'
+    );
+
+
+visibilityInputs.forEach(
+    function (input) {
+
+        input.addEventListener(
+            "change",
+            function () {
+
+                if (this.checked) {
+
+                    selectedVisibility =
+                        this.value;
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+// =====================================
 // VERIFICAR USUÁRIO
 // =====================================
 
@@ -81,9 +112,19 @@ async function loadUser() {
         data,
         error
     } = await db.auth.getUser();
-    
-console.log("USER:", data.user);
-console.log("AUTH ERROR:", error);
+
+
+    console.log(
+        "USER:",
+        data.user
+    );
+
+
+    console.log(
+        "AUTH ERROR:",
+        error
+    );
+
 
     if (
         error ||
@@ -128,9 +169,13 @@ imageInput.addEventListener(
         // =================================
 
         const allowedTypes = [
+
             "image/jpeg",
+
             "image/png",
+
             "image/webp"
+
         ];
 
 
@@ -185,12 +230,16 @@ imageInput.addEventListener(
 
         selectSection
             .classList
-            .add("hidden");
+            .add(
+                "hidden"
+            );
 
 
         editorSection
             .classList
-            .remove("hidden");
+            .remove(
+                "hidden"
+            );
 
 
         postMessage.textContent =
@@ -211,18 +260,23 @@ changeImage.addEventListener(
         imageInput.value =
             "";
 
+
         selectedFile =
             null;
 
 
         editorSection
             .classList
-            .add("hidden");
+            .add(
+                "hidden"
+            );
 
 
         selectSection
             .classList
-            .remove("hidden");
+            .remove(
+                "hidden"
+            );
 
 
         imagePreview.src =
@@ -328,6 +382,7 @@ function compressImage(
                                     width
                                 );
 
+
                             width =
                                 maxSize;
 
@@ -341,6 +396,7 @@ function compressImage(
                                     maxSize /
                                     height
                                 );
+
 
                             height =
                                 maxSize;
@@ -448,13 +504,27 @@ publishPost.addEventListener(
     "click",
     async function () {
 
-
         if (!selectedFile) {
 
             postMessage.textContent =
                 "Escolha uma fotografia.";
 
             return;
+
+        }
+
+
+        // =================================
+        // GARANTIR VISIBILIDADE VÁLIDA
+        // =================================
+
+        if (
+            selectedVisibility !== "feed" &&
+            selectedVisibility !== "profile"
+        ) {
+
+            selectedVisibility =
+                "feed";
 
         }
 
@@ -507,11 +577,14 @@ publishPost.addEventListener(
             const {
                 error: uploadError
             } = await db.storage
-                .from("vinci-images")
+                .from(
+                    "vinci-images"
+                )
                 .upload(
                     filePath,
                     compressedImage,
                     {
+
                         contentType:
                             "image/jpeg",
 
@@ -520,6 +593,7 @@ publishPost.addEventListener(
 
                         upsert:
                             false
+
                     }
                 );
 
@@ -542,7 +616,9 @@ publishPost.addEventListener(
             const {
                 data: publicURL
             } = db.storage
-                .from("vinci-images")
+                .from(
+                    "vinci-images"
+                )
                 .getPublicUrl(
                     filePath
                 );
@@ -559,7 +635,9 @@ publishPost.addEventListener(
             const {
                 error: postError
             } = await db
-                .from("posts")
+                .from(
+                    "posts"
+                )
                 .insert({
 
                     user_id:
@@ -569,20 +647,28 @@ publishPost.addEventListener(
                         imageURL,
 
                     caption:
-                        caption.value.trim()
+                        caption.value.trim(),
+
+                    visibility:
+                        selectedVisibility
 
                 });
 
 
+            // =================================
+            // ERRO NO BANCO
+            // =================================
+
             if (postError) {
 
-                // =================================
-                // SE O BANCO FALHAR,
-                // REMOVE A FOTO DO STORAGE
-                // =================================
+                // =============================
+                // APAGAR IMAGEM DO STORAGE
+                // =============================
 
                 await db.storage
-                    .from("vinci-images")
+                    .from(
+                        "vinci-images"
+                    )
                     .remove([
                         filePath
                     ]);
@@ -597,9 +683,27 @@ publishPost.addEventListener(
             // SUCESSO
             // =================================
 
-            postMessage.textContent =
-                "Publicado com sucesso! 📸";
+            if (
+                selectedVisibility ===
+                "profile"
+            ) {
 
+                postMessage.textContent =
+                    "Publicado no seu perfil! 📸";
+
+            }
+
+            else {
+
+                postMessage.textContent =
+                    "Publicado no feed! 📸";
+
+            }
+
+
+            // =================================
+            // IR PARA O FEED
+            // =================================
 
             setTimeout(
                 function () {
