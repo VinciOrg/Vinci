@@ -99,36 +99,44 @@ const postsCount =
 
 
 // =====================================
-// LOGIN
+// USUÁRIO ATUAL
 // =====================================
 
 async function loadUser() {
 
     try {
 
+        // O auth-guard já verifica a sessão.
+        // Aqui apenas pegamos o usuário atual.
+
         const {
             data,
             error
         } = await db.auth.getUser();
 
+        if (error) {
 
-        if (
-            error ||
-            !data ||
-            !data.user
-        ) {
-
-            window.location.href =
-                "login.html";
+            console.error(
+                "Vinci: erro ao obter usuário:",
+                error
+            );
 
             return;
 
         }
 
+        if (!data?.user) {
+
+            console.error(
+                "Vinci: nenhum usuário encontrado."
+            );
+
+            return;
+
+        }
 
         currentUser =
             data.user;
-
 
         await loadProfile();
 
@@ -137,17 +145,13 @@ async function loadUser() {
     catch (error) {
 
         console.error(
-            "Erro ao verificar usuário:",
+            "Vinci: erro ao carregar usuário:",
             error
         );
-
-        window.location.href =
-            "login.html";
 
     }
 
 }
-
 
 // =====================================
 // CARREGAR PERFIL
