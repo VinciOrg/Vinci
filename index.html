@@ -28,6 +28,10 @@
 <body>
 
 
+    <!-- =====================================
+         FEED
+    ====================================== -->
+
     <main class="feed-page">
 
 
@@ -40,7 +44,6 @@
             </div>
 
         </header>
-
 
 
         <!-- FEED -->
@@ -58,7 +61,6 @@
         </section>
 
 
-
         <!-- LOADING -->
 
         <div
@@ -69,7 +71,6 @@
             Carregando publicações...
 
         </div>
-
 
 
         <!-- FEED VAZIO -->
@@ -94,7 +95,6 @@
         </div>
 
 
-
         <!-- ERRO -->
 
         <div
@@ -111,10 +111,14 @@
 
 
 
-    <!-- NAVEGAÇÃO -->
+    <!-- =====================================
+         NAVEGAÇÃO
+    ====================================== -->
 
     <nav class="bottom-nav">
 
+
+        <!-- POSTS / FEED -->
 
         <a
             href="index.html"
@@ -130,7 +134,13 @@
         </a>
 
 
-        <a href="post.html">
+        <!-- CRIAR -->
+
+        <button
+            type="button"
+            id="openCreateMenu"
+            class="nav-create"
+        >
 
             <span class="nav-post">
                 +
@@ -138,10 +148,14 @@
 
             Postar
 
-        </a>
+        </button>
 
 
-        <a href="profile.html">
+        <!-- PERFIL -->
+
+        <a
+            href="profile.html"
+        >
 
             <span>
                 ◯
@@ -156,7 +170,138 @@
 
 
 
-    <!-- SUPABASE -->
+    <!-- =====================================
+         MENU DE CRIAÇÃO
+    ====================================== -->
+
+    <div
+        id="createMenu"
+        class="create-menu hidden"
+    >
+
+        <div class="create-menu-content">
+
+
+            <!-- FECHAR -->
+
+            <button
+                type="button"
+                id="closeCreateMenu"
+                class="create-menu-close"
+            >
+
+                ×
+
+            </button>
+
+
+            <!-- TÍTULO -->
+
+            <div class="create-menu-title">
+
+                <span>
+                    Vinci
+                </span>
+
+                <h2>
+                    O que você quer publicar?
+                </h2>
+
+            </div>
+
+
+            <!-- =================================
+                 PUBLICAÇÃO
+            ================================== -->
+
+            <button
+                type="button"
+                id="createPublication"
+                class="create-option"
+            >
+
+                <div class="create-option-icon">
+                    📸
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        Publicação
+                    </strong>
+
+                    <span>
+                        Compartilhe uma fotografia
+                    </span>
+
+                </div>
+
+
+                <span class="create-option-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <!-- =================================
+                 POST
+            ================================== -->
+
+            <button
+                type="button"
+                id="createProfilePost"
+                class="create-option"
+            >
+
+                <div class="create-option-icon">
+                    💬
+                </div>
+
+
+                <div class="create-option-text">
+
+                    <strong>
+                        Post
+                    </strong>
+
+                    <span>
+                        Compartilhe algo no seu perfil
+                    </span>
+
+                </div>
+
+
+                <span class="create-option-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <!-- CANCELAR -->
+
+            <button
+                type="button"
+                id="cancelCreate"
+                class="create-cancel"
+            >
+
+                Cancelar
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         SUPABASE
+    ====================================== -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
@@ -170,6 +315,9 @@
 
 
     <script src="feed.js"></script>
+
+
+    <script src="create.js"></script>
 
 
 </body>
