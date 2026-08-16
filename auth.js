@@ -351,7 +351,7 @@ if (sendReset) {
             {
 
               redirectTo:
-                `${window.location.origin}/reset-password.html`
+                `${window.location.origin}/Vinci/reset-password.html`
 
             }
           );
