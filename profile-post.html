@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#faf9f7"
+    >
+
+    <title>Novo Post — Vinci</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <main class="profile-post-page">
+
+
+        <!-- CABEÇALHO -->
+
+        <header class="create-post-header">
+
+            <button
+                type="button"
+                id="cancelPost"
+                class="create-back"
+            >
+                ←
+            </button>
+
+            <h1>
+                Novo post
+            </h1>
+
+            <button
+                type="button"
+                id="publishProfilePost"
+                class="create-publish"
+            >
+                Publicar
+            </button>
+
+        </header>
+
+
+        <!-- EDITOR -->
+
+        <section class="profile-post-editor">
+
+
+            <textarea
+                id="profilePostContent"
+                maxlength="500"
+                placeholder="O que você quer compartilhar?"
+                autofocus
+            ></textarea>
+
+
+            <div class="profile-post-footer">
+
+                <span id="profilePostCounter">
+                    0 / 500
+                </span>
+
+                <span id="profilePostMessage"></span>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- NAVEGAÇÃO -->
+
+    <nav class="bottom-nav">
+
+        <a href="index.html">
+
+            <span>
+                ⌂
+            </span>
+
+            Posts
+
+        </a>
+
+
+        <button
+            type="button"
+            class="nav-create"
+            onclick="window.location.href='profile-post.html'"
+        >
+
+            <span class="nav-post">
+                +
+            </span>
+
+            Postar
+
+        </button>
+
+
+        <a href="profile.html">
+
+            <span>
+                ◯
+            </span>
+
+            Perfil
+
+        </a>
+
+    </nav>
+
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <script src="supabase.js"></script>
+
+
+    <script src="auth-guard.js"></script>
+
+
+    <script src="profile-post.js"></script>
+
+
+</body>
+
+</html>
