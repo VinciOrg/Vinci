@@ -69,6 +69,16 @@ const profileMessage =
         "profileMessage"
     );
 
+const profilePostsSection =
+    document.getElementById(
+        "profilePostsSection"
+    );
+
+
+const profilePosts =
+    document.getElementById(
+        "profilePosts"
+    );
 
 // =====================================
 // ELEMENTOS DO 0.3.5
