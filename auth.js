@@ -19,11 +19,13 @@ if (signupForm) {
 
       event.preventDefault();
 
+
       const name =
         document
         .getElementById("name")
         .value
         .trim();
+
 
       const username =
         document
@@ -33,19 +35,23 @@ if (signupForm) {
         .toLowerCase()
         .replace("@", "");
 
+
       const email =
         document
         .getElementById("email")
         .value
         .trim();
 
+
       const password =
         document
         .getElementById("password")
         .value;
 
+
       const message =
         document.getElementById("message");
+
 
       message.textContent =
         "Criando sua conta...";
@@ -54,25 +60,25 @@ if (signupForm) {
       try {
 
         const { data, error } =
-          await db.auth.signUp({
+        await db.auth.signUp({
 
-            email: email,
+          email: email,
 
-            password: password,
+          password: password,
 
-            options: {
+          options: {
 
-              data: {
+            data: {
 
-                name: name,
+              name: name,
 
-                username: username
-
-              }
+              username: username
 
             }
 
-          });
+          }
+
+        });
 
 
         if (error) {
@@ -109,7 +115,6 @@ if (signupForm) {
 
 // -------------------------------
 // LOGIN
-// E-MAIL OU USERNAME
 // -------------------------------
 
 const loginForm =
@@ -125,12 +130,11 @@ if (loginForm) {
       event.preventDefault();
 
 
-      const loginValue =
+      const email =
         document
         .getElementById("email")
         .value
-        .trim()
-        .toLowerCase();
+        .trim();
 
 
       const password =
@@ -149,66 +153,14 @@ if (loginForm) {
 
       try {
 
-        let email =
-          loginValue;
+        const { data, error } =
+        await db.auth.signInWithPassword({
 
+          email: email,
 
-        // -------------------------------
-        // SE NÃO FOR E-MAIL,
-        // PROCURAR PELO USERNAME
-        // -------------------------------
+          password: password
 
-        if (
-          !loginValue.includes("@")
-        ) {
-
-          const {
-            data,
-            error
-          } =
-            await db.rpc(
-              "get_email_by_username",
-              {
-                input_username:
-                  loginValue
-              }
-            );
-
-
-          if (error) {
-            throw error;
-          }
-
-
-          if (!data) {
-
-            throw new Error(
-              "Usuário não encontrado."
-            );
-
-          }
-
-
-          email = data;
-
-        }
-
-
-        // -------------------------------
-        // LOGIN SUPABASE
-        // -------------------------------
-
-        const {
-          data,
-          error
-        } =
-          await db.auth.signInWithPassword({
-
-            email: email,
-
-            password: password
-
-          });
+        });
 
 
         if (error) {
@@ -226,14 +178,10 @@ if (loginForm) {
 
       } catch (error) {
 
-        console.error(
-          "ERRO LOGIN:",
-          error
-        );
-
+        console.error(error);
 
         message.textContent =
-          "E-mail, usuário ou senha incorretos.";
+          "E-mail ou senha incorretos.";
 
       }
 
@@ -252,15 +200,11 @@ const forgotPasswordButton =
 
 
 const forgotPasswordModal =
-  document.getElementById(
-    "forgotPasswordModal"
-  );
+  document.getElementById("forgotPasswordModal");
 
 
 const closeForgotModal =
-  document.getElementById(
-    "closeForgotModal"
-  );
+  document.getElementById("closeForgotModal");
 
 
 const sendReset =
@@ -272,9 +216,7 @@ const resetEmail =
 
 
 const resetMessage =
-  document.getElementById(
-    "resetMessage"
-  );
+  document.getElementById("resetMessage");
 
 
 // -------------------------------
@@ -328,7 +270,6 @@ if (closeForgotModal) {
         "hidden"
       );
 
-
       resetMessage.textContent = "";
 
     }
@@ -356,7 +297,6 @@ if (forgotPasswordModal) {
           "hidden"
         );
 
-
         resetMessage.textContent = "";
 
       }
@@ -368,7 +308,7 @@ if (forgotPasswordModal) {
 
 
 // -------------------------------
-// ENVIAR LINK DE RECUPERAÇÃO
+// ENVIAR LINK
 // -------------------------------
 
 if (sendReset) {
@@ -397,10 +337,8 @@ if (sendReset) {
 
       sendReset.disabled = true;
 
-
       sendReset.textContent =
         "Enviando...";
-
 
       resetMessage.textContent = "";
 
@@ -413,7 +351,7 @@ if (sendReset) {
             {
 
               redirectTo:
-                `${window.location.origin}/Vinci/reset-password.html`
+                `${window.location.origin}/reset-password.html`
 
             }
           );
@@ -437,19 +375,12 @@ if (sendReset) {
 
       } catch (error) {
 
-        console.error(
-          "ERRO RECUPERAÇÃO:",
-          error
-        );
-
+        console.error(error);
 
         resetMessage.textContent =
-          error.message ||
-          "Não foi possível enviar o link.";
-
+          "Não foi possível enviar o link. Tente novamente.";
 
         sendReset.disabled = false;
-
 
         sendReset.textContent =
           "Enviar link de recuperação";
