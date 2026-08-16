@@ -17,7 +17,10 @@
 
     <title>Perfil — Vinci</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
@@ -25,381 +28,431 @@
 <body>
 
 
-    <main class="profile-page">
+<main class="profile-page">
 
 
-        <!-- =========================
-             PERFIL
-        ========================== -->
+    <!-- =====================================
+         PERFIL
+    ====================================== -->
 
-        <section class="profile">
-
-
-            <div class="profile-top">
+    <section class="profile">
 
 
-                <!-- FOTO -->
+        <!-- CABEÇALHO -->
 
-                <div
-                    class="profile-avatar"
-                    id="avatar"
-                >
+        <div class="profile-top">
 
-                    <span id="avatarLetter">
-                        V
-                    </span>
 
-                </div>
+            <!-- AVATAR -->
 
-                <input
-    type="file"
-    id="avatarInput"
-    accept="image/jpeg,image/png,image/webp"
-    hidden
->
+            <div
+                class="profile-avatar"
+                id="avatar"
+            >
 
-                <button
-    type="button"
-    id="changeAvatar"
->
-    Alterar foto
-</button>
-
-                <!-- INFORMAÇÕES -->
-
-                <div class="profile-info">
-
-                    <h1 id="profileName">
-                        Carregando...
-                    </h1>
-
-                    <p id="profileUsername">
-                        @usuario
-                    </p>
-
-                </div>
-
+                <span id="avatarLetter">
+                    V
+                </span>
 
             </div>
 
 
-            <!-- BIO -->
-
-            <p
-                id="profileBio"
-                class="profile-bio"
+            <input
+                type="file"
+                id="avatarInput"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
             >
-                Sua bio ainda está vazia.
-            </p>
 
 
-            <!-- EDITAR -->
+            <!-- INFORMAÇÕES -->
+
+            <div class="profile-info">
+
+                <h1 id="profileName">
+                    Carregando...
+                </h1>
+
+                <p id="profileUsername">
+                    @usuario
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- BIO -->
+
+        <p
+            id="profileBio"
+            class="profile-bio"
+        >
+            Sua bio ainda está vazia.
+        </p>
+
+
+        <!-- BOTÕES -->
+
+        <div class="profile-actions">
 
             <button
                 id="editProfile"
                 class="button secondary"
+                type="button"
             >
                 Editar perfil
             </button>
 
 
-            <!-- =========================
-                 ESTATÍSTICAS
-            ========================== -->
+            <button
+                id="changeAvatar"
+                class="button secondary"
+                type="button"
+            >
+                Alterar foto
+            </button>
 
-            <div class="profile-stats">
-
-
-                <div>
-
-                    <strong id="postsCount">
-                        0
-                    </strong>
-
-                    <span>
-                        Posts
-                    </span>
-
-                </div>
+        </div>
 
 
-                <div>
+        <!-- =================================
+             ESTATÍSTICAS
+        ================================== -->
 
-                    <strong>
-                        0
-                    </strong>
-
-                    <span>
-                        Seguidores
-                    </span>
-
-                </div>
+        <div
+            class="profile-stats"
+            id="profileStats"
+        >
 
 
-                <div>
+            <div class="profile-stat">
 
-                    <strong>
-                        0
-                    </strong>
+                <strong id="postsCount">
+                    0
+                </strong>
 
-                    <span>
-                        Seguindo
-                    </span>
-
-                </div>
-
+                <span>
+                    Publicações
+                </span>
 
             </div>
 
 
-        </section>
+            <div class="profile-stat">
+
+                <strong>
+                    0
+                </strong>
+
+                <span>
+                    Seguidores
+                </span>
+
+            </div>
 
 
-     
-        <!-- =========================
-             MODAL EDITAR PERFIL
-        ========================== -->
+            <div class="profile-stat">
+
+                <strong>
+                    0
+                </strong>
+
+                <span>
+                    Seguindo
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================
+         ABAS
+    ====================================== -->
+
+    <div class="profile-tabs">
+
+
+        <button
+            id="textPostsTab"
+            class="profile-tab active"
+            type="button"
+        >
+            Posts
+        </button>
+
+
+        <button
+            id="photoPostsTab"
+            class="profile-tab"
+            type="button"
+        >
+            Publicações
+        </button>
+
+
+    </div>
+
+
+    <!-- =====================================
+         POSTS DE TEXTO
+    ====================================== -->
+
+    <section
+        id="profilePostsSection"
+        class="profile-content-section"
+    >
+
 
         <div
-            id="editModal"
-            class="modal hidden"
+            id="profilePosts"
+            class="profile-posts"
         >
 
+            <div class="profile-posts-loading">
 
-            <div class="modal-box">
+                Carregando posts...
 
+            </div>
 
-                <!-- CABEÇALHO -->
-
-                <div class="modal-header">
-
-                    <h2>
-                        Editar perfil
-                    </h2>
+        </div>
 
 
-                    <button
-                        id="closeModal"
-                        class="close-button"
-                        type="button"
-                    >
-                        ×
-                    </button>
-
-                </div>
+    </section>
 
 
+    <!-- =====================================
+         PUBLICAÇÕES / FOTOS
+    ====================================== -->
 
-                <!-- FORMULÁRIO -->
+    <section
+        id="profilePhotosSection"
+        class="profile-content-section hidden"
+    >
 
-                <form id="profileForm">
+
+        <div
+            id="profilePostsGrid"
+            class="profile-posts-grid"
+        >
+
+            <div class="profile-posts-loading">
+
+                Carregando fotografias...
+
+            </div>
+
+        </div>
 
 
-                    <!-- NOME -->
+    </section>
 
-                    <label for="editName">
-                        Nome
-                    </label>
+
+    <!-- =====================================
+         MODAL EDITAR PERFIL
+    ====================================== -->
+
+    <div
+        id="editModal"
+        class="modal hidden"
+    >
+
+
+        <div class="modal-box">
+
+
+            <!-- CABEÇALHO -->
+
+            <div class="modal-header">
+
+                <h2>
+                    Editar perfil
+                </h2>
+
+
+                <button
+                    id="closeModal"
+                    class="close-button"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- FORMULÁRIO -->
+
+            <form id="profileForm">
+
+
+                <!-- NOME -->
+
+                <label for="editName">
+                    Nome
+                </label>
+
+
+                <input
+                    type="text"
+                    id="editName"
+                    maxlength="40"
+                    autocomplete="name"
+                    required
+                >
+
+
+                <p
+                    id="nameChangeInfo"
+                    class="change-info"
+                >
+                    Disponível para alteração
+                </p>
+
+
+                <!-- USERNAME -->
+
+                <label for="editUsername">
+                    Nome de usuário
+                </label>
+
+
+                <div class="username-input">
+
+                    <span>
+                        @
+                    </span>
 
 
                     <input
                         type="text"
-                        id="editName"
-                        maxlength="40"
-                        autocomplete="name"
+                        id="editUsername"
+                        maxlength="20"
+                        autocomplete="username"
+                        autocapitalize="none"
+                        spellcheck="false"
                         required
                     >
 
-
-                    <p
-                        id="nameChangeInfo"
-                        class="change-info"
-                    >
-                        Disponível para alteração
-                    </p>
+                </div>
 
 
-
-                    <!-- USERNAME -->
-
-                    <label for="editUsername">
-                        Nome de usuário
-                    </label>
-
-
-                    <div class="username-input">
-
-                        <span>
-                            @
-                        </span>
+                <p
+                    id="usernameChangeInfo"
+                    class="change-info"
+                >
+                    Disponível para alteração
+                </p>
 
 
-                        <input
-                            type="text"
-                            id="editUsername"
-                            maxlength="20"
-                            autocomplete="username"
-                            autocapitalize="none"
-                            spellcheck="false"
-                            required
-                        >
+                <!-- BIO -->
 
-                    </div>
+                <label for="editBio">
+                    Bio
+                </label>
 
 
-                    <p
-                        id="usernameChangeInfo"
-                        class="change-info"
-                    >
-                        Disponível para alteração
-                    </p>
+                <textarea
+                    id="editBio"
+                    maxlength="150"
+                    placeholder="Conte um pouco sobre você..."
+                ></textarea>
 
 
-
-                    <!-- BIO -->
-
-                    <label for="editBio">
-                        Bio
-                    </label>
+                <p
+                    id="profileMessage"
+                    class="message"
+                ></p>
 
 
-                    <textarea
-                        id="editBio"
-                        maxlength="150"
-                        placeholder="Conte um pouco sobre você..."
-                    ></textarea>
+                <!-- SALVAR -->
+
+                <button
+                    type="submit"
+                    class="button primary"
+                >
+                    Salvar alterações
+                </button>
 
 
-                    <p
-                        id="profileMessage"
-                        class="message"
-                    ></p>
-
-
-                    <!-- SALVAR -->
-
-                    <button
-                        type="submit"
-                        class="button primary"
-                    >
-                        Salvar alterações
-                    </button>
-
-
-                </form>
-
-
-            </div>
+            </form>
 
 
         </div>
 
 
+    </div>
 
-    </main>
+
+</main>
+
 
 <!-- =====================================
-     POSTS DO PERFIL
+     NAVEGAÇÃO INFERIOR
 ====================================== -->
 
-<section
-    id="profilePostsSection"
-    class="profile-posts-section"
->
-
-    <div class="profile-section-header">
-
-        <h2>
-            Posts
-        </h2>
-
-    </div>
+<nav class="bottom-nav">
 
 
-    <div
-        id="profilePosts"
-        class="profile-posts"
+    <a href="index.html">
+
+        <span>
+            ⌂
+        </span>
+
+        Posts
+
+    </a>
+
+
+    <a href="post.html">
+
+        <span class="nav-post">
+            +
+        </span>
+
+        Postar
+
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="active"
     >
 
-        <div class="profile-posts-loading">
+        <span>
+            ◯
+        </span>
 
-            Carregando posts...
+        Perfil
 
-        </div>
-
-    </div>
-
-</section>
-
-    <!-- =========================
-         NAVEGAÇÃO INFERIOR
-    ========================== -->
-
-    <nav class="bottom-nav">
+    </a>
 
 
-        <!-- POSTS -->
-
-        <a href="index.html">
-
-            <span>
-                ⌂
-            </span>
-
-            Posts
-
-        </a>
+</nav>
 
 
+<!-- =====================================
+     SCRIPTS
+====================================== -->
 
-        <!-- POSTAR -->
-
-        <a href="post.html">
-
-            <span class="nav-post">
-                +
-            </span>
-
-            Postar
-
-        </a>
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
 
 
+<script src="supabase.js"></script>
 
-        <!-- PERFIL -->
+<script src="auth-guard.js"></script>
 
-        <a
-            href="profile.html"
-            class="active"
-        >
-
-            <span>
-                ◯
-            </span>
-
-            Perfil
-
-        </a>
-
-
-    </nav>
-
-
-
-    <!-- =========================
-         SCRIPTS
-    ========================== -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-    ></script>
-
-
-    <script src="supabase.js"></script>
-
-    <script src="auth-guard.js"></script>
-
-    <script src="profile.js"></script>
+<script src="profile.js"></script>
 
 
 </body>
