@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — PROFILE 0.3.5
+// VINCI — PROFILE 0.5.3
 // =====================================
 
 let currentUser = null;
@@ -20,14 +20,10 @@ const profileBio =
     document.getElementById("profileBio");
 
 const avatarInput =
-    document.getElementById(
-        "avatarInput"
-    );
+    document.getElementById("avatarInput");
 
 const changeAvatar =
-    document.getElementById(
-        "changeAvatar"
-    );
+    document.getElementById("changeAvatar");
 
 const avatar =
     document.getElementById("avatar");
@@ -74,14 +70,14 @@ const profilePostsSection =
         "profilePostsSection"
     );
 
-
 const profilePosts =
     document.getElementById(
         "profilePosts"
     );
 
+
 // =====================================
-// ELEMENTOS DO 0.3.5
+// ÁREAS DO PERFIL
 // =====================================
 
 let profileStats = null;
@@ -90,15 +86,10 @@ let postsTitle = null;
 
 
 // =====================================
-// CRIAR ÁREA DE POSTS
+// CRIAR ÁREA DE PUBLICAÇÕES
 // =====================================
 
 function createPostsArea() {
-
-    /*
-        Se já existir uma área de posts
-        no HTML, usamos ela.
-    */
 
     postsGrid =
         document.getElementById(
@@ -108,14 +99,15 @@ function createPostsArea() {
 
     if (postsGrid) {
 
+        postsTitle =
+            document.querySelector(
+                ".profile-posts-title"
+            );
+
         return;
 
     }
 
-
-    // =================================
-    // CONTAINER
-    // =================================
 
     const container =
         document.createElement(
@@ -126,10 +118,6 @@ function createPostsArea() {
     container.className =
         "profile-posts-section";
 
-
-    // =================================
-    // TÍTULO
-    // =================================
 
     postsTitle =
         document.createElement(
@@ -145,10 +133,6 @@ function createPostsArea() {
         "Publicações";
 
 
-    // =================================
-    // GRID
-    // =================================
-
     postsGrid =
         document.createElement(
             "div"
@@ -163,10 +147,6 @@ function createPostsArea() {
         "profile-posts-grid";
 
 
-    // =================================
-    // MONTAR
-    // =================================
-
     container.appendChild(
         postsTitle
     );
@@ -176,11 +156,6 @@ function createPostsArea() {
         postsGrid
     );
 
-
-    /*
-        Coloca a seção antes da
-        navegação inferior.
-    */
 
     const bottomNav =
         document.querySelector(
@@ -214,16 +189,16 @@ function createPostsArea() {
 
 function createStatsArea() {
 
-    if (
+    const existing =
         document.getElementById(
             "profileStats"
-        )
-    ) {
+        );
+
+
+    if (existing) {
 
         profileStats =
-            document.getElementById(
-                "profileStats"
-            );
+            existing;
 
         return;
 
@@ -261,22 +236,19 @@ function createStatsArea() {
     `;
 
 
-    /*
-        Tenta colocar as estatísticas
-        perto das informações do perfil.
-    */
-
     const editParent =
         editProfileButton?.parentElement;
 
 
-    if (editParent) {
-
+    if (
+        editParent &&
         editParent.parentElement
-            ?.insertBefore(
-                profileStats,
-                editParent
-            );
+    ) {
+
+        editParent.parentElement.insertBefore(
+            profileStats,
+            editParent
+        );
 
     }
 
@@ -441,7 +413,7 @@ async function loadProfile() {
 
 
     // =================================
-    // CRIAR INTERFACE DO 0.3.5
+    // CRIAR INTERFACE
     // =================================
 
     createStatsArea();
@@ -459,7 +431,18 @@ async function loadProfile() {
     updateChangeInfo();
 
 
+    // =================================
+    // CARREGAR PUBLICAÇÕES
+    // =================================
+
     await loadUserPosts();
+
+
+    // =================================
+    // CARREGAR POSTS DE TEXTO
+    // =================================
+
+    await loadProfilePosts();
 
 }
 
@@ -470,38 +453,50 @@ async function loadProfile() {
 
 function renderProfile() {
 
-    profileName.textContent =
-        currentProfile.name;
+    if (profileName) {
+
+        profileName.textContent =
+            currentProfile.name;
+
+    }
 
 
-    profileUsername.textContent =
-        "@" +
-        currentProfile.username;
+    if (profileUsername) {
+
+        profileUsername.textContent =
+            "@" +
+            currentProfile.username;
+
+    }
 
 
     // =================================
     // BIO
     // =================================
 
-    if (
-        currentProfile.bio
-    ) {
+    if (profileBio) {
 
-        profileBio.textContent =
-            currentProfile.bio;
+        if (
+            currentProfile.bio
+        ) {
 
-    }
+            profileBio.textContent =
+                currentProfile.bio;
 
-    else {
+        }
 
-        profileBio.textContent =
-            "Sua bio ainda está vazia.";
+        else {
+
+            profileBio.textContent =
+                "Sua bio ainda está vazia.";
+
+        }
 
     }
 
 
     // =================================
-    // FOTO / LETRA DO AVATAR
+    // AVATAR
     // =================================
 
     if (
@@ -542,7 +537,7 @@ function renderProfile() {
 
 
 // =====================================
-// CARREGAR POSTS DO USUÁRIO
+// CARREGAR PUBLICAÇÕES DE FOTOS
 // =====================================
 
 async function loadUserPosts() {
@@ -590,38 +585,41 @@ async function loadUserPosts() {
 
     if (error) {
 
-    console.error(
-        "Erro ao carregar posts:",
-        error
-    );
+        console.error(
+            "Erro ao carregar posts:",
+            error
+        );
 
-    postsGrid.innerHTML = `
 
-        <div class="profile-posts-empty">
+        postsGrid.innerHTML = `
 
-            <div class="profile-empty-icon">
-                ⚠️
+            <div class="profile-posts-empty">
+
+                <div class="profile-empty-icon">
+                    ⚠️
+                </div>
+
+                <strong>
+                    Erro ao carregar publicações
+                </strong>
+
+                <span>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </span>
+
             </div>
 
-            <strong>
-                Erro ao carregar publicações
-            </strong>
+        `;
 
-            <span>
-                ${escapeHTML(error.message)}
-            </span>
+        return;
 
-        </div>
-
-    `;
-
-    return;
-
-}
+    }
 
 
     // =================================
-    // ATUALIZAR CONTADOR
+    // CONTADOR
     // =================================
 
     const postsCount =
@@ -633,7 +631,7 @@ async function loadUserPosts() {
     if (postsCount) {
 
         postsCount.textContent =
-            data.length;
+            data?.length || 0;
 
     }
 
@@ -653,7 +651,7 @@ async function loadUserPosts() {
 
 
     // =================================
-    // NENHUM POST
+    // NENHUMA PUBLICAÇÃO
     // =================================
 
     if (
@@ -707,10 +705,6 @@ async function loadUserPosts() {
                 "profile-post";
 
 
-            // =================================
-            // IMAGEM
-            // =================================
-
             const image =
                 document.createElement(
                     "img"
@@ -730,10 +724,6 @@ async function loadUserPosts() {
                 "lazy";
 
 
-            // =================================
-            // DATA
-            // =================================
-
             const date =
                 new Date(
                     post.created_at
@@ -742,12 +732,10 @@ async function loadUserPosts() {
 
             postElement.title =
                 post.caption ||
-                `Publicado em ${date.toLocaleDateString("pt-BR")}`;
+                `Publicado em ${date.toLocaleDateString(
+                    "pt-BR"
+                )}`;
 
-
-            // =================================
-            // CLIQUE
-            // =================================
 
             postElement.addEventListener(
                 "click",
@@ -777,7 +765,7 @@ async function loadUserPosts() {
 
 
 // =====================================
-// VISUALIZAR POST
+// VISUALIZAR PUBLICAÇÃO
 // =====================================
 
 function openPostViewer(
@@ -832,7 +820,9 @@ function openPostViewer(
                 post.caption
                     ? `
                         <p class="post-viewer-caption">
-                            ${escapeHTML(post.caption)}
+                            ${escapeHTML(
+                                post.caption
+                            )}
                         </p>
                     `
                     : ""
@@ -863,10 +853,6 @@ function openPostViewer(
     );
 
 
-    // =================================
-    // FECHAR
-    // =================================
-
     document
         .getElementById(
             "closePostViewer"
@@ -894,6 +880,312 @@ function openPostViewer(
 
             }
 
+        }
+    );
+
+}
+
+
+// =====================================
+// CARREGAR POSTS DE TEXTO
+// =====================================
+
+async function loadProfilePosts() {
+
+    if (!profilePosts) {
+
+        console.warn(
+            "Área de posts do perfil não encontrada."
+        );
+
+        return;
+
+    }
+
+
+    profilePosts.innerHTML = `
+
+        <div class="profile-posts-loading">
+
+            Carregando posts...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await db
+            .from("profile_posts")
+            .select(`
+                id,
+                user_id,
+                content,
+                created_at
+            `)
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        // =================================
+        // NENHUM POST
+        // =================================
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            profilePosts.innerHTML = `
+
+                <div class="profile-posts-empty">
+
+                    <div class="profile-empty-icon">
+                        💬
+                    </div>
+
+                    <strong>
+                        Nenhum post ainda
+                    </strong>
+
+                    <span>
+                        Seus posts aparecerão aqui.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        // =================================
+        // LIMPAR
+        // =================================
+
+        profilePosts.innerHTML =
+            "";
+
+
+        // =================================
+        // CRIAR POSTS
+        // =================================
+
+        data.forEach(
+            function (post) {
+
+                const article =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                article.className =
+                    "profile-text-post";
+
+
+                // =================================
+                // CONTEÚDO
+                // =================================
+
+                const content =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                content.className =
+                    "profile-text-post-content";
+
+
+                content.textContent =
+                    post.content;
+
+
+                // =================================
+                // DATA
+                // =================================
+
+                const date =
+                    document.createElement(
+                        "time"
+                    );
+
+
+                date.className =
+                    "profile-text-post-date";
+
+
+                date.textContent =
+                    formatPostDate(
+                        post.created_at
+                    );
+
+
+                article.appendChild(
+                    content
+                );
+
+
+                article.appendChild(
+                    date
+                );
+
+
+                profilePosts.appendChild(
+                    article
+                );
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Erro ao carregar posts do perfil:",
+            error
+        );
+
+
+        profilePosts.innerHTML = `
+
+            <div class="profile-posts-empty">
+
+                <div class="profile-empty-icon">
+                    ⚠️
+                </div>
+
+                <strong>
+                    Erro ao carregar posts
+                </strong>
+
+                <span>
+                    Não foi possível carregar seus posts.
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// =====================================
+// FORMATAR DATA DO POST
+// =====================================
+
+function formatPostDate(
+    date
+) {
+
+    const postDate =
+        new Date(date);
+
+
+    const now =
+        new Date();
+
+
+    const difference =
+        now.getTime() -
+        postDate.getTime();
+
+
+    const seconds =
+        Math.floor(
+            difference / 1000
+        );
+
+
+    if (seconds < 60) {
+
+        return "agora";
+
+    }
+
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    if (minutes < 60) {
+
+        return (
+            minutes === 1
+                ? "há 1 minuto"
+                : `há ${minutes} minutos`
+        );
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if (hours < 24) {
+
+        return (
+            hours === 1
+                ? "há 1 hora"
+                : `há ${hours} horas`
+        );
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if (days < 7) {
+
+        return (
+            days === 1
+                ? "ontem"
+                : `há ${days} dias`
+        );
+
+    }
+
+
+    return postDate.toLocaleDateString(
+        "pt-BR",
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
         }
     );
 
@@ -1086,72 +1378,55 @@ function updateChangeInfo() {
 
 
 // =====================================
-// ABRIR EDITAR PERFIL
+// EDITAR PERFIL
 // =====================================
 
-editProfileButton.addEventListener(
-    "click",
-    function () {
+if (editProfileButton) {
 
-        editName.value =
-            currentProfile.name;
+    editProfileButton.addEventListener(
+        "click",
+        function () {
 
-
-        editUsername.value =
-            currentProfile.username;
+            editName.value =
+                currentProfile.name;
 
 
-        editBio.value =
-            currentProfile.bio || "";
+            editUsername.value =
+                currentProfile.username;
 
 
-        profileMessage.textContent =
-            "";
+            editBio.value =
+                currentProfile.bio || "";
 
 
-        updateChangeInfo();
+            profileMessage.textContent =
+                "";
 
 
-        editModal
-            .classList
-            .remove(
-                "hidden"
-            );
+            updateChangeInfo();
 
-    }
-);
+
+            editModal
+                .classList
+                .remove(
+                    "hidden"
+                );
+
+        }
+    );
+
+}
 
 
 // =====================================
 // FECHAR MODAL
 // =====================================
 
-closeModal.addEventListener(
-    "click",
-    function () {
+if (closeModal) {
 
-        editModal
-            .classList
-            .add(
-                "hidden"
-            );
-
-    }
-);
-
-
-// =====================================
-// FECHAR CLICANDO FORA
-// =====================================
-
-editModal.addEventListener(
-    "click",
-    function (event) {
-
-        if (
-            event.target ===
-            editModal
-        ) {
+    closeModal.addEventListener(
+        "click",
+        function () {
 
             editModal
                 .classList
@@ -1160,226 +1435,25 @@ editModal.addEventListener(
                 );
 
         }
+    );
 
-    }
-);
-
-
-// =====================================
-// USERNAME AUTOMÁTICO
-// =====================================
-
-editUsername.addEventListener(
-    "input",
-    function () {
-
-        this.value =
-            this.value
-                .toLowerCase()
-                .replace(
-                    /[^a-z0-9._]/g,
-                    ""
-                );
-
-    }
-);
+}
 
 
 // =====================================
-// SALVAR ALTERAÇÕES
+// FECHAR CLICANDO FORA
 // =====================================
 
-profileForm.addEventListener(
-    "submit",
-    async function (event) {
+if (editModal) {
 
-        event.preventDefault();
-
-
-        const name =
-            editName.value.trim();
-
-
-        const username =
-            editUsername.value
-                .trim()
-                .toLowerCase();
-
-
-        const bio =
-            editBio.value.trim();
-
-
-        // =================================
-        // VALIDAÇÕES
-        // =================================
-
-        if (!name) {
-
-            profileMessage.textContent =
-                "Digite seu nome.";
-
-            return;
-
-        }
-
-
-        if (!username) {
-
-            profileMessage.textContent =
-                "Digite um nome de usuário.";
-
-            return;
-
-        }
-
-
-        if (
-            !/^[a-z0-9._]+$/.test(
-                username
-            )
-        ) {
-
-            profileMessage.textContent =
-                "Use apenas letras, números, ponto e _.";
-
-            return;
-
-        }
-
-
-        if (
-            username.length < 3
-        ) {
-
-            profileMessage.textContent =
-                "O nome de usuário precisa ter pelo menos 3 caracteres.";
-
-            return;
-
-        }
-
-
-        profileMessage.textContent =
-            "Salvando...";
-
-
-        // =================================
-        // ATUALIZAR SUPABASE
-        // =================================
-
-        const {
-            data,
-            error
-        } = await db.rpc(
-            "update_profile",
-            {
-
-                new_name:
-                    name,
-
-                new_username:
-                    username,
-
-                new_bio:
-                    bio
-
-            }
-        );
-
-
-        // =================================
-        // ERRO
-        // =================================
-
-        if (error) {
-
-            console.error(
-                "Erro ao atualizar:",
-                error
-            );
-
-
-            const errorMessage =
-                error.message || "";
-
+    editModal.addEventListener(
+        "click",
+        function (event) {
 
             if (
-                errorMessage.includes(
-                    "20 dias"
-                )
+                event.target ===
+                editModal
             ) {
-
-                profileMessage.textContent =
-                    "Você só pode alterar o nome de usuário a cada 20 dias.";
-
-                return;
-
-            }
-
-
-            if (
-                errorMessage.includes(
-                    "24 horas"
-                )
-            ) {
-
-                profileMessage.textContent =
-                    "Você só pode alterar o nome a cada 24 horas.";
-
-                return;
-
-            }
-
-
-            if (
-                errorMessage.includes(
-                    "duplicate"
-                ) ||
-                errorMessage.includes(
-                    "unique"
-                ) ||
-                errorMessage.includes(
-                    "profiles_username_key"
-                )
-            ) {
-
-                profileMessage.textContent =
-                    "Esse nome de usuário já está sendo usado.";
-
-                return;
-
-            }
-
-
-            profileMessage.textContent =
-                "Não foi possível salvar as alterações.";
-
-            return;
-
-        }
-
-
-        // =================================
-        // ATUALIZOU
-        // =================================
-
-        currentProfile =
-            data;
-
-
-        renderProfile();
-
-
-        updateChangeInfo();
-
-
-        profileMessage.textContent =
-            "Perfil atualizado!";
-
-
-        setTimeout(
-            function () {
 
                 editModal
                     .classList
@@ -1387,18 +1461,260 @@ profileForm.addEventListener(
                         "hidden"
                     );
 
-            },
-            800
-        );
+            }
 
-    }
-);
+        }
+    );
+
+}
+
+
+// =====================================
+// USERNAME AUTOMÁTICO
+// =====================================
+
+if (editUsername) {
+
+    editUsername.addEventListener(
+        "input",
+        function () {
+
+            this.value =
+                this.value
+                    .toLowerCase()
+                    .replace(
+                        /[^a-z0-9._]/g,
+                        ""
+                    );
+
+        }
+    );
+
+}
+
+
+// =====================================
+// SALVAR PERFIL
+// =====================================
+
+if (profileForm) {
+
+    profileForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const name =
+                editName.value.trim();
+
+
+            const username =
+                editUsername.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const bio =
+                editBio.value.trim();
+
+
+            // =================================
+            // VALIDAÇÕES
+            // =================================
+
+            if (!name) {
+
+                profileMessage.textContent =
+                    "Digite seu nome.";
+
+                return;
+
+            }
+
+
+            if (!username) {
+
+                profileMessage.textContent =
+                    "Digite um nome de usuário.";
+
+                return;
+
+            }
+
+
+            if (
+                !/^[a-z0-9._]+$/.test(
+                    username
+                )
+            ) {
+
+                profileMessage.textContent =
+                    "Use apenas letras, números, ponto e _.";
+
+                return;
+
+            }
+
+
+            if (
+                username.length < 3
+            ) {
+
+                profileMessage.textContent =
+                    "O nome de usuário precisa ter pelo menos 3 caracteres.";
+
+                return;
+
+            }
+
+
+            profileMessage.textContent =
+                "Salvando...";
+
+
+            // =================================
+            // SUPABASE RPC
+            // =================================
+
+            const {
+                data,
+                error
+            } = await db.rpc(
+                "update_profile",
+                {
+
+                    new_name:
+                        name,
+
+                    new_username:
+                        username,
+
+                    new_bio:
+                        bio
+
+                }
+            );
+
+
+            // =================================
+            // ERRO
+            // =================================
+
+            if (error) {
+
+                console.error(
+                    "Erro ao atualizar:",
+                    error
+                );
+
+
+                const errorMessage =
+                    error.message || "";
+
+
+                if (
+                    errorMessage.includes(
+                        "20 dias"
+                    )
+                ) {
+
+                    profileMessage.textContent =
+                        "Você só pode alterar o nome de usuário a cada 20 dias.";
+
+                    return;
+
+                }
+
+
+                if (
+                    errorMessage.includes(
+                        "24 horas"
+                    )
+                ) {
+
+                    profileMessage.textContent =
+                        "Você só pode alterar o nome a cada 24 horas.";
+
+                    return;
+
+                }
+
+
+                if (
+                    errorMessage.includes(
+                        "duplicate"
+                    ) ||
+                    errorMessage.includes(
+                        "unique"
+                    ) ||
+                    errorMessage.includes(
+                        "profiles_username_key"
+                    )
+                ) {
+
+                    profileMessage.textContent =
+                        "Esse nome de usuário já está sendo usado.";
+
+                    return;
+
+                }
+
+
+                profileMessage.textContent =
+                    "Não foi possível salvar as alterações.";
+
+                return;
+
+            }
+
+
+            // =================================
+            // ATUALIZOU
+            // =================================
+
+            currentProfile =
+                data;
+
+
+            renderProfile();
+
+
+            updateChangeInfo();
+
+
+            profileMessage.textContent =
+                "Perfil atualizado!";
+
+
+            setTimeout(
+                function () {
+
+                    editModal
+                        .classList
+                        .add(
+                            "hidden"
+                        );
+
+                },
+                800
+            );
+
+        }
+    );
+
+}
+
 
 // =====================================
 // ALTERAR FOTO DE PERFIL
 // =====================================
 
-if (changeAvatar && avatarInput) {
+if (
+    changeAvatar &&
+    avatarInput
+) {
 
     changeAvatar.addEventListener(
         "click",
@@ -1426,7 +1742,7 @@ if (changeAvatar && avatarInput) {
 
 
             // =================================
-            // VALIDAR FORMATO
+            // FORMATOS
             // =================================
 
             const allowedTypes = [
@@ -1582,7 +1898,7 @@ if (changeAvatar && avatarInput) {
 
 
                 // =================================
-                // ATUALIZAR LOCALMENTE
+                // ATUALIZAR LOCAL
                 // =================================
 
                 currentProfile.avatar_url =
@@ -1605,7 +1921,6 @@ if (changeAvatar && avatarInput) {
                     },
                     1500
                 );
-
 
             }
 
@@ -1640,317 +1955,9 @@ if (changeAvatar && avatarInput) {
 
 }
 
-// =====================================
-// VINCI 0.5.3 — CARREGAR POSTS
-// =====================================
-
-async function loadProfilePosts() {
-
-    if (!profilePosts) {
-
-        console.warn(
-            "Área de posts do perfil não encontrada."
-        );
-
-        return;
-
-    }
-
-
-    profilePosts.innerHTML = `
-
-        <div class="profile-posts-loading">
-
-            Carregando posts...
-
-        </div>
-
-    `;
-
-
-    try {
-
-        const {
-            data,
-            error
-        } = await db
-            .from("profile_posts")
-            .select(`
-                id,
-                user_id,
-                content,
-                created_at
-            `)
-            .eq(
-                "user_id",
-                currentUser.id
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        // =================================
-        // NENHUM POST
-        // =================================
-
-        if (
-            !data ||
-            data.length === 0
-        ) {
-
-            profilePosts.innerHTML = `
-
-                <div class="profile-posts-empty">
-
-                    <div class="profile-empty-icon">
-                        💬
-                    </div>
-
-                    <strong>
-                        Nenhum post ainda
-                    </strong>
-
-                    <span>
-                        Seus posts aparecerão aqui.
-                    </span>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        // =================================
-        // LIMPAR
-        // =================================
-
-        profilePosts.innerHTML = "";
-
-
-        // =================================
-        // CRIAR POSTS
-        // =================================
-
-        data.forEach(
-            function (post) {
-
-                const article =
-                    document.createElement(
-                        "article"
-                    );
-
-
-                article.className =
-                    "profile-text-post";
-
-
-                // =================================
-                // CONTEÚDO
-                // =================================
-
-                const content =
-                    document.createElement(
-                        "p"
-                    );
-
-
-                content.className =
-                    "profile-text-post-content";
-
-
-                content.textContent =
-                    post.content;
-
-
-                // =================================
-                // DATA
-                // =================================
-
-                const date =
-                    document.createElement(
-                        "time"
-                    );
-
-
-                date.className =
-                    "profile-text-post-date";
-
-
-                date.textContent =
-                    formatPostDate(
-                        post.created_at
-                    );
-
-
-                // =================================
-                // MONTAR
-                // =================================
-
-                article.appendChild(
-                    content
-                );
-
-
-                article.appendChild(
-                    date
-                );
-
-
-                profilePosts.appendChild(
-                    article
-                );
-
-            }
-        );
-
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Erro ao carregar posts do perfil:",
-            error
-        );
-
-
-        profilePosts.innerHTML = `
-
-            <div class="profile-posts-empty">
-
-                <div class="profile-empty-icon">
-                    ⚠️
-                </div>
-
-                <strong>
-                    Erro ao carregar posts
-                </strong>
-
-                <span>
-                    Não foi possível carregar suas publicações de texto.
-                </span>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
 
 // =====================================
-// FORMATAR DATA DO POST
-// =====================================
-
-function formatPostDate(
-    date
-) {
-
-    const postDate =
-        new Date(date);
-
-
-    const now =
-        new Date();
-
-
-    const difference =
-        now.getTime() -
-        postDate.getTime();
-
-
-    const seconds =
-        Math.floor(
-            difference / 1000
-        );
-
-
-    if (seconds < 60) {
-
-        return "agora";
-
-    }
-
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-
-    if (minutes < 60) {
-
-        return (
-            minutes === 1
-                ? "há 1 minuto"
-                : `há ${minutes} minutos`
-        );
-
-    }
-
-
-    const hours =
-        Math.floor(
-            minutes / 60
-        );
-
-
-    if (hours < 24) {
-
-        return (
-            hours === 1
-                ? "há 1 hora"
-                : `há ${hours} horas`
-        );
-
-    }
-
-
-    const days =
-        Math.floor(
-            hours / 24
-        );
-
-
-    if (days < 7) {
-
-        return (
-            days === 1
-                ? "ontem"
-                : `há ${days} dias`
-        );
-
-    }
-
-
-    return postDate.toLocaleDateString(
-        "pt-BR",
-        {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        }
-    );
-
-}
-
-// =====================================
-// INICIAR
+// INICIAR VINCI
 // =====================================
 
 loadUser();
