@@ -19,13 +19,11 @@ if (signupForm) {
 
       event.preventDefault();
 
-
       const name =
         document
         .getElementById("name")
         .value
         .trim();
-
 
       const username =
         document
@@ -35,60 +33,52 @@ if (signupForm) {
         .toLowerCase()
         .replace("@", "");
 
-
       const email =
         document
         .getElementById("email")
         .value
         .trim();
 
-
       const password =
         document
         .getElementById("password")
         .value;
 
-
       const message =
         document.getElementById("message");
-
 
       message.textContent =
         "Criando sua conta...";
 
-
       try {
 
         const { data, error } =
-        await db.auth.signUp({
+          await db.auth.signUp({
 
-          email: email,
+            email: email,
 
-          password: password,
+            password: password,
 
-          options: {
+            options: {
 
-            data: {
+              data: {
 
-              name: name,
+                name: name,
 
-              username: username
+                username: username
+
+              }
 
             }
 
-          }
-
-        });
-
+          });
 
         if (error) {
           throw error;
         }
 
-
         message.textContent =
           "Conta criada! Verifique seu e-mail para confirmar.";
-
 
         setTimeout(() => {
 
@@ -96,7 +86,6 @@ if (signupForm) {
             "login.html";
 
         }, 2500);
-
 
       } catch (error) {
 
@@ -129,52 +118,43 @@ if (loginForm) {
 
       event.preventDefault();
 
-
       const email =
         document
         .getElementById("email")
         .value
         .trim();
 
-
       const password =
         document
         .getElementById("password")
         .value;
 
-
       const message =
         document.getElementById("message");
-
 
       message.textContent =
         "Entrando...";
 
-
       try {
 
         const { data, error } =
-        await db.auth.signInWithPassword({
+          await db.auth.signInWithPassword({
 
-          email: email,
+            email: email,
 
-          password: password
+            password: password
 
-        });
-
+          });
 
         if (error) {
           throw error;
         }
 
-
         message.textContent =
           "Login realizado!";
 
-
         window.location.href =
           "profile.html";
-
 
       } catch (error) {
 
@@ -198,22 +178,17 @@ if (loginForm) {
 const forgotPasswordButton =
   document.getElementById("forgotPassword");
 
-
 const forgotPasswordModal =
   document.getElementById("forgotPasswordModal");
-
 
 const closeForgotModal =
   document.getElementById("closeForgotModal");
 
-
 const sendReset =
   document.getElementById("sendReset");
 
-
 const resetEmail =
   document.getElementById("resetEmail");
-
 
 const resetMessage =
   document.getElementById("resetMessage");
@@ -233,16 +208,13 @@ if (forgotPasswordButton) {
         "hidden"
       );
 
-
       resetMessage.textContent = "";
-
 
       resetEmail.value =
         document
         .getElementById("email")
         .value
         .trim();
-
 
       setTimeout(() => {
 
@@ -322,7 +294,6 @@ if (sendReset) {
         .trim()
         .toLowerCase();
 
-
       if (!email) {
 
         resetMessage.textContent =
@@ -334,14 +305,12 @@ if (sendReset) {
 
       }
 
-
       sendReset.disabled = true;
 
       sendReset.textContent =
         "Enviando...";
 
       resetMessage.textContent = "";
-
 
       try {
 
@@ -356,29 +325,28 @@ if (sendReset) {
             }
           );
 
-
         if (error) {
           throw error;
         }
 
-
         resetMessage.textContent =
           "Link enviado! Verifique seu e-mail.";
-
 
         sendReset.textContent =
           "Link enviado";
 
-
         resetEmail.value = "";
-
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "ERRO RECUPERAÇÃO:",
+          error
+        );
 
         resetMessage.textContent =
-          "Não foi possível enviar o link. Tente novamente.";
+          error.message ||
+          "Não foi possível enviar o link.";
 
         sendReset.disabled = false;
 
