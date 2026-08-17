@@ -3699,3 +3699,239 @@ button:disabled {
     }
 
 }
+
+/* =====================================
+   VINCI — BOTÃO DE EXCLUIR PUBLICAÇÃO
+   ===================================== */
+
+.vinci-delete-button {
+
+    position: absolute;
+
+    right: 12px;
+    bottom: 12px;
+
+    z-index: 20;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    background:
+        rgba(12, 12, 16, 0.82);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    color:
+        rgba(255, 255, 255, 0.88);
+
+    font-family:
+        inherit;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+    line-height:
+        1;
+
+    padding:
+        9px 13px;
+
+    border-radius:
+        10px;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.28);
+
+    opacity:
+        0;
+
+    transform:
+        translateY(5px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+
+}
+
+
+/* =====================================
+   GARANTIR POSICIONAMENTO
+   ===================================== */
+
+.vinci-post,
+.profile-post,
+.profile-text-post {
+
+    position:
+        relative;
+
+}
+
+
+/* =====================================
+   MOSTRAR AO PASSAR O MOUSE
+   ===================================== */
+
+.vinci-post:hover
+.vinci-delete-button,
+
+.profile-post:hover
+.vinci-delete-button,
+
+.profile-text-post:hover
+.vinci-delete-button {
+
+    opacity:
+        1;
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =====================================
+   HOVER
+   ===================================== */
+
+.vinci-delete-button:hover {
+
+    background:
+        rgba(190, 35, 55, 0.92);
+
+    border-color:
+        rgba(255, 100, 120, 0.35);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.38);
+
+}
+
+
+/* =====================================
+   CLIQUE
+   ===================================== */
+
+.vinci-delete-button:active {
+
+    transform:
+        translateY(1px)
+        scale(0.96);
+
+}
+
+
+/* =====================================
+   CELULAR
+   ===================================== */
+
+@media (max-width: 700px) {
+
+    .vinci-delete-button {
+
+        opacity:
+            1;
+
+        transform:
+            none;
+
+        right:
+            8px;
+
+        bottom:
+            8px;
+
+        padding:
+            8px 11px;
+
+        font-size:
+            12px;
+
+        border-radius:
+            9px;
+
+        background:
+            rgba(12, 12, 16, 0.72);
+
+    }
+
+}
+
+
+/* =====================================
+   ACESSIBILIDADE
+   ===================================== */
+
+.vinci-delete-button:focus-visible {
+
+    outline:
+        2px solid rgba(255, 255, 255, 0.75);
+
+    outline-offset:
+        3px;
+
+}
+
+/* =====================================
+   VINCI — CONFIRMAÇÃO DE EXCLUSÃO
+   ===================================== */
+
+.vinci-delete-button.confirming {
+    
+    background:
+        rgba(190, 35, 55, 0.95);
+    
+    border-color:
+        rgba(255, 100, 120, 0.55);
+    
+    color:
+        #ffffff;
+    
+    opacity:
+        1;
+    
+    transform:
+        translateY(0);
+    
+    box-shadow:
+        0 8px 26px rgba(160, 20, 40, 0.30);
+    
+}
+
+
+.vinci-delete-button.confirming:hover {
+    
+    background:
+        rgba(220, 45, 65, 0.98);
+    
+    border-color:
+        rgba(255, 130, 145, 0.7);
+    
+}
+
+
+.vinci-delete-button:disabled {
+    
+    cursor:
+        wait;
+    
+    opacity:
+        0.7;
+    
+}
