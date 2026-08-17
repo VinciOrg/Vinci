@@ -893,6 +893,12 @@ async function loadProfilePosts() {
                 article.className =
                     "profile-text-post";
 
+                article.dataset.postId =
+    post.id;
+
+article.dataset.userId =
+    post.user_id;
+
 
                 const content =
                     document.createElement(
