@@ -21,6 +21,11 @@
         href="style.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="search.css"
+    >
+
 </head>
 
 <body>
@@ -38,6 +43,15 @@
             <div class="vinci-logo">
                 Vinci
             </div>
+
+            <button
+                type="button"
+                id="openSearch"
+                class="search-button"
+                aria-label="Pesquisar usuários"
+            >
+                🔎
+            </button>
 
         </header>
 
@@ -99,6 +113,64 @@
         </div>
 
     </main>
+
+    <!-- =====================================
+         PESQUISA DE USUÁRIOS
+    ====================================== -->
+
+    <div
+        id="searchPanel"
+        class="search-panel hidden"
+    >
+
+        <div class="search-content">
+
+            <div class="search-header">
+
+                <div class="search-input-wrapper">
+
+                    <span class="search-input-icon">
+                        🔎
+                    </span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="@usuario ou nome"
+                        autocomplete="off"
+                        maxlength="50"
+                    >
+
+                    <button
+                        type="button"
+                        id="searchSubmit"
+                        class="search-submit"
+                    >
+                        Pesquisar
+                    </button>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="closeSearch"
+                    class="search-close"
+                    aria-label="Fechar pesquisa"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div
+                id="searchResults"
+                class="search-results"
+            ></div>
+
+        </div>
+
+    </div>
 
     <!-- =====================================
          NAVEGAÇÃO
@@ -171,9 +243,7 @@
                 id="closeCreateMenu"
                 class="create-menu-close"
             >
-
                 ×
-
             </button>
 
             <!-- TÍTULO -->
@@ -261,9 +331,7 @@
                 id="cancelCreate"
                 class="create-cancel"
             >
-
                 Cancelar
-
             </button>
 
         </div>
@@ -279,16 +347,12 @@
     ></script>
 
     <script src="supabase.js"></script>
-
     <script src="auth-guard.js"></script>
-
     <script src="feed.js"></script>
-
     <script src="delete-system.js"></script>
-    
     <script src="profile-navigation.js"></script>
-
     <script src="create.js"></script>
+    <script src="search.js"></script>
 
 </body>
 
