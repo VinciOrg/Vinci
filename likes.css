@@ -1,0 +1,354 @@
+/* =====================================
+   VINCI — LIKES SYSTEM 1.0
+===================================== */
+
+
+/* =====================================
+   CONTROLE
+===================================== */
+
+.vinci-like-control {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    width:
+        fit-content;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+/* =====================================
+   BOTÃO
+===================================== */
+
+.vinci-like-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        6px;
+
+    min-height:
+        34px;
+
+    padding:
+        5px 9px;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        transparent;
+
+    color:
+        #777;
+
+    font-family:
+        inherit;
+
+    cursor:
+        pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.16s ease;
+
+}
+
+
+.vinci-like-button:hover {
+
+    background:
+        rgba(
+            225,
+            76,
+            96,
+            0.07
+        );
+
+}
+
+
+.vinci-like-button:active {
+
+    transform:
+        scale(0.9);
+
+}
+
+
+/* =====================================
+   CORAÇÃO
+===================================== */
+
+.vinci-like-icon {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        23px;
+
+    line-height:
+        1;
+
+    transition:
+        transform 0.18s ease,
+        color 0.18s ease;
+
+}
+
+
+/* =====================================
+   CONTADOR
+===================================== */
+
+.vinci-like-count {
+
+    min-width:
+        8px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+}
+
+
+/* =====================================
+   CURTIDO
+===================================== */
+
+.vinci-like-button.liked {
+
+    color:
+        #e4475f;
+
+}
+
+
+.vinci-like-button.liked
+.vinci-like-icon {
+
+    color:
+        #e4475f;
+
+    animation:
+        vinciLikePop
+        0.25s
+        ease;
+
+}
+
+
+/* =====================================
+   ANIMAÇÃO
+===================================== */
+
+@keyframes vinciLikePop {
+
+    0% {
+
+        transform:
+            scale(0.75);
+
+    }
+
+    55% {
+
+        transform:
+            scale(1.25);
+
+    }
+
+    100% {
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================
+   DESABILITADO
+===================================== */
+
+.vinci-like-button:disabled {
+
+    cursor:
+        wait;
+
+}
+
+
+/* =====================================
+   FOTOGRAFIA NO GRID
+===================================== */
+
+.profile-post {
+
+    position:
+        relative;
+
+}
+
+
+.vinci-like-control-grid {
+
+    position:
+        absolute;
+
+    left:
+        7px;
+
+    bottom:
+        7px;
+
+    z-index:
+        15;
+
+    margin:
+        0;
+
+}
+
+
+.vinci-like-control-grid
+.vinci-like-button {
+
+    min-height:
+        32px;
+
+    padding:
+        5px 9px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.15);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(15, 15, 18, 0.68);
+
+    color:
+        #ffffff;
+
+    backdrop-filter:
+        blur(9px);
+
+    -webkit-backdrop-filter:
+        blur(9px);
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.2);
+
+}
+
+
+.vinci-like-control-grid
+.vinci-like-button:hover {
+
+    background:
+        rgba(20, 20, 24, 0.82);
+
+}
+
+
+.vinci-like-control-grid
+.vinci-like-button.liked {
+
+    color:
+        #ff6178;
+
+}
+
+
+.vinci-like-control-grid
+.vinci-like-icon {
+
+    font-size:
+        20px;
+
+}
+
+
+/* =====================================
+   POST DE TEXTO
+===================================== */
+
+.profile-text-post
+.vinci-like-control {
+
+    margin-top:
+        9px;
+
+    margin-bottom:
+        0;
+
+}
+
+
+/* =====================================
+   CELULAR
+===================================== */
+
+@media (max-width: 700px) {
+
+    .vinci-like-button {
+
+        min-height:
+            38px;
+
+    }
+
+
+    .vinci-like-icon {
+
+        font-size:
+            24px;
+
+    }
+
+
+    .vinci-like-control-grid {
+
+        left:
+            6px;
+
+        bottom:
+            6px;
+
+    }
+
+}
