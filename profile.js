@@ -601,6 +601,12 @@ async function loadUserPosts() {
 
             postElement.className =
                 "profile-post";
+                
+                postElement.dataset.userId =
+    viewingProfileId;
+
+postElement.dataset.postId =
+    post.id;
 
 
             const image =
