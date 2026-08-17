@@ -66,9 +66,11 @@ function createPostElement(
     article.className =
         "vinci-post";
         
-    article.dataset.userId =
-        post.user_id;
+   article.dataset.userId =
+    post.user_id;
 
+article.dataset.postId =
+    post.id;
 
     // =================================
     // CABEÇALHO
