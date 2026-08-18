@@ -703,6 +703,16 @@ function openPostViewer(
         "post-viewer";
 
 
+    // Identificação usada pelo sistema
+    // de respostas da fotografia.
+    viewer.dataset.postId =
+        post.id;
+
+
+    viewer.dataset.userId =
+        viewingProfileId;
+
+
     viewer.innerHTML = `
 
         <div class="post-viewer-content">
@@ -892,8 +902,8 @@ async function loadProfilePosts() {
 
                 article.className =
                     "profile-text-post";
-
-                article.dataset.postId =
+                    
+                    article.dataset.postId =
     post.id;
 
 article.dataset.userId =
