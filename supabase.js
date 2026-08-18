@@ -123,22 +123,26 @@ const VinciMedia = (() => {
       return;
     }
 
-    const original =
-      img.dataset.vinciOriginalSrc ||
+    const currentSrc =
       img.getAttribute("src") ||
       "";
+
+    // Se a imagem já está usando uma URL assinada válida,
+    // não tenta assiná-la novamente.
+    if (
+      currentSrc.includes(`/storage/v1/object/sign/${BUCKET}/`) &&
+      currentSrc.includes("token=")
+    ) {
+      return;
+    }
+
+    const original =
+      img.dataset.vinciOriginalSrc ||
+      currentSrc;
 
     const path = extractPath(original);
 
     if (!path) {
-      return;
-    }
-
-    // URLs assinadas válidas podem continuar sendo usadas.
-    if (
-      original.includes(`/storage/v1/object/sign/${BUCKET}/`) &&
-      original.includes("token=")
-    ) {
       return;
     }
 
