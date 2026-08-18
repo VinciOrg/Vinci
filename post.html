@@ -22,6 +22,11 @@
         href="style.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="privacy.css"
+    >
+
 </head>
 
 
@@ -145,6 +150,150 @@
 
 
 
+            <!-- =========================
+                 ONDE PUBLICAR
+            ========================== -->
+
+            <div class="post-visibility">
+
+                <h3>Onde publicar?</h3>
+
+                <label class="visibility-option">
+
+                    <input
+                        type="radio"
+                        name="visibility"
+                        value="feed"
+                        checked
+                    >
+
+                    <div>
+
+                        <strong>
+                            📰 Feed + Perfil
+                        </strong>
+
+                        <span>
+                            Sua fotografia aparecerá no feed
+                            e no seu perfil.
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <label class="visibility-option">
+
+                    <input
+                        type="radio"
+                        name="visibility"
+                        value="profile"
+                    >
+
+                    <div>
+
+                        <strong>
+                            👤 Apenas Perfil
+                        </strong>
+
+                        <span>
+                            A fotografia ficará somente
+                            no seu perfil.
+                        </span>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- =========================
+                 PRIVACIDADE DAS RESPOSTAS
+            ========================== -->
+
+            <section class="reply-privacy-card">
+
+                <div class="reply-privacy-heading">
+
+                    <div>
+                        <h3>Quem pode responder?</h3>
+                    </div>
+
+                    <span class="reply-privacy-badge">
+                        Controle do autor
+                    </span>
+
+                </div>
+
+                <p class="reply-privacy-description">
+                    Adicione exatamente as pessoas que poderão responder esta fotografia.
+                </p>
+
+                <div class="reply-user-picker">
+
+                    <div class="reply-user-search-wrap">
+
+                        <span class="reply-user-search-at">
+                            @
+                        </span>
+
+                        <input
+                            type="search"
+                            id="replyUserSearch"
+                            placeholder="Digite o usuário ou nome"
+                            autocomplete="off"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            maxlength="50"
+                        >
+
+                    </div>
+
+                    <div
+                        id="replyUserResults"
+                        class="reply-user-results hidden"
+                    ></div>
+
+                </div>
+
+                <div class="reply-selected-header">
+
+                    <strong>
+                        Pessoas autorizadas
+                    </strong>
+
+                    <span
+                        id="replySelectedCount"
+                        class="reply-selected-count"
+                    >
+                        0 pessoas selecionadas
+                    </span>
+
+                </div>
+
+                <div
+                    id="replySelectedUsers"
+                    class="reply-selected-users"
+                ></div>
+
+                <p
+                    id="replyPermissionEmpty"
+                    class="reply-permission-empty"
+                >
+                    Ninguém foi adicionado. A publicação continuará visível normalmente, mas somente você poderá responder.
+                </p>
+
+                <p class="reply-privacy-note">
+                    Você poderá alterar essa lista depois da publicação.
+                </p>
+
+            </section>
+
+
+
             <!-- MENSAGEM -->
 
             <p
@@ -182,59 +331,6 @@
 
         </section>
 
-<div class="post-visibility">
-
-    <h3>Onde publicar?</h3>
-
-    <label class="visibility-option">
-
-        <input
-            type="radio"
-            name="visibility"
-            value="feed"
-            checked
-        >
-
-        <div>
-
-            <strong>
-                📰 Feed + Perfil
-            </strong>
-
-            <span>
-                Sua fotografia aparecerá no feed
-                e no seu perfil.
-            </span>
-
-        </div>
-
-    </label>
-
-
-    <label class="visibility-option">
-
-        <input
-            type="radio"
-            name="visibility"
-            value="profile"
-        >
-
-        <div>
-
-            <strong>
-                👤 Apenas Perfil
-            </strong>
-
-            <span>
-                A fotografia ficará somente
-                no seu perfil.
-            </span>
-
-        </div>
-
-    </label>
-
-</div>
 
     </main>
 
@@ -295,6 +391,8 @@
     <script src="supabase.js"></script>
 
     <script src="auth-guard.js"></script>
+
+    <script src="privacy.js"></script>
 
     <script src="post.js"></script>
 
