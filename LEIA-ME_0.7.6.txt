@@ -1,0 +1,59 @@
+VINCI 0.7.6 — SHUTTER LOADER
+================================
+
+NOVIDADE
+--------
+O Vinci agora possui um loader global inspirado no obturador de uma câmera.
+A marca em V fecha e abre como se estivesse tirando uma fotografia.
+
+ARQUIVOS NOVOS
+--------------
+- loading.css
+- loading.js
+
+ARQUIVOS HTML ALTERADOS
+-----------------------
+O loader foi conectado a todas as páginas HTML do projeto:
+- index.html
+- profile.html
+- post.html
+- profile-post.html
+- albums.html
+- circles.html
+- notifications.html
+- login.html
+- signup.html
+- reset-password.html
+
+COMO FUNCIONA
+-------------
+1. Ao abrir uma página, o loader aparece imediatamente.
+2. Quando o conteúdo termina de carregar, ele desaparece suavemente.
+3. Requisições fetch/Supabase rápidas são ignoradas para não causar piscadas.
+4. Se uma requisição realmente demorar, o loader aparece automaticamente.
+5. Ao navegar entre páginas internas do Vinci, ele aparece durante a transição.
+
+API OPCIONAL PARA NOVAS FUNÇÕES
+-------------------------------
+Você também pode controlar o loader manualmente em funcionalidades futuras:
+
+const token = VinciLoading.show("Publicando");
+
+// ... operação async ...
+
+VinciLoading.hide(token);
+
+Ou:
+
+await VinciLoading.track(
+    minhaFuncaoAsync(),
+    "Carregando"
+);
+
+IMPORTANTE
+----------
+Nenhum SQL novo é necessário para esta atualização.
+
+Se o navegador travar completamente a thread principal do JavaScript,
+nenhuma animação de página pode ser garantida. O loader usa apenas transform
+e opacity para ser o mais leve possível e continuar suave em pequenos atrasos.

@@ -13,12 +13,198 @@
     <title>Entrar — Vinci</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loading.css">
 
 </head>
 
 <body>
 
-    <main class="auth-page">
+        <!-- =====================================
+         VINCI — SHUTTER LOADER GLOBAL 0.7.7
+    ====================================== -->
+    <div
+        id="vinciGlobalLoader"
+        class="vinci-loader vinci-loader--visible"
+        role="status"
+        aria-live="polite"
+        aria-hidden="false"
+    >
+        <div class="vinci-loader__flash-screen" aria-hidden="true"></div>
+
+        <div class="vinci-loader__content">
+            <div class="vinci-loader__logo-wrap" aria-hidden="true">
+                <div class="vinci-loader__halo"></div>
+
+                <svg
+                    class="vinci-loader__mark"
+                    viewBox="0 0 120 108"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <defs>
+                        <linearGradient id="vinciLoaderLeftArm" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#ffb474"/>
+                            <stop offset="1" stop-color="#f28b3c"/>
+                        </linearGradient>
+
+                        <linearGradient id="vinciLoaderRightArm" x1="1" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#f79b52"/>
+                            <stop offset="1" stop-color="#d96f1f"/>
+                        </linearGradient>
+
+                        <filter id="vinciLoaderShadow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feDropShadow
+                                dx="0"
+                                dy="8"
+                                stdDeviation="7"
+                                flood-color="#d96f1f"
+                                flood-opacity="0.18"
+                            />
+                        </filter>
+                    </defs>
+
+                    <g filter="url(#vinciLoaderShadow)">
+                        <g>
+                            <path
+                                d="M22 18 C17 18 14 23 17 28 L51 91 C54 97 61 97 64 91 L69 81 L42 25 C40 20 35 18 30 18 Z"
+                                fill="url(#vinciLoaderLeftArm)"
+                            />
+
+                            <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                values="0 60 92; 0 60 92; 11 60 92; 11 60 92; 0 60 92; 0 60 92"
+                                keyTimes="0; .22; .39; .52; .72; 1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+                        </g>
+
+                        <g>
+                            <path
+                                d="M98 18 C103 18 106 23 103 28 L69 91 C66 97 59 97 56 91 L51 81 L78 25 C80 20 85 18 90 18 Z"
+                                fill="url(#vinciLoaderRightArm)"
+                            />
+
+                            <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                values="0 60 92; 0 60 92; -11 60 92; -11 60 92; 0 60 92; 0 60 92"
+                                keyTimes="0; .22; .39; .52; .72; 1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+                        </g>
+                    </g>
+
+                    <g>
+                        <circle
+                            cx="60"
+                            cy="48"
+                            r="23"
+                            fill="#fffaf6"
+                            stroke="#f28b3c"
+                            stroke-width="4"
+                        />
+
+                        <circle
+                            cx="60"
+                            cy="48"
+                            r="17"
+                            fill="#3b3029"
+                        />
+
+                        <g
+                            opacity="0.72"
+                            stroke="#f7c29b"
+                            stroke-width="2.4"
+                            stroke-linecap="round"
+                        >
+                            <line x1="60" y1="33" x2="60" y2="39"/>
+                            <line x1="73" y1="40.5" x2="67.8" y2="43.5"/>
+                            <line x1="73" y1="55.5" x2="67.8" y2="52.5"/>
+                            <line x1="60" y1="63" x2="60" y2="57"/>
+                            <line x1="47" y1="55.5" x2="52.2" y2="52.5"/>
+                            <line x1="47" y1="40.5" x2="52.2" y2="43.5"/>
+
+                            <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                values="0 60 48; 0 60 48; 50 60 48; 50 60 48; 0 60 48; 0 60 48"
+                                keyTimes="0; .22; .42; .52; .72; 1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+                        </g>
+
+                        <circle
+                            cx="60"
+                            cy="48"
+                            r="9"
+                            fill="#fffaf6"
+                        >
+                            <animate
+                                attributeName="r"
+                                values="9;9;1.7;1.7;9.5;9"
+                                keyTimes="0;.22;.42;.52;.72;1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+                        </circle>
+
+                        <circle
+                            cx="60"
+                            cy="48"
+                            r="3.8"
+                            fill="#f28b3c"
+                            opacity="0.85"
+                        >
+                            <animate
+                                attributeName="r"
+                                values="3.8;3.8;.8;.8;4.2;3.8"
+                                keyTimes="0;.22;.42;.52;.72;1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+                        </circle>
+
+                        <circle
+                            cx="60"
+                            cy="48"
+                            r="10"
+                            fill="#ffffff"
+                            opacity="0"
+                        >
+                            <animate
+                                attributeName="opacity"
+                                values="0;0;0;.95;0;0"
+                                keyTimes="0;.43;.47;.50;.57;1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+
+                            <animate
+                                attributeName="r"
+                                values="10;10;10;28;34;34"
+                                keyTimes="0;.43;.47;.50;.57;1"
+                                dur="1.45s"
+                                repeatCount="indefinite"
+                            />
+                        </circle>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="vinci-loader__brand">
+                Vinci
+            </div>
+
+            <p class="vinci-loader__message">
+                <span class="vinci-loader__message-text">Carregando</span><span class="vinci-loader__dots" aria-hidden="true"></span>
+            </p>
+        </div>
+    </div>
+
+<main class="auth-page">
 
         <div class="auth-box">
 
@@ -170,6 +356,8 @@
 
     </div>
 
+
+    <script src="loading.js"></script>
 
     <script
         src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"

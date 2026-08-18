@@ -1,0 +1,14 @@
+VINCI 0.7.7 — SHUTTER LOADER FIX
+
+Correção do loader 0.7.6.
+
+O que mudou:
+- removido o movimento por CSS/SVG transform que podia virar um X;
+- o V agora usa animação nativa SVG com pivô fixo;
+- as duas pernas do V nunca se cruzam;
+- o V estreita e abre novamente;
+- a lente central fecha como um obturador;
+- há um flash curto no momento da "foto";
+- loading.js continua com o mesmo comportamento automático.
+
+Não há SQL novo.
