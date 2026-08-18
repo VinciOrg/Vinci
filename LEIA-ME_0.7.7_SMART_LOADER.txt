@@ -1,0 +1,21 @@
+VINCI 0.7.7 — SMART SHUTTER LOADER
+
+CORREÇÃO DE EXPERIÊNCIA
+
+O loader do Vinci não aparece mais obrigatoriamente em toda troca de página.
+
+Novo comportamento:
+- Feed -> Perfil rápido: sem loader.
+- Perfil -> Feed rápido: sem loader.
+- carregamento/requisição abaixo de ~800 ms: sem loader.
+- espera acima de ~800 ms: o obturador aparece automaticamente.
+- se o loader aparecer, permanece por pelo menos ~420 ms para não piscar.
+- operações futuras podem chamar window.VinciLoading.show() manualmente quando realmente precisarem bloquear a tela.
+
+Não há SQL novo nesta correção.
+
+Arquivos principais alterados:
+- loading.js
+- HTMLs: o loader agora nasce oculto em vez de visível.
+
+Objetivo: manter a animação como feedback para demora real, sem transformar cada navegação em uma tela de carregamento.

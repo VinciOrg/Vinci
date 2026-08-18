@@ -1,21 +1,30 @@
 // =====================================
-// VINCI 0.7.7 — SHUTTER LOADER FIX
+// VINCI 0.7.7 — SMART SHUTTER LOADER
 // =====================================
 //
-// O loader cobre:
-// 1) carregamento inicial da página;
-// 2) requisições fetch/Supabase que realmente demoram;
-// 3) navegação entre páginas internas;
-// 4) uso manual via window.VinciLoading.
+// O loader NÃO aparece em toda troca de página.
+// Ele só entra quando uma espera realmente fica perceptível.
 //
-// Requisições rápidas NÃO fazem a tela piscar.
+// Automático:
+// 1) carregamento inicial que passar do limite;
+// 2) fetch/Supabase que passar do limite;
+// 3) navegação interna que realmente demorar.
+//
+// Manual:
+// window.VinciLoading.show("Publicando");
+// window.VinciLoading.hide(token);
+// window.VinciLoading.track(promessa, "Carregando", { immediate: false });
 
 (function () {
     "use strict";
 
-    const AUTO_SHOW_DELAY = 560;
+    // Evita piscar o loader em operações rápidas.
+    const AUTO_SHOW_DELAY = 800;
+
+    // Depois que apareceu, deixa tempo suficiente para a animação ser percebida.
     const MIN_VISIBLE_TIME = 420;
-    const BOOT_MIN_VISIBLE = 300;
+
+    const DEFAULT_MESSAGE = "Carregando";
 
     let overlay = null;
     let messageElement = null;
@@ -29,11 +38,7 @@
     let showTimer = null;
     let hideTimer = null;
     let navigationSafetyTimer = null;
-
-    let visibleSince = performance.now();
-    const createdAt = performance.now();
-
-    const DEFAULT_MESSAGE = "Carregando";
+    let visibleSince = 0;
 
     // =====================================
     // ELEMENTOS
@@ -54,7 +59,7 @@
     }
 
     function setMessage(message) {
-        if (!resolveElements()) return;
+        if (!resolveElements() || !messageElement) return;
 
         messageElement.textContent =
             String(message || DEFAULT_MESSAGE).trim() ||
@@ -77,24 +82,22 @@
     function isVisible() {
         return (
             resolveElements() &&
-            overlay.classList.contains(
-                "vinci-loader--visible"
-            )
+            overlay.classList.contains("vinci-loader--visible")
         );
     }
 
     function clearShowTimer() {
-        if (!showTimer) return;
-
-        clearTimeout(showTimer);
-        showTimer = null;
+        if (showTimer !== null) {
+            clearTimeout(showTimer);
+            showTimer = null;
+        }
     }
 
     function clearHideTimer() {
-        if (!hideTimer) return;
-
-        clearTimeout(hideTimer);
-        hideTimer = null;
+        if (hideTimer !== null) {
+            clearTimeout(hideTimer);
+            hideTimer = null;
+        }
     }
 
     // =====================================
@@ -107,22 +110,14 @@
         clearShowTimer();
         clearHideTimer();
 
-        if (message) {
-            setMessage(message);
-        }
+        if (message) setMessage(message);
 
         if (!isVisible()) {
             visibleSince = performance.now();
         }
 
-        overlay.classList.add(
-            "vinci-loader--visible"
-        );
-
-        overlay.setAttribute(
-            "aria-hidden",
-            "false"
-        );
+        overlay.classList.add("vinci-loader--visible");
+        overlay.setAttribute("aria-hidden", "false");
     }
 
     function scheduleShow(message) {
@@ -133,18 +128,15 @@
             return;
         }
 
-        if (showTimer) return;
+        if (showTimer !== null) return;
 
-        showTimer = setTimeout(
-            function () {
-                showTimer = null;
+        showTimer = setTimeout(function () {
+            showTimer = null;
 
-                if (!hasWork()) return;
+            if (!hasWork()) return;
 
-                showNow(message || DEFAULT_MESSAGE);
-            },
-            AUTO_SHOW_DELAY
-        );
+            showNow(message || DEFAULT_MESSAGE);
+        }, AUTO_SHOW_DELAY);
     }
 
     function hideNow() {
@@ -153,14 +145,8 @@
         clearShowTimer();
         clearHideTimer();
 
-        overlay.classList.remove(
-            "vinci-loader--visible"
-        );
-
-        overlay.setAttribute(
-            "aria-hidden",
-            "true"
-        );
+        overlay.classList.remove("vinci-loader--visible");
+        overlay.setAttribute("aria-hidden", "true");
 
         setMessage(DEFAULT_MESSAGE);
     }
@@ -177,43 +163,27 @@
             return;
         }
 
-        const elapsed =
-            performance.now() - visibleSince;
-
-        const minimum =
-            performance.now() - createdAt < 2000
-                ? BOOT_MIN_VISIBLE
-                : MIN_VISIBLE_TIME;
-
-        const remaining = Math.max(
-            0,
-            minimum - elapsed
-        );
+        const elapsed = performance.now() - visibleSince;
+        const remaining = Math.max(0, MIN_VISIBLE_TIME - elapsed);
 
         clearHideTimer();
 
-        hideTimer = setTimeout(
-            function () {
-                hideTimer = null;
+        hideTimer = setTimeout(function () {
+            hideTimer = null;
 
-                if (!hasWork()) {
-                    hideNow();
-                }
-            },
-            remaining
-        );
+            if (!hasWork()) {
+                hideNow();
+            }
+        }, remaining);
     }
 
     function refresh(options) {
         const opts = options || {};
 
         if (hasWork()) {
-            if (
-                booting ||
-                navigating ||
-                opts.immediate === true ||
-                manualTokens.size > 0
-            ) {
+            // Só operações explicitamente marcadas como imediatas
+            // bloqueiam a tela sem esperar os 800 ms.
+            if (opts.immediate === true) {
                 showNow(opts.message);
             } else {
                 scheduleShow(opts.message);
@@ -235,10 +205,8 @@
         manualTokens.add(token);
 
         refresh({
-            immediate:
-                options?.immediate !== false,
-            message:
-                message || DEFAULT_MESSAGE
+            immediate: options?.immediate !== false,
+            message: message || DEFAULT_MESSAGE
         });
 
         return token;
@@ -260,10 +228,9 @@
             options || { immediate: false }
         );
 
-        return Promise.resolve(promise)
-            .finally(function () {
-                manualHide(token);
-            });
+        return Promise.resolve(promise).finally(function () {
+            manualHide(token);
+        });
     }
 
     window.VinciLoading = {
@@ -278,15 +245,14 @@
     };
 
     // =====================================
-    // MONITOR AUTOMÁTICO DE FETCH
+    // MONITOR AUTOMÁTICO DE FETCH / SUPABASE
     // =====================================
 
     if (
         typeof window.fetch === "function" &&
         !window.fetch.__vinciLoadingWrapped
     ) {
-        const originalFetch =
-            window.fetch.bind(window);
+        const originalFetch = window.fetch.bind(window);
 
         const wrappedFetch = function () {
             networkRequests += 1;
@@ -299,34 +265,21 @@
             let request;
 
             try {
-                request = originalFetch.apply(
-                    window,
-                    arguments
-                );
+                request = originalFetch.apply(window, arguments);
             } catch (error) {
-                networkRequests = Math.max(
-                    0,
-                    networkRequests - 1
-                );
-
+                networkRequests = Math.max(0, networkRequests - 1);
                 refresh();
                 throw error;
             }
 
-            return Promise.resolve(request)
-                .finally(function () {
-                    networkRequests = Math.max(
-                        0,
-                        networkRequests - 1
-                    );
-
-                    refresh();
-                });
+            return Promise.resolve(request).finally(function () {
+                networkRequests = Math.max(0, networkRequests - 1);
+                refresh();
+            });
         };
 
         wrappedFetch.__vinciLoadingWrapped = true;
         wrappedFetch.__vinciOriginalFetch = originalFetch;
-
         window.fetch = wrappedFetch;
     }
 
@@ -357,11 +310,7 @@
         }
 
         try {
-            const url = new URL(
-                anchor.href,
-                window.location.href
-            );
-
+            const url = new URL(anchor.href, window.location.href);
             return url.origin === window.location.origin;
         } catch (_) {
             return false;
@@ -382,60 +331,43 @@
                 return;
             }
 
-            const anchor =
-                event.target.closest?.("a[href]");
+            const anchor = event.target.closest?.("a[href]");
 
-            if (!isInternalNavigation(anchor)) {
-                return;
-            }
+            if (!isInternalNavigation(anchor)) return;
 
             navigating = true;
 
+            // IMPORTANTE: não mostra imediatamente.
+            // Se Feed -> Perfil abrir rápido, o usuário não vê loader nenhum.
             refresh({
-                immediate: true,
+                immediate: false,
                 message: "Abrindo"
             });
 
             clearTimeout(navigationSafetyTimer);
 
-            // Se algum script cancelar a navegação depois
-            // do clique, o loader não fica preso para sempre.
-            navigationSafetyTimer = setTimeout(
-                function () {
-                    navigating = false;
-                    refresh();
-                },
-                2200
-            );
+            // Se algum script cancelar a navegação, não deixa estado preso.
+            navigationSafetyTimer = setTimeout(function () {
+                navigating = false;
+                refresh();
+            }, 2400);
         },
         true
     );
 
-    window.addEventListener(
-        "beforeunload",
-        function () {
-            navigating = true;
+    // Não forçamos loader no beforeunload.
+    // Uma navegação rápida deve continuar parecendo instantânea.
 
-            refresh({
-                immediate: true,
-                message: "Abrindo"
-            });
-        }
-    );
+    window.addEventListener("pageshow", function (event) {
+        if (!event.persisted) return;
 
-    window.addEventListener(
-        "pageshow",
-        function (event) {
-            if (!event.persisted) return;
+        navigating = false;
+        booting = false;
+        networkRequests = 0;
+        manualTokens.clear();
 
-            navigating = false;
-            booting = false;
-            networkRequests = 0;
-            manualTokens.clear();
-
-            refresh();
-        }
-    );
+        refresh();
+    });
 
     // =====================================
     // FIM DO BOOT
@@ -449,14 +381,11 @@
     if (document.readyState === "complete") {
         setTimeout(finishBoot, 0);
     } else {
-        window.addEventListener(
-            "load",
-            finishBoot,
-            { once: true }
-        );
+        window.addEventListener("load", finishBoot, { once: true });
     }
 
-    // O HTML já nasce com o loader visível.
-    // Garantimos aqui que o JS encontrou os elementos.
+    // O HTML começa escondido. Se o carregamento total realmente demorar,
+    // só então o loader aparece.
     resolveElements();
+    refresh({ immediate: false, message: DEFAULT_MESSAGE });
 })();
