@@ -13,6 +13,7 @@
     <title>Criar conta — Vinci</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="signup-verification.css">
 
 </head>
 
@@ -90,9 +91,49 @@
 
             </form>
 
-            <p id="message" class="message"></p>
+            <p id="message" class="message" aria-live="polite"></p>
 
-            <p class="switch-auth">
+            <section
+                id="signupSuccess"
+                class="signup-success hidden"
+                aria-live="assertive"
+            >
+
+                <div class="signup-success-icon" aria-hidden="true">
+                    ✉
+                </div>
+
+                <p class="signup-success-kicker">
+                    Conta criada!
+                </p>
+
+                <h2>
+                    Verifique seu e-mail
+                </h2>
+
+                <div class="signup-spam-warning">
+                    <strong>
+                        EMAIL DE VERIFICAÇÃO PODE ESTAR NO SPAM
+                    </strong>
+                </div>
+
+                <p class="signup-success-text">
+                    Procure a mensagem do Vinci na sua caixa de entrada.
+                    Se ela não aparecer, confira também as pastas
+                    <strong>Spam</strong>, <strong>Lixo eletrônico</strong> ou
+                    <strong>Promoções</strong>.
+                </p>
+
+                <a
+                    class="button primary signup-login-button"
+                    href="login.html"
+                >
+                    Ir para o login
+                </a>
+
+            </section>
+
+            <p id="signupSwitchAuth" class="switch-auth">
                 Já possui uma conta?
                 <a href="login.html">
                     Entrar

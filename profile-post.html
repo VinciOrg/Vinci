@@ -23,6 +23,7 @@
     >
 
     <link rel="stylesheet" href="post-circles.css">
+    <link rel="stylesheet" href="post-options.css">
 
 </head>
 
@@ -104,16 +105,36 @@
 
                 <label class="audience-option">
                     <input type="radio" name="audienceType" value="public" checked>
+
                     <div>
-                        <strong>🌎 Público</strong>
+                        <strong class="audience-option-title">
+                            <svg class="audience-option-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="8.5"></circle>
+                                <path d="M3.8 12h16.4"></path>
+                                <path d="M12 3.5c2.2 2.35 3.4 5.2 3.4 8.5S14.2 18.15 12 20.5"></path>
+                                <path d="M12 3.5C9.8 5.85 8.6 8.7 8.6 12s1.2 6.15 3.4 8.5"></path>
+                            </svg>
+                            Público
+                        </strong>
+
                         <small>Qualquer pessoa autenticada no Vinci pode visualizar.</small>
                     </div>
                 </label>
 
                 <label class="audience-option">
                     <input type="radio" name="audienceType" value="circle">
+
                     <div>
-                        <strong>◎ Um círculo</strong>
+                        <strong class="audience-option-title">
+                            <svg class="audience-option-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="9" cy="9" r="3"></circle>
+                                <circle cx="16.5" cy="10" r="2.5"></circle>
+                                <path d="M3.8 19c1.1-3 3.05-4.5 5.2-4.5s4.1 1.5 5.2 4.5"></path>
+                                <path d="M14.2 15.2c2.4-.5 4.55.65 5.8 3.3"></path>
+                            </svg>
+                            Um círculo
+                        </strong>
+
                         <small>Somente você e as pessoas desse círculo.</small>
                     </div>
                 </label>

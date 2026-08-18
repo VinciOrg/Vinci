@@ -1,0 +1,291 @@
+/* =====================================
+   VINCI 0.7.5 — OPÇÕES DE PUBLICAÇÃO
+   Correção visual da tela Nova publicação
+===================================== */
+
+/* ONDE PUBLICAR */
+.post-visibility {
+    margin: 22px 0 18px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+
+.post-visibility h3 {
+    margin: 0 0 12px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.visibility-option {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 13px;
+
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 15px 16px;
+
+    border: 1px solid #e8e2dc;
+    border-radius: 16px;
+    background: #ffffff;
+
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.visibility-option:hover {
+    background: #fffaf6;
+    border-color: #efd0b5;
+}
+
+.visibility-option:active {
+    transform: scale(.995);
+}
+
+.visibility-option input {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 22px !important;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 !important;
+    margin: 0;
+
+    border: 1.7px solid #b9b1aa;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: none;
+
+    position: relative;
+    cursor: pointer;
+}
+
+.visibility-option input:checked {
+    border-color: var(--orange-dark);
+    background: #fff;
+}
+
+.visibility-option input:checked::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    background: var(--orange-dark);
+}
+
+.visibility-option:has(input:checked) {
+    border-color: #f2a365;
+    background: #fff8f2;
+    box-shadow: 0 5px 18px rgba(232, 139, 69, .08);
+}
+
+.visibility-option .post-option-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.post-option-title {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 8px !important;
+}
+
+.post-option-icon {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+    fill: none;
+    stroke: var(--orange-dark);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.visibility-option strong {
+    color: #24211f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.visibility-option .post-option-description {
+    margin: 0;
+    color: #817a73 !important;
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+/* QUEM PODE VISUALIZAR */
+.post-audience-card {
+    margin: 22px 0 18px;
+    padding: 18px;
+    border: 1px solid #e9e3dd;
+    border-radius: 18px;
+    background: #fffdfb;
+}
+
+.audience-options {
+    display: grid;
+    gap: 10px;
+}
+
+.audience-option {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 13px;
+
+    width: 100%;
+    margin: 0;
+    padding: 15px 16px;
+
+    border: 1px solid #e8e2dc;
+    border-radius: 16px;
+    background: #fff;
+
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.audience-option:hover {
+    background: #fffaf6;
+    border-color: #efd0b5;
+}
+
+.audience-option:active {
+    transform: scale(.995);
+}
+
+.audience-option input {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 22px !important;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 1.7px solid #b9b1aa;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: none;
+
+    position: relative;
+    cursor: pointer;
+}
+
+.audience-option input:checked {
+    border-color: var(--orange-dark);
+}
+
+.audience-option input:checked::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--orange-dark);
+}
+
+.audience-option:has(input:checked) {
+    border-color: #f2a365;
+    background: #fff8f2;
+    box-shadow: 0 5px 18px rgba(232, 139, 69, .08);
+}
+
+.audience-option > div {
+    min-width: 0;
+}
+
+.audience-option-title {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    color: #24211f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.audience-option-icon {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+    fill: none;
+    stroke: var(--orange-dark);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.audience-option small {
+    display: block;
+    margin-top: 5px;
+    color: #817a73;
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+@media (max-width: 600px) {
+    .post-visibility {
+        margin-top: 20px;
+    }
+
+    .visibility-option,
+    .audience-option {
+        grid-template-columns: 21px minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px;
+        border-radius: 15px;
+    }
+
+    .visibility-option input,
+    .audience-option input {
+        width: 21px !important;
+        min-width: 21px;
+        height: 21px;
+    }
+
+    .post-audience-card {
+        padding: 15px;
+    }
+}
+
+/* =====================================
+   VINCI 0.7.5 — POST DE TEXTO
+   Mantém as opções de audiência alinhadas
+===================================== */
+.profile-post-audience .audience-option {
+    margin-top: 0;
+}
+
+.profile-post-audience .audience-option input[type="radio"] {
+    width: 22px !important;
+    min-width: 22px !important;
+    max-width: 22px !important;
+    height: 22px !important;
+    flex: 0 0 22px;
+}
+
+.profile-post-audience .audience-option > div {
+    width: auto;
+    min-width: 0;
+}
+
+@media (max-width: 600px) {
+    .profile-post-audience .audience-option input[type="radio"] {
+        width: 21px !important;
+        min-width: 21px !important;
+        max-width: 21px !important;
+        height: 21px !important;
+        flex-basis: 21px;
+    }
+}

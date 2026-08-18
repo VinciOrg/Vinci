@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="featured-posts.css">
     <link rel="stylesheet" href="profile-hub.css">
     <link rel="stylesheet" href="profile-customization.css">
+    <link rel="stylesheet" href="profile-logout.css">
 
 </head>
 
@@ -51,6 +52,29 @@
     ====================================== -->
 
     <section class="profile" id="profileCard">
+
+
+        <!-- SAIR DA CONTA -->
+
+        <button
+            type="button"
+            id="profileLogoutButton"
+            class="profile-logout-button hidden"
+            aria-label="Sair da conta"
+            title="Sair da conta"
+        >
+            <svg
+                class="profile-logout-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <path d="M10 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H10"></path>
+                <path d="M14 8l4 4-4 4"></path>
+                <path d="M9 12h9"></path>
+            </svg>
+
+            <span>Sair</span>
+        </button>
 
 
         <!-- BANNER PERSONALIZÁVEL -->
@@ -835,5 +859,6 @@
 <script src="featured-posts.js"></script>
 <script src="profile-hub.js"></script>
 <script src="profile-customization.js"></script>
+<script src="profile-logout.js"></script>
 <script src="create.js"></script>
 </body>

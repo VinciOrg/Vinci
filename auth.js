@@ -86,9 +86,27 @@ if (signupForm) {
                 }
 
 
-                message.textContent =
-                    "Conta criada! Verifique seu e-mail para confirmar.";
+                message.textContent = "";
 
+                const signupSuccess =
+                    document.getElementById("signupSuccess");
+
+                const signupSwitchAuth =
+                    document.getElementById("signupSwitchAuth");
+
+                signupForm.classList.add("hidden");
+
+                if (signupSwitchAuth) {
+                    signupSwitchAuth.classList.add("hidden");
+                }
+
+                if (signupSuccess) {
+                    signupSuccess.classList.remove("hidden");
+                    signupSuccess.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }
 
                 // Não redireciona imediatamente.
                 // O usuário precisa confirmar o e-mail primeiro.

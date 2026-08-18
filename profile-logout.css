@@ -1,0 +1,90 @@
+/* =====================================
+   VINCI — BOTÃO DE LOGOUT NO PERFIL
+===================================== */
+
+.profile-logout-button {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 8;
+
+    min-width: 74px;
+    height: 38px;
+    padding: 0 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.88);
+    color: #5c5149;
+
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        color .18s ease,
+        box-shadow .18s ease;
+}
+
+.profile-logout-button.hidden {
+    display: none;
+}
+
+.profile-logout-button:hover {
+    background: #fff;
+    color: #d44b3e;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 22px rgba(0, 0, 0, 0.13);
+}
+
+.profile-logout-button:active {
+    transform: scale(.96);
+}
+
+.profile-logout-button:disabled {
+    opacity: .65;
+    cursor: wait;
+}
+
+.profile-logout-icon {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 500px) {
+    .profile-logout-button {
+        top: 10px;
+        right: 10px;
+        min-width: 66px;
+        height: 35px;
+        padding: 0 11px;
+        font-size: 11px;
+    }
+
+    .profile-logout-icon {
+        width: 16px;
+        height: 16px;
+    }
+}

@@ -29,6 +29,8 @@
 
     <link rel="stylesheet" href="post-circles.css">
 
+    <link rel="stylesheet" href="post-options.css">
+
 </head>
 
 
@@ -169,15 +171,18 @@
                         checked
                     >
 
-                    <div>
+                    <div class="post-option-copy">
 
-                        <strong>
-                            📰 Feed + Perfil
-                        </strong>
+                        <div class="post-option-title">
+                            <svg class="post-option-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                                <path d="M8 9h8M8 12h8M8 15h5"></path>
+                            </svg>
+                            <strong>Feed + Perfil</strong>
+                        </div>
 
-                        <span>
-                            Sua fotografia aparecerá no feed
-                            e no seu perfil.
+                        <span class="post-option-description">
+                            Sua fotografia aparecerá no feed e no seu perfil.
                         </span>
 
                     </div>
@@ -193,15 +198,18 @@
                         value="profile"
                     >
 
-                    <div>
+                    <div class="post-option-copy">
 
-                        <strong>
-                            👤 Apenas Perfil
-                        </strong>
+                        <div class="post-option-title">
+                            <svg class="post-option-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="8" r="3"></circle>
+                                <path d="M6.5 19c1.5-3 3.4-4.5 5.5-4.5s4 1.5 5.5 4.5"></path>
+                            </svg>
+                            <strong>Apenas Perfil</strong>
+                        </div>
 
-                        <span>
-                            A fotografia ficará somente
-                            no seu perfil.
+                        <span class="post-option-description">
+                            A fotografia ficará somente no seu perfil.
                         </span>
 
                     </div>
@@ -232,7 +240,13 @@
                     <label class="audience-option">
                         <input type="radio" name="audienceType" value="public" checked>
                         <div>
-                            <strong>🌎 Público</strong>
+                            <strong class="audience-option-title">
+                                <svg class="audience-option-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="8"></circle>
+                                    <path d="M4.5 12h15M12 4c2 2.2 3.1 4.9 3.1 8S14 17.8 12 20M12 4c-2 2.2-3.1 4.9-3.1 8S10 17.8 12 20"></path>
+                                </svg>
+                                Público
+                            </strong>
                             <small>Qualquer pessoa autenticada no Vinci pode visualizar.</small>
                         </div>
                     </label>
@@ -240,7 +254,14 @@
                     <label class="audience-option">
                         <input type="radio" name="audienceType" value="circle">
                         <div>
-                            <strong>◎ Um círculo</strong>
+                            <strong class="audience-option-title">
+                                <svg class="audience-option-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="8" cy="10" r="2.5"></circle>
+                                    <circle cx="16" cy="10" r="2.5"></circle>
+                                    <path d="M3.5 18c1-2.6 2.5-4 4.5-4s3.5 1.4 4.5 4M11.5 18c1-2.6 2.5-4 4.5-4s3.5 1.4 4.5 4"></path>
+                                </svg>
+                                Um círculo
+                            </strong>
                             <small>Somente você e as pessoas escolhidas nesse círculo.</small>
                         </div>
                     </label>

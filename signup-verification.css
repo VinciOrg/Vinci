@@ -1,0 +1,93 @@
+/* =====================================
+   VINCI — AVISO DE VERIFICAÇÃO DE E-MAIL
+===================================== */
+
+.signup-success {
+    margin-top: 22px;
+    padding: 26px 22px;
+    border: 1px solid rgba(242, 139, 60, 0.28);
+    border-radius: 20px;
+    background: linear-gradient(180deg, #fffaf5 0%, #ffffff 100%);
+    text-align: center;
+    box-shadow: 0 16px 36px rgba(89, 62, 40, 0.08);
+}
+
+.signup-success.hidden {
+    display: none;
+}
+
+.signup-success-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    background: #fff0e4;
+    color: #f28b3c;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.signup-success-kicker {
+    margin: 0 0 6px;
+    color: #f28b3c;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.signup-success h2 {
+    margin: 0 0 18px;
+    color: #26211e;
+    font-size: clamp(24px, 6vw, 30px);
+    line-height: 1.1;
+}
+
+.signup-spam-warning {
+    margin: 0 0 18px;
+    padding: 18px 14px;
+    border: 2px solid #f28b3c;
+    border-radius: 16px;
+    background: #fff0e4;
+    color: #c85f13;
+}
+
+.signup-spam-warning strong {
+    display: block;
+    font-size: clamp(19px, 5.4vw, 25px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.signup-success-text {
+    margin: 0 auto 20px;
+    max-width: 330px;
+    color: #6f6862;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.signup-success-text strong {
+    color: #3f3935;
+}
+
+.signup-login-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+@media (max-width: 500px) {
+    .signup-success {
+        margin-top: 16px;
+        padding: 24px 18px;
+    }
+
+    .signup-spam-warning {
+        padding: 17px 12px;
+    }
+}
