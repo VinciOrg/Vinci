@@ -504,6 +504,16 @@ publishPost.addEventListener(
     "click",
     async function () {
 
+        if (!currentUser) {
+
+            postMessage.textContent =
+                "Aguarde sua sessão carregar.";
+
+            return;
+
+        }
+
+
         if (!selectedFile) {
 
             postMessage.textContent =
@@ -633,6 +643,7 @@ publishPost.addEventListener(
             // =================================
 
             const {
+                data: createdPost,
                 error: postError
             } = await db
                 .from(
@@ -652,7 +663,11 @@ publishPost.addEventListener(
                     visibility:
                         selectedVisibility
 
-                });
+                })
+                .select(
+                    "id"
+                )
+                .single();
 
 
             // =================================
@@ -675,6 +690,84 @@ publishPost.addEventListener(
 
 
                 throw postError;
+
+            }
+
+
+            // =================================
+            // SALVAR QUEM PODE RESPONDER
+            // =================================
+
+            const replyUserIds =
+                window.VinciPrivacy
+                    ?.getReplyUserIds
+                    ?.() || [];
+
+
+            if (replyUserIds.length > 0) {
+
+                postMessage.textContent =
+                    "Salvando privacidade das respostas...";
+
+
+                const permissionRows =
+                    replyUserIds.map(
+                        function (userId) {
+
+                            return {
+                                post_id:
+                                    createdPost.id,
+
+                                user_id:
+                                    userId
+                            };
+
+                        }
+                    );
+
+
+                const {
+                    error: permissionError
+                } = await db
+                    .from(
+                        "post_reply_permissions"
+                    )
+                    .insert(
+                        permissionRows
+                    );
+
+
+                if (permissionError) {
+
+                    // Se a lista de privacidade falhar,
+                    // desfazemos a publicação inteira.
+                    // Assim nunca nasce um post com
+                    // permissões diferentes do que o
+                    // autor escolheu.
+
+                    await db
+                        .from(
+                            "posts"
+                        )
+                        .delete()
+                        .eq(
+                            "id",
+                            createdPost.id
+                        );
+
+
+                    await db.storage
+                        .from(
+                            "vinci-images"
+                        )
+                        .remove([
+                            filePath
+                        ]);
+
+
+                    throw permissionError;
+
+                }
 
             }
 
