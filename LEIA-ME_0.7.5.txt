@@ -1,0 +1,15 @@
+VINCI 0.7.5 — AJUSTE DO NOME + NOVAS FONTES
+
+ALTERAÇÕES
+- Nome + @username foram deslocados para baixo no cabeçalho do perfil.
+- Novos estilos de nome: Pixel, Arcade, Fofinha, Docinho, Assinatura e Manuscrita.
+- As novas fontes usam Google Fonts com fallbacks locais.
+
+SE VOCÊ JÁ RODOU O SQL DA 0.7.4
+1. Rode VINCI_0_7_5_FONTES_MIGRATION.sql no Supabase.
+2. Substitua profile.html, profile-customization.css e profile-customization.js.
+
+SE AINDA NÃO RODOU O SQL DE PERSONALIZAÇÃO
+- Rode o VINCI_PROFILE_CUSTOMIZATION.sql atualizado que está nesta pasta.
+
+Não é necessário alterar profile.js.

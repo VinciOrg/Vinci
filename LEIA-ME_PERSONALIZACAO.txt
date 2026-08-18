@@ -1,0 +1,26 @@
+VINCI 0.7.4 — TESTE DE PERSONALIZAÇÃO DE PERFIL
+
+O QUE FOI ADICIONADO
+- Banner no topo do perfil.
+- Cor personalizada do perfil.
+- 6 cores rápidas + seletor livre de cor.
+- 5 estilos de fonte para o nome: Padrão, Elegante, Mono, Suave e Clássico.
+- Prévia ao vivo antes de salvar.
+- Personalização aparece também quando outra pessoa visita o perfil.
+- Só o dono do perfil vê o botão "Personalizar".
+
+COMO TESTAR
+1. No Supabase > SQL Editor, rode VINCI_PROFILE_CUSTOMIZATION.sql UMA VEZ.
+2. No SPCK, substitua profile.html e adicione:
+   - profile-customization.css
+   - profile-customization.js
+3. Abra seu perfil e toque em "Personalizar".
+4. Escolha uma cor, fonte e/ou banner e toque em "Salvar personalização".
+
+BANNNER
+- JPG, PNG ou WEBP.
+- Máximo 5 MB.
+- O teste reutiliza o bucket "avatars" que o Vinci já usa.
+
+ARQUIVOS ANTIGOS
+Nenhum JS antigo precisou ser reescrito. A personalização foi criada como módulo separado.

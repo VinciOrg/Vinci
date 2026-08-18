@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="reply-photos.css">
     <link rel="stylesheet" href="featured-posts.css">
     <link rel="stylesheet" href="profile-hub.css">
+    <link rel="stylesheet" href="profile-customization.css">
 
 </head>
 
@@ -49,7 +50,18 @@
          PERFIL
     ====================================== -->
 
-    <section class="profile">
+    <section class="profile" id="profileCard">
+
+
+        <!-- BANNER PERSONALIZÁVEL -->
+
+        <div
+            id="profileBanner"
+            class="profile-banner"
+            aria-hidden="true"
+        >
+            <div class="profile-banner-pattern"></div>
+        </div>
 
 
         <!-- CABEÇALHO -->
@@ -126,6 +138,15 @@
                 type="button"
             >
                 Alterar foto
+            </button>
+
+
+            <button
+                id="customizeProfile"
+                class="button secondary"
+                type="button"
+            >
+                Personalizar
             </button>
 
         </div>
@@ -404,6 +425,210 @@
     </div>
 
 
+
+    <!-- =====================================
+         MODAL PERSONALIZAR PERFIL
+    ====================================== -->
+
+    <div
+        id="customizeModal"
+        class="modal hidden profile-customize-modal"
+    >
+
+        <div class="modal-box customize-modal-box">
+
+            <div class="modal-header">
+                <div>
+                    <span class="customize-kicker">Vinci</span>
+                    <h2>Personalizar perfil</h2>
+                </div>
+
+                <button
+                    id="closeCustomizeModal"
+                    class="close-button"
+                    type="button"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+            </div>
+
+
+            <!-- PRÉVIA -->
+
+            <div
+                id="customizePreview"
+                class="customize-preview"
+            >
+                <div
+                    id="customizePreviewBanner"
+                    class="customize-preview-banner"
+                ></div>
+
+                <div class="customize-preview-content">
+                    <div
+                        id="customizePreviewAvatar"
+                        class="customize-preview-avatar"
+                    >
+                        V
+                    </div>
+
+                    <div>
+                        <strong id="customizePreviewName">Seu nome</strong>
+                        <span id="customizePreviewUsername">@usuario</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- BANNER -->
+
+            <div class="customize-section">
+                <div class="customize-section-title">
+                    <strong>Banner</strong>
+                    <span>JPG, PNG ou WEBP · até 5 MB</span>
+                </div>
+
+                <input
+                    type="file"
+                    id="bannerInput"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                >
+
+                <div class="customize-row">
+                    <button
+                        id="chooseBanner"
+                        class="button secondary customize-small-button"
+                        type="button"
+                    >
+                        Escolher imagem
+                    </button>
+
+                    <button
+                        id="removeBanner"
+                        class="button secondary customize-small-button customize-danger-button"
+                        type="button"
+                    >
+                        Remover banner
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- COR -->
+
+            <div class="customize-section">
+                <div class="customize-section-title">
+                    <strong>Cor do perfil</strong>
+                    <span>Usada nos detalhes do seu perfil.</span>
+                </div>
+
+                <div class="customize-color-layout">
+                    <input
+                        type="color"
+                        id="profileAccentColor"
+                        value="#f28b3c"
+                        aria-label="Escolher cor do perfil"
+                    >
+
+                    <div class="customize-color-swatches" id="profileColorSwatches">
+                        <button type="button" class="color-swatch" data-color="#f28b3c" style="--swatch:#f28b3c" aria-label="Laranja Vinci"></button>
+                        <button type="button" class="color-swatch" data-color="#e85d75" style="--swatch:#e85d75" aria-label="Rosa"></button>
+                        <button type="button" class="color-swatch" data-color="#7c6ee6" style="--swatch:#7c6ee6" aria-label="Roxo"></button>
+                        <button type="button" class="color-swatch" data-color="#3288e6" style="--swatch:#3288e6" aria-label="Azul"></button>
+                        <button type="button" class="color-swatch" data-color="#2e9d70" style="--swatch:#2e9d70" aria-label="Verde"></button>
+                        <button type="button" class="color-swatch" data-color="#242424" style="--swatch:#242424" aria-label="Preto"></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- FONTE -->
+
+            <div class="customize-section">
+                <div class="customize-section-title">
+                    <strong>Estilo do nome</strong>
+                    <span>Altera somente o nome exibido no perfil.</span>
+                </div>
+
+                <div class="name-font-options" id="nameFontOptions">
+                    <button type="button" class="name-font-option" data-font="default">
+                        <span class="font-sample font-default">Vinci</span>
+                        <small>Padrão</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="elegant">
+                        <span class="font-sample font-elegant">Vinci</span>
+                        <small>Elegante</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="mono">
+                        <span class="font-sample font-mono">Vinci</span>
+                        <small>Mono</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="soft">
+                        <span class="font-sample font-soft">Vinci</span>
+                        <small>Suave</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="classic">
+                        <span class="font-sample font-classic">Vinci</span>
+                        <small>Clássico</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="pixel">
+                        <span class="font-sample font-pixel">Vinci</span>
+                        <small>Pixel</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="arcade">
+                        <span class="font-sample font-arcade">Vinci</span>
+                        <small>Arcade</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="cute">
+                        <span class="font-sample font-cute">Vinci</span>
+                        <small>Fofinha</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="bubble">
+                        <span class="font-sample font-bubble">Vinci</span>
+                        <small>Docinho</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="script">
+                        <span class="font-sample font-script">Vinci</span>
+                        <small>Assinatura</small>
+                    </button>
+
+                    <button type="button" class="name-font-option" data-font="hand">
+                        <span class="font-sample font-hand">Vinci</span>
+                        <small>Manuscrita</small>
+                    </button>
+                </div>
+            </div>
+
+
+            <p
+                id="customizeMessage"
+                class="message customize-message"
+            ></p>
+
+
+            <button
+                id="saveCustomization"
+                class="button primary customize-save"
+                type="button"
+            >
+                Salvar personalização
+            </button>
+
+        </div>
+
+    </div>
+
 </main>
 
 
@@ -609,5 +834,6 @@
 <script src="replies.js"></script>
 <script src="featured-posts.js"></script>
 <script src="profile-hub.js"></script>
+<script src="profile-customization.js"></script>
 <script src="create.js"></script>
 </body>

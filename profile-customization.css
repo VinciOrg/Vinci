@@ -1,0 +1,495 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Pacifico&family=Pixelify+Sans:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Press+Start+2P&family=Quicksand:wght@600;700&family=Space+Mono:wght@700&display=swap");
+
+/* =====================================
+   VINCI 0.7.4 — PERSONALIZAÇÃO DE PERFIL
+===================================== */
+
+.profile {
+    --profile-accent: #f28b3c;
+    --profile-accent-soft: rgba(242, 139, 60, 0.14);
+    --profile-accent-faint: rgba(242, 139, 60, 0.07);
+
+    position: relative;
+    overflow: visible;
+}
+
+.profile-banner {
+    position: relative;
+    width: 100%;
+    height: 168px;
+    margin-bottom: -44px;
+
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 24px;
+
+    background:
+        linear-gradient(135deg, var(--profile-accent), var(--profile-accent-soft));
+
+    background-position: center;
+    background-size: cover;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.06);
+}
+
+.profile-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.01),
+        rgba(0, 0, 0, 0.12)
+    );
+    pointer-events: none;
+}
+
+.profile-banner.has-image .profile-banner-pattern {
+    display: none;
+}
+
+.profile-banner-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    background-image:
+        radial-gradient(circle at 18% 25%, rgba(255,255,255,.35) 0 2px, transparent 3px),
+        radial-gradient(circle at 75% 34%, rgba(255,255,255,.23) 0 3px, transparent 4px),
+        linear-gradient(125deg, transparent 0 46%, rgba(255,255,255,.08) 46% 54%, transparent 54% 100%);
+    background-size: 90px 90px, 130px 130px, 100% 100%;
+}
+
+.profile .profile-top {
+    position: relative;
+    z-index: 2;
+    padding: 0 18px;
+    align-items: flex-end;
+}
+
+.profile .profile-avatar {
+    width: 96px;
+    height: 96px;
+    min-width: 96px;
+
+    border: 4px solid #faf9f7;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.profile .profile-info {
+    /* O nome ficava alto demais sobre o banner. Este deslocamento
+       baixa nome + @username como um único bloco, sem mexer no avatar. */
+    padding-bottom: 0;
+    transform: translateY(10px);
+}
+
+.profile .profile-info h1 {
+    color: var(--profile-accent);
+    transition:
+        color .2s ease,
+        font-family .2s ease;
+}
+
+.profile .profile-bio,
+.profile .profile-actions,
+.profile .profile-stats {
+    position: relative;
+    z-index: 2;
+}
+
+.profile .profile-bio,
+.profile .profile-actions {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.profile .profile-actions .button:hover {
+    border-color: var(--profile-accent);
+    color: var(--profile-accent);
+}
+
+.profile .profile-stats {
+    border-color: var(--profile-accent-soft);
+}
+
+.profile-tabs .profile-tab.active {
+    color: var(--profile-accent, var(--orange-dark));
+}
+
+.profile-tabs .profile-tab.active::after {
+    background: var(--profile-accent, var(--orange));
+}
+
+/* =====================================
+   ESTILOS DO NOME
+   As fontes externas são carregadas pelo Google Fonts.
+   Cada opção mantém um fallback local caso a conexão esteja lenta.
+===================================== */
+
+.profile .profile-info h1,
+.customize-preview-content strong,
+.font-sample {
+    line-height: 1.22;
+}
+
+.profile-name-font-default,
+.font-default {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.profile-name-font-elegant,
+.font-elegant {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 700 !important;
+    letter-spacing: -0.2px !important;
+}
+
+.profile-name-font-mono,
+.font-mono {
+    font-family: "Space Mono", "SFMono-Regular", Consolas, monospace;
+    font-weight: 700 !important;
+    letter-spacing: -0.5px !important;
+}
+
+.profile-name-font-soft,
+.font-soft {
+    font-family: "Quicksand", "Trebuchet MS", Verdana, sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: -0.2px !important;
+}
+
+.profile-name-font-classic,
+.font-classic {
+    font-family: Garamond, Georgia, serif;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+}
+
+/* Pixelada / blocky, inspirada em jogos de blocos. */
+.profile-name-font-pixel,
+.font-pixel {
+    font-family: "Pixelify Sans", "Courier New", monospace;
+    font-weight: 700 !important;
+    letter-spacing: 0.2px !important;
+}
+
+/* Mais 8-bit/arcade. */
+.profile-name-font-arcade,
+.font-arcade {
+    font-family: "Press Start 2P", "Courier New", monospace;
+    font-weight: 400 !important;
+    letter-spacing: -0.3px !important;
+    font-size: 0.72em !important;
+    line-height: 1.45 !important;
+}
+
+/* Arredondada e delicada. */
+.profile-name-font-cute,
+.font-cute {
+    font-family: "Fredoka", "Trebuchet MS", sans-serif;
+    font-weight: 600 !important;
+    letter-spacing: 0.1px !important;
+}
+
+/* Mais cheia e divertida. */
+.profile-name-font-bubble,
+.font-bubble {
+    font-family: "Baloo 2", "Trebuchet MS", sans-serif;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+}
+
+/* Assinatura suave. */
+.profile-name-font-script,
+.font-script {
+    font-family: "Pacifico", cursive;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: 1.35 !important;
+}
+
+/* Manuscrita casual. */
+.profile-name-font-hand,
+.font-hand {
+    font-family: "Caveat", cursive;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    font-size: 1.16em !important;
+    line-height: 1.08 !important;
+}
+
+/* =====================================
+   MODAL
+===================================== */
+
+.profile-customize-modal {
+    z-index: 10010;
+}
+
+.customize-modal-box {
+    width: min(94vw, 560px);
+    max-height: min(88vh, 780px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.customize-kicker {
+    display: block;
+    margin-bottom: 3px;
+    color: #f28b3c;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.customize-preview {
+    --preview-accent: #f28b3c;
+    --preview-soft: rgba(242, 139, 60, 0.14);
+
+    margin: 6px 0 22px;
+    overflow: hidden;
+
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 20px;
+    background: #fff;
+}
+
+.customize-preview-banner {
+    height: 112px;
+    background:
+        linear-gradient(135deg, var(--preview-accent), var(--preview-soft));
+    background-size: cover;
+    background-position: center;
+}
+
+.customize-preview-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 0 16px 17px;
+}
+
+.customize-preview-avatar {
+    width: 62px;
+    height: 62px;
+    margin-top: -31px;
+    flex: 0 0 62px;
+
+    display: grid;
+    place-items: center;
+
+    border: 4px solid #fff;
+    border-radius: 50%;
+    background: var(--preview-accent);
+    background-size: cover;
+    background-position: center;
+
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.customize-preview-content > div:last-child {
+    min-width: 0;
+    padding-top: 10px;
+}
+
+.customize-preview-content strong,
+.customize-preview-content span {
+    display: block;
+}
+
+.customize-preview-content strong {
+    color: var(--preview-accent);
+    font-size: 20px;
+}
+
+.customize-preview-content span {
+    margin-top: 2px;
+    color: #8b8782;
+    font-size: 12px;
+}
+
+.customize-section {
+    padding: 17px 0;
+    border-top: 1px solid rgba(0,0,0,.07);
+}
+
+.customize-section-title {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 12px;
+}
+
+.customize-section-title strong {
+    color: #2d2926;
+    font-size: 14px;
+}
+
+.customize-section-title span {
+    color: #96908b;
+    font-size: 11px;
+}
+
+.customize-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.customize-small-button {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 9px 13px !important;
+    font-size: 12px !important;
+}
+
+.customize-danger-button {
+    color: #c85555 !important;
+}
+
+.customize-color-layout {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+#profileAccentColor {
+    width: 54px;
+    height: 44px;
+    flex: 0 0 54px;
+    padding: 4px;
+
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+}
+
+.customize-color-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.color-swatch {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+
+    border: 3px solid transparent;
+    border-radius: 50%;
+    background: var(--swatch);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+    cursor: pointer;
+}
+
+.color-swatch.selected {
+    border-color: #fff;
+    box-shadow:
+        0 0 0 2px var(--swatch),
+        0 4px 12px rgba(0,0,0,.12);
+}
+
+.name-font-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.name-font-option {
+    min-height: 67px;
+    padding: 10px 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 13px;
+    background: #fff;
+    color: #302c29;
+    cursor: pointer;
+    text-align: left;
+}
+
+.name-font-option:hover {
+    background: #fffaf6;
+}
+
+.name-font-option.selected {
+    border-color: var(--selected-accent, #f28b3c);
+    box-shadow: 0 0 0 2px rgba(242,139,60,.10);
+}
+
+.font-sample {
+    display: block;
+    font-size: 19px;
+}
+
+.name-font-option small {
+    color: #99928c;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-size: 10px;
+}
+
+.customize-message {
+    min-height: 20px;
+    margin: 4px 0 8px;
+}
+
+.customize-save {
+    width: 100%;
+}
+
+@media (max-width: 520px) {
+    .profile-banner {
+        height: 135px;
+        margin-bottom: -36px;
+        border-radius: 19px;
+    }
+
+    .profile .profile-top {
+        padding: 0 12px;
+    }
+
+    .profile .profile-avatar {
+        width: 82px;
+        height: 82px;
+        min-width: 82px;
+    }
+
+    .profile .profile-info {
+        transform: translateY(9px);
+    }
+
+    .profile .profile-bio {
+        margin-top: 16px;
+    }
+
+    .profile .profile-bio,
+    .profile .profile-actions {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .customize-modal-box {
+        width: calc(100vw - 24px);
+        max-height: 90vh;
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .customize-preview-banner {
+        height: 98px;
+    }
+
+    .name-font-options {
+        grid-template-columns: 1fr 1fr;
+    }
+}
