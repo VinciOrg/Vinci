@@ -1,0 +1,40 @@
+.profile-post { position: relative; }
+.vinci-featured-badge {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 7px;
+    border-radius: 999px;
+    background: rgba(27,24,22,.78);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+}
+.vinci-featured-action {
+    width: 100%;
+    margin-top: 12px;
+    padding: 11px 13px;
+    border: 1px solid #eadfd5;
+    border-radius: 13px;
+    background: #fff7f0;
+    color: #c86d29;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+.vinci-featured-action.active {
+    background: #f5f1ed;
+    color: #6f6861;
+}
+.vinci-featured-message {
+    margin: 7px 0 0;
+    color: #8a827a;
+    font-size: 12px;
+    text-align: center;
+}

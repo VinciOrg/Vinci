@@ -1,5 +1,5 @@
 // =====================================
-// VINCI 0.5 — PROFILE POST
+// VINCI 0.7.0 — PROFILE POST
 // =====================================
 
 
@@ -124,6 +124,19 @@ publishButton.addEventListener(
         }
 
 
+        if (
+            window.VinciPostCircles &&
+            !window.VinciPostCircles.isValid()
+        ) {
+
+            message.textContent =
+                "Escolha um círculo para este post.";
+
+            return;
+
+        }
+
+
         // =================================
         // DESATIVAR
         // =================================
@@ -158,7 +171,14 @@ publishButton.addEventListener(
                         currentUser.id,
 
                     content:
-                        content
+                        content,
+
+                    ...(window.VinciPostCircles
+                        ?.getAudience
+                        ?.() || {
+                            audience_type: "public",
+                            circle_id: null
+                        })
 
                 })
                 .select()

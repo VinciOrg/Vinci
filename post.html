@@ -27,6 +27,8 @@
         href="privacy.css"
     >
 
+    <link rel="stylesheet" href="post-circles.css">
+
 </head>
 
 
@@ -211,6 +213,51 @@
 
 
             <!-- =========================
+                 CÍRCULOS DE ACESSO
+            ========================== -->
+
+            <section class="post-audience-card">
+
+                <div class="post-audience-heading">
+                    <h3>Quem pode visualizar?</h3>
+                    <span>Círculos</span>
+                </div>
+
+                <p class="post-audience-description">
+                    Esta configuração controla quem consegue ver a fotografia. Ela é separada de “Feed ou Perfil”.
+                </p>
+
+                <div class="audience-options">
+
+                    <label class="audience-option">
+                        <input type="radio" name="audienceType" value="public" checked>
+                        <div>
+                            <strong>🌎 Público</strong>
+                            <small>Qualquer pessoa autenticada no Vinci pode visualizar.</small>
+                        </div>
+                    </label>
+
+                    <label class="audience-option">
+                        <input type="radio" name="audienceType" value="circle">
+                        <div>
+                            <strong>◎ Um círculo</strong>
+                            <small>Somente você e as pessoas escolhidas nesse círculo.</small>
+                        </div>
+                    </label>
+
+                </div>
+
+                <div id="circleAudienceWrap" class="circle-select-wrap hidden">
+                    <select id="circleAudienceSelect" aria-label="Escolher círculo">
+                        <option value="">Carregando círculos...</option>
+                    </select>
+                    <p id="circleAudienceNote" class="circle-select-note"></p>
+                </div>
+
+            </section>
+
+
+            <!-- =========================
                  PRIVACIDADE DAS RESPOSTAS
             ========================== -->
 
@@ -344,7 +391,11 @@
         <a href="index.html">
 
             <span>
-                ⌂
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+    <path d="M6 9.75V20h12V9.75"></path>
+    <path d="M10 20v-5h4v5"></path>
+</svg>
             </span>
 
             Posts
@@ -358,7 +409,10 @@
         >
 
             <span class="nav-post">
-                +
+                <svg class="nav-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 5v14"></path>
+    <path d="M5 12h14"></path>
+</svg>
             </span>
 
             Postar
@@ -369,7 +423,10 @@
         <a href="profile.html">
 
             <span>
-                ◯
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.25"></circle>
+    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+</svg>
             </span>
 
             Perfil
@@ -393,6 +450,7 @@
     <script src="auth-guard.js"></script>
 
     <script src="privacy.js"></script>
+    <script src="post-circles.js"></script>
 
     <script src="post.js"></script>
 

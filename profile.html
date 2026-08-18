@@ -32,6 +32,10 @@
         href="replies.css"
     >
 
+    <link rel="stylesheet" href="reply-photos.css">
+    <link rel="stylesheet" href="featured-posts.css">
+    <link rel="stylesheet" href="profile-hub.css">
+
 </head>
 
 
@@ -409,28 +413,44 @@
 
 <nav class="bottom-nav">
 
+    <!-- FEED -->
 
     <a href="index.html">
 
         <span>
-            ⌂
-        </span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+    <path d="M6 9.75V20h12V9.75"></path>
+    <path d="M10 20v-5h4v5"></path>
+</svg>
+            </span>
 
         Posts
 
     </a>
 
 
-    <a href="post.html">
+    <!-- CRIAR -->
+
+    <button
+        type="button"
+        id="openCreateMenu"
+        class="nav-create"
+    >
 
         <span class="nav-post">
-            +
-        </span>
+                <svg class="nav-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 5v14"></path>
+    <path d="M5 12h14"></path>
+</svg>
+            </span>
 
         Postar
 
-    </a>
+    </button>
 
+
+    <!-- PERFIL -->
 
     <a
         href="profile.html"
@@ -438,17 +458,136 @@
     >
 
         <span>
-            ◯
-        </span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.25"></circle>
+    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+</svg>
+            </span>
 
         Perfil
 
     </a>
 
-
 </nav>
 
 
+<!-- =====================================
+     MENU DE CRIAÇÃO
+====================================== -->
+
+<div
+    id="createMenu"
+    class="create-menu hidden"
+>
+
+    <div class="create-menu-content">
+
+        <!-- FECHAR -->
+
+        <button
+            type="button"
+            id="closeCreateMenu"
+            class="create-menu-close"
+        >
+            ×
+        </button>
+
+
+        <!-- TÍTULO -->
+
+        <div class="create-menu-title">
+
+            <span>
+                Vinci
+            </span>
+
+            <h2>
+                O que você quer publicar?
+            </h2>
+
+        </div>
+
+
+        <!-- PUBLICAÇÃO -->
+
+        <button
+            type="button"
+            id="createPublication"
+            class="create-option"
+        >
+
+            <div class="create-option-icon">
+                <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M4 9.25A2.25 2.25 0 0 1 6.25 7h1.45l1.05-1.5h6.5L16.3 7h1.45A2.25 2.25 0 0 1 20 9.25v8.5A2.25 2.25 0 0 1 17.75 20h-11.5A2.25 2.25 0 0 1 4 17.75z"></path>
+    <circle cx="12" cy="13" r="3.25"></circle>
+</svg>
+            </div>
+
+            <div class="create-option-text">
+
+                <strong>
+                    Publicação
+                </strong>
+
+                <span>
+                    Compartilhe uma fotografia
+                </span>
+
+            </div>
+
+            <span class="create-option-arrow">
+                →
+            </span>
+
+        </button>
+
+
+        <!-- POST -->
+
+        <button
+            type="button"
+            id="createProfilePost"
+            class="create-option"
+        >
+
+            <div class="create-option-icon">
+                <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6.25 5.5h11.5A2.25 2.25 0 0 1 20 7.75v7.5a2.25 2.25 0 0 1-2.25 2.25H10l-4 3v-3H6.25A2.25 2.25 0 0 1 4 15.25v-7.5A2.25 2.25 0 0 1 6.25 5.5z"></path>
+</svg>
+            </div>
+
+            <div class="create-option-text">
+
+                <strong>
+                    Post
+                </strong>
+
+                <span>
+                    Compartilhe algo no seu perfil
+                </span>
+
+            </div>
+
+            <span class="create-option-arrow">
+                →
+            </span>
+
+        </button>
+
+
+        <!-- CANCELAR -->
+
+        <button
+            type="button"
+            id="cancelCreate"
+            class="create-cancel"
+        >
+            Cancelar
+        </button>
+
+    </div>
+
+</div>
 <!-- =====================================
      SCRIPTS
 ====================================== -->
@@ -466,8 +605,9 @@
 
 <script src="delete-system.js"></script>
 <script src="likes.js"></script>
+<script src="reply-photo-utils.js"></script>
 <script src="replies.js"></script>
-
+<script src="featured-posts.js"></script>
+<script src="profile-hub.js"></script>
+<script src="create.js"></script>
 </body>
-
-</html>

@@ -16,56 +16,6 @@
 
     <title>Vinci</title>
 
-<!-- =====================================
-     PREVIEW DE COMPARTILHAMENTO
-====================================== -->
-
-<meta
-    property="og:title"
-    content="Vinci"
->
-
-<meta
-    property="og:description"
-    content="Fotografia, conexão e privacidade do seu jeito."
->
-
-<meta
-    property="og:image"
-    content="https://vinciorg.github.io/Vinci/assets/banner-vinci.png"
->
-
-<meta
-    property="og:url"
-    content="https://vinciorg.github.io/Vinci/"
->
-
-<meta
-    property="og:type"
-    content="website"
->
-
-<meta
-    name="twitter:card"
-    content="summary_large_image"
->
-
-<meta
-    name="twitter:title"
-    content="Vinci"
->
-
-<meta
-    name="twitter:description"
-    content="Fotografia, conexão e privacidade do seu jeito."
->
-
-<meta
-    name="twitter:image"
-    content="https://vinciorg.github.io/Vinci/assets/banner-vinci.png"
->
-
-    
     <link
         rel="stylesheet"
         href="style.css"
@@ -85,6 +35,9 @@
         rel="stylesheet"
         href="replies.css"
     >
+
+    <link rel="stylesheet" href="reply-photos.css">
+    <link rel="stylesheet" href="notifications.css">
     
 
 </head>
@@ -111,7 +64,10 @@
                 class="search-button"
                 aria-label="Pesquisar usuários"
             >
-                🔎
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="11" cy="11" r="5.75"></circle>
+    <path d="M16 16l4 4"></path>
+</svg>
             </button>
 
         </header>
@@ -247,7 +203,11 @@
         >
 
             <span>
-                ⌂
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+    <path d="M6 9.75V20h12V9.75"></path>
+    <path d="M10 20v-5h4v5"></path>
+</svg>
             </span>
 
             Posts
@@ -263,7 +223,10 @@
         >
 
             <span class="nav-post">
-                +
+                <svg class="nav-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 5v14"></path>
+    <path d="M5 12h14"></path>
+</svg>
             </span>
 
             Postar
@@ -277,7 +240,10 @@
         >
 
             <span>
-                ◯
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.25"></circle>
+    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+</svg>
             </span>
 
             Perfil
@@ -332,8 +298,11 @@
             >
 
                 <div class="create-option-icon">
-                    📸
-                </div>
+                <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M4 9.25A2.25 2.25 0 0 1 6.25 7h1.45l1.05-1.5h6.5L16.3 7h1.45A2.25 2.25 0 0 1 20 9.25v8.5A2.25 2.25 0 0 1 17.75 20h-11.5A2.25 2.25 0 0 1 4 17.75z"></path>
+    <circle cx="12" cy="13" r="3.25"></circle>
+</svg>
+            </div>
 
                 <div class="create-option-text">
 
@@ -364,8 +333,10 @@
             >
 
                 <div class="create-option-icon">
-                    💬
-                </div>
+                <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6.25 5.5h11.5A2.25 2.25 0 0 1 20 7.75v7.5a2.25 2.25 0 0 1-2.25 2.25H10l-4 3v-3H6.25A2.25 2.25 0 0 1 4 15.25v-7.5A2.25 2.25 0 0 1 6.25 5.5z"></path>
+</svg>
+            </div>
 
                 <div class="create-option-text">
 
@@ -417,7 +388,9 @@
     <script src="create.js"></script>
     <script src="search.js"></script>
     <script src="likes.js"></script>
+    <script src="reply-photo-utils.js"></script>
     <script src="replies.js"></script>
+    <script src="notifications-badge.js"></script>
 
 </body>
 

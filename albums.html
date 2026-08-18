@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#faf9f7">
+    <title>Álbuns — Vinci</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="albums.css">
+</head>
+<body>
+    <main class="albums-page">
+        <header class="albums-header">
+            <button type="button" class="back-button" id="albumsBack">←</button>
+            <div class="albums-owner">
+                <span id="albumsUsername">@usuario</span>
+                <h1>Álbuns</h1>
+            </div>
+            <button type="button" id="newAlbumButton" class="button primary hidden">Novo álbum</button>
+        </header>
+
+        <section id="albumCreatePanel" class="album-create-panel hidden">
+            <div class="album-create-fields">
+                <label>Título<input id="albumTitle" type="text" maxlength="60" placeholder="Ex.: Verão 2026"></label>
+                <label>Descrição<textarea id="albumDescription" maxlength="300" placeholder="Sobre este álbum..."></textarea></label>
+            </div>
+            <div class="album-create-actions">
+                <button type="button" id="cancelAlbum" class="button secondary">Cancelar</button>
+                <button type="button" id="saveAlbum" class="button primary">Criar álbum</button>
+            </div>
+            <p id="albumMessage" class="album-message"></p>
+        </section>
+
+        <section id="albumsGrid" class="albums-grid">
+            <div class="albums-state">Carregando álbuns...</div>
+        </section>
+    </main>
+
+    <div id="albumViewer" class="album-viewer hidden" aria-hidden="true">
+        <div class="album-viewer-card">
+            <button type="button" id="closeAlbumViewer" class="album-viewer-close">×</button>
+            <div class="album-viewer-heading">
+                <div>
+                    <span>Álbum</span>
+                    <h2 id="viewerAlbumTitle">Álbum</h2>
+                    <p id="viewerAlbumDescription"></p>
+                </div>
+                <div id="albumOwnerActions" class="album-owner-actions hidden">
+                    <button type="button" id="addPhotosToAlbum" class="button secondary">Adicionar fotos</button>
+                    <button type="button" id="deleteAlbum" class="album-delete-button">Excluir álbum</button>
+                </div>
+            </div>
+            <div id="albumPhotos" class="album-photos"></div>
+        </div>
+    </div>
+
+    <div id="albumPicker" class="album-picker hidden" aria-hidden="true">
+        <div class="album-picker-card">
+            <div class="album-picker-header">
+                <div><span>Suas publicações</span><h2>Adicionar ao álbum</h2></div>
+                <button type="button" id="closeAlbumPicker">×</button>
+            </div>
+            <div id="albumPickerGrid" class="album-picker-grid"></div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html"><span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+    <path d="M6 9.75V20h12V9.75"></path>
+    <path d="M10 20v-5h4v5"></path>
+</svg>
+            </span>Posts</a>
+        <button type="button" class="nav-create" onclick="location.href='index.html#create'"><span class="nav-post">
+                <svg class="nav-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 5v14"></path>
+    <path d="M5 12h14"></path>
+</svg>
+            </span>Postar</button>
+        <a href="profile.html" class="active"><span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.25"></circle>
+    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+</svg>
+            </span>Perfil</a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="auth-guard.js"></script>
+    <script src="albums.js"></script>
+</body>
+</html>

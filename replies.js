@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — PHOTO REPLIES 1.0
+// VINCI — PHOTO REPLIES 1.1 / VINCI 0.7
 // Respostas com permissão individual por @
 // =====================================
 
@@ -270,23 +270,51 @@
         );
 
 
-        const content =
-            document.createElement("p");
-
-        content.className =
-            "vinci-reply-text";
-
-        content.textContent =
-            reply.content;
-
-
         body.appendChild(
             meta
         );
 
-        body.appendChild(
-            content
-        );
+
+        if (reply.content) {
+
+            const content =
+                document.createElement("p");
+
+            content.className =
+                "vinci-reply-text";
+
+            content.textContent =
+                reply.content;
+
+            body.appendChild(
+                content
+            );
+
+        }
+
+
+        if (reply.image_url) {
+
+            const replyImage =
+                document.createElement("img");
+
+            replyImage.className =
+                "vinci-reply-image";
+
+            replyImage.src =
+                reply.image_url;
+
+            replyImage.alt =
+                "Fotografia enviada na resposta";
+
+            replyImage.loading =
+                "lazy";
+
+            body.appendChild(
+                replyImage
+            );
+
+        }
 
 
         item.appendChild(
@@ -435,6 +463,19 @@
                     }
 
 
+                    if (
+                        reply.image_url &&
+                        window.VinciReplyPhotos
+                    ) {
+
+                        await window.VinciReplyPhotos
+                            .removeUrl(
+                                reply.image_url
+                            );
+
+                    }
+
+
                     await reload();
 
                 }
@@ -487,7 +528,7 @@
                 "post_replies"
             )
             .select(
-                "id, post_id, user_id, content, created_at"
+                "id, post_id, user_id, content, image_url, created_at"
             )
             .eq(
                 "post_id",
@@ -645,12 +686,179 @@
             );
 
 
+        const photoInput =
+            form.querySelector(
+                ".vinci-reply-photo-input"
+            );
+
+
+        const photoButton =
+            form.querySelector(
+                ".vinci-reply-photo-button"
+            );
+
+
+        const photoRemove =
+            form.querySelector(
+                ".vinci-reply-photo-remove"
+            );
+
+
+        const previewWrap =
+            form.querySelector(
+                ".vinci-reply-photo-preview-wrap"
+            );
+
+
+        const preview =
+            form.querySelector(
+                ".vinci-reply-photo-preview"
+            );
+
+
+        let previewURL = null;
+
+
+        function clearPhoto() {
+
+            if (previewURL) {
+
+                URL.revokeObjectURL(
+                    previewURL
+                );
+
+                previewURL = null;
+
+            }
+
+
+            if (photoInput) {
+
+                photoInput.value = "";
+
+            }
+
+
+            if (preview) {
+
+                preview.src = "";
+
+            }
+
+
+            previewWrap
+                ?.classList
+                .add("hidden");
+
+            photoRemove
+                ?.classList
+                .add("hidden");
+
+        }
+
+
         textarea.addEventListener(
             "input",
             function () {
 
                 counter.textContent =
                     `${textarea.value.length} / 500`;
+
+            }
+        );
+
+
+        photoButton?.addEventListener(
+            "click",
+            function () {
+
+                photoInput?.click();
+
+            }
+        );
+
+
+        photoRemove?.addEventListener(
+            "click",
+            function () {
+
+                clearPhoto();
+
+                message.textContent = "";
+
+            }
+        );
+
+
+        photoInput?.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    photoInput.files?.[0];
+
+
+                if (!file) {
+
+                    clearPhoto();
+
+                    return;
+
+                }
+
+
+                const validation =
+                    window.VinciReplyPhotos
+                        ?.validate(file);
+
+
+                if (
+                    validation &&
+                    !validation.ok
+                ) {
+
+                    message.textContent =
+                        validation.message;
+
+                    clearPhoto();
+
+                    return;
+
+                }
+
+
+                if (previewURL) {
+
+                    URL.revokeObjectURL(
+                        previewURL
+                    );
+
+                }
+
+
+                previewURL =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+                if (preview) {
+
+                    preview.src =
+                        previewURL;
+
+                }
+
+
+                previewWrap
+                    ?.classList
+                    .remove("hidden");
+
+                photoRemove
+                    ?.classList
+                    .remove("hidden");
+
+                message.textContent = "";
 
             }
         );
@@ -671,10 +879,20 @@
                         .trim();
 
 
-                if (!content) {
+                const photoFile =
+                    photoInput
+                        ?.files
+                        ?.[0] ||
+                    null;
+
+
+                if (
+                    !content &&
+                    !photoFile
+                ) {
 
                     message.textContent =
-                        "Escreva uma resposta.";
+                        "Escreva uma resposta ou escolha uma foto.";
 
                     return;
 
@@ -687,31 +905,106 @@
                 textarea.disabled =
                     true;
 
+                if (photoButton) {
+
+                    photoButton.disabled =
+                        true;
+
+                }
+
+                if (photoRemove) {
+
+                    photoRemove.disabled =
+                        true;
+
+                }
+
+
                 message.textContent =
-                    "Enviando resposta...";
+                    photoFile
+                        ? "Enviando fotografia..."
+                        : "Enviando resposta...";
 
 
-                const {
-                    error
-                } = await db
-                    .from(
-                        "post_replies"
-                    )
-                    .insert({
-
-                        post_id:
-                            postId,
-
-                        user_id:
-                            currentUser.id,
-
-                        content:
-                            content
-
-                    });
+                let uploaded =
+                    null;
 
 
-                if (error) {
+                try {
+
+                    if (photoFile) {
+
+                        if (!window.VinciReplyPhotos) {
+
+                            throw new Error(
+                                "Sistema de fotos indisponível."
+                            );
+
+                        }
+
+
+                        uploaded =
+                            await window
+                                .VinciReplyPhotos
+                                .upload(
+                                    photoFile,
+                                    currentUser.id
+                                );
+
+                    }
+
+
+                    const {
+                        error
+                    } = await db
+                        .from(
+                            "post_replies"
+                        )
+                        .insert({
+
+                            post_id:
+                                postId,
+
+                            user_id:
+                                currentUser.id,
+
+                            content:
+                                content || null,
+
+                            image_url:
+                                uploaded?.url || null
+
+                        });
+
+
+                    if (error) {
+
+                        throw error;
+
+                    }
+
+
+                    textarea.value =
+                        "";
+
+                    counter.textContent =
+                        "0 / 500";
+
+                    clearPhoto();
+
+                    message.textContent =
+                        "";
+
+
+                    await loadRepliesIntoPanel(
+                        panel,
+                        postId,
+                        postOwnerId
+                    );
+
+                }
+
+                catch (error) {
 
                     console.error(
                         "Vinci Replies: erro ao responder:",
@@ -719,9 +1012,37 @@
                     );
 
 
-                    message.textContent =
-                        "Você não tem permissão para responder esta publicação.";
+                    if (
+                        uploaded?.path &&
+                        window.VinciReplyPhotos
+                    ) {
 
+                        await window
+                            .VinciReplyPhotos
+                            .removePath(
+                                uploaded.path
+                            );
+
+                    }
+
+
+                    const text =
+                        String(
+                            error?.message ||
+                            ""
+                        );
+
+
+                    message.textContent =
+                        text.includes("permission") ||
+                        text.includes("policy") ||
+                        text.includes("row-level")
+                            ? "Você não tem permissão para responder esta publicação."
+                            : (text || "Não foi possível enviar a resposta.");
+
+                }
+
+                finally {
 
                     submit.disabled =
                         false;
@@ -729,32 +1050,21 @@
                     textarea.disabled =
                         false;
 
-                    return;
+                    if (photoButton) {
+
+                        photoButton.disabled =
+                            false;
+
+                    }
+
+                    if (photoRemove) {
+
+                        photoRemove.disabled =
+                            false;
+
+                    }
 
                 }
-
-
-                textarea.value =
-                    "";
-
-                counter.textContent =
-                    "0 / 500";
-
-                message.textContent =
-                    "";
-
-                submit.disabled =
-                    false;
-
-                textarea.disabled =
-                    false;
-
-
-                await loadRepliesIntoPanel(
-                    panel,
-                    postId,
-                    postOwnerId
-                );
 
             }
         );
@@ -1770,6 +2080,108 @@
                 "vinci-reply-message";
 
 
+            const photoTools =
+                document.createElement(
+                    "div"
+                );
+
+
+            photoTools.className =
+                "vinci-reply-photo-tools";
+
+
+            const photoButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            photoButton.type =
+                "button";
+
+            photoButton.className =
+                "vinci-reply-photo-button";
+
+            photoButton.textContent =
+                "📷 Foto";
+
+
+            const photoRemove =
+                document.createElement(
+                    "button"
+                );
+
+
+            photoRemove.type =
+                "button";
+
+            photoRemove.className =
+                "vinci-reply-photo-remove hidden";
+
+            photoRemove.textContent =
+                "Remover foto";
+
+
+            const photoInput =
+                document.createElement(
+                    "input"
+                );
+
+
+            photoInput.type =
+                "file";
+
+            photoInput.accept =
+                "image/jpeg,image/png,image/webp";
+
+            photoInput.className =
+                "vinci-reply-photo-input";
+
+            photoInput.hidden =
+                true;
+
+
+            const previewWrap =
+                document.createElement(
+                    "div"
+                );
+
+
+            previewWrap.className =
+                "vinci-reply-photo-preview-wrap hidden";
+
+
+            const preview =
+                document.createElement(
+                    "img"
+                );
+
+
+            preview.className =
+                "vinci-reply-photo-preview";
+
+            preview.alt =
+                "Prévia da fotografia da resposta";
+
+
+            previewWrap.appendChild(
+                preview
+            );
+
+
+            photoTools.appendChild(
+                photoButton
+            );
+
+            photoTools.appendChild(
+                photoRemove
+            );
+
+            photoTools.appendChild(
+                photoInput
+            );
+
+
             footer.appendChild(
                 counter
             );
@@ -1782,6 +2194,16 @@
 
             form.appendChild(
                 textarea
+            );
+
+
+            form.appendChild(
+                photoTools
+            );
+
+
+            form.appendChild(
+                previewWrap
             );
 
 

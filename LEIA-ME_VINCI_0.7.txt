@@ -1,0 +1,58 @@
+VINCI 0.7.0 — GRANDE ATUALIZAÇÃO
+================================
+
+IMPLEMENTADO
+- Círculos de acesso para fotografias e Posts de texto.
+- Respostas com fotografia (texto, foto ou os dois).
+- Álbuns no perfil.
+- Até 3 publicações em destaque no perfil.
+- Notificações de curtidas, respostas e entrada em círculos.
+
+ORDEM PARA ATUALIZAR
+1. Faça um backup do projeto atual e do banco.
+2. No Supabase > SQL Editor, rode TODO o arquivo:
+   VINCI_0_7_GRANDE_ATUALIZACAO.sql
+3. Só depois envie/substitua os arquivos deste pacote no GitHub Pages.
+4. Recarregue o site sem cache.
+
+IMPORTANTE
+- VINCI_PRIVACY_REPLIES.sql é o SQL antigo da 0.6. Não rode esse arquivo depois da 0.7.
+- O SQL da 0.7 adiciona RLS restritiva para Círculos. A privacidade não depende apenas do JavaScript.
+- Se um círculo for excluído, conteúdos ligados a ele passam para o estado interno "private" (somente o autor vê), em vez de ficarem públicos.
+- As respostas com foto reutilizam o bucket existente "vinci-images" e salvam em /<user>/replies/.
+
+COMO TESTAR
+A) CÍRCULOS
+- Perfil > Círculos > crie um círculo e adicione outra conta.
+- Publique uma fotografia ou Post de texto escolhendo esse círculo.
+- Conta dentro do círculo deve ver; conta fora não deve ver.
+
+B) RESPOSTA COM FOTO
+- Em uma fotografia, abra Respostas.
+- Use o botão "Foto" e envie uma foto, com ou sem texto.
+
+C) ÁLBUNS
+- Perfil > Álbuns > Novo álbum.
+- Abra o álbum > Adicionar fotos.
+- Perfis de outras pessoas também conseguem abrir os álbuns, respeitando Círculos.
+
+D) DESTAQUES
+- Abra uma fotografia no seu próprio perfil.
+- Toque em "Destacar no perfil".
+- Máximo: 3. As destacadas ficam primeiro no grid e ganham o selo "Destaque".
+
+E) NOTIFICAÇÕES
+- No feed aparece o sino com contador.
+- Curtidas em fotos/Posts, respostas e adição a círculo geram notificações.
+
+ARQUIVOS NOVOS PRINCIPAIS
+- VINCI_0_7_GRANDE_ATUALIZACAO.sql
+- circles.html / circles.js / circles.css
+- albums.html / albums.js / albums.css
+- notifications.html / notifications.js / notifications.css / notifications-badge.js
+- featured-posts.js / featured-posts.css
+- post-circles.js / post-circles.css
+- reply-photo-utils.js / reply-photos.css
+- profile-hub.js / profile-hub.css
+
+VINCI 0.7.0

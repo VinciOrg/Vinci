@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#faf9f7">
+    <title>Notificações — Vinci</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="notifications.css">
+</head>
+<body>
+    <main class="notifications-page">
+        <header class="notifications-header">
+            <button type="button" class="back-button" id="notificationsBack">←</button>
+            <div>
+                <span>Vinci</span>
+                <h1>Notificações</h1>
+            </div>
+            <button type="button" id="markAllRead" class="notifications-read-all">Marcar como lidas</button>
+        </header>
+
+        <section id="notificationsList" class="notifications-list">
+            <div class="notifications-state">Carregando notificações...</div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html"><span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+    <path d="M6 9.75V20h12V9.75"></path>
+    <path d="M10 20v-5h4v5"></path>
+</svg>
+            </span>Posts</a>
+        <button type="button" class="nav-create" onclick="location.href='index.html#create'"><span class="nav-post">
+                <svg class="nav-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 5v14"></path>
+    <path d="M5 12h14"></path>
+</svg>
+            </span>Postar</button>
+        <a href="profile.html"><span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.25"></circle>
+    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+</svg>
+            </span>Perfil</a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="auth-guard.js"></script>
+    <script src="notifications.js"></script>
+</body>
+</html>

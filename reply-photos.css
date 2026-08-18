@@ -1,0 +1,44 @@
+.vinci-reply-photo-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+.vinci-reply-photo-button,
+.vinci-reply-photo-remove {
+    border: 1px solid #e6ddd5;
+    border-radius: 11px;
+    background: #fff8f2;
+    color: #b96628;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.vinci-reply-photo-remove {
+    background: #f7f3ef;
+    color: #7f7770;
+}
+.vinci-reply-photo-preview-wrap {
+    position: relative;
+    margin-top: 9px;
+    width: min(220px, 100%);
+}
+.vinci-reply-photo-preview {
+    display: block;
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 13px;
+    border: 1px solid #e9e1da;
+}
+.vinci-reply-image {
+    display: block;
+    width: min(340px, 100%);
+    max-height: 360px;
+    object-fit: cover;
+    margin-top: 8px;
+    border-radius: 13px;
+    background: #eee9e4;
+}

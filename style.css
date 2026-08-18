@@ -784,11 +784,40 @@ textarea:focus {
 
 .bottom-nav a span {
 
-    font-size: 22px;
+    width: 24px;
+
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
     line-height: 1;
 
 }
+
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-plus-icon {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 
 .bottom-nav .nav-post {
 
@@ -1639,8 +1668,8 @@ button:disabled {
 
     padding: 20px;
 
-    background:
-        rgba(0, 0, 0, 0.82);
+    /* Fundo totalmente opaco: evita o perfil aparecendo por trás */
+    background: #121110;
 
 }
 
@@ -1658,8 +1687,12 @@ button:disabled {
 
     border-radius: 18px;
 
-    background:
-        var(--panel);
+    /* --panel não existe no tema claro do Vinci.
+       Usamos branco sólido para impedir transparência no visualizador. */
+    background: var(--white, #ffffff);
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.28);
 
 }
 
@@ -2083,7 +2116,17 @@ button:disabled {
 
     background: #fff1e5;
 
-    font-size: 23px;
+    color: var(--orange-dark);
+}
+
+.create-option-icon .menu-icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 /* =====================================
@@ -3934,4 +3977,511 @@ button:disabled {
     opacity:
         0.7;
     
+}
+
+/* =====================================
+   VINCI — SEARCH SYSTEM
+===================================== */
+
+.feed-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feed-search-button {
+    position: absolute;
+    right: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #e5e1dc;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.feed-search-button:hover {
+    transform: scale(1.05);
+    background: #faf7f3;
+}
+
+
+/* =====================================
+   MODAL
+===================================== */
+
+.search-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 80px 20px 30px;
+
+    background: rgba(
+        20,
+        18,
+        16,
+        0.28
+    );
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    opacity: 1;
+
+    transition:
+        opacity 0.2s ease;
+}
+
+
+.search-modal.hidden {
+    display: none;
+}
+
+
+/* =====================================
+   CAIXA
+===================================== */
+
+.search-modal-content {
+    width: 100%;
+    max-width: 560px;
+
+    max-height: 75vh;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e3de;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 60px rgba(
+            0,
+            0,
+            0,
+            0.14
+        );
+
+    animation:
+        searchModalIn
+        0.2s
+        ease;
+}
+
+
+@keyframes searchModalIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-12px)
+            scale(0.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================
+   CABEÇALHO
+===================================== */
+
+.search-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 22px 24px 16px;
+}
+
+
+.search-title-small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #f28b3c;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.search-header h2 {
+    margin: 0;
+
+    color: #171717;
+
+    font-size: 21px;
+
+    font-weight: 600;
+}
+
+
+.search-close {
+    width: 38px;
+    height: 38px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #f5f3f1;
+
+    color: #555;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.search-close:hover {
+    background: #ece9e6;
+
+    transform: rotate(5deg);
+}
+
+
+/* =====================================
+   INPUT
+===================================== */
+
+.search-input-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 0 24px 16px;
+
+    padding: 0 15px;
+
+    height: 48px;
+
+    border: 1px solid #e2ded9;
+
+    border-radius: 14px;
+
+    background: #faf9f7;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.search-input-wrapper:focus-within {
+    border-color: #f28b3c;
+
+    box-shadow:
+        0 0 0 3px rgba(
+            242,
+            139,
+            60,
+            0.10
+        );
+}
+
+
+.search-input-wrapper span {
+    font-size: 16px;
+
+    opacity: 0.6;
+}
+
+
+.search-input-wrapper input {
+    width: 100%;
+
+    height: 100%;
+
+    border: 0;
+
+    outline: 0;
+
+    background: transparent;
+
+    color: #171717;
+
+    font-size: 15px;
+}
+
+
+.search-input-wrapper input::placeholder {
+    color: #9a9691;
+}
+
+
+/* =====================================
+   RESULTADOS
+===================================== */
+
+.search-results {
+    max-height: 52vh;
+
+    overflow-y: auto;
+
+    padding: 0 12px 12px;
+}
+
+
+.search-result {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    border: 0;
+
+    border-radius: 15px;
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.search-result:hover {
+    background: #faf7f3;
+
+    transform: translateX(2px);
+}
+
+
+/* =====================================
+   AVATAR
+===================================== */
+
+.search-result-avatar {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    background: #eeeae6;
+}
+
+
+/* =====================================
+   INFO
+===================================== */
+
+.search-result-info {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.search-result-info strong {
+    overflow: hidden;
+
+    color: #222;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.search-result-info span {
+    overflow: hidden;
+
+    color: #96918c;
+
+    font-size: 13px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.search-result-arrow {
+    color: #c0bbb5;
+
+    font-size: 20px;
+
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.search-result:hover
+.search-result-arrow {
+    color: #f28b3c;
+
+    transform: translateX(3px);
+}
+
+
+/* =====================================
+   ESTADOS
+===================================== */
+
+.search-loading,
+.search-empty {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    color: #88837e;
+}
+
+
+.search-empty div {
+    font-size: 30px;
+
+    margin-bottom: 4px;
+}
+
+
+.search-empty strong {
+    color: #333;
+
+    font-size: 15px;
+}
+
+
+.search-empty span {
+    max-width: 300px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================
+   CELULAR
+===================================== */
+
+@media (max-width: 600px) {
+
+    .search-modal {
+
+        padding:
+            20px
+            12px
+            20px;
+
+        align-items: flex-start;
+
+    }
+
+
+    .search-modal-content {
+
+        margin-top: 20px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .search-header {
+
+        padding:
+            18px
+            18px
+            14px;
+
+    }
+
+
+    .search-input-wrapper {
+
+        margin:
+            0 18px 14px;
+
+    }
+
+
+    .search-results {
+
+        padding:
+            0 8px 8px;
+
+    }
+
 }

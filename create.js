@@ -1,5 +1,5 @@
 // =====================================
-// VINCI 0.5 — CREATE MENU
+// VINCI 0.7.0 — CREATE MENU
 // =====================================
 
 
@@ -129,3 +129,26 @@ createProfilePost.addEventListener(
 
     }
 );
+
+
+// =====================================
+// ABRIR AO VIR DE OUTRA PÁGINA
+// =====================================
+
+if (
+    window.location.hash === "#create" &&
+    createMenu
+) {
+
+    createMenu
+        .classList
+        .remove("hidden");
+
+    history.replaceState(
+        null,
+        "",
+        window.location.pathname +
+        window.location.search
+    );
+
+}

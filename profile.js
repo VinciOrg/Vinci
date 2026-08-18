@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — PROFILE 0.6.2
+// VINCI — PROFILE 0.7.0
 // =====================================
 
 let currentUser = null;
@@ -481,11 +481,26 @@ async function loadUserPosts() {
             id,
             image_url,
             caption,
-            created_at
+            created_at,
+            is_featured,
+            featured_at
         `)
         .eq(
             "user_id",
             viewingProfileId
+        )
+        .order(
+            "is_featured",
+            {
+                ascending: false
+            }
+        )
+        .order(
+            "featured_at",
+            {
+                ascending: false,
+                nullsFirst: false
+            }
         )
         .order(
             "created_at",
@@ -608,6 +623,29 @@ async function loadUserPosts() {
 postElement.dataset.postId =
     post.id;
 
+postElement.dataset.featured =
+    post.is_featured ? "true" : "false";
+
+
+            if (post.is_featured) {
+
+                const featuredBadge =
+                    document.createElement(
+                        "span"
+                    );
+
+                featuredBadge.className =
+                    "vinci-featured-badge";
+
+                featuredBadge.textContent =
+                    "★ Destaque";
+
+                postElement.appendChild(
+                    featuredBadge
+                );
+
+            }
+
 
             const image =
                 document.createElement(
@@ -711,6 +749,10 @@ function openPostViewer(
 
     viewer.dataset.userId =
         viewingProfileId;
+
+
+    viewer.dataset.featured =
+        post.is_featured ? "true" : "false";
 
 
     viewer.innerHTML = `

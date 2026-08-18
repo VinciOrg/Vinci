@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#faf9f7">
+    <title>Círculos — Vinci</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="circles.css">
+</head>
+<body>
+    <main class="feature-page circles-page">
+        <header class="feature-header">
+            <button type="button" class="back-button" id="circlesBack">←</button>
+            <div>
+                <span class="feature-kicker">Privacidade Vinci</span>
+                <h1>Círculos</h1>
+            </div>
+        </header>
+
+        <section class="feature-intro">
+            <div class="feature-intro-icon">◎</div>
+            <div>
+                <h2>Escolha quem entra no seu mundo.</h2>
+                <p>Crie grupos de pessoas e use esses círculos para limitar quem pode visualizar uma publicação.</p>
+            </div>
+        </section>
+
+        <section class="circle-create-card">
+            <label for="newCircleName">Novo círculo</label>
+            <div class="circle-create-row">
+                <input id="newCircleName" type="text" maxlength="40" placeholder="Ex.: Amigos próximos">
+                <button id="createCircle" type="button" class="button primary">Criar</button>
+            </div>
+            <p id="circleMessage" class="feature-message"></p>
+        </section>
+
+        <section>
+            <div class="feature-section-title">
+                <div>
+                    <span>Seus grupos</span>
+                    <h2>Meus círculos</h2>
+                </div>
+                <span id="circleCount" class="feature-count">0</span>
+            </div>
+            <div id="circlesList" class="circles-list">
+                <div class="feature-loading">Carregando círculos...</div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html"><span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+    <path d="M6 9.75V20h12V9.75"></path>
+    <path d="M10 20v-5h4v5"></path>
+</svg>
+            </span>Posts</a>
+        <button type="button" class="nav-create" onclick="location.href='index.html#create'"><span class="nav-post">
+                <svg class="nav-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 5v14"></path>
+    <path d="M5 12h14"></path>
+</svg>
+            </span>Postar</button>
+        <a href="profile.html" class="active"><span>
+                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="8" r="3.25"></circle>
+    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+</svg>
+            </span>Perfil</a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="auth-guard.js"></script>
+    <script src="circles.js"></script>
+</body>
+</html>

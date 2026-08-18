@@ -1,0 +1,12 @@
+.profile-actions {
+    flex-wrap: wrap;
+}
+.profile-actions .vinci-profile-feature {
+    white-space: nowrap;
+}
+@media (max-width: 520px) {
+    .profile-actions .button {
+        flex: 1 1 calc(50% - 8px);
+        text-align: center;
+    }
+}

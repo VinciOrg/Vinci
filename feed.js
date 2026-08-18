@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — FEED 0.4
+// VINCI — FEED 0.7.0
 // =====================================
 
 
@@ -65,15 +65,12 @@ function createPostElement(
 
     article.className =
         "vinci-post";
+        
+   article.dataset.userId =
+    post.user_id;
 
-
-    article.dataset.userId =
-        post.user_id;
-
-
-    article.dataset.postId =
-        post.id;
-
+article.dataset.postId =
+    post.id;
 
     // =================================
     // CABEÇALHO
@@ -335,20 +332,7 @@ async function loadFeed() {
     try {
 
         // =================================
-        // VIDA ÚTIL DO FEED
-        // Máximo: 3 dias
-        // =================================
-
-        const threeDaysAgo =
-            new Date(
-                Date.now() -
-                3 * 24 * 60 * 60 * 1000
-            ).toISOString();
-
-
-        // =================================
-        // BUSCAR PUBLICAÇÕES ATIVAS
-        // DO FEED
+        // BUSCAR SOMENTE POSTS DO FEED
         // =================================
 
         const {
@@ -369,37 +353,15 @@ async function loadFeed() {
                     avatar_url
                 )
             `)
-
-            // Somente posts enviados
-            // para o feed
-
             .eq(
                 "visibility",
                 "feed"
             )
-
-            // Somente publicações
-            // dos últimos 3 dias
-
-            .gte(
-                "created_at",
-                threeDaysAgo
-            )
-
-            // Mais recentes primeiro
-
             .order(
                 "created_at",
                 {
                     ascending: false
                 }
-            )
-
-            // Máximo de 120
-            // publicações no feed
-
-            .limit(
-                120
             );
 
 

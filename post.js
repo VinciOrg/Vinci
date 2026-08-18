@@ -1,5 +1,5 @@
 // =====================================
-// VINCI — CREATE POST 0.4
+// VINCI — CREATE POST 0.7.0
 // =====================================
 
 let currentUser = null;
@@ -539,6 +539,19 @@ publishPost.addEventListener(
         }
 
 
+        if (
+            window.VinciPostCircles &&
+            !window.VinciPostCircles.isValid()
+        ) {
+
+            postMessage.textContent =
+                "Escolha um círculo para esta publicação.";
+
+            return;
+
+        }
+
+
         publishPost.disabled =
             true;
 
@@ -661,7 +674,14 @@ publishPost.addEventListener(
                         caption.value.trim(),
 
                     visibility:
-                        selectedVisibility
+                        selectedVisibility,
+
+                    ...(window.VinciPostCircles
+                        ?.getAudience
+                        ?.() || {
+                            audience_type: "public",
+                            circle_id: null
+                        })
 
                 })
                 .select(

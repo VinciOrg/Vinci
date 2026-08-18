@@ -544,3 +544,14 @@
     }
 
 }
+
+
+.search-button .nav-icon {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
