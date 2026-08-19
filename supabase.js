@@ -10,52 +10,68 @@ const db = createClient(
 
 /* =====================================
    VINCI PRIVATE MEDIA
-   Resolve URLs from the private
-   "vinci-images" bucket automatically.
+   Resolve URLs from private Vinci
+   Storage buckets automatically.
 ===================================== */
 
 const VinciMedia = (() => {
 
-  const BUCKET = "vinci-images";
+  const DEFAULT_BUCKET = "vinci-images";
+  const PRIVATE_BUCKETS = new Set([
+    "vinci-images",
+    "vinci-audio"
+  ]);
+
   const SIGNED_URL_TTL = 60 * 60; // 1 hora
   const REFRESH_MARGIN_MS = 5 * 60 * 1000;
   const cache = new Map();
 
-  function extractPath(url) {
+  function extractRef(url) {
 
     if (!url || typeof url !== "string") {
       return null;
     }
 
-    const markers = [
-      `/storage/v1/object/public/${BUCKET}/`,
-      `/storage/v1/object/sign/${BUCKET}/`,
-      `/storage/v1/object/authenticated/${BUCKET}/`
-    ];
+    for (const bucket of PRIVATE_BUCKETS) {
+      const markers = [
+        `/storage/v1/object/public/${bucket}/`,
+        `/storage/v1/object/sign/${bucket}/`,
+        `/storage/v1/object/authenticated/${bucket}/`
+      ];
 
-    for (const marker of markers) {
-      const index = url.indexOf(marker);
+      for (const marker of markers) {
+        const index = url.indexOf(marker);
 
-      if (index !== -1) {
-        return decodeURIComponent(
-          url
-            .slice(index + marker.length)
-            .split("?")[0]
-        );
+        if (index !== -1) {
+          return {
+            bucket,
+            path: decodeURIComponent(
+              url
+                .slice(index + marker.length)
+                .split("?")[0]
+            )
+          };
+        }
       }
     }
 
     return null;
   }
 
-  async function signedUrlForPath(path) {
+  // Mantém compatibilidade com o restante do Vinci.
+  function extractPath(url) {
+    return extractRef(url)?.path || null;
+  }
 
-    if (!path) {
+  async function signedUrlForPath(path, bucket = DEFAULT_BUCKET) {
+
+    if (!path || !PRIVATE_BUCKETS.has(bucket)) {
       return null;
     }
 
+    const cacheKey = `${bucket}:${path}`;
     const now = Date.now();
-    const cached = cache.get(path);
+    const cached = cache.get(cacheKey);
 
     if (
       cached &&
@@ -72,22 +88,22 @@ const VinciMedia = (() => {
     const promise = (async () => {
 
       const { data, error } = await db.storage
-        .from(BUCKET)
+        .from(bucket)
         .createSignedUrl(path, SIGNED_URL_TTL);
 
       if (error) {
         console.warn(
-          "Vinci: mídia protegida não pôde ser carregada.",
+          `Vinci: mídia protegida (${bucket}) não pôde ser carregada.`,
           error.message
         );
-        cache.delete(path);
+        cache.delete(cacheKey);
         return null;
       }
 
       const result = data?.signedUrl || null;
 
       if (result) {
-        cache.set(path, {
+        cache.set(cacheKey, {
           url: result,
           expiresAt: Date.now() + SIGNED_URL_TTL * 1000
         });
@@ -97,20 +113,20 @@ const VinciMedia = (() => {
 
     })();
 
-    cache.set(path, { promise });
+    cache.set(cacheKey, { promise });
 
     return promise;
   }
 
   async function resolveUrl(url) {
 
-    const path = extractPath(url);
+    const ref = extractRef(url);
 
-    if (!path) {
+    if (!ref) {
       return url;
     }
 
-    return await signedUrlForPath(path);
+    return await signedUrlForPath(ref.path, ref.bucket);
   }
 
   async function protectImage(img) {
@@ -127,10 +143,12 @@ const VinciMedia = (() => {
       img.getAttribute("src") ||
       "";
 
-    // Se a imagem já está usando uma URL assinada válida,
-    // não tenta assiná-la novamente.
+    // Auto-proteção visual é usada só para imagens.
+    const currentRef = extractRef(currentSrc);
+
     if (
-      currentSrc.includes(`/storage/v1/object/sign/${BUCKET}/`) &&
+      currentRef?.bucket === DEFAULT_BUCKET &&
+      currentSrc.includes(`/storage/v1/object/sign/${DEFAULT_BUCKET}/`) &&
       currentSrc.includes("token=")
     ) {
       return;
@@ -140,16 +158,19 @@ const VinciMedia = (() => {
       img.dataset.vinciOriginalSrc ||
       currentSrc;
 
-    const path = extractPath(original);
+    const ref = extractRef(original);
 
-    if (!path) {
+    if (!ref || ref.bucket !== DEFAULT_BUCKET) {
       return;
     }
 
     img.dataset.vinciOriginalSrc = original;
     img.dataset.vinciMediaResolving = "1";
 
-    const signedUrl = await signedUrlForPath(path);
+    const signedUrl = await signedUrlForPath(
+      ref.path,
+      ref.bucket
+    );
 
     if (signedUrl) {
       img.src = signedUrl;
@@ -173,7 +194,7 @@ const VinciMedia = (() => {
     }
 
     root
-      .querySelectorAll(`img[src*="/vinci-images/"]`)
+      .querySelectorAll(`img[src*="/${DEFAULT_BUCKET}/"]`)
       .forEach(protectImage);
   }
 
@@ -230,6 +251,7 @@ const VinciMedia = (() => {
   observe();
 
   return {
+    extractRef,
     extractPath,
     resolveUrl,
     signedUrlForPath,

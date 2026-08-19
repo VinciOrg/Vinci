@@ -752,7 +752,7 @@ textarea:focus {
 
     justify-content: center;
 
-    gap: 80px;
+    gap: 58px;
 
     z-index: 50;
 
@@ -889,7 +889,7 @@ textarea:focus {
 
     .bottom-nav {
 
-        gap: 60px;
+        gap: 38px;
 
     }
 
@@ -4484,4 +4484,13 @@ button:disabled {
 
     }
 
+}
+/* VINCI 1.0 — quatro destinos na navegação */
+@media(max-width:380px){.bottom-nav{gap:28px}.bottom-nav a,.bottom-nav .nav-create{font-size:11px}}
+
+
+/* VINCI ZOOM LOCK */
+html, body {
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
 }

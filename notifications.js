@@ -32,7 +32,12 @@
             text_like: { icon: "♥", text: "curtiu seu post" },
             reply: { icon: "↩", text: "respondeu sua fotografia" },
             photo_reply: { icon: "📷", text: "respondeu sua fotografia com uma foto" },
-            circle_added: { icon: "◎", text: "adicionou você a um círculo" }
+            circle_added: { icon: "◎", text: "adicionou você a um círculo" },
+            room_invite: { icon: "👥", text: "convidou você para uma Room" },
+            friend_request: { icon: "🤝", text: "quer ser seu amigo" },
+            friend_accept: { icon: "🧡", text: "aceitou seu pedido de amizade" },
+            direct_message: { icon: "💬", text: "enviou uma mensagem" },
+            direct_audio: { icon: "🎙️", text: "enviou um áudio" }
         };
         return map[type] || { icon: "●", text: "interagiu com você" };
     }
@@ -57,6 +62,10 @@
     }
 
     function destination(notification) {
+        if (notification.type === "room_invite") return `rooms.html?invite=${encodeURIComponent(notification.room_invite_id || "")}`;
+        if (notification.type === "friend_request") return 'friends.html';
+        if (notification.type === "friend_accept" && notification.friendship_id) return `friendship.html?id=${encodeURIComponent(notification.friendship_id)}`;
+        if ((notification.type === "direct_message" || notification.type === "direct_audio") && notification.friendship_id) return `direct-chat.html?id=${encodeURIComponent(notification.friendship_id)}`;
         if (notification.actor_id) return `profile.html?id=${encodeURIComponent(notification.actor_id)}`;
         return "index.html";
     }
@@ -65,7 +74,7 @@
         list.innerHTML = '<div class="notifications-state">Carregando notificações...</div>';
         const { data, error } = await db
             .from("vinci_notifications")
-            .select("id, actor_id, type, post_id, profile_post_id, reply_id, circle_id, is_read, created_at")
+            .select("id, actor_id, type, post_id, profile_post_id, reply_id, circle_id, room_id, room_invite_id, friend_request_id, friendship_id, direct_message_id, is_read, created_at")
             .eq("user_id", currentUser.id)
             .order("created_at", { ascending: false })
             .limit(100);

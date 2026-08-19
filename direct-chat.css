@@ -1,0 +1,69 @@
+:root{--direct-bg:#f6f3f0;--direct-self:#f4a261;--direct-other:#fff;--direct-accent:#f4a261;--direct-text:#211c18}.direct-page{height:100dvh;display:grid;grid-template-rows:auto 1fr auto auto auto;background:var(--direct-bg);max-width:900px;margin:0 auto;position:relative;overflow:hidden}.direct-head{display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 13px 10px;background:#ffffffeb;backdrop-filter:blur(18px);border-bottom:1px solid #ebe5df;z-index:30}.direct-head>button,.direct-head-actions button,.direct-head-actions a{border:0;background:#f2efec;color:#302923;width:38px;height:38px;border-radius:12px;font:inherit;font-size:19px;display:grid;place-items:center;text-decoration:none;cursor:pointer}.direct-person{display:flex;gap:9px;align-items:center;flex:1;text-decoration:none;color:inherit;min-width:0}.direct-person img{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#eee}.direct-person strong{display:block;font-size:13px}.direct-person small{display:block;color:#999;margin-top:2px}.direct-head-actions{display:flex;gap:6px}.direct-messages{overflow-y:auto;padding:18px 13px 20px;scroll-behavior:smooth;overscroll-behavior:contain}.direct-day{text-align:center;color:#a49a92;font-size:10px;margin:13px}.direct-row{display:flex;gap:7px;align-items:flex-end;margin:7px 0}.direct-row.mine{justify-content:flex-end}.direct-msg-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover}.direct-row.mine .direct-msg-avatar{display:none}.direct-stack{max-width:min(74%,580px);position:relative}.direct-bubble{background:var(--direct-other);color:var(--direct-text);border-radius:17px 17px 17px 5px;padding:9px 11px;box-shadow:0 1px 3px #00000009;position:relative;overflow:hidden}.direct-row.mine .direct-bubble{background:var(--direct-self);color:#fff;border-radius:17px 17px 5px 17px}.direct-bubble p{margin:0;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.35}.direct-meta{display:flex;gap:5px;justify-content:flex-end;align-items:center;font-size:8px;opacity:.68;margin-top:4px}.direct-edited{font-style:italic}.direct-photo{display:block;width:min(280px,64vw);max-height:340px;object-fit:cover;border-radius:12px}.direct-audio{display:flex;align-items:center;gap:7px;min-width:210px}.direct-audio audio{width:205px;max-width:52vw;height:34px}.direct-sticker-img{width:125px;height:125px;object-fit:contain}.direct-bubble.sticker{background:transparent!important;box-shadow:none;padding:2px}.direct-reply-preview{border-left:3px solid var(--direct-accent);background:#0000000a;border-radius:8px;padding:5px 7px;margin-bottom:6px;font-size:10px;opacity:.82;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.direct-menu-button{border:0;background:transparent;color:#999;padding:2px 5px;cursor:pointer}.direct-actions{position:absolute;right:0;top:100%;z-index:20;background:#fff;border:1px solid #e7dfd8;border-radius:11px;box-shadow:0 9px 25px #0002;padding:5px;display:flex;gap:3px}.direct-row.mine .direct-actions{right:0}.direct-actions.hidden{display:none}.direct-actions button{border:0;background:#f5f2ef;border-radius:8px;padding:6px 8px;font-size:10px;cursor:pointer}.direct-actions .danger{color:#aa4747;background:#fff1f1}.direct-reactions{display:flex;gap:3px;margin-top:3px}.direct-reaction{font-size:10px;border:1px solid #e1d8d0;background:#fff;border-radius:999px;padding:2px 5px}.direct-reaction.mine{border-color:var(--direct-accent)}.quick-reactions{display:flex;gap:2px;padding:3px}.quick-reactions button{font-size:15px;padding:4px;background:transparent}.direct-compose{display:grid;grid-template-columns:auto auto auto 1fr auto;gap:6px;align-items:end;padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:#ffffffee;border-top:1px solid #e8e1dc;backdrop-filter:blur(18px)}.direct-icon,.direct-send{border:0;border-radius:11px;height:39px;font:inherit;cursor:pointer}.direct-icon{width:39px;background:#f2efec;font-size:18px}.direct-send{background:var(--direct-accent);color:#fff;padding:0 13px;font-weight:850}.direct-compose textarea{resize:none;max-height:105px;min-height:39px;border:1px solid #ddd5cf;border-radius:13px;padding:9px 11px;font:inherit;box-sizing:border-box}.direct-reply-bar,.direct-media-preview,.direct-record{display:flex;align-items:center;gap:9px;background:#fff;border-top:1px solid #ebe4de;padding:8px 13px}.direct-reply-bar.hidden,.direct-media-preview.hidden,.direct-record.hidden,.direct-panel.hidden{display:none!important}.direct-reply-bar div{flex:1;min-width:0}.direct-reply-bar strong{display:block;font-size:10px;color:var(--direct-accent)}.direct-reply-bar span{font-size:11px;color:#777;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;display:block}.direct-reply-bar button,.direct-media-preview button,.direct-record button{border:0;background:#f1eeeb;border-radius:8px;padding:6px 8px}.direct-media-preview img{width:40px;height:40px;border-radius:9px;object-fit:cover}.direct-media-preview span{flex:1;font-size:11px}.record-dot{width:9px;height:9px;border-radius:50%;background:#e84b4b;animation:recordPulse 1s infinite}.direct-record span:nth-of-type(2){flex:1;color:#8a7d74;font-size:11px}.direct-panel{position:absolute;left:12px;right:12px;bottom:calc(68px + env(safe-area-inset-bottom));z-index:50;background:#fff;border:1px solid #e7dfd9;border-radius:20px;padding:15px;box-shadow:0 20px 55px #0003;max-height:55dvh;overflow:auto}.direct-panel-head{display:flex;justify-content:space-between;align-items:center}.direct-panel-head h3{margin:0}.direct-panel-head button{border:0;background:#f2efec;width:32px;height:32px;border-radius:9px}.direct-sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}.direct-sticker-grid button{border:0;background:#f7f4f1;border-radius:12px;aspect-ratio:1;display:grid;place-items:center}.direct-sticker-grid img{width:90%;height:90%;object-fit:contain}.direct-theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.direct-theme-option{border:1px solid #e6ddd5;background:#fff;border-radius:12px;padding:8px;font:inherit;font-size:10px}.theme-swatch{height:42px;border-radius:8px;margin-bottom:5px}.direct-panel label{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:750}.direct-empty{text-align:center;color:#999;margin:40px 0}.direct-edit{width:100%;border:0;outline:0;background:#ffffffc9;border-radius:9px;padding:7px;font:inherit;box-sizing:border-box}.direct-edit-actions{display:flex;justify-content:flex-end;gap:5px;margin-top:5px}.direct-edit-actions button{border:0;border-radius:7px;padding:5px 7px;font-size:9px}.direct-delete-confirm{font-size:11px}.direct-delete-confirm div{display:flex;gap:5px;margin-top:7px}.direct-delete-confirm button{border:0;border-radius:8px;padding:6px 8px}@keyframes recordPulse{50%{opacity:.3;transform:scale(.75)}}@media(max-width:520px){.direct-stack{max-width:82%}.direct-head{padding-left:9px;padding-right:9px}.direct-head-actions a,.direct-head-actions button{width:35px;height:35px}.direct-compose{grid-template-columns:auto auto auto 1fr auto}.direct-icon{width:34px;height:37px}.direct-send{padding:0 9px;font-size:11px}.direct-sticker-grid{grid-template-columns:repeat(4,1fr)}}
+
+
+/* ==========================================================
+   VINCI DIRECT — gravação de áudio com confirmação explícita
+   ========================================================== */
+.direct-record{
+  flex-wrap:wrap;
+  gap:7px;
+  position:relative;
+  z-index:35;
+}
+
+.direct-record #recordStatus{
+  flex:1;
+  min-width:115px;
+  color:#8a7d74;
+  font-size:11px;
+}
+
+.direct-record .record-preview{
+  order:10;
+  flex-basis:100%;
+  width:100%;
+  height:38px;
+}
+
+.direct-record .record-preview.hidden{
+  display:none!important;
+}
+
+.direct-record .record-stop{
+  color:#8a4d35;
+  background:#fff0e8;
+}
+
+.direct-record .record-send{
+  background:var(--direct-accent);
+  color:#fff;
+  font-weight:850;
+  box-shadow:0 5px 13px color-mix(in srgb,var(--direct-accent) 28%,transparent);
+}
+
+.direct-record .record-send.hidden,
+.direct-record .record-stop.hidden,
+.direct-record .record-dot.hidden{
+  display:none!important;
+}
+
+.direct-record.is-ready{
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.direct-record.is-ready #recordTime{
+  color:var(--direct-accent);
+}
+
+@media(max-width:520px){
+  .direct-record{
+    padding-left:9px;
+    padding-right:9px;
+  }
+
+  .direct-record button{
+    padding:7px 9px;
+    font-size:10px;
+  }
+}

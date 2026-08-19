@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="theme-color" content="#faf9f7"><title>Chat — Vinci</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="direct-chat.css?v=audio2"><link rel="stylesheet" href="global-cosmetics.css?v=cosmetics-rework5"></head><body>
+<main class="direct-page" id="directShell"><header class="direct-head"><button id="directBack">←</button><a id="friendProfileLink" class="direct-person" href="#"><img id="directAvatar" alt=""><div><strong id="directUsername">Carregando...</strong><small id="directName">Vinci Friends</small></div></a><div class="direct-head-actions"><a id="friendshipInfo" href="#" title="Perfil da amizade">♡</a><a id="directCapsuleLink" href="#" title="Time Capsule">⌛</a><button id="directThemeButton" title="Tema">✦</button></div></header>
+<section id="directMessages" class="direct-messages"><div class="direct-empty">Carregando conversa...</div></section>
+<div id="replyBar" class="direct-reply-bar hidden"><div><strong>Respondendo</strong><span id="replyText"></span></div><button id="cancelReply">×</button></div>
+<div id="mediaPreview" class="direct-media-preview hidden"><img id="mediaPreviewImage" alt="Prévia"><span>Foto pronta</span><button id="cancelMedia">Remover</button></div>
+<div id="recordBar" class="direct-record hidden">
+<span id="recordDot" class="record-dot"></span>
+<strong id="recordTime">00:00</strong>
+<span id="recordStatus">Gravando áudio...</span>
+<audio id="recordPreview" class="record-preview hidden" controls preload="metadata"></audio>
+<button id="stopRecord" class="record-stop">Parar</button>
+<button id="cancelRecord">Cancelar</button>
+<button id="sendRecord" class="record-send hidden">Enviar áudio</button>
+</div>
+<footer class="direct-compose"><button id="directMore" class="direct-icon">＋</button><button id="directSticker" class="direct-icon">☺</button><button id="directRecord" class="direct-icon">◉</button><textarea id="directInput" rows="1" maxlength="3000" placeholder="Mensagem..."></textarea><button id="directSend" class="direct-send">Enviar</button><input id="directPhotoFile" type="file" accept="image/*" hidden><input id="directStickerFile" type="file" accept="image/*" hidden></footer>
+<div id="directStickerPanel" class="direct-panel hidden"><div class="direct-panel-head"><h3>Figurinhas</h3><button data-close-panel>×</button></div><div id="directStickerGrid" class="direct-sticker-grid"></div></div>
+<div id="directThemePanel" class="direct-panel hidden"><div class="direct-panel-head"><h3>Tema da conversa</h3><button data-close-panel>×</button></div><div id="directThemeGrid" class="direct-theme-grid"></div><label>Cor das suas mensagens <input id="directAccent" type="color" value="#f4a261"></label></div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase.js?v=audio-storage2"></script><script src="auth-guard.js"></script><script src="direct-chat.js?v=audio-storage2"></script><script src="global-cosmetics.js?v=social1"></script><script src="zoom-lock.js?v=1"></script></body></html>

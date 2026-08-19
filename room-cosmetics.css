@@ -1,0 +1,1398 @@
+
+.vinci-frame-wrap{position:relative;display:inline-grid;place-items:center;flex:0 0 auto;isolation:isolate;border-radius:50%;padding:3px}.vinci-frame-wrap>img{position:relative;z-index:2;margin:0!important}.vinci-frame-wrap:before,.vinci-frame-wrap:after{content:"";position:absolute;inset:-2px;border-radius:50%;z-index:1;pointer-events:none}.vinci-frame-wrap:after{inset:-5px;opacity:.58;filter:blur(5px);z-index:0}.vinci-frame-aurora:before{background:conic-gradient(from 20deg,#ff7a59,#ffd166,#65d6c8,#8c7cff,#ff7aaa,#ff7a59);animation:vinciSpin 5s linear infinite}.vinci-frame-aurora:after{background:conic-gradient(#ff7a59,#65d6c8,#8c7cff,#ff7a59)}.vinci-frame-orbit:before{background:conic-gradient(from 90deg,#36e4ff 0 15%,#172bff 25% 38%,transparent 39% 52%,#9c4dff 55% 72%,#36e4ff 85%)}.vinci-frame-orbit:after{background:#366dff;animation:vinciPulse 2.4s ease-in-out infinite}.vinci-frame-solar:before{background:conic-gradient(#ffb347,#ff6b00,#ffe08b,#ff8c00,#ffb347);animation:vinciSpin 3.5s linear infinite}.vinci-frame-solar:after{background:#ff8b19;animation:vinciPulse 1.9s ease-in-out infinite}.vinci-frame-champion:before{background:conic-gradient(#fff2a8,#d69a24,#fff8c8,#b96e0c,#fff2a8)}.vinci-frame-champion:after{background:#f5b63f;box-shadow:0 -8px 10px -8px #fff4aa,8px 2px 10px -8px #fff4aa,-8px 2px 10px -8px #fff4aa}.vinci-frame-prism:before{background:conic-gradient(from 45deg,#ff3cac,#784ba0,#2b86c5,#4cffbf,#ffe45c,#ff3c78,#ff3cac);animation:vinciSpin 2.7s linear infinite}.vinci-frame-prism:after{background:linear-gradient(135deg,#ff4fc8,#35d9ff);animation:vinciPulse 1.5s ease-in-out infinite}.vinci-frame-constellation:before{background:radial-gradient(circle at 20% 15%,#fff 0 2px,transparent 3px),radial-gradient(circle at 78% 18%,#fff 0 1.5px,transparent 3px),radial-gradient(circle at 88% 70%,#fff 0 2px,transparent 3px),radial-gradient(circle at 20% 82%,#fff 0 1.5px,transparent 3px),conic-gradient(#10183c,#7156b5,#192551,#8c75cc,#10183c);animation:vinciSpin 8s linear infinite}.vinci-frame-constellation:after{background:#5c4aa0;filter:blur(8px);opacity:.72}.vinci-frame-legend:before{background:conic-gradient(from 0deg,#fff0a3,#ff9b43,#ff4d7d,#b04dff,#4aa8ff,#5ef4c6,#fff0a3);animation:vinciSpin 2.2s linear infinite}.vinci-frame-legend:after{background:conic-gradient(#ffd76a,#ff617c,#8d5cff,#39dbe8,#ffd76a);filter:blur(9px);opacity:.8;animation:vinciPulse 1.3s ease-in-out infinite}@keyframes vinciSpin{to{transform:rotate(360deg)}}@keyframes vinciPulse{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:.9;transform:scale(1.08)}}
+
+
+/* ===== Vinci Rare Frames — Creative Collection ===== */
+.vinci-frame-wrap:has(.vinci-frame-art){padding:4px;overflow:visible!important}
+.vinci-frame-art{position:absolute;inset:-16px;z-index:4;pointer-events:none;display:block;animation:vinciRareFloat 3.2s ease-in-out infinite}
+.vinci-frame-art b{position:absolute;display:block;pointer-events:none}
+
+/* Celestial Wings */
+.vinci-frame-celestial_wings{background:conic-gradient(#dff8ff,#7acfff,#d8c5ff,#fff,#7acfff);box-shadow:0 0 16px #88d8ff88}
+.vinci-frame-celestial_wings::before{inset:-7px;background:radial-gradient(circle at 50% 0,#fff 0 2px,transparent 3px),radial-gradient(circle at 8% 46%,#bcecff 0 2px,transparent 3px),radial-gradient(circle at 92% 50%,#fff 0 2px,transparent 3px);animation:vinciRareSpark 2s ease-in-out infinite}
+.vinci-frame-celestial_wings::after{inset:-9px;background:#8bdcff55;filter:blur(10px);animation:vinciFramePulse 2.4s ease-in-out infinite}
+.vinci-frame-celestial_wings .vinci-frame-art b:nth-child(1),.vinci-frame-celestial_wings .vinci-frame-art b:nth-child(2){top:28%;width:22px;height:38px;background:linear-gradient(145deg,#fff,#95ddff 62%,#7a8cff);filter:drop-shadow(0 0 6px #9feaff);clip-path:polygon(100% 0,75% 44%,100% 38%,62% 72%,86% 70%,35% 100%,48% 61%,0 75%,35% 32%)}
+.vinci-frame-celestial_wings .vinci-frame-art b:nth-child(1){left:-12px;transform:rotate(-12deg)}
+.vinci-frame-celestial_wings .vinci-frame-art b:nth-child(2){right:-12px;transform:scaleX(-1) rotate(-12deg)}
+.vinci-frame-celestial_wings .vinci-frame-art b:nth-child(3){top:-1px;left:50%;width:25px;height:8px;border:2px solid #fff4a8;border-radius:50%;transform:translateX(-50%);box-shadow:0 0 8px #fff6a5}
+
+/* Sakura Spirit */
+.vinci-frame-sakura_spirit{background:conic-gradient(#ffb4d2,#fff0f7,#ff7fb3,#ffd1e3,#ffb4d2);box-shadow:0 0 15px #ff9bc077}
+.vinci-frame-sakura_spirit::after{background:#ff9bc055;filter:blur(9px);animation:vinciFramePulse 2.6s ease-in-out infinite}
+.vinci-frame-sakura_spirit .vinci-frame-art b{width:11px;height:7px;background:linear-gradient(135deg,#fff,#ff86b8);border-radius:100% 0 100% 0;box-shadow:0 0 6px #ffb2cf;animation:vinciPetal 3.2s linear infinite}
+.vinci-frame-sakura_spirit .vinci-frame-art b:nth-child(1){left:3px;top:4px}.vinci-frame-sakura_spirit .vinci-frame-art b:nth-child(2){right:0;top:31px;animation-delay:-.8s}.vinci-frame-sakura_spirit .vinci-frame-art b:nth-child(3){left:9px;bottom:3px;animation-delay:-1.6s}.vinci-frame-sakura_spirit .vinci-frame-art b:nth-child(4){right:15px;bottom:-2px;animation-delay:-2.4s}
+
+/* Inferno Dragon */
+.vinci-frame-inferno_dragon{background:conic-gradient(#320000,#ff2b19,#ffb000,#ff4a00,#260000);box-shadow:0 0 20px #ff3d0088;animation:vinciHeat 1.5s ease-in-out infinite}
+.vinci-frame-inferno_dragon::after{inset:-10px;background:#ff3d0048;filter:blur(10px)}
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(1),.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(2){bottom:-7px;width:23px;height:31px;background:linear-gradient(#ffd23d,#ff3b00 62%,#7a0010);clip-path:polygon(50% 0,78% 35%,100% 8%,91% 75%,53% 100%,15% 75%,0 20%,34% 42%);filter:drop-shadow(0 0 5px #ff6a00);animation:vinciFlame .9s ease-in-out infinite alternate}
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(1){left:-5px;transform:rotate(-22deg)}.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(2){right:-5px;transform:scaleX(-1) rotate(-22deg)}
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3),.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(4){top:3px;width:13px;height:24px;background:#ff7140;clip-path:polygon(0 0,100% 45%,35% 100%);filter:drop-shadow(0 0 5px #ff2b00)}
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3){left:3px;transform:rotate(-28deg)}.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(4){right:3px;transform:scaleX(-1) rotate(-28deg)}
+
+/* Lunar Crown */
+.vinci-frame-lunar_crown{background:conic-gradient(#162453,#98b8ff,#e8ddff,#6677d8,#162453);box-shadow:0 0 18px #899cff88}
+.vinci-frame-lunar_crown::before{background:radial-gradient(circle at 18% 20%,#fff 0 2px,transparent 3px),radial-gradient(circle at 81% 34%,#fff 0 1.5px,transparent 3px),radial-gradient(circle at 30% 88%,#b9caff 0 2px,transparent 3px),transparent;animation:vinciFrameSpin 9s linear infinite}
+.vinci-frame-lunar_crown::after{background:#667bff52;filter:blur(11px)}
+.vinci-frame-lunar_crown .vinci-frame-art b:nth-child(1){top:-8px;left:50%;width:39px;height:24px;transform:translateX(-50%);background:linear-gradient(#fff7bf,#e7c45e);clip-path:polygon(0 100%,8% 18%,32% 57%,50% 0,69% 57%,94% 17%,100% 100%);filter:drop-shadow(0 0 6px #ffe887)}
+.vinci-frame-lunar_crown .vinci-frame-art b:nth-child(2){left:-3px;top:39%;width:13px;height:13px;border:3px solid #dfe7ff;border-right-color:transparent;border-radius:50%;animation:vinciMoonOrbit 4s linear infinite}
+.vinci-frame-lunar_crown .vinci-frame-art b:nth-child(3){right:1px;bottom:8px;width:8px;height:8px;background:#fff;clip-path:polygon(50% 0,61% 38%,100% 50%,61% 62%,50% 100%,39% 62%,0 50%,39% 38%);box-shadow:0 0 8px #fff}
+
+/* Seraph Prism */
+.vinci-frame-seraph_prism{background:conic-gradient(#ff8fde,#8de8ff,#b8ffce,#fff0a2,#bb9cff,#ff8fde);box-shadow:0 0 19px #b8dfff99;animation:vinciHue 5s linear infinite}
+.vinci-frame-seraph_prism::after{background:conic-gradient(#ff7ad9,#65eaff,#82ffb3,#f5ff83,#b67cff);filter:blur(11px);opacity:.65}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1),.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){top:14%;width:28px;height:47px;background:linear-gradient(160deg,#fff,#80eaff 35%,#b887ff 68%,#ff95d8);clip-path:polygon(100% 0,74% 36%,100% 28%,73% 57%,96% 55%,57% 82%,78% 80%,22% 100%,42% 62%,0 75%,33% 37%);filter:drop-shadow(0 0 7px #9beaff);animation:vinciWing 2.2s ease-in-out infinite}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1){left:-19px;transform-origin:right center}.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){right:-19px;transform:scaleX(-1);transform-origin:left center}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3),.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4){width:10px;height:10px;background:#fff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);box-shadow:0 0 8px #fff;animation:vinciRareSpark 1.5s ease-in-out infinite}.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3){top:0;left:8px}.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4){right:5px;bottom:3px;animation-delay:-.7s}
+
+/* Eternal Vinci */
+.vinci-frame-eternal_vinci{background:conic-gradient(from 0deg,#ffd76f,#ff754d,#ff4fad,#8d64ff,#45cbff,#60efbe,#ffd76f);box-shadow:0 0 22px #ff9c5588,0 0 35px #8c65ff55;animation:vinciFrameSpin 4s linear infinite}
+.vinci-frame-eternal_vinci::before{inset:-10px;background:repeating-conic-gradient(from 0deg,transparent 0 13deg,#fff 14deg 15deg,transparent 16deg 31deg);animation:vinciFrameSpin 7s linear infinite reverse;opacity:.75}
+.vinci-frame-eternal_vinci::after{inset:-13px;background:conic-gradient(#ffce58,#ff4c73,#8c54ff,#36d8ff,#61f0ad,#ffce58);filter:blur(12px);animation:vinciFramePulse 1.2s ease-in-out infinite}
+.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(1){top:-12px;left:50%;width:43px;height:27px;transform:translateX(-50%);background:linear-gradient(#fffbd2,#ffc84a 55%,#ff8f2b);clip-path:polygon(0 100%,7% 24%,30% 57%,50% 0,69% 57%,93% 24%,100% 100%);filter:drop-shadow(0 0 8px #ffdc73)}
+.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(2),.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(3),.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(4){width:9px;height:9px;background:#fff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);box-shadow:0 0 9px #fff;animation:vinciEternalOrbit 3.6s linear infinite}.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(2){left:-1px;top:25%}.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(3){right:-2px;top:45%;animation-delay:-1.2s}.vinci-frame-eternal_vinci .vinci-frame-art b:nth-child(4){left:45%;bottom:-6px;animation-delay:-2.4s}
+
+@keyframes vinciRareFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes vinciRareSpark{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.18)}}
+@keyframes vinciPetal{0%{transform:translate(0,-3px) rotate(0);opacity:.2}35%{opacity:1}100%{transform:translate(10px,20px) rotate(180deg);opacity:.15}}
+@keyframes vinciFlame{from{filter:drop-shadow(0 0 4px #ff5100);scale:.92}to{filter:drop-shadow(0 0 9px #ffbb00);scale:1.08}}
+@keyframes vinciHeat{0%,100%{filter:saturate(1)}50%{filter:saturate(1.35) brightness(1.08)}}
+@keyframes vinciMoonOrbit{to{transform:rotate(360deg)}}
+@keyframes vinciWing{0%,100%{rotate:-3deg}50%{rotate:5deg}}
+@keyframes vinciHue{to{filter:hue-rotate(360deg)}}
+@keyframes vinciEternalOrbit{0%{transform:rotate(0) translateX(0) scale(.8)}50%{transform:rotate(180deg) translateX(3px) scale(1.2)}100%{transform:rotate(360deg) translateX(0) scale(.8)}}
+
+
+/* ==========================================================
+   DEV//CORE — moldura exclusiva @yakodevofc
+   Terminal vivo + circuito + halo verde neon.
+   ========================================================== */
+.vinci-frame-yakodev_core{
+  padding:4px;
+  overflow:visible!important;
+  background:
+    conic-gradient(from 0deg,
+      #03130b 0 8%,
+      #00ff84 13%,
+      #0b5f39 21%,
+      #78ffbc 29%,
+      #001b0e 39%,
+      #00ff84 52%,
+      #052d1b 65%,
+      #9affcc 78%,
+      #00d96e 89%,
+      #03130b 100%);
+  box-shadow:
+    0 0 7px #00ff84,
+    0 0 18px #00ff8490,
+    0 0 32px #00ff8445,
+    inset 0 0 8px #001b0f;
+  animation:vinciDevCoreRing 4.8s linear infinite;
+}
+.vinci-frame-yakodev_core::before{
+  inset:-10px;
+  border:1px solid #00ff8499;
+  background:
+    linear-gradient(90deg,transparent 0 13%,#00ff84 13% 15%,transparent 15% 48%,#00ff84 48% 50%,transparent 50% 82%,#00ff84 82% 84%,transparent 84%),
+    linear-gradient(0deg,transparent 0 19%,#00ff8466 19% 21%,transparent 21% 61%,#00ff8466 61% 63%,transparent 63%);
+  clip-path:polygon(0 16%,16% 16%,16% 0,84% 0,84% 16%,100% 16%,100% 84%,84% 84%,84% 100%,16% 100%,16% 84%,0 84%);
+  filter:drop-shadow(0 0 4px #00ff84);
+  animation:vinciDevCircuit 2.8s steps(6,end) infinite;
+}
+.vinci-frame-yakodev_core::after{
+  inset:-15px;
+  border:1px dashed #00ff8466;
+  background:transparent;
+  box-shadow:
+    inset 0 0 12px #00ff8422,
+    0 0 14px #00ff8440;
+  animation:vinciDevOrbit 8s linear infinite;
+}
+
+/* Terminal/código acima do avatar */
+.vinci-frame-yakodev_core .vinci-frame-art{
+  inset:-22px;
+  animation:none;
+}
+.vinci-frame-yakodev_core .vinci-frame-art::before{
+  content:"</>  const VINCI = { dev: true };";
+  position:absolute;
+  left:50%;
+  top:-9px;
+  transform:translateX(-50%);
+  max-width:112px;
+  white-space:nowrap;
+  overflow:hidden;
+  color:#9affc8;
+  background:#020806ee;
+  border:1px solid #00ff8477;
+  border-radius:5px;
+  padding:2px 5px;
+  font:700 5.8px/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.1px;
+  text-shadow:0 0 4px #00ff84;
+  box-shadow:0 0 8px #00ff844d,inset 0 0 5px #00ff8418;
+  animation:vinciDevTyping 3.4s steps(30,end) infinite;
+}
+.vinci-frame-yakodev_core .vinci-frame-art::after{
+  content:"01  10  {}  =>  _";
+  position:absolute;
+  left:50%;
+  bottom:-10px;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  color:#37ff9a;
+  background:#00150cdd;
+  border-left:2px solid #00ff84;
+  border-right:2px solid #00ff84;
+  padding:2px 5px;
+  border-radius:3px;
+  font:800 5.5px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  text-shadow:0 0 5px #00ff84;
+  animation:vinciDevCursor .75s steps(2,end) infinite;
+}
+
+/* Os quatro elementos representam brackets, elos e nós de circuito */
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(1),
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(2){
+  top:28%;
+  width:14px;
+  height:28px;
+  border-top:2px solid #40ffa2;
+  border-bottom:2px solid #40ffa2;
+  filter:drop-shadow(0 0 5px #00ff84);
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(1){
+  left:-4px;
+  border-left:3px solid #00ff84;
+  border-radius:7px 0 0 7px;
+  animation:vinciDevBracketLeft 1.8s ease-in-out infinite;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(1)::after{
+  content:"{";
+  position:absolute;
+  left:1px;
+  top:4px;
+  color:#a4ffd0;
+  font:900 14px/1 monospace;
+  text-shadow:0 0 5px #00ff84;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(2){
+  right:-4px;
+  border-right:3px solid #00ff84;
+  border-radius:0 7px 7px 0;
+  animation:vinciDevBracketRight 1.8s ease-in-out infinite;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(2)::after{
+  content:"}";
+  position:absolute;
+  right:1px;
+  top:4px;
+  color:#a4ffd0;
+  font:900 14px/1 monospace;
+  text-shadow:0 0 5px #00ff84;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(3){
+  width:15px;
+  height:15px;
+  left:0;
+  bottom:4px;
+  border:2px solid #00ff84;
+  border-right-color:#0a5;
+  border-radius:50%;
+  box-shadow:0 0 7px #00ff84,inset 0 0 5px #00ff8440;
+  animation:vinciDevNodeA 2.5s linear infinite;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(3)::after{
+  content:"";
+  position:absolute;
+  width:5px;height:5px;
+  border-radius:50%;
+  background:#9affcf;
+  left:3px;top:3px;
+  box-shadow:0 0 5px #00ff84;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(4){
+  width:11px;
+  height:11px;
+  right:2px;
+  top:4px;
+  border:2px solid #8affc4;
+  border-radius:3px;
+  transform:rotate(45deg);
+  box-shadow:0 0 7px #00ff84;
+  animation:vinciDevNodeB 2s ease-in-out infinite;
+}
+.vinci-frame-yakodev_core .vinci-frame-art b:nth-child(4)::after{
+  content:"";
+  position:absolute;
+  inset:2px;
+  background:#00ff84;
+  border-radius:1px;
+  box-shadow:0 0 7px #00ff84;
+}
+
+@keyframes vinciDevCoreRing{
+  0%{filter:hue-rotate(0deg) brightness(1);transform:translateZ(0)}
+  50%{filter:hue-rotate(8deg) brightness(1.18)}
+  100%{filter:hue-rotate(0deg) brightness(1)}
+}
+@keyframes vinciDevCircuit{
+  0%,100%{opacity:.35;transform:scale(.98)}
+  45%{opacity:1;transform:scale(1.035)}
+  55%{opacity:.55}
+}
+@keyframes vinciDevOrbit{to{transform:rotate(360deg)}}
+@keyframes vinciDevTyping{
+  0%{width:0;opacity:.75}
+  55%,84%{width:112px;opacity:1}
+  100%{width:0;opacity:.8}
+}
+@keyframes vinciDevCursor{50%{opacity:.25}}
+@keyframes vinciDevBracketLeft{50%{transform:translateX(-3px);filter:drop-shadow(0 0 8px #00ff84)}}
+@keyframes vinciDevBracketRight{50%{transform:translateX(3px);filter:drop-shadow(0 0 8px #00ff84)}}
+@keyframes vinciDevNodeA{to{transform:rotate(360deg)}}
+@keyframes vinciDevNodeB{50%{transform:rotate(135deg) scale(1.18)}}
+
+@media (prefers-reduced-motion:reduce){
+  .vinci-frame-yakodev_core,
+  .vinci-frame-yakodev_core::before,
+  .vinci-frame-yakodev_core::after,
+  .vinci-frame-yakodev_core .vinci-frame-art::before,
+  .vinci-frame-yakodev_core .vinci-frame-art::after,
+  .vinci-frame-yakodev_core .vinci-frame-art b{
+    animation:none!important;
+  }
+}
+
+/* ===== Vinci Creative Frames — Social Expansion ===== */
+.vinci-frame-crystal_garden{background:conic-gradient(#e5fcff,#7de6ee,#b59cff,#fff,#6fe0ca);box-shadow:0 0 18px #8cebf088}.vinci-frame-crystal_garden::after{background:#8de8ff55;filter:blur(11px);animation:vinciFramePulse 2.3s ease-in-out infinite}.vinci-frame-crystal_garden .vinci-frame-art b{width:14px;height:25px;background:linear-gradient(145deg,#fff,#76ecff 45%,#b881ff);clip-path:polygon(50% 0,100% 35%,72% 100%,25% 88%,0 35%);filter:drop-shadow(0 0 5px #84eaff);animation:vinciCrystal 2.4s ease-in-out infinite}.vinci-frame-crystal_garden .vinci-frame-art b:nth-child(1){left:-5px;bottom:1px;transform:rotate(-25deg)}.vinci-frame-crystal_garden .vinci-frame-art b:nth-child(2){right:-4px;bottom:3px;transform:rotate(25deg);animation-delay:-.7s}.vinci-frame-crystal_garden .vinci-frame-art b:nth-child(3){left:11px;top:-8px;width:10px;height:18px;animation-delay:-1.2s}.vinci-frame-crystal_garden .vinci-frame-art b:nth-child(4){right:11px;top:-6px;width:9px;height:16px;animation-delay:-1.7s}
+
+.vinci-frame-midnight_butterfly{background:conic-gradient(#11132c,#6e4ab1,#1d2450,#a969d6,#11132c);box-shadow:0 0 20px #7c5bd477}.vinci-frame-midnight_butterfly::after{background:#553a9c66;filter:blur(11px)}.vinci-frame-midnight_butterfly .vinci-frame-art b{width:17px;height:13px;background:radial-gradient(circle at 60% 45%,#fff 0 1px,transparent 2px),linear-gradient(135deg,#8666df,#ff9ad8);clip-path:polygon(50% 50%,0 0,8% 75%,50% 62%,92% 100%,100% 20%);filter:drop-shadow(0 0 5px #aa76ff);animation:vinciButterfly 2.2s ease-in-out infinite}.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(1){left:-4px;top:8px}.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(2){right:-6px;top:29px;animation-delay:-.7s}.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(3){left:11px;bottom:-6px;animation-delay:-1.4s}.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(4){right:14px;top:-8px;width:11px;height:9px;animation-delay:-1.9s}
+
+.vinci-frame-ocean_guardian{
+  background:conic-gradient(from 20deg,#001f38,#046a8a,#12bfd1,#7af5dc,#168bb2,#003755,#001f38);
+  box-shadow:0 0 12px #10cbd488,0 0 24px #0a87b044;
+}
+.vinci-frame-ocean_guardian::before{
+  inset:-9px;
+  background:
+    radial-gradient(circle at 15% 24%,#eaffff 0 1.6px,transparent 2.5px),
+    radial-gradient(circle at 82% 20%,#b9fff1 0 1.3px,transparent 2.3px),
+    radial-gradient(circle at 91% 66%,#eaffff 0 1.8px,transparent 2.8px),
+    radial-gradient(circle at 12% 76%,#79efd9 0 1.2px,transparent 2.2px),
+    radial-gradient(circle at 65% 93%,#d7ffff 0 1.2px,transparent 2.2px);
+  opacity:.9;
+  animation:vinciOceanBubbles 4.2s ease-in-out infinite;
+}
+.vinci-frame-ocean_guardian::after{
+  inset:-8px;
+  background:radial-gradient(circle,#3cf6e477 0 12%,#087ea844 38%,transparent 70%);
+  filter:blur(10px);
+  animation:vinciOceanGlow 3.2s ease-in-out infinite;
+}
+
+/* Peixes — três trajetórias diferentes e dessincronizadas */
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(-n+3){
+  width:20px;
+  height:9px;
+  border-radius:70% 55% 55% 70%;
+  background:
+    radial-gradient(circle at 73% 38%,#052535 0 1px,transparent 1.4px),
+    linear-gradient(100deg,#d8fff5 0 12%,#49e6ce 34%,#0795ba 72%,#07537b 100%);
+  box-shadow:inset 0 -2px 3px #014f6d66;
+  filter:drop-shadow(0 0 5px #47f2df);
+  transform-origin:center;
+  will-change:transform,opacity;
+}
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(-n+3)::before{
+  content:"";
+  position:absolute;
+  left:-7px;
+  top:1px;
+  width:8px;
+  height:8px;
+  background:linear-gradient(135deg,#62ead8,#087da8);
+  clip-path:polygon(100% 50%,0 0,18% 50%,0 100%);
+  filter:drop-shadow(0 0 2px #55e8e0);
+}
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(-n+3)::after{
+  content:"";
+  position:absolute;
+  right:4px;
+  top:2px;
+  width:2px;
+  height:2px;
+  border-radius:50%;
+  background:#eaffff;
+  box-shadow:0 0 3px #fff;
+}
+
+/* peixe superior: atravessa a parte alta e mergulha pela direita */
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(1){
+  left:5px;
+  top:1px;
+  animation:vinciOceanFishOne 7.8s ease-in-out infinite;
+}
+
+/* peixe lateral: mais rápido, faz uma curva oposta */
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(2){
+  right:2px;
+  top:34%;
+  width:17px;
+  height:8px;
+  opacity:.9;
+  animation:vinciOceanFishTwo 6.1s ease-in-out -2.3s infinite;
+}
+
+/* peixe menor: passeia pela parte inferior e sobe */
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(3){
+  left:20%;
+  bottom:6px;
+  width:14px;
+  height:7px;
+  opacity:.82;
+  animation:vinciOceanFishThree 9.4s ease-in-out -4.7s infinite;
+}
+
+/* Amuleto marítimo central */
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(4){
+  left:50%;
+  bottom:-17px;
+  width:21px;
+  height:24px;
+  transform:translateX(-50%);
+  border:2px solid #bffff4;
+  border-radius:48% 48% 55% 55%;
+  background:
+    radial-gradient(circle at 50% 45%,#cffff7 0 9%,#4ee7d1 10% 26%,#087da6 28% 58%,#043c64 60% 100%);
+  box-shadow:
+    0 0 5px #bffff4,
+    0 0 12px #24d9d4aa,
+    inset 0 0 5px #eaffff88;
+  filter:drop-shadow(0 3px 5px #003a5777);
+  animation:vinciOceanAmulet 2.7s ease-in-out infinite;
+  z-index:8;
+}
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(4)::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-12px;
+  width:13px;
+  height:12px;
+  transform:translateX(-50%);
+  border:2px solid #8df4e6;
+  border-bottom:0;
+  border-radius:50% 50% 0 0;
+  box-shadow:0 0 4px #38daca;
+  opacity:.9;
+}
+.vinci-frame-ocean_guardian .vinci-frame-art b:nth-child(4)::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:10px;
+  height:10px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  background:conic-gradient(from 45deg,#dffff8 0 12.5%,#138fb1 12.5% 25%,#a5fff0 25% 37.5%,#057397 37.5% 50%,#dffff8 50% 62.5%,#138fb1 62.5% 75%,#a5fff0 75% 87.5%,#057397 87.5%);
+  clip-path:polygon(50% 0,62% 37%,100% 50%,62% 63%,50% 100%,38% 63%,0 50%,38% 37%);
+  box-shadow:0 0 5px #cafff4;
+}
+
+.vinci-frame-cyber_koi{background:conic-gradient(#03140f,#00e88a,#0f4d3f,#ff7e6a,#00f0c0,#03140f);box-shadow:0 0 22px #00dc9a88}.vinci-frame-cyber_koi::after{background:#00dc9a44;filter:blur(12px)}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1),.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2){width:25px;height:11px;border-radius:70% 45% 70% 45%;background:linear-gradient(90deg,#fff,#00eaa2 48%,#ff8873);filter:drop-shadow(0 0 5px #00e99a);animation:vinciKoi 4s linear infinite}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1){left:-8px;top:7px}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2){right:-8px;bottom:5px;transform:scaleX(-1);animation-delay:-2s}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1)::after,.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2)::after{content:"";position:absolute;right:-7px;top:1px;border-left:8px solid #00eaa2;border-top:5px solid transparent;border-bottom:5px solid transparent}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(3),.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(4){width:4px;height:4px;background:#afffe0;border-radius:50%;box-shadow:0 0 6px #00ff9d}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(3){left:12px;bottom:-5px}.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(4){right:10px;top:-5px}
+
+.vinci-frame-royal_phoenix{background:conic-gradient(#2b0800,#ff4b14,#ffd45d,#ff7b17,#4a0b00);box-shadow:0 0 24px #ff6a1688;animation:vinciHeat 1.7s ease-in-out infinite}.vinci-frame-royal_phoenix::after{background:#ff6b174f;filter:blur(12px)}.vinci-frame-royal_phoenix .vinci-frame-art b:nth-child(1),.vinci-frame-royal_phoenix .vinci-frame-art b:nth-child(2){top:17%;width:31px;height:43px;background:linear-gradient(155deg,#fff1a2,#ff8c1c 48%,#ee2d19);clip-path:polygon(100% 0,65% 43%,100% 35%,54% 73%,82% 68%,20% 100%,42% 59%,0 76%,31% 25%);filter:drop-shadow(0 0 8px #ff8a16);animation:vinciPhoenixWing 1.9s ease-in-out infinite}.vinci-frame-royal_phoenix .vinci-frame-art b:nth-child(1){left:-20px}.vinci-frame-royal_phoenix .vinci-frame-art b:nth-child(2){right:-20px;transform:scaleX(-1)}.vinci-frame-royal_phoenix .vinci-frame-art b:nth-child(3){top:-11px;left:50%;transform:translateX(-50%);width:35px;height:22px;background:linear-gradient(#fff2a7,#f1b83e);clip-path:polygon(0 100%,8% 20%,32% 56%,50% 0,69% 56%,94% 20%,100% 100%);filter:drop-shadow(0 0 7px #ffd96a)}.vinci-frame-royal_phoenix .vinci-frame-art b:nth-child(4){left:50%;bottom:-9px;width:12px;height:21px;background:#ff8d1c;transform:translateX(-50%);clip-path:polygon(50% 0,100% 65%,50% 100%,0 65%);filter:drop-shadow(0 0 7px #ff6b12);animation:vinciFlame .8s ease-in-out infinite alternate}
+
+.vinci-frame-galaxy_crown{background:conic-gradient(#05071d,#36208a,#a441cc,#315ddb,#05071d);box-shadow:0 0 25px #6d45dd99}.vinci-frame-galaxy_crown::before{inset:-11px;background:radial-gradient(circle at 12% 25%,#fff 0 2px,transparent 3px),radial-gradient(circle at 90% 31%,#f0c9ff 0 1.5px,transparent 3px),radial-gradient(circle at 73% 90%,#fff 0 2px,transparent 3px),radial-gradient(circle at 22% 80%,#a8ceff 0 1.5px,transparent 3px);animation:vinciFrameSpin 10s linear infinite}.vinci-frame-galaxy_crown::after{background:conic-gradient(#552cc8,#d255e2,#246dff,#552cc8);filter:blur(13px);opacity:.65}.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(1){top:-14px;left:50%;transform:translateX(-50%);width:43px;height:27px;background:linear-gradient(#fff,#c493ff 48%,#6e4bdd);clip-path:polygon(0 100%,7% 24%,28% 58%,50% 0,72% 58%,93% 24%,100% 100%);filter:drop-shadow(0 0 9px #c987ff)}.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(2),.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(3),.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(4){width:8px;height:8px;background:#fff;border-radius:50%;box-shadow:0 0 9px #caa7ff;animation:vinciGalaxyOrbit 4.5s linear infinite}.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(2){left:-3px;top:38%}.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(3){right:-3px;top:58%;animation-delay:-1.5s}.vinci-frame-galaxy_crown .vinci-frame-art b:nth-child(4){left:47%;bottom:-8px;animation-delay:-3s}
+
+@keyframes vinciCrystal{50%{transform:translateY(-3px) rotate(8deg);filter:drop-shadow(0 0 10px #c6a1ff)}}
+@keyframes vinciButterfly{50%{transform:translateY(-4px) scaleX(.82);filter:drop-shadow(0 0 9px #c77cff)}}
+@keyframes vinciBubble{50%{transform:translateY(-3px);opacity:.35}}
+@keyframes vinciWave{50%{translate:0 -3px;scale:1.08}}
+@keyframes vinciKoi{0%{rotate:0deg;translate:0 0}50%{rotate:8deg;translate:4px 3px}100%{rotate:0deg;translate:0 0}}
+@keyframes vinciPhoenixWing{50%{scale:1.08;filter:drop-shadow(0 0 13px #ffba36)}}
+@keyframes vinciGalaxyOrbit{50%{transform:translateY(-5px) scale(1.3);opacity:.55}}
+
+/* Aliases globais usados pelas novas molduras dentro das Rooms. */
+@keyframes vinciFrameSpin{to{transform:rotate(360deg)}}
+@keyframes vinciFramePulse{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:.9;transform:scale(1.08)}}
+
+
+@keyframes vinciOceanBubbles{
+  0%,100%{transform:translateY(2px) scale(.98);opacity:.58}
+  45%{transform:translateY(-4px) scale(1.03);opacity:1}
+  70%{transform:translateY(-1px) scale(1);opacity:.75}
+}
+@keyframes vinciOceanGlow{
+  0%,100%{opacity:.35;transform:scale(.96)}
+  50%{opacity:.82;transform:scale(1.08)}
+}
+@keyframes vinciOceanFishOne{
+  0%{transform:translate(-7px,3px) rotate(-7deg) scaleX(1);opacity:.35}
+  12%{opacity:1}
+  30%{transform:translate(28px,-7px) rotate(7deg) scaleX(1)}
+  52%{transform:translate(53px,12px) rotate(19deg) scaleX(1)}
+  54%{transform:translate(53px,12px) rotate(19deg) scaleX(-1)}
+  76%{transform:translate(20px,31px) rotate(-10deg) scaleX(-1)}
+  98%{opacity:.85}
+  100%{transform:translate(-7px,3px) rotate(-7deg) scaleX(-1);opacity:.35}
+}
+@keyframes vinciOceanFishTwo{
+  0%{transform:translate(8px,-5px) rotate(8deg) scaleX(-1);opacity:.45}
+  18%{opacity:1}
+  35%{transform:translate(-24px,13px) rotate(-16deg) scaleX(-1)}
+  53%{transform:translate(-47px,27px) rotate(8deg) scaleX(-1)}
+  55%{transform:translate(-47px,27px) rotate(8deg) scaleX(1)}
+  76%{transform:translate(-20px,-13px) rotate(-11deg) scaleX(1)}
+  100%{transform:translate(8px,-5px) rotate(8deg) scaleX(1);opacity:.45}
+}
+@keyframes vinciOceanFishThree{
+  0%{transform:translate(-8px,7px) rotate(4deg) scaleX(1);opacity:.42}
+  20%{opacity:.9}
+  34%{transform:translate(37px,3px) rotate(-8deg) scaleX(1)}
+  50%{transform:translate(55px,-24px) rotate(-20deg) scaleX(1)}
+  52%{transform:translate(55px,-24px) rotate(-20deg) scaleX(-1)}
+  73%{transform:translate(19px,-39px) rotate(10deg) scaleX(-1)}
+  88%{transform:translate(-16px,-15px) rotate(17deg) scaleX(-1)}
+  100%{transform:translate(-8px,7px) rotate(4deg) scaleX(-1);opacity:.42}
+}
+@keyframes vinciOceanAmulet{
+  0%,100%{transform:translateX(-50%) rotate(-3deg) translateY(0);filter:drop-shadow(0 3px 5px #003a5777)}
+  50%{transform:translateX(-50%) rotate(3deg) translateY(2px);filter:drop-shadow(0 4px 8px #18d8d0aa)}
+}
+
+
+/* ==========================================================
+   SERAPH PRISM — REWORK 2
+   Asas prismáticas vivas + halo celestial + núcleo prismático
+   ========================================================== */
+.vinci-frame-seraph_prism{
+  background:conic-gradient(from 10deg,#fff6ff 0deg,#78eaff 55deg,#9d86ff 115deg,#ff8fd8 175deg,#ffe993 235deg,#83ffd4 295deg,#fff6ff 360deg);
+  box-shadow:0 0 10px #ffffffaa,0 0 22px #a886ff88,0 0 34px #69e9ff44;
+  animation:vinciSeraphAura 5.8s ease-in-out infinite;
+}
+.vinci-frame-seraph_prism::before{
+  inset:-12px;
+  background:
+    radial-gradient(circle at 50% 1%,#fff 0 2px,transparent 3px),
+    radial-gradient(circle at 9% 30%,#91f4ff 0 1.6px,transparent 2.7px),
+    radial-gradient(circle at 91% 27%,#ffc5f0 0 1.8px,transparent 2.8px),
+    radial-gradient(circle at 4% 72%,#fff0a8 0 1.3px,transparent 2.4px),
+    radial-gradient(circle at 94% 76%,#b4ffdd 0 1.4px,transparent 2.5px),
+    conic-gradient(from 0deg,transparent 0 14%,#ffffff55 15% 16%,transparent 17% 31%,#8ceaff55 32% 33%,transparent 34% 49%,#ff9bdf55 50% 51%,transparent 52% 68%,#fff09a55 69% 70%,transparent 71% 100%);
+  opacity:.9;
+  filter:drop-shadow(0 0 4px #d9f7ff);
+  animation:vinciSeraphOrbitDust 8.8s linear infinite;
+}
+.vinci-frame-seraph_prism::after{
+  inset:-11px;
+  background:radial-gradient(circle,#ffffffaa 0 6%,#ae9cff66 22%,#6fe8ff44 42%,transparent 72%);
+  filter:blur(12px);
+  opacity:.62;
+  animation:vinciSeraphGlow 3.1s ease-in-out infinite;
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1),
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){
+  top:8%;width:39px;height:57px;border:0;border-radius:0;
+  background:linear-gradient(155deg,#fff 0 12%,#c4fbff 23%,#7edfff 41%,#9e94ff 58%,#ff92db 76%,#fff0a4 100%);
+  clip-path:polygon(100% 0,76% 22%,100% 15%,71% 42%,97% 35%,64% 62%,91% 58%,50% 83%,73% 81%,21% 100%,40% 67%,0 79%,31% 47%,3% 53%,36% 24%);
+  box-shadow:inset 0 0 7px #ffffffaa;
+  filter:drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #79e8ff) drop-shadow(0 0 15px #b988ff88);
+  will-change:transform,filter;
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1){left:-29px;right:auto;bottom:auto;transform-origin:100% 48%;animation:vinciSeraphWingLeft 2.45s ease-in-out infinite}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){right:-29px;left:auto;bottom:auto;transform-origin:0 48%;animation:vinciSeraphWingRight 2.45s ease-in-out -.18s infinite}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1)::before,
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2)::before{
+  content:"";position:absolute;inset:8px 5px 2px 8px;
+  background:linear-gradient(150deg,#ffffffdd,#75ebff99 42%,#c481ff88 72%,#ff9ed588);
+  clip-path:polygon(100% 0,68% 35%,100% 29%,60% 60%,90% 58%,33% 100%,45% 61%,0 77%,34% 35%);
+  opacity:.78;filter:drop-shadow(0 0 5px #fff);
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1)::after,
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2)::after{
+  content:"";position:absolute;width:7px;height:7px;top:8px;right:7px;background:#fff;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  box-shadow:0 0 7px #fff,0 0 12px #8eeaff;animation:vinciSeraphWingSpark 1.8s ease-in-out infinite;
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3){
+  left:50%;right:auto;top:-14px;bottom:auto;width:40px;height:12px;
+  transform:translateX(-50%) rotate(-4deg);border:2px solid #fff;border-radius:50%;
+  background:conic-gradient(from 30deg,#fff,#8feaff,#c58aff,#ff9fd8,#fff1a2,#86ffd6,#fff);
+  clip-path:none;box-shadow:0 0 5px #fff,0 0 10px #8deaff,0 0 16px #bb8dff88;
+  animation:vinciSeraphHalo 4.4s linear infinite;
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3)::before,
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3)::after{
+  content:"";position:absolute;top:50%;width:6px;height:6px;margin-top:-3px;background:#fff;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 5px #fff);
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3)::before{left:-11px;animation:vinciSeraphSatelliteA 2.8s ease-in-out infinite}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3)::after{right:-11px;animation:vinciSeraphSatelliteB 3.4s ease-in-out -.9s infinite}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4){
+  left:50%;right:auto;top:auto;bottom:-19px;width:22px;height:30px;transform:translateX(-50%);
+  border:0;border-radius:0;background:linear-gradient(145deg,#fff 0 13%,#87efff 29%,#9a86ff 48%,#ff91d3 67%,#ffe995 84%,#7dffd4 100%);
+  clip-path:polygon(50% 0,88% 26%,78% 76%,50% 100%,22% 76%,12% 26%);
+  box-shadow:0 0 6px #fff,0 0 12px #8deaff,0 0 18px #c087ffaa;
+  filter:drop-shadow(0 3px 6px #6a62b077);animation:vinciSeraphCore 2.9s ease-in-out infinite;z-index:9;
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4)::before{
+  content:"";position:absolute;left:50%;top:-10px;width:12px;height:11px;transform:translateX(-50%);
+  border:2px solid #e9ffff;border-bottom:0;border-radius:50% 50% 0 0;box-shadow:0 0 6px #9defff;
+}
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4)::after{
+  content:"";position:absolute;left:50%;top:47%;width:8px;height:8px;transform:translate(-50%,-50%) rotate(45deg);
+  background:#fff;box-shadow:0 0 5px #fff,0 0 9px #91eaff;animation:vinciSeraphCoreSpark 1.45s ease-in-out infinite;
+}
+@keyframes vinciSeraphAura{0%,100%{filter:hue-rotate(0deg) saturate(1.04)}50%{filter:hue-rotate(18deg) saturate(1.18)}}
+@keyframes vinciSeraphOrbitDust{0%{transform:rotate(0deg) scale(.98);opacity:.55}35%{opacity:1}70%{opacity:.72}100%{transform:rotate(360deg) scale(.98);opacity:.55}}
+@keyframes vinciSeraphGlow{0%,100%{transform:scale(.94);opacity:.38}50%{transform:scale(1.09);opacity:.82}}
+@keyframes vinciSeraphWingLeft{0%,100%{transform:rotate(-8deg) translate(0,1px) scaleY(.98)}48%{transform:rotate(5deg) translate(2px,-2px) scaleY(1.04)}68%{transform:rotate(1deg) translate(1px,-1px) scaleY(1.01)}}
+@keyframes vinciSeraphWingRight{0%,100%{transform:scaleX(-1) rotate(-8deg) translate(0,1px) scaleY(.98)}48%{transform:scaleX(-1) rotate(5deg) translate(2px,-2px) scaleY(1.04)}68%{transform:scaleX(-1) rotate(1deg) translate(1px,-1px) scaleY(1.01)}}
+@keyframes vinciSeraphWingSpark{0%,100%{transform:scale(.65) rotate(0);opacity:.35}50%{transform:scale(1.25) rotate(90deg);opacity:1}}
+@keyframes vinciSeraphHalo{0%{transform:translateX(-50%) rotate(-4deg) rotateY(0);filter:hue-rotate(0)}50%{transform:translateX(-50%) rotate(4deg) rotateY(18deg);filter:hue-rotate(25deg)}100%{transform:translateX(-50%) rotate(-4deg) rotateY(0);filter:hue-rotate(0)}}
+@keyframes vinciSeraphSatelliteA{0%,100%{transform:translate(-2px,2px) scale(.7);opacity:.45}50%{transform:translate(5px,-5px) scale(1.25);opacity:1}}
+@keyframes vinciSeraphSatelliteB{0%,100%{transform:translate(3px,-1px) scale(.75);opacity:.5}50%{transform:translate(-5px,5px) scale(1.2);opacity:1}}
+@keyframes vinciSeraphCore{0%,100%{transform:translateX(-50%) translateY(0) rotate(-2deg);filter:drop-shadow(0 3px 6px #6a62b077) hue-rotate(0)}50%{transform:translateX(-50%) translateY(3px) rotate(2deg);filter:drop-shadow(0 5px 10px #8deaffaa) hue-rotate(28deg)}}
+@keyframes vinciSeraphCoreSpark{0%,100%{transform:translate(-50%,-50%) rotate(45deg) scale(.65);opacity:.6}50%{transform:translate(-50%,-50%) rotate(135deg) scale(1.15);opacity:1}}
+
+
+/* ==========================================================
+   SERAPH PRISM — WINGS ALIGNMENT FIX
+   Mantém as duas asas perfeitamente espelhadas e sincronizadas.
+   ========================================================== */
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1),
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){
+  top:10%;
+  width:39px;
+  height:57px;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1){
+  left:-30px;
+  right:auto;
+  transform-origin:100% 42%;
+  animation:vinciSeraphWingLeftFixed 2.65s ease-in-out infinite;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){
+  right:-30px;
+  left:auto;
+  transform-origin:0 42%;
+  animation:vinciSeraphWingRightFixed 2.65s ease-in-out infinite;
+}
+
+/* Sem atraso entre as asas: elas permanecem simétricas em todos os frames. */
+@keyframes vinciSeraphWingLeftFixed{
+  0%,100%{
+    transform:translateY(0) rotate(3deg) scaleY(1);
+  }
+  45%{
+    transform:translateY(-2px) rotate(-2deg) scaleY(1.025);
+  }
+  70%{
+    transform:translateY(-1px) rotate(0deg) scaleY(1.012);
+  }
+}
+
+@keyframes vinciSeraphWingRightFixed{
+  0%,100%{
+    transform:translateY(0) rotate(-3deg) scaleX(-1) scaleY(1);
+  }
+  45%{
+    transform:translateY(-2px) rotate(2deg) scaleX(-1) scaleY(1.025);
+  }
+  70%{
+    transform:translateY(-1px) rotate(0deg) scaleX(-1) scaleY(1.012);
+  }
+}
+
+
+/* ==========================================================
+   VINCI COSMETICS REWORK PACK
+   SERAPH PRISM / MIDNIGHT BUTTERFLY / CYBER KOI / INFERNO DRAGON
+   ========================================================== */
+
+/* ==========================================================
+   SERAPH PRISM — GEOMETRIA CENTRAL REAL
+   O art-box passa a ser exatamente o círculo do avatar.
+   ========================================================== */
+.vinci-frame-seraph_prism .vinci-frame-art{
+  inset:0!important;
+  animation:none!important;
+  transform:none!important;
+}
+
+/* As duas asas usam exatamente o mesmo eixo horizontal/vertical. */
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1),
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){
+  top:50%!important;
+  bottom:auto!important;
+  width:38px!important;
+  height:56px!important;
+  margin-top:-28px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:
+    linear-gradient(
+      155deg,
+      #ffffff 0 12%,
+      #c6fbff 24%,
+      #70dcff 42%,
+      #958cff 59%,
+      #ff8dd8 77%,
+      #ffe99a 100%
+    )!important;
+  clip-path:polygon(
+    100% 0,
+    76% 22%,
+    100% 15%,
+    71% 42%,
+    97% 35%,
+    64% 62%,
+    91% 58%,
+    50% 83%,
+    73% 81%,
+    21% 100%,
+    40% 67%,
+    0 79%,
+    31% 47%,
+    3% 53%,
+    36% 24%
+  )!important;
+  filter:
+    drop-shadow(0 0 5px #fff)
+    drop-shadow(0 0 9px #76e9ff)
+    drop-shadow(0 0 14px #b184ff88)!important;
+  will-change:rotate,translate,scale!important;
+}
+
+/* inner edge das duas asas fica à mesma distância do centro */
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1){
+  left:auto!important;
+  right:82%!important;
+  transform:none!important;
+  transform-origin:100% 50%!important;
+  rotate:-4deg;
+  animation:vinciSeraphWingPerfectLeft 2.7s ease-in-out infinite!important;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2){
+  right:auto!important;
+  left:82%!important;
+  transform:scaleX(-1)!important;
+  transform-origin:0 50%!important;
+  rotate:4deg;
+  animation:vinciSeraphWingPerfectRight 2.7s ease-in-out infinite!important;
+}
+
+/* halo preso exatamente ao x=50% */
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3){
+  left:50%!important;
+  right:auto!important;
+  top:-13px!important;
+  bottom:auto!important;
+  width:38px!important;
+  height:11px!important;
+  margin:0!important;
+  transform:none!important;
+  translate:-50% 0;
+  rotate:0deg;
+  animation:vinciSeraphHaloPerfect 4.8s ease-in-out infinite!important;
+}
+
+/* cristal preso exatamente ao x=50% */
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4){
+  left:50%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:-20px!important;
+  width:21px!important;
+  height:28px!important;
+  margin:0!important;
+  transform:none!important;
+  translate:-50% 0;
+  rotate:0deg;
+  animation:vinciSeraphCorePerfect 2.9s ease-in-out infinite!important;
+}
+
+@keyframes vinciSeraphWingPerfectLeft{
+  0%,100%{
+    rotate:-4deg;
+    translate:0 0;
+    scale:1 1;
+  }
+  50%{
+    rotate:1deg;
+    translate:0 -1px;
+    scale:1 1.025;
+  }
+}
+
+@keyframes vinciSeraphWingPerfectRight{
+  0%,100%{
+    rotate:4deg;
+    translate:0 0;
+    scale:1 1;
+  }
+  50%{
+    rotate:-1deg;
+    translate:0 -1px;
+    scale:1 1.025;
+  }
+}
+
+@keyframes vinciSeraphHaloPerfect{
+  0%,100%{
+    translate:-50% 0;
+    scale:1 .98;
+    filter:hue-rotate(0deg);
+  }
+  50%{
+    translate:-50% -1px;
+    scale:1.04 1;
+    filter:hue-rotate(25deg);
+  }
+}
+
+@keyframes vinciSeraphCorePerfect{
+  0%,100%{
+    translate:-50% 0;
+    rotate:-2deg;
+    filter:drop-shadow(0 3px 6px #6a62b077) hue-rotate(0deg);
+  }
+  50%{
+    translate:-50% 2px;
+    rotate:2deg;
+    filter:drop-shadow(0 5px 10px #8deaffaa) hue-rotate(28deg);
+  }
+}
+
+
+/* ==========================================================
+   MIDNIGHT BUTTERFLY — MOON GARDEN REWORK
+   3 borboletas independentes + estrelas + amuleto lunar.
+   ========================================================== */
+.vinci-frame-midnight_butterfly{
+  background:
+    conic-gradient(
+      from 15deg,
+      #080916,
+      #20144a,
+      #613b9a,
+      #1b1648,
+      #8b4fb1,
+      #0a0b1c
+    )!important;
+  box-shadow:
+    0 0 12px #6e53cb88,
+    0 0 25px #482c9a55!important;
+}
+
+.vinci-frame-midnight_butterfly::before{
+  inset:-10px!important;
+  background:
+    radial-gradient(circle at 16% 20%,#fff 0 1.4px,transparent 2.3px),
+    radial-gradient(circle at 84% 14%,#cdb8ff 0 1.2px,transparent 2.2px),
+    radial-gradient(circle at 90% 78%,#ffb8e8 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 8% 70%,#a28eff 0 1.1px,transparent 2.1px),
+    transparent!important;
+  opacity:.9!important;
+  animation:vinciMidnightStarsRework 7s linear infinite!important;
+}
+
+.vinci-frame-midnight_butterfly::after{
+  inset:-11px!important;
+  background:
+    radial-gradient(circle,#a26bff66 0 18%,#432b8b44 44%,transparent 72%)!important;
+  filter:blur(12px)!important;
+  animation:vinciMidnightGlowRework 3.4s ease-in-out infinite!important;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art{
+  inset:0!important;
+  animation:none!important;
+  transform:none!important;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(-n+3){
+  width:3px!important;
+  height:13px!important;
+  border-radius:999px!important;
+  background:linear-gradient(#f5e9ff,#7d4dcc)!important;
+  clip-path:none!important;
+  box-shadow:0 0 5px #c79aff!important;
+  filter:drop-shadow(0 0 4px #8f6cff)!important;
+  transform-origin:center!important;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(-n+3)::before,
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(-n+3)::after{
+  content:"";
+  position:absolute;
+  top:1px;
+  width:11px;
+  height:12px;
+  background:
+    radial-gradient(circle at 58% 38%,#fff 0 1px,transparent 1.8px),
+    linear-gradient(145deg,#8f6cff,#ff8fd2 65%,#4d2c88);
+  box-shadow:0 0 7px #a96cff88;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(-n+3)::before{
+  right:2px;
+  border-radius:90% 18% 70% 25%;
+  transform-origin:100% 55%;
+  animation:vinciButterflyWingLeftRework .72s ease-in-out infinite;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(-n+3)::after{
+  left:2px;
+  border-radius:18% 90% 25% 70%;
+  transform-origin:0 55%;
+  animation:vinciButterflyWingRightRework .72s ease-in-out infinite;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(1){
+  left:6%!important;
+  right:auto!important;
+  top:8%!important;
+  bottom:auto!important;
+  animation:vinciMidnightFlyOneRework 7.4s ease-in-out infinite!important;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(2){
+  right:4%!important;
+  left:auto!important;
+  top:38%!important;
+  bottom:auto!important;
+  animation:vinciMidnightFlyTwoRework 6.3s ease-in-out -2.1s infinite!important;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(3){
+  left:26%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:1%!important;
+  animation:vinciMidnightFlyThreeRework 8.6s ease-in-out -4.4s infinite!important;
+}
+
+/* amuleto de lua crescente */
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(4){
+  left:50%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:-18px!important;
+  width:22px!important;
+  height:22px!important;
+  margin:0!important;
+  transform:none!important;
+  translate:-50% 0;
+  rotate:0deg;
+  border-radius:50%!important;
+  clip-path:none!important;
+  background:#f1eaff!important;
+  box-shadow:
+    inset 7px -2px 0 #34245e,
+    0 0 8px #ccbaff,
+    0 0 14px #7755ce!important;
+  filter:none!important;
+  animation:vinciMidnightMoonRework 3s ease-in-out infinite!important;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(4)::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-10px;
+  width:12px;
+  height:10px;
+  transform:translateX(-50%);
+  border:2px solid #9b7ae7;
+  border-bottom:0;
+  border-radius:50% 50% 0 0;
+  box-shadow:0 0 5px #b89dff;
+}
+
+.vinci-frame-midnight_butterfly .vinci-frame-art b:nth-child(4)::after{
+  content:"✦";
+  position:absolute;
+  right:-7px;
+  top:-5px;
+  font-size:9px;
+  color:#fff;
+  text-shadow:0 0 7px #fff,0 0 10px #d58cff;
+}
+
+@keyframes vinciButterflyWingLeftRework{
+  0%,100%{transform:scaleX(.55) rotate(-8deg)}
+  50%{transform:scaleX(1) rotate(5deg)}
+}
+
+@keyframes vinciButterflyWingRightRework{
+  0%,100%{transform:scaleX(.55) rotate(8deg)}
+  50%{transform:scaleX(1) rotate(-5deg)}
+}
+
+@keyframes vinciMidnightFlyOneRework{
+  0%,100%{transform:translate(0,0) rotate(-14deg)}
+  35%{transform:translate(28px,12px) rotate(8deg)}
+  70%{transform:translate(7px,36px) rotate(-5deg)}
+}
+
+@keyframes vinciMidnightFlyTwoRework{
+  0%,100%{transform:translate(0,0) rotate(12deg)}
+  35%{transform:translate(-31px,18px) rotate(-9deg)}
+  72%{transform:translate(-11px,-23px) rotate(6deg)}
+}
+
+@keyframes vinciMidnightFlyThreeRework{
+  0%,100%{transform:translate(0,0) rotate(5deg)}
+  40%{transform:translate(32px,-16px) rotate(-12deg)}
+  76%{transform:translate(-7px,-42px) rotate(8deg)}
+}
+
+@keyframes vinciMidnightStarsRework{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes vinciMidnightGlowRework{
+  0%,100%{opacity:.4;transform:scale(.95)}
+  50%{opacity:.8;transform:scale(1.07)}
+}
+
+@keyframes vinciMidnightMoonRework{
+  0%,100%{translate:-50% 0;rotate:-3deg}
+  50%{translate:-50% 2px;rotate:3deg}
+}
+
+
+/* ==========================================================
+   CYBER KOI — NEON CIRCUIT POND REWORK
+   2 koi animados + circuito + núcleo digital.
+   ========================================================== */
+.vinci-frame-cyber_koi{
+  background:
+    conic-gradient(
+      from 45deg,
+      #02110f,
+      #004f46,
+      #00e7b1,
+      #06463e,
+      #ff705d,
+      #00b895,
+      #02110f
+    )!important;
+  box-shadow:
+    0 0 12px #00e3a988,
+    0 0 25px #00a77f55!important;
+}
+
+.vinci-frame-cyber_koi::before{
+  inset:-9px!important;
+  background:
+    linear-gradient(90deg,transparent 47%,#00ffc822 48% 50%,transparent 51%),
+    linear-gradient(0deg,transparent 47%,#00ffc822 48% 50%,transparent 51%),
+    radial-gradient(circle at 15% 20%,#76ffe2 0 1.4px,transparent 2.3px),
+    radial-gradient(circle at 86% 70%,#ff8878 0 1.5px,transparent 2.4px)!important;
+  border:1px solid #00dda455!important;
+  border-radius:50%!important;
+  animation:vinciCyberCircuitRework 6.5s linear infinite!important;
+}
+
+.vinci-frame-cyber_koi::after{
+  inset:-11px!important;
+  background:#00dba44d!important;
+  filter:blur(12px)!important;
+  animation:vinciCyberGlowRework 2.7s ease-in-out infinite!important;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art{
+  inset:0!important;
+  animation:none!important;
+  transform:none!important;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1),
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2){
+  width:24px!important;
+  height:10px!important;
+  border-radius:70% 48% 70% 48%!important;
+  background:
+    radial-gradient(circle at 72% 36%,#031a17 0 1px,transparent 1.5px),
+    linear-gradient(90deg,#eafff8 0 10%,#00e7b0 40%,#1d8d7a 68%,#ff7c69 100%)!important;
+  clip-path:none!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 0 5px #00f1b6)!important;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1)::before,
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2)::before{
+  content:"";
+  position:absolute;
+  left:-7px;
+  top:1px;
+  width:8px;
+  height:8px;
+  background:linear-gradient(135deg,#00f2ba,#ff796a);
+  clip-path:polygon(100% 50%,0 0,18% 50%,0 100%);
+  filter:drop-shadow(0 0 3px #00e8ae);
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1)::after,
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2)::after{
+  content:"";
+  position:absolute;
+  left:7px;
+  top:2px;
+  width:8px;
+  height:5px;
+  border-top:1px solid #dffff7;
+  border-bottom:1px solid #ff9c8e;
+  opacity:.85;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(1){
+  left:4%!important;
+  right:auto!important;
+  top:10%!important;
+  bottom:auto!important;
+  animation:vinciCyberKoiOneRework 7.2s ease-in-out infinite!important;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(2){
+  right:5%!important;
+  left:auto!important;
+  top:auto!important;
+  bottom:8%!important;
+  transform:scaleX(-1)!important;
+  animation:vinciCyberKoiTwoRework 8.1s ease-in-out -3.6s infinite!important;
+}
+
+/* núcleo digital pendurado */
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(3){
+  left:50%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:-17px!important;
+  width:21px!important;
+  height:20px!important;
+  margin:0!important;
+  transform:none!important;
+  translate:-50% 0;
+  rotate:45deg;
+  border:2px solid #6cffe3!important;
+  border-radius:5px!important;
+  background:#05231f!important;
+  box-shadow:
+    0 0 7px #00efb5,
+    0 0 13px #ff725c55!important;
+  animation:vinciCyberCoreRework 2.5s ease-in-out infinite!important;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(3)::before{
+  content:"01";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  transform:rotate(-45deg);
+  font:700 6px/1 monospace;
+  color:#aaffec;
+  text-shadow:0 0 4px #00ffbb;
+}
+
+.vinci-frame-cyber_koi .vinci-frame-art b:nth-child(4){
+  right:-7px!important;
+  left:auto!important;
+  top:3px!important;
+  bottom:auto!important;
+  width:9px!important;
+  height:9px!important;
+  border:1px solid #79ffe6!important;
+  border-radius:2px!important;
+  background:#062922!important;
+  box-shadow:0 0 6px #00f1b6!important;
+  animation:vinciCyberNodeRework 2.2s steps(2,end) infinite!important;
+}
+
+@keyframes vinciCyberKoiOneRework{
+  0%,100%{transform:translate(0,0) rotate(-5deg)}
+  33%{transform:translate(34px,9px) rotate(11deg)}
+  57%{transform:translate(44px,38px) rotate(21deg)}
+  78%{transform:translate(9px,30px) rotate(-12deg)}
+}
+
+@keyframes vinciCyberKoiTwoRework{
+  0%,100%{transform:scaleX(-1) translate(0,0) rotate(-4deg)}
+  35%{transform:scaleX(-1) translate(32px,-9px) rotate(10deg)}
+  62%{transform:scaleX(-1) translate(43px,-38px) rotate(20deg)}
+  82%{transform:scaleX(-1) translate(7px,-29px) rotate(-10deg)}
+}
+
+@keyframes vinciCyberCircuitRework{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes vinciCyberGlowRework{
+  0%,100%{opacity:.35;transform:scale(.95)}
+  50%{opacity:.78;transform:scale(1.06)}
+}
+
+@keyframes vinciCyberCoreRework{
+  0%,100%{
+    translate:-50% 0;
+    rotate:45deg;
+    filter:hue-rotate(0deg);
+  }
+  50%{
+    translate:-50% 2px;
+    rotate:135deg;
+    filter:hue-rotate(28deg);
+  }
+}
+
+@keyframes vinciCyberNodeRework{
+  0%,45%{opacity:.35}
+  50%,100%{opacity:1}
+}
+
+
+/* ==========================================================
+   INFERNO DRAGON — EMBER WYRM REWORK
+   asas dracônicas + cabeça/brasas + núcleo flamejante.
+   ========================================================== */
+.vinci-frame-inferno_dragon{
+  background:
+    conic-gradient(
+      from 20deg,
+      #160000,
+      #6b0805,
+      #ff3617,
+      #ff9b12,
+      #7d0705,
+      #250000
+    )!important;
+  box-shadow:
+    0 0 12px #ff401888,
+    0 0 27px #ff6b124d!important;
+  animation:vinciDragonHeatRework 2.1s ease-in-out infinite!important;
+}
+
+.vinci-frame-inferno_dragon::before{
+  inset:-10px!important;
+  background:
+    radial-gradient(circle at 12% 28%,#ffd172 0 1.6px,transparent 2.6px),
+    radial-gradient(circle at 86% 19%,#ff6a34 0 1.4px,transparent 2.4px),
+    radial-gradient(circle at 91% 76%,#ffca67 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 15% 83%,#ff4927 0 1.3px,transparent 2.3px),
+    transparent!important;
+  animation:vinciDragonEmbersRework 4.1s ease-in-out infinite!important;
+}
+
+.vinci-frame-inferno_dragon::after{
+  inset:-12px!important;
+  background:
+    radial-gradient(circle,#ff7a263d 0 22%,#8f0d093d 48%,transparent 72%)!important;
+  filter:blur(12px)!important;
+  animation:vinciDragonGlowRework 2.1s ease-in-out infinite!important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art{
+  inset:0!important;
+  animation:none!important;
+  transform:none!important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(1),
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(2){
+  top:50%!important;
+  bottom:auto!important;
+  width:36px!important;
+  height:52px!important;
+  margin-top:-25px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:
+    linear-gradient(
+      150deg,
+      #ffd273 0 8%,
+      #ff5a22 38%,
+      #9d100a 70%,
+      #260000 100%
+    )!important;
+  clip-path:polygon(
+    100% 0,
+    72% 24%,
+    98% 20%,
+    65% 45%,
+    94% 43%,
+    57% 65%,
+    86% 66%,
+    40% 84%,
+    66% 88%,
+    18% 100%,
+    34% 67%,
+    0 77%,
+    28% 43%,
+    2% 48%,
+    37% 20%
+  )!important;
+  filter:
+    drop-shadow(0 0 5px #ff6a22)
+    drop-shadow(0 0 10px #8f0d05)!important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(1){
+  right:82%!important;
+  left:auto!important;
+  transform:none!important;
+  transform-origin:100% 48%!important;
+  animation:vinciDragonWingLeftRework 2.15s ease-in-out infinite!important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(2){
+  left:82%!important;
+  right:auto!important;
+  transform:scaleX(-1)!important;
+  transform-origin:0 48%!important;
+  animation:vinciDragonWingRightRework 2.15s ease-in-out infinite!important;
+}
+
+/* cabeça/crista do dragão */
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3){
+  left:50%!important;
+  right:auto!important;
+  top:-13px!important;
+  bottom:auto!important;
+  width:30px!important;
+  height:23px!important;
+  margin:0!important;
+  transform:none!important;
+  translate:-50% 0;
+  background:linear-gradient(#ffcf6c,#ff4b1c 55%,#690806)!important;
+  clip-path:polygon(
+    50% 0,
+    65% 28%,
+    92% 13%,
+    80% 48%,
+    100% 65%,
+    67% 67%,
+    57% 100%,
+    43% 100%,
+    33% 67%,
+    0 65%,
+    20% 48%,
+    8% 13%,
+    35% 28%
+  )!important;
+  filter:drop-shadow(0 0 7px #ff5221)!important;
+  animation:vinciDragonCrestRework 2.4s ease-in-out infinite!important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3)::before,
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3)::after{
+  content:"";
+  position:absolute;
+  top:11px;
+  width:3px;
+  height:2px;
+  border-radius:50%;
+  background:#fff3a4;
+  box-shadow:0 0 5px #ffde6a;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3)::before{
+  left:8px;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3)::after{
+  right:8px;
+}
+
+/* núcleo de fogo inferior */
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(4){
+  left:50%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:-18px!important;
+  width:22px!important;
+  height:28px!important;
+  margin:0!important;
+  transform:none!important;
+  translate:-50% 0;
+  background:
+    linear-gradient(
+      #fff0a2 0 8%,
+      #ffae20 28%,
+      #ff3b12 66%,
+      #7c0606 100%
+    )!important;
+  clip-path:polygon(
+    50% 0,
+    67% 30%,
+    84% 18%,
+    79% 54%,
+    100% 42%,
+    82% 80%,
+    50% 100%,
+    18% 80%,
+    0 42%,
+    21% 54%,
+    16% 18%,
+    33% 30%
+  )!important;
+  filter:drop-shadow(0 0 7px #ff6a17)!important;
+  animation:vinciDragonFlameCoreRework .95s ease-in-out infinite alternate!important;
+}
+
+@keyframes vinciDragonWingLeftRework{
+  0%,100%{rotate:-5deg;translate:0 1px;scale:1 1}
+  50%{rotate:1deg;translate:0 -1px;scale:1 1.035}
+}
+
+@keyframes vinciDragonWingRightRework{
+  0%,100%{rotate:5deg;translate:0 1px;scale:1 1}
+  50%{rotate:-1deg;translate:0 -1px;scale:1 1.035}
+}
+
+@keyframes vinciDragonCrestRework{
+  0%,100%{translate:-50% 0;scale:1}
+  50%{translate:-50% -1px;scale:1.04}
+}
+
+@keyframes vinciDragonFlameCoreRework{
+  0%{
+    translate:-50% 1px;
+    scale:.94 1;
+    filter:drop-shadow(0 0 5px #ff4a16);
+  }
+  100%{
+    translate:-50% -2px;
+    scale:1.05 1.08;
+    filter:drop-shadow(0 0 11px #ff9a20);
+  }
+}
+
+@keyframes vinciDragonEmbersRework{
+  0%,100%{
+    transform:translateY(2px) rotate(0deg);
+    opacity:.55;
+  }
+  50%{
+    transform:translateY(-4px) rotate(6deg);
+    opacity:1;
+  }
+}
+
+@keyframes vinciDragonGlowRework{
+  0%,100%{opacity:.38;transform:scale(.95)}
+  50%{opacity:.82;transform:scale(1.08)}
+}
+
+@keyframes vinciDragonHeatRework{
+  0%,100%{filter:saturate(1)}
+  50%{filter:saturate(1.22) brightness(1.05)}
+}
