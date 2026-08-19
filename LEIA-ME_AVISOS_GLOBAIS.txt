@@ -1,0 +1,72 @@
+VINCI — SISTEMA DE AVISOS GLOBAIS
+=================================
+
+O pacote já vem com @yakodevofc autorizado.
+
+ARQUIVOS NOVOS
+- notice-admins.json
+- global-notices.css
+- global-notices.js
+- global-notices-admin.css
+- global-notices-admin.js
+- VINCI_GLOBAL_NOTICES.sql
+- supabase/functions/vinci-global-notice-admin/index.ts
+
+COMO FUNCIONA
+1. O aviso global é lido da tabela vinci_global_notices.
+2. Quando ativo, aparece em qualquer página do Vinci.
+3. Alterações são recebidas por Supabase Realtime.
+4. Se o usuário fechar um aviso, ele só volta quando o aviso for atualizado.
+5. O painel "Avisos globais" aparece apenas no próprio perfil de contas autorizadas em notice-admins.json.
+6. A Edge Function consulta a mesma lista no GitHub antes de permitir qualquer publicação. Assim a proteção não depende apenas de esconder o botão.
+
+O QUE DÁ PARA PERSONALIZAR
+- ativo/desativado
+- título
+- mensagem
+- fundo
+- cor do texto
+- cor de destaque
+- cor da borda
+- fonte
+- posição (6 posições)
+- tamanho
+- animação
+- ícone
+- arredondamento
+- opacidade
+- permitir fechar
+- fechamento automático
+- botão opcional com texto + link
+
+PARA TESTAR NO SPCK
+- Abra o Vinci normalmente e entre na conta @yakodevofc.
+- No próprio perfil aparecerá "Avisos globais ADMIN".
+- O botão "Pré-visualizar" funciona mesmo antes de instalar o backend.
+
+PARA PUBLICAR DE VERDADE PARA TODOS
+A) No Supabase SQL Editor, execute:
+   VINCI_GLOBAL_NOTICES.sql
+
+B) Crie/deploy a Edge Function com o nome:
+   vinci-global-notice-admin
+   usando o arquivo:
+   supabase/functions/vinci-global-notice-admin/index.ts
+
+A função valida o JWT por conta própria. Se o painel do Supabase oferecer a opção Verify JWT, deixe ativada.
+
+AUTORIZAR OUTRO PERFIL PELO GITHUB
+Edite notice-admins.json no repositório e acrescente outra entrada:
+
+{
+  "username": "usuario",
+  "user_id": "UUID-DA-CONTA"
+}
+
+O user_id é recomendado porque continua protegendo a autorização mesmo se o @ mudar.
+A lista pode ser pública: ela não contém senha nem token.
+
+IMPORTANTE
+- Não coloque service_role, senha, token do GitHub ou qualquer segredo em nenhum JS do site.
+- A tabela não dá INSERT/UPDATE/DELETE para anon/authenticated.
+- Quem grava é somente a Edge Function depois de validar a conta contra notice-admins.json.

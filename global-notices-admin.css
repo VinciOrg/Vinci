@@ -1,0 +1,295 @@
+/* =====================================
+   VINCI — PAINEL DE AVISOS GLOBAIS
+===================================== */
+
+.vinci-notice-admin-button {
+  position: relative;
+}
+
+.vinci-notice-admin-button::after {
+  content: "ADMIN";
+  margin-left: 7px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: rgba(242, 139, 60, 0.12);
+  color: #e87928;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+
+.vinci-notice-admin-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(18, 18, 18, 0.44);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.vinci-notice-admin-modal.hidden {
+  display: none !important;
+}
+
+.vinci-notice-admin-panel {
+  width: min(720px, 100%);
+  max-height: min(88vh, 900px);
+  overflow: auto;
+  border: 1px solid rgba(127, 127, 127, 0.18);
+  border-radius: 24px;
+  background: #fff;
+  color: #161616;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.28);
+}
+
+.vinci-notice-admin-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 19px 20px;
+  border-bottom: 1px solid #ece9e5;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+}
+
+.vinci-notice-admin-head span {
+  display: block;
+  margin-bottom: 3px;
+  color: #f28b3c;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.vinci-notice-admin-head h2 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.vinci-notice-admin-close {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #e8e4df;
+  border-radius: 50%;
+  background: #faf9f7;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.vinci-notice-admin-body {
+  padding: 20px;
+}
+
+.vinci-notice-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.vinci-notice-admin-field {
+  display: grid;
+  gap: 7px;
+}
+
+.vinci-notice-admin-field.full {
+  grid-column: 1 / -1;
+}
+
+.vinci-notice-admin-field > span,
+.vinci-notice-admin-section-title {
+  color: #615d58;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.vinci-notice-admin-field input[type="text"],
+.vinci-notice-admin-field input[type="url"],
+.vinci-notice-admin-field input[type="number"],
+.vinci-notice-admin-field select,
+.vinci-notice-admin-field textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid #e2ded9;
+  border-radius: 12px;
+  background: #faf9f7;
+  color: #171717;
+  font: inherit;
+  outline: none;
+}
+
+.vinci-notice-admin-field textarea {
+  min-height: 105px;
+  resize: vertical;
+}
+
+.vinci-notice-admin-field input:focus,
+.vinci-notice-admin-field select:focus,
+.vinci-notice-admin-field textarea:focus {
+  border-color: #f28b3c;
+  box-shadow: 0 0 0 3px rgba(242, 139, 60, 0.12);
+}
+
+.vinci-notice-admin-colors {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 15px;
+  border-radius: 16px;
+  background: #faf9f7;
+}
+
+.vinci-notice-color-control {
+  display: grid;
+  gap: 7px;
+  color: #615d58;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.vinci-notice-color-control input[type="color"] {
+  width: 100%;
+  height: 42px;
+  padding: 3px;
+  border: 1px solid #ddd7d1;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.vinci-notice-admin-switches {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.vinci-notice-switch {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 12px;
+  border: 1px solid #e7e2dc;
+  border-radius: 12px;
+  background: #fff;
+  color: #383532;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vinci-notice-switch input {
+  width: 17px !important;
+  height: 17px;
+  accent-color: #f28b3c;
+}
+
+.vinci-notice-admin-range {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.vinci-notice-admin-range input[type="range"] {
+  width: 100%;
+  accent-color: #f28b3c;
+}
+
+.vinci-notice-admin-range output {
+  min-width: 42px;
+  text-align: right;
+  color: #6d6964;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.vinci-notice-admin-message {
+  min-height: 18px;
+  margin: 14px 0 0;
+  color: #68635f;
+  font-size: 12px;
+}
+
+.vinci-notice-admin-actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+  padding: 15px 20px calc(15px + env(safe-area-inset-bottom));
+  border-top: 1px solid #ece9e5;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+}
+
+.vinci-notice-admin-actions button {
+  min-height: 40px;
+  padding: 9px 14px;
+  border-radius: 11px;
+  border: 1px solid #ddd8d2;
+  background: #fff;
+  color: #302d2a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.vinci-notice-admin-actions .primary {
+  border-color: #f28b3c;
+  background: #f28b3c;
+  color: #fff;
+}
+
+.vinci-notice-admin-actions .danger {
+  border-color: #f2d1d1;
+  color: #b72e2e;
+}
+
+.vinci-notice-admin-actions button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+@media (max-width: 650px) {
+  .vinci-notice-admin-modal {
+    padding: 0;
+    place-items: end center;
+  }
+
+  .vinci-notice-admin-panel {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .vinci-notice-admin-grid,
+  .vinci-notice-admin-colors,
+  .vinci-notice-admin-switches {
+    grid-template-columns: 1fr;
+  }
+
+  .vinci-notice-admin-colors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vinci-notice-admin-actions {
+    justify-content: stretch;
+  }
+
+  .vinci-notice-admin-actions button {
+    flex: 1 1 auto;
+  }
+}
