@@ -385,8 +385,12 @@
   async function publish({ forceDisabled }) {
     const config = collectForm();
 
-    if (forceDisabled) {
-      config.enabled = false;
+    // O botão Publicar sempre coloca o aviso no ar.
+    // Para removê-lo, existe o botão separado "Desativar aviso".
+    config.enabled = !forceDisabled;
+
+    if (form?.elements?.enabled) {
+      form.elements.enabled.checked = config.enabled;
     }
 
     if (!config.title) {
@@ -414,7 +418,7 @@
 
       messageEl.textContent = forceDisabled
         ? "Aviso desativado para todos."
-        : "Aviso publicado para todos. As telas abertas recebem a mudança em tempo real.";
+        : "Aviso ATIVADO e publicado para todos. As telas abertas recebem a mudança em tempo real.";
 
       await window.VinciGlobalNotices?.load(true);
     } catch (error) {
