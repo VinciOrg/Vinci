@@ -1,0 +1,25 @@
+{
+  "name": "Vinci",
+  "short_name": "Vinci",
+  "description": "Vinci — uma rede social feita para criar e guardar memórias.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf9f7",
+  "theme_color": "#faf9f7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icon-vinci.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-vinci.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
