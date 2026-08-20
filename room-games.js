@@ -380,7 +380,7 @@ async function renderGame(){
 }
 
 async function flashBody(mine){
- if(submissionPhase())return `<h3 class="game-prompt">${esc(game.prompt)}</h3><p class="game-helper">Apenas quem entrou na sala participa. Você tem 90 segundos para enviar sua foto.</p>${mine?'<div class="game-toast good">✓ Sua foto foi enviada. Esperando os outros jogadores...</div>':'<div class="game-actions"><button id="sendFlashPhoto" class="game-action-primary" type="button">📷 Tirar / escolher foto</button></div>'}`;
+ if(submissionPhase())return `<h3 class="game-prompt">${esc(game.prompt)}</h3><p class="game-helper">Apenas quem entrou na sala participa. Você tem 90 segundos para tirar e enviar sua foto.</p>${mine?'<div class="game-toast good">✓ Sua foto foi enviada. Esperando os outros jogadores...</div>':'<div class="game-actions"><button id="sendFlashPhoto" class="game-action-primary" type="button">📷 Tirar foto agora</button></div>'}`;
  if(!submissions.length)return '<div class="game-toast">Ninguém enviou foto nesta rodada.</div>';
  let cards='';
  for(const s of submissions){
@@ -410,7 +410,24 @@ async function captionBody(mine){
 }
 
 function bindGameActions(){
- const fp=$('#sendFlashPhoto');if(fp)fp.onclick=()=>$('#flashPhotoInput').click();
+ const fp=$('#sendFlashPhoto');
+ if(fp)fp.onclick=()=>{
+  const input=$('#flashPhotoInput');
+  if(!input)return;
+
+  /*
+     VINCI FLASH:
+     este jogo é captura em tempo real, não upload de galeria.
+
+     O atributo capture="environment" pede ao Android/Chrome/PWA
+     para abrir diretamente a câmera traseira.
+     Reaplicamos os atributos antes do click porque alguns WebViews
+     recriam/normalizam atributos de inputs de arquivo.
+  */
+  input.setAttribute('accept','image/*');
+  input.setAttribute('capture','environment');
+  input.click();
+ };
  const cp=$('#sendCaptionGame');if(cp)cp.onclick=()=>submitCaption();
  let guess=null;
  document.querySelectorAll('[data-guess-user]').forEach(b=>b.onclick=()=>{
@@ -534,6 +551,10 @@ async function init(){
  await Promise.all([loadLatestGame(),loadLobby()]);
  document.querySelectorAll('[data-start-game]').forEach(b=>b.onclick=()=>openLobby(b.dataset.startGame));
  const photo=$('#flashPhotoInput');
+ if(photo){
+  photo.setAttribute('accept','image/*');
+  photo.setAttribute('capture','environment');
+ }
  if(photo)photo.onchange=e=>{
   const f=e.target.files?.[0];
   e.target.value='';

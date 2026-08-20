@@ -225,3 +225,95 @@ html[data-theme="dark"] .game-spectator{
     min-width:0
   }
 }
+
+
+/* ==========================================================
+   VINCI 1.1 FOCUS — GAMES DARK MODE FIX
+   Quem Tirou? tinha texto claro sobre cards brancos.
+   ========================================================== */
+
+html[data-theme="dark"] .active-game-card {
+    background: #1a1817 !important;
+    color: #f4f1ed !important;
+    border-color: #302c29 !important;
+}
+
+html[data-theme="dark"] .active-game-body {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] .game-prompt {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] .game-helper {
+    color: #aaa39d !important;
+}
+
+/* QUEM TIROU? — opções de usuário */
+html[data-theme="dark"] .game-player {
+    background: #211e1c !important;
+    color: #f4f1ed !important;
+    border-color: #3a342f !important;
+}
+
+html[data-theme="dark"] .game-player strong {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] .game-player:hover,
+html[data-theme="dark"] .game-player:focus-visible {
+    background: #292421 !important;
+    border-color: #55483f !important;
+}
+
+html[data-theme="dark"] .game-player.selected {
+    background: #35271e !important;
+    border-color: var(--orange) !important;
+    box-shadow:
+        0 0 0 1px
+        rgba(244, 162, 97, .18)
+        inset;
+}
+
+html[data-theme="dark"] .game-player.selected strong {
+    color: #ffb57c !important;
+}
+
+/* Blind Caption também fica protegido contra o mesmo problema */
+html[data-theme="dark"] .game-submission {
+    background: #211e1c !important;
+    color: #f4f1ed !important;
+    border-color: #332e2a;
+}
+
+html[data-theme="dark"] .game-submission .caption-choice {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] .game-submission.selected {
+    border-color: var(--orange) !important;
+    background: #35271e !important;
+}
+
+html[data-theme="dark"] .game-input {
+    background: #151312 !important;
+    color: #f4f1ed !important;
+    border-color: #3a342f !important;
+}
+
+html[data-theme="dark"] .game-toast {
+    background: #24201d !important;
+    color: #d8d0ca !important;
+}
+
+html[data-theme="dark"] .game-toast.good {
+    background: #18271d !important;
+    color: #8ed0a3 !important;
+}
+
+html[data-theme="dark"] .game-toast.bad {
+    background: #2d1c1c !important;
+    color: #e69b9b !important;
+}
+
