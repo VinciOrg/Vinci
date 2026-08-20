@@ -1747,16 +1747,14 @@ if (
                 try {
 
                     const croppedFile =
-                        await window.VinciImageCropper.open(
-                            file,
-                            {
-                                kind: "avatar",
-                                aspect: 1,
-                                outputWidth: 640,
-                                outputHeight: 640,
-                                title: "Enquadrar foto de perfil"
-                            }
-                        );
+                        window.VinciImageCropper.openAvatar
+                            ? await window.VinciImageCropper.openAvatar(file)
+                            : await window.VinciImageCropper.open(
+                                file,
+                                {
+                                    kind: "avatar"
+                                }
+                            );
 
                     if (!croppedFile) {
                         avatarInput.value = "";

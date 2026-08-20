@@ -12,3 +12,216 @@
 .cosmetics-shop-tabs{width:min(680px,100%);margin:0 auto;background:#fff;display:flex;gap:5px;overflow-x:auto;padding:3px 19px 12px;scrollbar-width:none}.cosmetics-shop-tabs::-webkit-scrollbar{display:none}.cosmetics-shop-tabs button{flex:0 0 auto;border:1px solid #ebe3dd;background:#f7f4f1;border-radius:999px;padding:7px 10px;font:inherit;font-size:9px;font-weight:850;color:#746a62}.cosmetics-shop-tabs button.active{background:#211c18;color:#fff;border-color:#211c18}.cosmetics-section-head{width:min(680px,100%);margin:0 auto;background:#fff;padding:5px 19px 10px}.cosmetics-section-head span{font-size:8px;letter-spacing:.14em;font-weight:900;color:var(--orange-dark)}.cosmetics-section-head h4{margin:2px 0;font-size:18px}.cosmetic-rarity{position:absolute;right:10px;top:9px;font-size:7px;font-weight:900;letter-spacing:.08em;background:#241f1b;color:#fff;border-radius:999px;padding:4px 6px;z-index:3}.cosmetic-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.cosmetic-meta span,.cosmetic-meta b{font-size:7px;border-radius:999px;padding:4px 6px;background:#f4f0ec;color:#7c7168}.cosmetic-meta b{background:#edf8f1;color:#47755a}.cosmetic-card{min-height:250px}.cosmetic-card.locked .cosmetic-rarity{background:#938a83}.cosmetics-panel>.cosmetics-shop-tabs,.cosmetics-panel>.cosmetics-section-head{box-sizing:border-box}.cosmetics-panel>.cosmetics-section-head+ .cosmetics-grid{border-radius:0 0 24px 24px}.cosmetics-panel>.cosmetics-grid{padding-top:0}.cosmetics-panel>.cosmetics-shop-tabs{margin-top:0}.cosmetics-panel>.cosmetics-section-head{margin-top:0}.cosmetics-panel>.cosmetics-copy{padding-bottom:8px}@media(max-width:620px){.cosmetics-shop-tabs{padding-left:15px;padding-right:15px}.cosmetics-section-head{padding-left:15px;padding-right:15px}.cosmetic-card{min-height:235px}}
 
 .room-tabs{grid-template-columns:repeat(7,minmax(0,1fr))}
+
+
+/* ============================================================
+   VINCI 1.1 FOCUS — SALAS DE PARTIDA MULTIPLAYER
+   ============================================================ */
+
+.room-game-lobby-notice{
+  width:min(calc(100% - 24px),760px);
+  margin:12px auto 10px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:11px;
+  padding:11px 12px;
+  border:1px solid #f0d7c2;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff8f1,#fffdfb);
+  box-shadow:0 8px 24px rgba(78,45,24,.06)
+}
+.room-game-lobby-notice.hidden{display:none!important}
+.room-game-notice-icon{
+  width:38px;height:38px;border-radius:12px;
+  display:grid;place-items:center;
+  background:#f8e8da;
+  font-size:19px
+}
+.room-game-notice-copy{min-width:0}
+.room-game-notice-copy span{
+  display:block;
+  font-size:8px;font-weight:950;letter-spacing:.13em;color:var(--orange-dark);
+  margin-bottom:2px
+}
+.room-game-notice-copy strong{
+  display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.room-game-notice-copy small{
+  display:block;margin-top:2px;color:#8c7e73;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.room-game-lobby-notice button{
+  border:0;border-radius:11px;padding:9px 12px;
+  background:#211b17;color:#fff;font:inherit;font-size:10px;font-weight:900;
+  -webkit-tap-highlight-color:transparent
+}
+
+.game-lobby-area{margin:14px 0}
+.game-lobby-empty{
+  border:1px dashed #e5d9d0;
+  border-radius:18px;
+  padding:15px 16px;
+  background:#fffaf6
+}
+.game-lobby-empty span{
+  color:var(--orange-dark);font-size:8px;font-weight:950;letter-spacing:.13em
+}
+.game-lobby-empty h3{margin:4px 0 5px;font-size:18px}
+.game-lobby-empty p{margin:0;color:#83776e;font-size:11px;line-height:1.5}
+
+.game-lobby-card{
+  overflow:hidden;
+  border:1px solid #eadfd6;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 14px 35px rgba(66,43,28,.07)
+}
+.game-lobby-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:16px 17px;
+  background:
+    radial-gradient(circle at 100% 0,rgba(244,162,97,.23),transparent 38%),
+    linear-gradient(145deg,#fffaf6,#fff)
+}
+.game-lobby-head span{
+  display:block;color:var(--orange-dark);font-size:8px;font-weight:950;letter-spacing:.13em
+}
+.game-lobby-head h3{margin:4px 0 2px;font-size:21px}
+.game-lobby-head p{margin:0;color:#8c7c70;font-size:10px}
+.game-lobby-expire{
+  flex:0 0 auto;
+  min-width:68px;
+  text-align:right
+}
+.game-lobby-expire small{display:block;color:#9b8b7e;font-size:8px;text-transform:uppercase;letter-spacing:.08em}
+.game-lobby-expire strong{display:block;margin-top:2px;font-size:17px;color:#5f4c3f}
+
+.game-lobby-status{
+  padding:15px 17px 11px;
+  border-top:1px solid #f0e8e2
+}
+.game-lobby-status>strong{
+  display:block;margin-top:10px;font-size:13px
+}
+.game-lobby-status>small{
+  display:block;margin-top:3px;color:#8f8278;font-size:10px
+}
+.game-lobby-avatars{
+  min-height:42px;
+  display:flex;align-items:center;
+  padding-left:3px
+}
+.game-lobby-avatar{
+  position:relative;
+  width:40px;height:40px;
+  margin-left:-7px;
+  border:3px solid #fff;
+  border-radius:50%;
+  background:#eee7e1;
+  box-shadow:0 2px 8px rgba(34,24,18,.12)
+}
+.game-lobby-avatar:first-child{margin-left:0}
+.game-lobby-avatar img{
+  width:100%;height:100%;border-radius:50%;object-fit:cover;display:block
+}
+.game-lobby-avatar.host b{
+  position:absolute;right:-3px;bottom:-3px;
+  width:16px;height:16px;border-radius:50%;
+  display:grid;place-items:center;
+  border:2px solid #fff;
+  background:#201b17;color:#ffc188;
+  font-size:8px
+}
+
+.game-lobby-actions{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  padding:5px 17px 17px
+}
+.game-lobby-actions .game-action-primary{
+  flex:1;
+  min-width:160px
+}
+.game-lobby-actions .game-action-primary:disabled{
+  opacity:.45;
+  cursor:not-allowed
+}
+.game-lobby-actions .game-action-soft.danger{
+  color:#b24f4f;
+  background:#fff0f0
+}
+.game-lobby-wait{
+  flex:1 1 190px;
+  color:#796d64;
+  font-size:10px;
+  line-height:1.4
+}
+
+.game-spectator{
+  padding:14px;
+  border:1px dashed #ded5ce;
+  border-radius:16px;
+  background:#faf7f4;
+  text-align:center
+}
+.game-spectator span{
+  color:var(--orange-dark);font-size:8px;font-weight:950;letter-spacing:.12em
+}
+.game-spectator h3{margin:5px 0 5px;font-size:18px}
+.game-spectator p{margin:0;color:#837870;font-size:11px;line-height:1.5}
+
+/* o botão agora abre uma sala, não uma partida instantânea */
+.game-card button{
+  transition:transform .12s ease,opacity .12s ease
+}
+.game-card button:not(:disabled):active{transform:scale(.98)}
+
+html[data-theme="dark"] .room-game-lobby-notice{
+  border-color:#43352b;
+  background:linear-gradient(135deg,#211a16,#191715)
+}
+html[data-theme="dark"] .room-game-notice-icon{background:#33251d}
+html[data-theme="dark"] .room-game-notice-copy small{color:#aaa097}
+html[data-theme="dark"] .room-game-lobby-notice button{background:#f0a166;color:#1d1713}
+html[data-theme="dark"] .game-lobby-empty{
+  border-color:#3b342f;background:#1c1917
+}
+html[data-theme="dark"] .game-lobby-empty p,
+html[data-theme="dark"] .game-lobby-head p,
+html[data-theme="dark"] .game-lobby-status>small,
+html[data-theme="dark"] .game-lobby-wait,
+html[data-theme="dark"] .game-spectator p{color:#aaa097}
+html[data-theme="dark"] .game-lobby-card{
+  border-color:#37302b;background:#1d1a18
+}
+html[data-theme="dark"] .game-lobby-head{
+  background:
+    radial-gradient(circle at 100% 0,rgba(244,162,97,.18),transparent 40%),
+    linear-gradient(145deg,#211d1a,#1b1816)
+}
+html[data-theme="dark"] .game-lobby-status{border-top-color:#332d29}
+html[data-theme="dark"] .game-lobby-avatar{border-color:#1d1a18;background:#292421}
+html[data-theme="dark"] .game-lobby-avatar.host b{border-color:#1d1a18}
+html[data-theme="dark"] .game-spectator{
+  border-color:#3b342f;background:#201c19
+}
+
+@media(max-width:520px){
+  .room-game-lobby-notice{
+    width:calc(100% - 20px);
+    grid-template-columns:auto 1fr;
+  }
+  .room-game-lobby-notice button{
+    grid-column:1/-1;
+    width:100%
+  }
+  .game-lobby-head h3{font-size:19px}
+  .game-lobby-actions{
+    display:grid;
+    grid-template-columns:1fr
+  }
+  .game-lobby-actions .game-action-primary,
+  .game-lobby-actions .game-action-soft{
+    width:100%;
+    min-width:0
+  }
+}

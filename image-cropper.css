@@ -1,7 +1,83 @@
-/* VINCI 1.1 FOCUS — ENQUADRAMENTO */
-.vinci-cropper{position:fixed;inset:0;z-index:30000;display:grid;place-items:center;padding:18px;background:rgba(15,13,12,.72);backdrop-filter:blur(14px)}
+/* VINCI 1.1 FOCUS — RECORTE AVATAR/BANNER FIX */
+
+.vinci-cropper{position:fixed;inset:0;z-index:30000;display:grid;place-items:center;padding:18px;background:rgba(15,13,12,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .vinci-cropper-card{width:min(94vw,620px);max-height:min(92vh,820px);overflow:auto;border-radius:24px;background:var(--white,#fff);color:var(--text,#181818);border:1px solid var(--border,#e8e5e1);box-shadow:0 28px 90px rgba(0,0,0,.28)}
-.vinci-cropper-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 20px 14px}.vinci-cropper-head span{display:block;color:var(--orange-dark);font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.vinci-cropper-head h2{margin-top:3px;font-size:20px}.vinci-cropper-close{width:36px;height:36px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--muted);font-size:21px}.vinci-cropper-body{padding:0 20px 20px}
-.vinci-cropper-stage{position:relative;width:100%;overflow:hidden;border-radius:18px;background:linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touch-action:none;user-select:none;cursor:grab}.vinci-cropper-stage.avatar{max-width:430px;aspect-ratio:1/1;margin-inline:auto}.vinci-cropper-stage.banner{aspect-ratio:3.5/1}.vinci-cropper-stage.dragging{cursor:grabbing}.vinci-cropper-stage canvas{display:block;width:100%;height:100%}.vinci-cropper-mask{position:absolute;pointer-events:none}.vinci-cropper-stage.avatar .vinci-cropper-mask{width:84%;aspect-ratio:1;left:8%;top:8%;border:2px solid rgba(255,255,255,.96);border-radius:50%;box-shadow:0 0 0 999px rgba(0,0,0,.48)}.vinci-cropper-stage.banner .vinci-cropper-mask{inset:0;border:2px solid rgba(255,255,255,.96);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
-.vinci-cropper-help{margin:12px 2px 16px;color:var(--muted);font-size:11px;text-align:center}.vinci-cropper-control{display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center;padding:12px 0}.vinci-cropper-control span{font-size:11px;color:var(--muted)}.vinci-cropper-control input[type=range]{width:100%;accent-color:var(--orange)}.vinci-cropper-actions{display:flex;justify-content:space-between;gap:9px;margin-top:10px}.vinci-cropper-actions>div{display:flex;gap:8px}.vinci-cropper-actions button{border:1px solid var(--border);border-radius:12px;padding:10px 14px;background:var(--white);color:var(--text);font-weight:700}.vinci-cropper-actions .apply{background:var(--orange);border-color:var(--orange);color:white}
+.vinci-cropper-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 20px 14px}
+.vinci-cropper-head span{display:block;color:var(--orange-dark);font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.vinci-cropper-head h2{margin-top:3px;font-size:20px}
+.vinci-cropper-close{width:36px;height:36px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--muted);font-size:21px}
+.vinci-cropper-body{padding:0 20px 20px}
+
+.vinci-cropper-stage{position:relative;width:100%;overflow:hidden;background:linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touch-action:none;user-select:none;cursor:grab}
+
+/* FOTO DE PERFIL: QUADRADO 1:1 */
+.vinci-cropper-stage--avatar{width:min(100%,430px);aspect-ratio:1/1!important;margin-inline:auto;border-radius:18px}
+.vinci-cropper-stage--avatar .vinci-cropper-mask{position:absolute;inset:0;border:2px solid rgba(255,255,255,.98);border-radius:17px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);pointer-events:none}
+
+/* BANNER: HORIZONTAL 3.5:1 */
+.vinci-cropper-stage--banner{width:100%;aspect-ratio:3.5/1!important;border-radius:16px}
+.vinci-cropper-stage--banner .vinci-cropper-mask{position:absolute;inset:0;border:2px solid rgba(255,255,255,.98);border-radius:15px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);pointer-events:none}
+
+.vinci-cropper-stage.dragging{cursor:grabbing}
+.vinci-cropper-stage canvas{display:block;width:100%;height:100%}
+
+.vinci-cropper-format{width:fit-content;margin:10px auto 0;padding:6px 9px;border-radius:999px;background:rgba(244,162,97,.12);color:var(--orange-dark);font-size:9px;font-weight:900;letter-spacing:.08em}
+.vinci-cropper-help{margin:8px 2px 16px;color:var(--muted);font-size:11px;text-align:center}
+.vinci-cropper-control{display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center;padding:12px 0}
+.vinci-cropper-control span{font-size:11px;color:var(--muted)}
+.vinci-cropper-control input[type=range]{width:100%;accent-color:var(--orange)}
+.vinci-cropper-actions{display:flex;justify-content:space-between;gap:9px;margin-top:10px}
+.vinci-cropper-actions>div{display:flex;gap:8px}
+.vinci-cropper-actions button{border:1px solid var(--border);border-radius:12px;padding:10px 14px;background:var(--white);color:var(--text);font-weight:700}
+.vinci-cropper-actions .apply{background:var(--orange);border-color:var(--orange);color:white}
+
 html[data-theme=dark] .vinci-cropper-stage{background-color:#171514;background-image:linear-gradient(45deg,#2a2725 25%,transparent 25%),linear-gradient(-45deg,#2a2725 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#2a2725 75%),linear-gradient(-45deg,transparent 75%,#2a2725 75%)}
+
+@media(max-width:520px){
+    .vinci-cropper{padding:10px}
+    .vinci-cropper-card{width:100%;border-radius:22px}
+    .vinci-cropper-body{padding-inline:14px}
+    .vinci-cropper-stage--avatar{width:min(100%,390px)}
+}
+
+
+/* ==========================================================
+   VINCI CROPPER — COLLISION FIX 3
+   ========================================================== */
+
+/*
+   Não usar classes genéricas .avatar ou .banner aqui.
+   style.css já possui .avatar com 80x80.
+*/
+
+.vinci-cropper-stage--avatar {
+    box-sizing: border-box !important;
+    width: min(100%, 430px) !important;
+    aspect-ratio: 1 / 1 !important;
+    flex: none !important;
+    margin-inline: auto !important;
+    border-radius: 18px !important;
+}
+
+.vinci-cropper-stage--banner {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    aspect-ratio: 3.5 / 1 !important;
+    flex: none !important;
+    border-radius: 16px !important;
+}
+
+.vinci-cropper-stage--avatar canvas,
+.vinci-cropper-stage--banner canvas {
+    display: block !important;
+    max-width: none !important;
+    max-height: none !important;
+}
+
+@media (max-width: 520px) {
+
+    .vinci-cropper-stage--avatar {
+        width: min(100%, 390px) !important;
+    }
+
+}

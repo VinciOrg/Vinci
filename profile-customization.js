@@ -393,13 +393,15 @@
 
         if (window.VinciImageCropper?.open) {
             try {
-                const croppedFile = await window.VinciImageCropper.open(file, {
-                    kind: "banner",
-                    aspect: 3.5,
-                    outputWidth: 1750,
-                    outputHeight: 500,
-                    title: "Enquadrar banner"
-                });
+                const croppedFile =
+                    window.VinciImageCropper.openBanner
+                        ? await window.VinciImageCropper.openBanner(file)
+                        : await window.VinciImageCropper.open(
+                            file,
+                            {
+                                kind: "banner"
+                            }
+                        );
 
                 if (!croppedFile) {
                     this.value = "";
