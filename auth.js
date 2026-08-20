@@ -161,6 +161,43 @@ const loginForm =
 
 if (loginForm) {
 
+    /*
+       Se a sessão ainda existe, não pede senha de novo.
+    */
+    (async function restoreLoginPageSession() {
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await db.auth.getSession();
+
+
+            if (
+                !error &&
+                data?.session
+            ) {
+
+                window.location.replace(
+                    "profile.html"
+                );
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Vinci: não foi possível restaurar a sessão na tela de login.",
+                error
+            );
+
+        }
+
+    })();
+
+
     loginForm.addEventListener(
         "submit",
         async function(event) {

@@ -1,13 +1,158 @@
 // =====================================
-// VINCI — AUTH GUARD
+// VINCI 1.1 FOCUS — AUTH GUARD
+// LOGIN PERSISTENTE / PWA / SAFARI
 // =====================================
 
 (async function () {
 
+    "use strict";
+
+
+    const LOGIN_PAGE =
+        "login.html";
+
+
+    function goToLogin() {
+
+        window.location.replace(
+            LOGIN_PAGE
+        );
+
+    }
+
+
+    async function readSession() {
+
+        const {
+            data,
+            error
+        } =
+            await db.auth.getSession();
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        return data?.session ||
+            null;
+
+    }
+
+
+    function waitForInitialAuthState(
+        timeoutMs = 1800
+    ) {
+
+        return new Promise(
+            resolve => {
+
+                let settled =
+                    false;
+
+
+                let timer =
+                    null;
+
+
+                let subscription =
+                    null;
+
+
+                const finish =
+                    session => {
+
+                        if (settled) {
+                            return;
+                        }
+
+
+                        settled =
+                            true;
+
+
+                        if (timer) {
+
+                            clearTimeout(
+                                timer
+                            );
+
+                        }
+
+
+                        subscription
+                            ?.unsubscribe?.();
+
+
+                        resolve(
+                            session ||
+                            null
+                        );
+
+                    };
+
+
+                const authListener =
+                    db.auth
+                    .onAuthStateChange(
+                        (
+                            event,
+                            session
+                        ) => {
+
+                            if (
+                                event ===
+                                    "INITIAL_SESSION" ||
+                                event ===
+                                    "SIGNED_IN" ||
+                                event ===
+                                    "TOKEN_REFRESHED"
+                            ) {
+
+                                finish(
+                                    session
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                subscription =
+                    authListener
+                    ?.data
+                    ?.subscription ||
+                    null;
+
+
+                timer =
+                    setTimeout(
+                        () => {
+
+                            finish(
+                                null
+                            );
+
+                        },
+                        timeoutMs
+                    );
+
+            }
+        );
+
+    }
+
+
     try {
 
-        // Espera o Supabase estar disponível
-        if (typeof db === "undefined") {
+        if (
+            typeof db ===
+            "undefined"
+        ) {
 
             console.error(
                 "Vinci: Supabase não foi carregado."
@@ -18,58 +163,93 @@
         }
 
 
-        // Verifica a sessão atual
-        const {
-            data,
-            error
-        } = await db.auth.getSession();
+        /*
+           Normalmente a sessão já vem daqui porque fica
+           persistida no localStorage.
+        */
+
+        let session =
+            await readSession();
 
 
-        // Erro ao verificar sessão
-        if (error) {
+        /*
+           Em PWA/Safari, ao voltar de suspensão, o Auth pode
+           precisar de alguns milissegundos para restaurar
+           e renovar a sessão.
+        */
 
-            console.error(
-                "Erro ao verificar sessão:",
-                error
-            );
+        if (!session) {
 
-            window.location.replace(
-                "login.html"
-            );
+            session =
+                await waitForInitialAuthState();
+
+        }
+
+
+        /*
+           Última leitura após INITIAL_SESSION/TOKEN_REFRESHED.
+        */
+
+        if (!session) {
+
+            session =
+                await readSession();
+
+        }
+
+
+        if (!session) {
+
+            goToLogin();
 
             return;
 
         }
 
 
-        // Usuário não está logado
-        if (!data.session) {
-
-            window.location.replace(
-                "login.html"
-            );
-
-            return;
-
-        }
-
-
-        // Usuário está autenticado
         console.log(
-            "Vinci: usuário autenticado."
+            "Vinci: sessão restaurada."
         );
 
 
     } catch (error) {
 
         console.error(
-            "Erro no Auth Guard:",
+            "Vinci: erro ao restaurar sessão:",
             error
         );
 
-        window.location.replace(
-            "login.html"
-        );
+
+        /*
+           Uma falha momentânea não deve expulsar o usuário
+           sem tentar uma última leitura local.
+        */
+
+        try {
+
+            const fallback =
+                await readSession();
+
+
+            if (fallback) {
+
+                return;
+
+            }
+
+        } catch (
+            fallbackError
+        ) {
+
+            console.error(
+                "Vinci: fallback da sessão falhou:",
+                fallbackError
+            );
+
+        }
+
+
+        goToLogin();
 
     }
 
