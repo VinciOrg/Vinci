@@ -1,3 +1,288 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="theme-color" content="#faf9f7"><title>Vinci Yearbook</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="yearbook.css?v=1"><link rel="stylesheet" href="global-cosmetics.css?v=cosmetics-rework5"></head><body>
-<main class="yearbook-page"><header class="yearbook-head"><button id="yearbookBack">←</button><div><span>VINCI YEARBOOK</span><h1 id="yearbookYear">2026</h1><p>Um ano contado pelas coisas que você viveu.</p></div><button id="shareYearbook">Compartilhar</button></header><div id="yearbookStatus" class="yearbook-status">Montando seu ano...</div><section id="yearbookContent" class="hidden"><article class="yearbook-cover"><span>SEU ANO NO VINCI</span><h2 id="yearbookCoverTitle">2026</h2><p id="yearbookCoverText"></p><div id="yearbookCoverAvatar"></div></article><div id="yearbookStats" class="yearbook-stats"></div><article class="yearbook-feature"><span>ROOM DO ANO</span><h2 id="yearbookTopRoom">—</h2><p id="yearbookTopRoomText"></p></article><section><div class="yearbook-section-title"><span>MEMÓRIAS</span><h2>Alguns quadros do seu ano</h2></div><div id="yearbookMosaic" class="yearbook-mosaic"></div></section><article class="yearbook-ending"><span>VINCI</span><h2 id="yearbookEnding">E isso foi só um ano.</h2><p>As fotos passam. As histórias ficam.</p></article></section><canvas id="yearbookCanvas" width="1080" height="1350" hidden></canvas></main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase.js?v=audio-storage2"></script><script src="auth-guard.js"></script><script src="yearbook.js?v=1"></script><script src="global-cosmetics.js?v=social1"></script><script src="zoom-lock.js?v=1"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#faf9f7"
+    >
+
+    <title>
+        Vinci Yearbook
+    </title>
+
+    <script src="theme.js?v=focus1"></script>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="yearbook.css?v=share-remake1"
+    >
+
+    <link
+        rel="stylesheet"
+        href="global-cosmetics.css?v=clean-cut4"
+    >
+
+    <link
+        rel="stylesheet"
+        href="theme.css?v=dark-text-post-fix1"
+    >
+
+    <link
+        rel="stylesheet"
+        href="frame-motion.css?v=motion-fix3"
+    >
+
+    <link
+        rel="stylesheet"
+        href="frame-engine.css?v=clean-cut4"
+    >
+
+</head>
+
+
+<body>
+
+
+    <main class="yearbook-page">
+
+
+        <header class="yearbook-head">
+
+
+            <button
+                id="yearbookBack"
+                type="button"
+                aria-label="Voltar"
+            >
+                ←
+            </button>
+
+
+            <div>
+
+                <span>
+                    VINCI YEARBOOK
+                </span>
+
+                <h1 id="yearbookYear">
+                    2026
+                </h1>
+
+                <p>
+                    Um ano contado pelas coisas que você viveu.
+                </p>
+
+            </div>
+
+
+            <button
+                id="shareYearbook"
+                type="button"
+            >
+                Compartilhar
+            </button>
+
+
+        </header>
+
+
+        <div
+            id="yearbookStatus"
+            class="yearbook-status"
+        >
+            Montando seu ano...
+        </div>
+
+
+        <section
+            id="yearbookContent"
+            class="hidden"
+        >
+
+
+            <article class="yearbook-cover">
+
+                <span>
+                    SEU ANO NO VINCI
+                </span>
+
+                <h2 id="yearbookCoverTitle">
+                    2026
+                </h2>
+
+                <p id="yearbookCoverText">
+                </p>
+
+                <div id="yearbookCoverAvatar">
+                </div>
+
+            </article>
+
+
+            <div
+                id="yearbookStats"
+                class="yearbook-stats"
+            >
+            </div>
+
+
+            <article class="yearbook-feature">
+
+                <span>
+                    ROOM DO ANO
+                </span>
+
+                <h2 id="yearbookTopRoom">
+                    —
+                </h2>
+
+                <p id="yearbookTopRoomText">
+                </p>
+
+            </article>
+
+
+            <section>
+
+                <div class="yearbook-section-title">
+
+                    <span>
+                        MEMÓRIAS
+                    </span>
+
+                    <h2>
+                        Alguns quadros do seu ano
+                    </h2>
+
+                </div>
+
+                <div
+                    id="yearbookMosaic"
+                    class="yearbook-mosaic"
+                >
+                </div>
+
+            </section>
+
+
+            <section class="yearbook-share-builder">
+
+
+                <header class="yearbook-share-builder-head">
+
+
+                    <div>
+
+                        <span>
+                            SUA CAPA DE COMPARTILHAR
+                        </span>
+
+                        <h2>
+                            Escolha 3 fotos
+                        </h2>
+
+                        <p>
+                            Elas vão aparecer como fotos impressas na arte do seu Yearbook.
+                        </p>
+
+                    </div>
+
+
+                    <strong id="yearbookPhotoSelectionCount">
+                        0 / 3
+                    </strong>
+
+
+                </header>
+
+
+                <div
+                    id="yearbookPhotoPicker"
+                    class="yearbook-photo-picker"
+                >
+                </div>
+
+
+                <div class="yearbook-share-builder-foot">
+
+                    <p>
+                        Dica: escolha fotos que contem partes diferentes do seu ano.
+                    </p>
+
+                    <button
+                        id="shareYearbookFromBuilder"
+                        type="button"
+                    >
+                        Criar imagem
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+            <article class="yearbook-ending">
+
+                <span>
+                    VINCI
+                </span>
+
+                <h2 id="yearbookEnding">
+                    E isso foi só um ano.
+                </h2>
+
+                <p>
+                    As fotos passam. As histórias ficam.
+                </p>
+
+            </article>
+
+
+        </section>
+
+
+        <canvas
+            id="yearbookCanvas"
+            width="1080"
+            height="1350"
+            hidden
+        >
+        </canvas>
+
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js?v=audio-storage2"></script>
+
+    <script src="auth-guard.js"></script>
+
+    <script src="yearbook.js?v=share-remake1"></script>
+
+    <script src="global-cosmetics.js?v=clean-cut4"></script>
+
+    <script src="zoom-lock.js?v=1"></script>
+
+    <script src="frame-engine.js?v=clean-cut4"></script>
+
+
+</body>
+
+</html>

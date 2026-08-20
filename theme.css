@@ -1,0 +1,150 @@
+/* VINCI 1.1 FOCUS — TEMA GLOBAL */
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --background: #11100f;
+    --text: #f4f1ed;
+    --muted: #aaa39d;
+    --border: #302c29;
+    --white: #1a1817;
+    --orange: #f4a261;
+    --orange-dark: #ffad6f;
+}
+
+html[data-theme="dark"] body {
+    background: #11100f !important;
+    color: #f4f1ed;
+}
+
+html[data-theme="dark"] :is(
+    .auth-box,.profile,.modal-box,.create-menu-content,.friends-modal-card,
+    .room-modal-card,.capsule-modal-card,.global-notice-admin-card,.search-modal-content
+) {
+    background: #1a1817 !important;
+    color: #f4f1ed !important;
+    border-color: #302c29 !important;
+}
+
+html[data-theme="dark"] :is(input,textarea,select) {
+    background: #151312 !important;
+    color: #f4f1ed !important;
+    border-color: #35302d !important;
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+    color: #776f69 !important;
+}
+
+html[data-theme="dark"] .secondary,
+html[data-theme="dark"] .button.secondary {
+    background: #1d1a19 !important;
+    color: #f4f1ed !important;
+    border-color: #38322f !important;
+}
+
+html[data-theme="dark"] .bottom-nav {
+    background: rgba(22,20,19,.94) !important;
+    border-color: #302c29 !important;
+}
+
+html[data-theme="dark"] .profile-avatar {
+    border-color: #11100f !important;
+}
+
+html[data-theme="dark"] :is(
+    .profile-tabs,.profile-stats,.profile-post-card,.profile-text-post,
+    .friend-card,.friend-request,.room-card,.challenge-card,
+    .members-progress,.reward-card,.room-progression,.history-card,.vote-panel,
+    .rank-row,.game-card,.games-progress-card,.active-game-card,.cosmetic-card,
+    .room-chat-shell,.chat-panel,.album-card,.album-detail-card,.circle-card,
+    .circle-create-card,.feature-intro,.capsule-card,.friendship-card,
+    .yearbook-stats > *,.yearbook-feature,.yearbook-ending
+) {
+    background-color: #1a1817 !important;
+    color: #f4f1ed !important;
+    border-color: #302c29 !important;
+}
+
+html[data-theme="dark"] :is(
+    .profile-tab,.friends-heading h2,.rooms-section-title h2,.section-heading h2,
+    .feature-section-title h2,.customize-section-title strong,.name-font-option,
+    .customize-preview-content strong
+) {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] :is(.customize-preview,.name-font-option) {
+    background: #1a1817 !important;
+    border-color: #302c29 !important;
+}
+
+html[data-theme="dark"] .customize-preview-avatar {
+    border-color: #1a1817 !important;
+}
+
+html[data-theme="dark"] .customize-preview-content span,
+html[data-theme="dark"] .customize-section-title span {
+    color: #aaa39d !important;
+}
+
+html[data-theme="dark"] a { color: #ffad6f; }
+
+@media (prefers-reduced-motion: reduce) {
+
+    /*
+       Reduz movimento da INTERFACE, sem desligar
+       as molduras cosméticas escolhidas pelo usuário.
+    */
+
+    body *:not(.vinci-frame-wrap):not(.vinci-frame-wrap *) {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    body *:not(.vinci-frame-wrap):not(.vinci-frame-wrap *)::before,
+    body *:not(.vinci-frame-wrap):not(.vinci-frame-wrap *)::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+}
+
+/* =========================================
+   VINCI 1.1 FOCUS — DARK TEXT POST FIX
+   Corrige posts de texto do perfil no modo escuro.
+========================================= */
+
+html[data-theme="dark"] .profile-text-post {
+    background: #1a1817 !important;
+    color: #f4f1ed !important;
+    border-color: #302c29 !important;
+}
+
+html[data-theme="dark"] .profile-text-post-content {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] .profile-text-post-date {
+    color: #9f9690 !important;
+}
+
+html[data-theme="dark"] .profile-posts-loading,
+html[data-theme="dark"] .profile-posts-empty {
+    color: #aaa39d !important;
+}
+
+html[data-theme="dark"] .profile-posts-empty strong {
+    color: #f4f1ed !important;
+}
+
+html[data-theme="dark"] .profile-posts-empty span {
+    color: #aaa39d !important;
+}
+
+html[data-theme="dark"] .profile-posts-title,
+html[data-theme="dark"] .profile-section-header h2 {
+    color: #f4f1ed !important;
+}
