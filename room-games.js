@@ -252,11 +252,19 @@ function renderGameButtons(){
  const buttons=document.querySelectorAll('[data-start-game]');
  const active=gameIsActive();
  const open=lobbyIsOpen();
- const cooldown=game?Math.max(0,new Date(game.created_at).getTime()+10*60*1000-Date.now()):0;
+
+ /*
+    Sem cooldown:
+    terminou uma partida, a Room pode abrir outra sala imediatamente.
+    Continuam valendo:
+    - uma sala aberta por vez;
+    - uma partida ativa por vez;
+    - mínimo de 2 pessoas para iniciar.
+ */
  buttons.forEach(button=>{
   const same=open&&button.dataset.startGame===lobby.game_type;
-  button.disabled=!lobbySchemaReady||active||open||cooldown>0;
-  button.textContent=same?'Sala aberta':open?'Outra sala aberta':active?'Partida em andamento':cooldown>0?'Aguarde':'Abrir sala';
+  button.disabled=!lobbySchemaReady||active||open;
+  button.textContent=same?'Sala aberta':open?'Outra sala aberta':active?'Partida em andamento':'Abrir sala';
  });
 }
 
@@ -330,25 +338,17 @@ function timeLeft(){if(!game)return 0;const target=submissionPhase()?game.submit
 function fmt(ms){const s=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(s/60),r=s%60;return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`}
 
 function renderCooldown(){
+ /*
+    Mantemos o nome da função para compatibilidade com as chamadas
+    antigas do arquivo, mas o cooldown não existe mais.
+ */
  const box=$('#gamesCooldown');
- if(!box)return;
- const buttons=document.querySelectorAll('[data-start-game]');
- if(!game){
+ if(box){
   box.classList.add('hidden');
-  renderGameButtons();
-  return;
+  box.textContent='';
  }
- const until=new Date(game.created_at).getTime()+10*60*1000;
- const left=until-Date.now();
- const active=gameIsActive();
- if(left>0&&!lobbyIsOpen()){
-  box.classList.remove('hidden');
-  box.textContent=`⏳ Próxima sala disponível em ${fmt(left)}. O limite continua sendo 1 partida a cada 10 minutos por Room.`;
- }else{
-  box.classList.add('hidden');
- }
+
  renderGameButtons();
- if(active)buttons.forEach(b=>b.disabled=true);
 }
 
 async function renderGame(){
