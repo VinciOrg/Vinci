@@ -7,13 +7,28 @@
     let observer = null;
 
     function cleanFrameKey(value){
+        const legacyMap = {
+            inferno_dragon: "vector_nova",
+            seraph_prism: "event_horizon"
+        };
+
+        const visualValue =
+            legacyMap[value] || value;
+
         const allowed = new Set([
             "aurora","orbit","solar","champion",
             "prism","constellation","legend",
-            "celestial_wings","sakura_spirit","inferno_dragon",
-            "lunar_crown","seraph_prism","eternal_vinci","crystal_garden","midnight_butterfly","ocean_guardian","cyber_koi","royal_phoenix","galaxy_crown","yakodev_core"
+            "celestial_wings","sakura_spirit","vector_nova",
+            "lunar_crown","event_horizon","eternal_vinci",
+            "crystal_garden","midnight_butterfly","ocean_guardian",
+            "cyber_koi","royal_phoenix","galaxy_crown",
+            "court_king","neon_symphony","shutter_bloom",
+            "storm_circuit","yakodev_core"
         ]);
-        return allowed.has(value) ? value : null;
+
+        return allowed.has(visualValue)
+            ? visualValue
+            : null;
     }
 
     function getTargetForNode(node){
@@ -22,10 +37,19 @@
         return node.querySelector?.(".post-avatar, .friend-avatar, .direct-avatar, .friendship-avatar-slot img, .yearbook-cover-avatar img") || null;
     }
 
-    const ART_FRAMES = new Set(["celestial_wings","sakura_spirit","inferno_dragon","lunar_crown","seraph_prism","eternal_vinci","crystal_garden","midnight_butterfly","ocean_guardian","cyber_koi","royal_phoenix","galaxy_crown","yakodev_core"]);
+    const ART_FRAMES = new Set(["celestial_wings","sakura_spirit","vector_nova","lunar_crown","event_horizon","eternal_vinci","crystal_garden","midnight_butterfly","ocean_guardian","cyber_koi","royal_phoenix","galaxy_crown","court_king","neon_symphony","shutter_bloom","storm_circuit","yakodev_core"]);
 
     function ensureFrameArt(wrap, frameKey){
         let art = wrap.querySelector('.vinci-frame-art');
+
+        if(
+            art?.dataset?.vinciFxArt &&
+            art.dataset.vinciFxArt !== frameKey
+        ){
+            art.remove();
+            art = null;
+        }
+
         if(ART_FRAMES.has(frameKey)){
             if(!art){
                 art = document.createElement('i');
@@ -34,7 +58,9 @@
                 art.innerHTML = '<b></b><b></b><b></b><b></b>';
                 wrap.insertBefore(art, wrap.firstChild);
             }
-        }else if(art){ art.remove(); }
+        }else if(art){
+            art.remove();
+        }
     }
 
     function ensureWrap(target, frameKey){

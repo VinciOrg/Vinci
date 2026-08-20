@@ -44,8 +44,30 @@ if (signupForm) {
                 .getElementById("password")
                 .value;
 
+            const confirmPassword =
+                document
+                .getElementById("confirmSignupPassword")
+                ?.value || "";
+
             const message =
                 document.getElementById("message");
+
+            if (password !== confirmPassword) {
+                message.textContent = "As duas senhas precisam ser iguais.";
+                return;
+            }
+
+            const passwordResult =
+                window.VinciPassword?.validate
+                    ? window.VinciPassword.validate(password)
+                    : { valid: password.length >= 8 };
+
+            if (!passwordResult.valid) {
+                message.textContent =
+                    window.VinciPassword?.message?.(passwordResult) ||
+                    "Use uma senha mais forte.";
+                return;
+            }
 
             message.textContent =
                 "Criando sua conta...";

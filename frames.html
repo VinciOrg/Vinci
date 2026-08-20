@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#faf9f7"
+    >
+
+    <title>
+        Molduras — Vinci
+    </title>
+
+    <script src="theme.js?v=focus2"></script>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="room-games.css?v=cosmetics-rework5"
+    >
+
+    <link
+        rel="stylesheet"
+        href="room-cosmetics.css?v=clean-cut4"
+    >
+
+    <link
+        rel="stylesheet"
+        href="global-cosmetics.css?v=clean-cut4"
+    >
+
+    <link
+        rel="stylesheet"
+        href="frames.css?v=focus2"
+    >
+
+    <link
+        rel="stylesheet"
+        href="focus-nav.css?v=focus1"
+    >
+
+    <link
+        rel="stylesheet"
+        href="theme.css?v=dark-text-post-fix1"
+    >
+
+    <link rel="stylesheet" href="frame-motion.css?v=motion-fix3">
+    <link rel="stylesheet" href="frame-engine.css?v=clean-cut4">
+</head>
+
+
+<body>
+
+
+    <main class="frames-page">
+
+
+        <header class="frames-head">
+
+
+            <button
+                id="framesBack"
+                class="frames-back"
+                type="button"
+                aria-label="Voltar"
+            >
+
+                ←
+
+            </button>
+
+
+            <div>
+
+
+                <span>
+                    APARÊNCIA · VINCI COLLECTION
+                </span>
+
+
+                <h1>
+                    Molduras
+                </h1>
+
+
+                <p>
+                    A mesma coleção dos Jogos, agora acessível direto pelo seu perfil.
+                </p>
+
+
+            </div>
+
+
+        </header>
+
+
+        <section
+            id="gamesProgress"
+            class="games-progress-card frames-game-progress"
+        >
+
+            Carregando sua coleção...
+
+        </section>
+
+
+        <section class="frames-collection">
+
+
+            <header class="frames-collection-head">
+
+
+                <div>
+
+
+                    <span>
+                        VINCI COLLECTION
+                    </span>
+
+
+                    <h2>
+                        Loja de conquistas
+                    </h2>
+
+
+                </div>
+
+
+            </header>
+
+
+            <p class="cosmetics-copy frames-copy">
+
+                Nada aqui é comprado.
+                Cada moldura representa algo que você conquistou jogando.
+
+            </p>
+
+
+            <div class="cosmetics-shop-tabs">
+
+
+                <button
+                    class="active"
+                    data-shop-filter="featured"
+                    type="button"
+                >
+
+                    Destaques
+
+                </button>
+
+
+                <button
+                    data-shop-filter="recent"
+                    type="button"
+                >
+
+                    Recentes
+
+                </button>
+
+
+                <button
+                    data-shop-filter="popular"
+                    type="button"
+                >
+
+                    Mais usadas
+
+                </button>
+
+
+                <button
+                    data-shop-filter="classic"
+                    type="button"
+                >
+
+                    Clássicas
+
+                </button>
+
+
+                <button
+                    data-shop-filter="rare"
+                    type="button"
+                >
+
+                    Raras
+
+                </button>
+
+
+                <button
+                    data-shop-filter="mythic"
+                    type="button"
+                >
+
+                    Míticas
+
+                </button>
+
+
+                <button
+                    data-shop-filter="exclusive"
+                    type="button"
+                >
+
+                    Exclusivas
+
+                </button>
+
+
+            </div>
+
+
+            <div class="cosmetics-section-head">
+
+
+                <span>
+                    COLEÇÃO
+                </span>
+
+
+                <h4 id="cosmeticsSectionTitle">
+
+                    Destaques
+
+                </h4>
+
+
+            </div>
+
+
+            <div
+                id="cosmeticsGrid"
+                class="cosmetics-grid"
+            >
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+
+        <a href="index.html">
+
+
+            <span>
+
+
+                <svg
+                    class="nav-icon"
+                    viewBox="0 0 24 24"
+                >
+
+                    <path d="M3.5 10.5L12 3.75l8.5 6.75"></path>
+
+                    <path d="M6 9.75V20h12V9.75"></path>
+
+                    <path d="M10 20v-5h4v5"></path>
+
+
+                </svg>
+
+
+            </span>
+
+
+            Posts
+
+
+        </a>
+
+
+        <button
+            type="button"
+            class="nav-create"
+            onclick="location.href='index.html#create'"
+        >
+
+
+            <span class="nav-post">
+
+
+                <svg
+                    class="nav-plus-icon"
+                    viewBox="0 0 24 24"
+                >
+
+                    <path d="M12 5v14"></path>
+
+                    <path d="M5 12h14"></path>
+
+
+                </svg>
+
+
+            </span>
+
+
+            Postar
+
+
+        </button>
+
+
+        <a href="rooms.html">
+
+
+            <span>
+
+
+                <svg
+                    class="nav-icon"
+                    viewBox="0 0 24 24"
+                >
+
+                    <circle cx="8" cy="9" r="2.5"></circle>
+
+                    <circle cx="16" cy="9" r="2.5"></circle>
+
+                    <path d="M3.5 19c.9-3 2.8-4.5 5-4.5s4.1 1.5 5 4"></path>
+
+                    <path d="M11 18.5c.9-2.7 2.7-4 4.8-4 2 0 3.8 1.3 4.7 4"></path>
+
+
+                </svg>
+
+
+            </span>
+
+
+            Rooms
+
+
+        </a>
+
+
+        <a href="profile.html">
+
+
+            <span>
+
+
+                <svg
+                    class="nav-icon"
+                    viewBox="0 0 24 24"
+                >
+
+                    <circle cx="12" cy="8" r="3.25"></circle>
+
+                    <path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path>
+
+
+                </svg>
+
+
+            </span>
+
+
+            Perfil
+
+
+        </a>
+
+
+    </nav>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js?v=audio-storage2"></script>
+
+    <script src="auth-guard.js"></script>
+
+
+    <!--
+        MESMO sistema da coleção de Jogos.
+        Não existe mais renderer separado de Molduras.
+    -->
+    <script src="room-games.js?v=clean-cut4"></script>
+
+
+    <script src="global-cosmetics.js?v=clean-cut4"></script>
+
+    <script src="focus-nav.js?v=focus1"></script>
+
+    <script src="zoom-lock.js?v=1"></script>
+
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const back =
+                    document.getElementById(
+                        "framesBack"
+                    );
+
+
+                back?.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            document.referrer &&
+                            history.length > 1
+                        ) {
+
+                            history.back();
+
+                            return;
+
+                        }
+
+
+                        location.href =
+                            "profile.html";
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+    <script src="frame-engine.js?v=clean-cut4"></script>
+</body>
+
+</html>

@@ -1695,7 +1695,7 @@ if (
             }
 
 
-            const file =
+            let file =
                 this.files[0];
 
 
@@ -1738,6 +1738,41 @@ if (
                 );
 
                 return;
+
+            }
+
+
+            if (window.VinciImageCropper?.open) {
+
+                try {
+
+                    const croppedFile =
+                        await window.VinciImageCropper.open(
+                            file,
+                            {
+                                kind: "avatar",
+                                aspect: 1,
+                                outputWidth: 640,
+                                outputHeight: 640,
+                                title: "Enquadrar foto de perfil"
+                            }
+                        );
+
+                    if (!croppedFile) {
+                        avatarInput.value = "";
+                        return;
+                    }
+
+                    file = croppedFile;
+
+                } catch (cropError) {
+
+                    console.error("Erro ao enquadrar avatar:", cropError);
+                    alert("Não foi possível preparar essa imagem.");
+                    avatarInput.value = "";
+                    return;
+
+                }
 
             }
 

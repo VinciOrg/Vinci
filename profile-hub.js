@@ -1,40 +1,28 @@
 // =====================================
-// VINCI 0.7 — ATALHOS DO PERFIL
+// VINCI 1.1 FOCUS — PERFIL ORGANIZADO
 // =====================================
-(function () {
-    "use strict";
-
-    const host = document.querySelector(".profile-actions");
-    if (!host || host.dataset.vinciHubReady === "true") return;
-    host.dataset.vinciHubReady = "true";
-
-    function addButton(label, handler, className) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = `button secondary vinci-profile-feature ${className || ""}`.trim();
-        button.textContent = label;
-        button.addEventListener("click", handler);
-        host.appendChild(button);
-    }
-
-    async function init() {
-        const { data } = await db.auth.getUser();
-        const user = data?.user;
-        if (!user) return;
-
-        const params = new URLSearchParams(location.search);
-        const viewedId = params.get("id") || user.id;
-        const own = viewedId === user.id;
-
-        addButton("Álbuns", function () {
-            location.assign(`albums.html?id=${encodeURIComponent(viewedId)}`);
-        }, "vinci-albums-shortcut");
-
-        if (own) {
-            addButton("Círculos", function () { location.assign("circles.html"); }, "vinci-circles-shortcut");
-            addButton("Notificações", function () { location.assign("notifications.html"); }, "vinci-notifications-shortcut");
-        }
-    }
-
-    init();
-})();
+(function(){"use strict";
+const $=s=>document.querySelector(s);
+function icon(name){const icons={appearance:'<path d="M5 19l2.2-6.8L15 4.4a2.1 2.1 0 0 1 3 3l-7.8 7.8L5 19z"></path><path d="M13.8 5.6l3 3"></path>',people:'<circle cx="8" cy="9" r="2.7"></circle><circle cx="16" cy="9" r="2.7"></circle><path d="M3.5 19c.8-3 2.6-4.5 4.8-4.5 2.1 0 3.9 1.4 4.8 4"></path><path d="M12 18.5c.8-2.7 2.5-4 4.5-4 1.9 0 3.5 1.2 4.2 3.5"></path>',memories:'<rect x="4" y="5" width="16" height="14" rx="2.5"></rect><circle cx="9" cy="10" r="1.5"></circle><path d="M5.5 17l4.2-4 2.8 2.6 2.5-2.2 3.5 3.6"></path>',more:'<circle cx="6" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="18" cy="12" r="1"></circle>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${icons[name]||icons.more}</svg>`}
+function closeSheet(){const sheet=$('#focusProfileSheet');if(sheet){sheet.classList.add('hidden');document.body.classList.remove('focus-sheet-open')}}
+function rowHTML(title,desc,action,kind='button'){return kind==='link'?`<a class="focus-sheet-row" href="${action}"><span><strong>${title}</strong><small>${desc}</small></span><b>›</b></a>`:`<button type="button" class="focus-sheet-row" data-focus-action="${action}"><span><strong>${title}</strong><small>${desc}</small></span><b>›</b></button>`}
+function themeHTML(){const mode=window.VinciTheme?.getMode?.()||'system';return `<div class="focus-theme-block"><div><strong>Modo do Vinci</strong><small>Escolha como o app aparece neste dispositivo.</small></div><div class="focus-theme-options">${[['light','Claro'],['dark','Escuro'],['system','Sistema']].map(([key,label])=>`<button type="button" data-vinci-theme="${key}" class="${mode===key?'selected':''}">${label}</button>`).join('')}</div></div>`}
+function openSheet(type,viewedId){const sheet=$('#focusProfileSheet'),title=$('#focusSheetTitle'),body=$('#focusSheetBody');if(!sheet||!title||!body)return;let html='';if(type==='appearance'){title.textContent='Aparência';html=rowHTML('Editar perfil','Nome, @ e bio.','edit')+rowHTML('Foto de perfil','Trocar e enquadrar sua foto.','avatar')+rowHTML('Personalização','Banner, cor e estilo do nome.','customize')+rowHTML('Molduras','Ver coleção e equipar molduras.','frames.html','link')+themeHTML()}else if(type==='people'){title.textContent='Pessoas';html=rowHTML('Conversas','Seus chats diretos.','chat.html','link')+rowHTML('Amigos','Pedidos, amizades e perfis.','friends.html','link')+rowHTML('Círculos','Organize pessoas para sua privacidade.','circles.html','link')}else if(type==='memories'){title.textContent='Memórias';html=rowHTML('Álbuns','Organize fotos e momentos.','albums.html?id='+encodeURIComponent(viewedId),'link')+rowHTML('Cápsulas do Tempo','Guarde algo para abrir depois.','capsules.html','link')+rowHTML('Yearbook','Reveja sua história no Vinci.','yearbook.html','link')}else{title.textContent='Mais';html=rowHTML('Notificações','Convites, respostas e novidades.','notifications.html','link')+rowHTML('Sair da conta','Encerrar esta sessão do Vinci.','logout')}
+body.innerHTML=html;sheet.classList.remove('hidden');document.body.classList.add('focus-sheet-open');window.VinciTheme?.syncControls?.();body.querySelectorAll('[data-vinci-theme]').forEach(b=>b.onclick=()=>window.VinciTheme?.setMode?.(b.dataset.vinciTheme));body.querySelectorAll('[data-focus-action]').forEach(b=>b.onclick=()=>{const action=b.dataset.focusAction;closeSheet();if(action==='edit')$('#editProfile')?.click();if(action==='avatar')$('#changeAvatar')?.click();if(action==='customize')$('#customizeProfile')?.click();if(action==='logout')$('#profileLogoutButton')?.click()})}
+async function init(){const host=$('.profile-actions'),profile=$('#profileCard');if(!host||!profile)return;const{data}=await db.auth.getUser();const user=data?.user;if(!user)return;const viewedId=new URLSearchParams(location.search).get('id')||user.id,own=viewedId===user.id;
+try{
+    const [{count:friendCount},{count:roomCount}]=await Promise.all([
+        db.from('vinci_friendships').select('id',{count:'exact',head:true}).or(`user_a.eq.${viewedId},user_b.eq.${viewedId}`),
+        db.from('vinci_room_members').select('room_id',{count:'exact',head:true}).eq('user_id',viewedId)
+    ]);
+    if($('#profileFriendsCount')) $('#profileFriendsCount').textContent=friendCount??'—';
+    if($('#profileRoomsCount')) $('#profileRoomsCount').textContent=roomCount??'—';
+}catch(error){
+    console.warn('Focus: não foi possível carregar estatísticas sociais.',error);
+}
+if(!own)return;
+host.classList.add('focus-own-actions');host.insertAdjacentHTML('beforeend',`<button type="button" id="focusAppearanceMain" class="button secondary focus-profile-primary">Personalizar perfil</button><button type="button" id="focusProfileMore" class="focus-more-button" aria-label="Mais opções">•••</button>`);
+const stats=$('#profileStats');const hub=document.createElement('section');hub.className='focus-profile-hub';hub.innerHTML=`<div class="focus-hub-title"><span>SEU VINCI</span><p>Tudo no lugar, sem lotar seu perfil.</p></div><div class="focus-hub-list"><button type="button" data-focus-panel="appearance"><i>${icon('appearance')}</i><span><strong>Aparência</strong><small>Perfil, personalização e molduras</small></span><b>›</b></button><button type="button" data-focus-panel="people"><i>${icon('people')}</i><span><strong>Pessoas</strong><small>Amigos, conversas e círculos</small></span><b>›</b></button><button type="button" data-focus-panel="memories"><i>${icon('memories')}</i><span><strong>Memórias</strong><small>Álbuns, cápsulas e Yearbook</small></span><b>›</b></button></div>`;(stats||host).insertAdjacentElement('afterend',hub);
+const sheet=document.createElement('div');sheet.id='focusProfileSheet';sheet.className='focus-profile-sheet hidden';sheet.innerHTML=`<div class="focus-profile-sheet-card"><header><div><span>VINCI 1.1 FOCUS</span><h2 id="focusSheetTitle">Seu Vinci</h2></div><button type="button" id="focusSheetClose">×</button></header><div id="focusSheetBody" class="focus-sheet-body"></div></div>`;document.body.appendChild(sheet);
+$('#focusAppearanceMain').onclick=()=>openSheet('appearance',viewedId);$('#focusProfileMore').onclick=()=>openSheet('more',viewedId);hub.querySelectorAll('[data-focus-panel]').forEach(b=>b.onclick=()=>openSheet(b.dataset.focusPanel,viewedId));$('#focusSheetClose').onclick=closeSheet;sheet.onclick=e=>{if(e.target===sheet)closeSheet()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();

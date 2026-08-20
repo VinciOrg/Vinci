@@ -1,0 +1,298 @@
+/* =========================================
+   VINCI 1.1 FOCUS — FRAME MOTION FIX v2
+   Esta folha é carregada por ÚLTIMO.
+========================================= */
+
+/*
+   Força o motor de animações dos cosméticos a permanecer ativo,
+   mesmo se algum CSS anterior tiver aplicado animation:none
+   ou reduced-motion.
+*/
+
+.vinci-frame-inferno_dragon,
+.vinci-frame-seraph_prism,
+.vinci-frame-court_king,
+.vinci-frame-neon_symphony,
+.vinci-frame-shutter_bloom,
+.vinci-frame-storm_circuit,
+.vinci-frame-inferno_dragon::before,
+.vinci-frame-inferno_dragon::after,
+.vinci-frame-seraph_prism::before,
+.vinci-frame-seraph_prism::after,
+.vinci-frame-court_king::before,
+.vinci-frame-court_king::after,
+.vinci-frame-neon_symphony::before,
+.vinci-frame-neon_symphony::after,
+.vinci-frame-shutter_bloom::before,
+.vinci-frame-shutter_bloom::after,
+.vinci-frame-storm_circuit::before,
+.vinci-frame-storm_circuit::after,
+.vinci-frame-inferno_dragon .vinci-frame-art b,
+.vinci-frame-seraph_prism .vinci-frame-art b,
+.vinci-frame-court_king .vinci-frame-art b,
+.vinci-frame-neon_symphony .vinci-frame-art b,
+.vinci-frame-shutter_bloom .vinci-frame-art b,
+.vinci-frame-storm_circuit .vinci-frame-art b {
+    animation-play-state: running !important;
+    -webkit-animation-play-state: running !important;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+
+/* =====================================
+   SOLAR FORGE
+===================================== */
+
+.vinci-frame-inferno_dragon {
+    animation: vinciSolarForgeBreath 2.8s ease-in-out infinite !important;
+    -webkit-animation: vinciSolarForgeBreath 2.8s ease-in-out infinite !important;
+}
+
+.vinci-frame-inferno_dragon::before {
+    animation: vinciSolarForgeSpin 7s linear infinite !important;
+    -webkit-animation: vinciSolarForgeSpin 7s linear infinite !important;
+}
+
+.vinci-frame-inferno_dragon::after {
+    animation: vinciSolarForgeCorona 1.8s ease-in-out infinite !important;
+    -webkit-animation: vinciSolarForgeCorona 1.8s ease-in-out infinite !important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(1) {
+    animation: vinciForgeRuneNorth 3.4s ease-in-out infinite !important;
+    -webkit-animation: vinciForgeRuneNorth 3.4s ease-in-out infinite !important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(2) {
+    animation: vinciForgeRuneEast 3.4s ease-in-out infinite -.85s !important;
+    -webkit-animation: vinciForgeRuneEast 3.4s ease-in-out infinite -.85s !important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(3) {
+    animation: vinciForgeRuneSouth 3.4s ease-in-out infinite -1.7s !important;
+    -webkit-animation: vinciForgeRuneSouth 3.4s ease-in-out infinite -1.7s !important;
+}
+
+.vinci-frame-inferno_dragon .vinci-frame-art b:nth-child(4) {
+    animation: vinciForgeRuneWest 3.4s ease-in-out infinite -2.55s !important;
+    -webkit-animation: vinciForgeRuneWest 3.4s ease-in-out infinite -2.55s !important;
+}
+
+
+/* =====================================
+   PRISM REACTOR
+===================================== */
+
+.vinci-frame-seraph_prism {
+    animation: vinciPrismReactorGlow 2.5s ease-in-out infinite !important;
+    -webkit-animation: vinciPrismReactorGlow 2.5s ease-in-out infinite !important;
+}
+
+.vinci-frame-seraph_prism::before {
+    animation: vinciPrismOuterSpin 5.6s linear infinite !important;
+    -webkit-animation: vinciPrismOuterSpin 5.6s linear infinite !important;
+}
+
+.vinci-frame-seraph_prism::after {
+    animation: vinciPrismInnerSpin 8s linear infinite reverse !important;
+    -webkit-animation: vinciPrismInnerSpin 8s linear infinite reverse !important;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(1) {
+    animation: vinciPrismNode1 5s linear infinite !important;
+    -webkit-animation: vinciPrismNode1 5s linear infinite !important;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(2) {
+    animation: vinciPrismNode2 5s linear infinite !important;
+    -webkit-animation: vinciPrismNode2 5s linear infinite !important;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(3) {
+    animation: vinciPrismNode3 5s linear infinite !important;
+    -webkit-animation: vinciPrismNode3 5s linear infinite !important;
+}
+
+.vinci-frame-seraph_prism .vinci-frame-art b:nth-child(4) {
+    animation: vinciPrismNode4 5s linear infinite !important;
+    -webkit-animation: vinciPrismNode4 5s linear infinite !important;
+}
+
+
+/* =====================================
+   COURT KING — BASQUETE
+===================================== */
+
+.vinci-frame-court_king::before {
+    animation: vinciCourtTicks 9s linear infinite !important;
+    -webkit-animation: vinciCourtTicks 9s linear infinite !important;
+}
+
+.vinci-frame-court_king::after {
+    animation: vinciCourtPulse 1.5s ease-out infinite !important;
+    -webkit-animation: vinciCourtPulse 1.5s ease-out infinite !important;
+}
+
+.vinci-frame-court_king .vinci-frame-art b:nth-child(1) {
+    animation: vinciBasketOrbit 4.4s linear infinite !important;
+    -webkit-animation: vinciBasketOrbit 4.4s linear infinite !important;
+}
+
+.vinci-frame-court_king .vinci-frame-art b:nth-child(2) {
+    animation: vinciRimGlow 1.3s ease-in-out infinite !important;
+    -webkit-animation: vinciRimGlow 1.3s ease-in-out infinite !important;
+}
+
+.vinci-frame-court_king .vinci-frame-art b:nth-child(4) {
+    animation: vinciScoreFlash 1.8s ease-in-out infinite !important;
+    -webkit-animation: vinciScoreFlash 1.8s ease-in-out infinite !important;
+}
+
+
+/* =====================================
+   NEON SYMPHONY — MÚSICA
+===================================== */
+
+.vinci-frame-neon_symphony {
+    animation: vinciMusicFramePulse 1.8s ease-in-out infinite !important;
+    -webkit-animation: vinciMusicFramePulse 1.8s ease-in-out infinite !important;
+}
+
+.vinci-frame-neon_symphony::before {
+    animation: vinciMusicSpectrum 12s linear infinite !important;
+    -webkit-animation: vinciMusicSpectrum 12s linear infinite !important;
+}
+
+.vinci-frame-neon_symphony::after {
+    animation: vinciSoundWave 2.2s ease-out infinite !important;
+    -webkit-animation: vinciSoundWave 2.2s ease-out infinite !important;
+}
+
+.vinci-frame-neon_symphony .vinci-frame-art b:nth-child(1) {
+    animation: vinciMusicNoteLeft 2.6s ease-in-out infinite !important;
+    -webkit-animation: vinciMusicNoteLeft 2.6s ease-in-out infinite !important;
+}
+
+.vinci-frame-neon_symphony .vinci-frame-art b:nth-child(2) {
+    animation: vinciMusicNoteRight 2.6s ease-in-out infinite -.65s !important;
+    -webkit-animation: vinciMusicNoteRight 2.6s ease-in-out infinite -.65s !important;
+}
+
+.vinci-frame-neon_symphony .vinci-frame-art b:nth-child(3) {
+    animation: vinciEqualizer 1.1s steps(4,end) infinite !important;
+    -webkit-animation: vinciEqualizer 1.1s steps(4,end) infinite !important;
+}
+
+.vinci-frame-neon_symphony .vinci-frame-art b:nth-child(4) {
+    animation: vinciBeatCore 1.1s ease-in-out infinite !important;
+    -webkit-animation: vinciBeatCore 1.1s ease-in-out infinite !important;
+}
+
+
+/* =====================================
+   SHUTTER BLOOM — FOTOGRAFIA
+===================================== */
+
+.vinci-frame-shutter_bloom::before {
+    animation: vinciShutterRotate 9s cubic-bezier(.55,.1,.45,.9) infinite !important;
+    -webkit-animation: vinciShutterRotate 9s cubic-bezier(.55,.1,.45,.9) infinite !important;
+}
+
+.vinci-frame-shutter_bloom::after {
+    animation: vinciLensFlare 3.8s ease-in-out infinite !important;
+    -webkit-animation: vinciLensFlare 3.8s ease-in-out infinite !important;
+}
+
+.vinci-frame-shutter_bloom .vinci-frame-art b {
+    animation: vinciFocusBreathe 2.1s ease-in-out infinite !important;
+    -webkit-animation: vinciFocusBreathe 2.1s ease-in-out infinite !important;
+}
+
+.vinci-frame-shutter_bloom .vinci-frame-art b:nth-child(2) {
+    animation-delay: -.5s !important;
+    -webkit-animation-delay: -.5s !important;
+}
+
+.vinci-frame-shutter_bloom .vinci-frame-art b:nth-child(3) {
+    animation-delay: -1s !important;
+    -webkit-animation-delay: -1s !important;
+}
+
+.vinci-frame-shutter_bloom .vinci-frame-art b:nth-child(4) {
+    animation-delay: -1.5s !important;
+    -webkit-animation-delay: -1.5s !important;
+}
+
+
+/* =====================================
+   STORM CIRCUIT — CYBER / ENERGIA
+===================================== */
+
+.vinci-frame-storm_circuit {
+    animation: vinciStormCharge 2.2s ease-in-out infinite !important;
+    -webkit-animation: vinciStormCharge 2.2s ease-in-out infinite !important;
+}
+
+.vinci-frame-storm_circuit::before {
+    animation: vinciCircuitScan 3.2s linear infinite !important;
+    -webkit-animation: vinciCircuitScan 3.2s linear infinite !important;
+}
+
+.vinci-frame-storm_circuit::after {
+    animation: vinciStormHalo 6s linear infinite reverse !important;
+    -webkit-animation: vinciStormHalo 6s linear infinite reverse !important;
+}
+
+.vinci-frame-storm_circuit .vinci-frame-art b:nth-child(1) {
+    animation: vinciStormNodeNorth 2.7s ease-in-out infinite !important;
+    -webkit-animation: vinciStormNodeNorth 2.7s ease-in-out infinite !important;
+}
+
+.vinci-frame-storm_circuit .vinci-frame-art b:nth-child(2) {
+    animation: vinciStormNodeEast 2.7s ease-in-out infinite -.675s !important;
+    -webkit-animation: vinciStormNodeEast 2.7s ease-in-out infinite -.675s !important;
+}
+
+.vinci-frame-storm_circuit .vinci-frame-art b:nth-child(3) {
+    animation: vinciStormNodeSouth 2.7s ease-in-out infinite -1.35s !important;
+    -webkit-animation: vinciStormNodeSouth 2.7s ease-in-out infinite -1.35s !important;
+}
+
+.vinci-frame-storm_circuit .vinci-frame-art b:nth-child(4) {
+    animation: vinciStormNodeWest 2.7s ease-in-out infinite -2.025s !important;
+    -webkit-animation: vinciStormNodeWest 2.7s ease-in-out infinite -2.025s !important;
+}
+
+
+/* =====================================
+   COMPOSIÇÃO — CHROME / SAFARI / iOS
+===================================== */
+
+.vinci-frame-inferno_dragon,
+.vinci-frame-seraph_prism,
+.vinci-frame-court_king,
+.vinci-frame-neon_symphony,
+.vinci-frame-shutter_bloom,
+.vinci-frame-storm_circuit,
+.vinci-frame-inferno_dragon::before,
+.vinci-frame-inferno_dragon::after,
+.vinci-frame-seraph_prism::before,
+.vinci-frame-seraph_prism::after,
+.vinci-frame-court_king::before,
+.vinci-frame-court_king::after,
+.vinci-frame-neon_symphony::before,
+.vinci-frame-neon_symphony::after,
+.vinci-frame-shutter_bloom::before,
+.vinci-frame-shutter_bloom::after,
+.vinci-frame-storm_circuit::before,
+.vinci-frame-storm_circuit::after,
+.vinci-frame-inferno_dragon .vinci-frame-art b,
+.vinci-frame-seraph_prism .vinci-frame-art b,
+.vinci-frame-court_king .vinci-frame-art b,
+.vinci-frame-neon_symphony .vinci-frame-art b,
+.vinci-frame-shutter_bloom .vinci-frame-art b,
+.vinci-frame-storm_circuit .vinci-frame-art b {
+    will-change: transform, opacity, filter;
+    transform-style: preserve-3d;
+}

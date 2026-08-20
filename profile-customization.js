@@ -379,8 +379,8 @@
         bannerInput?.click();
     });
 
-    bannerInput?.addEventListener("change", function () {
-        const file = this.files?.[0];
+    bannerInput?.addEventListener("change", async function () {
+        let file = this.files?.[0];
         if (!file) return;
 
         const validationError = validateBanner(file);
@@ -391,6 +391,30 @@
             return;
         }
 
+        if (window.VinciImageCropper?.open) {
+            try {
+                const croppedFile = await window.VinciImageCropper.open(file, {
+                    kind: "banner",
+                    aspect: 3.5,
+                    outputWidth: 1750,
+                    outputHeight: 500,
+                    title: "Enquadrar banner"
+                });
+
+                if (!croppedFile) {
+                    this.value = "";
+                    return;
+                }
+
+                file = croppedFile;
+            } catch (cropError) {
+                console.error("Erro ao enquadrar banner:", cropError);
+                if (message) message.textContent = "Não foi possível preparar esse banner.";
+                this.value = "";
+                return;
+            }
+        }
+
         if (selectedBannerPreviewURL) {
             URL.revokeObjectURL(selectedBannerPreviewURL);
         }
@@ -399,7 +423,7 @@
         selectedBannerPreviewURL = URL.createObjectURL(file);
         removeBannerRequested = false;
 
-        if (message) message.textContent = "Banner pronto para salvar.";
+        if (message) message.textContent = "Banner enquadrado e pronto para salvar.";
         updatePreview();
     });
 
