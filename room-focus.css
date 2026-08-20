@@ -1,2 +1,858 @@
-/* VINCI 1.1 FOCUS — ROOMS */
-.focus-original-room-tabs{display:none!important}.focus-room-tabs{position:sticky;top:0;z-index:25;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:0 auto 16px;padding:5px;width:min(calc(100% - 24px),760px);border:1px solid var(--border,#e8e5e1);border-radius:16px;background:rgba(250,249,247,.92);backdrop-filter:blur(14px)}.focus-room-tabs button{padding:10px 5px;border:0;border-radius:11px;background:transparent;color:#888;font-size:11px;font-weight:800}.focus-room-tabs button.active{background:rgba(244,162,97,.14);color:var(--room-accent,var(--orange-dark))}.focus-room-panel{max-width:760px;margin:0 auto;padding:4px 20px 105px}.focus-room-panel>header{margin:4px 0 14px}.focus-room-panel>header span{color:var(--room-accent,var(--orange-dark));font-size:9px;font-weight:900;letter-spacing:.14em}.focus-room-panel>header h2{margin-top:3px;font-size:22px}.focus-room-panel>header p{margin-top:4px;color:#888;font-size:11px}.focus-room-cards{display:grid;gap:8px}.focus-room-cards>button{width:100%;display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:11px;padding:13px;border:1px solid var(--border,#e8e5e1);border-radius:16px;background:var(--white,#fff);color:var(--text,#181818);text-align:left}.focus-room-cards i{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:rgba(244,162,97,.13);color:var(--room-accent,var(--orange-dark));font-style:normal}.focus-room-cards span strong,.focus-room-cards span small{display:block}.focus-room-cards span strong{font-size:13px}.focus-room-cards span small{margin-top:3px;color:#888;font-size:10px}.focus-room-cards>b{color:#aaa;font-size:20px;font-weight:400}.focus-room-actions-menu{position:absolute;right:0;top:44px;z-index:70;min-width:190px;padding:6px;border:1px solid var(--border,#e8e5e1);border-radius:14px;background:var(--white,#fff);box-shadow:0 16px 42px rgba(0,0,0,.16)}.room-hero-actions{position:relative}.focus-room-actions-menu>.room-soft-btn,.focus-room-actions-menu>.room-danger-btn{display:block;width:100%;margin:0;padding:10px;border:0!important;border-radius:9px;background:transparent!important;text-align:left;color:var(--text,#181818)!important}.focus-room-actions-menu>.room-danger-btn{color:#c95555!important}.focus-room-actions-menu>.hidden{display:none!important}.focus-room-actions-trigger{min-width:42px;font-size:17px;font-weight:900}html[data-theme=dark] .focus-room-tabs{background:rgba(22,20,19,.92);border-color:#302c29}html[data-theme=dark] .focus-room-panel>header p,html[data-theme=dark] .focus-room-cards span small{color:#aaa39d}@media(max-width:600px){.focus-room-panel{padding-inline:14px}.focus-room-tabs{width:calc(100% - 20px);margin-bottom:12px}.focus-room-tabs button{font-size:10px}}
+/* =========================================
+   VINCI 1.1 FOCUS — ROOMS
+========================================= */
+
+.focus-original-room-tabs {
+    display: none !important;
+}
+
+
+.focus-room-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+
+    width:
+        min(
+            calc(100% - 24px),
+            760px
+        );
+
+    margin:
+        0 auto 16px;
+
+    padding: 5px;
+
+    border:
+        1px solid
+        var(
+            --border,
+            #e8e5e1
+        );
+
+    border-radius: 16px;
+
+    background:
+        rgba(
+            250,
+            249,
+            247,
+            .92
+        );
+
+    backdrop-filter:
+        blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+}
+
+
+.focus-room-tabs button {
+    padding:
+        10px
+        5px;
+
+    border: 0;
+
+    border-radius:
+        11px;
+
+    background:
+        transparent;
+
+    color:
+        #888;
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+}
+
+
+.focus-room-tabs button.active {
+    background:
+        rgba(
+            244,
+            162,
+            97,
+            .14
+        );
+
+    color:
+        var(
+            --room-accent,
+            var(
+                --orange-dark
+            )
+        );
+}
+
+
+/* =====================================
+   PAINÉIS FOCUS
+===================================== */
+
+.focus-room-panel {
+    max-width:
+        760px;
+
+    margin:
+        0 auto;
+
+    padding:
+        4px
+        20px
+        105px;
+}
+
+
+.focus-room-panel > header {
+    margin:
+        4px
+        0
+        14px;
+}
+
+
+.focus-room-panel > header span {
+    color:
+        var(
+            --room-accent,
+            var(
+                --orange-dark
+            )
+        );
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .14em;
+}
+
+
+.focus-room-panel > header h2 {
+    margin-top:
+        3px;
+
+    font-size:
+        22px;
+}
+
+
+.focus-room-panel > header p {
+    margin-top:
+        4px;
+
+    color:
+        #888;
+
+    font-size:
+        11px;
+}
+
+
+.focus-room-cards {
+    display: grid;
+
+    gap: 8px;
+}
+
+
+.focus-room-cards > button {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        40px
+        1fr
+        auto;
+
+    align-items:
+        center;
+
+    gap: 11px;
+
+    padding: 13px;
+
+    border:
+        1px solid
+        var(
+            --border,
+            #e8e5e1
+        );
+
+    border-radius:
+        16px;
+
+    background:
+        var(
+            --white,
+            #fff
+        );
+
+    color:
+        var(
+            --text,
+            #181818
+        );
+
+    text-align:
+        left;
+}
+
+
+.focus-room-cards i {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(
+            244,
+            162,
+            97,
+            .13
+        );
+
+    color:
+        var(
+            --room-accent,
+            var(
+                --orange-dark
+            )
+        );
+
+    font-style:
+        normal;
+}
+
+
+.focus-room-cards span strong,
+.focus-room-cards span small {
+    display: block;
+}
+
+
+.focus-room-cards span strong {
+    font-size:
+        13px;
+}
+
+
+.focus-room-cards span small {
+    margin-top:
+        3px;
+
+    color:
+        #888;
+
+    font-size:
+        10px;
+}
+
+
+.focus-room-cards > b {
+    color:
+        #aaa;
+
+    font-size:
+        20px;
+
+    font-weight:
+        400;
+}
+
+
+/* =====================================
+   3 PONTOS — FIX
+===================================== */
+
+.room-hero-actions {
+    position: relative;
+
+    display: flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-end;
+}
+
+
+/*
+   NÃO movemos esses botões para o menu.
+
+   room.js continua controlando:
+   - visibilidade;
+   - permissões;
+   - onclick;
+   - abertura dos modais.
+
+   Apenas escondemos a representação visual original.
+*/
+.room-hero-actions.focus-room-actions-ready
+> #editRoomButton,
+
+.room-hero-actions.focus-room-actions-ready
+> #inviteMemberButton,
+
+.room-hero-actions.focus-room-actions-ready
+> #leaveRoomButton {
+    position:
+        absolute !important;
+
+    width:
+        1px !important;
+
+    height:
+        1px !important;
+
+    padding:
+        0 !important;
+
+    margin:
+        0 !important;
+
+    overflow:
+        hidden !important;
+
+    clip:
+        rect(
+            0,
+            0,
+            0,
+            0
+        )
+        !important;
+
+    clip-path:
+        inset(50%)
+        !important;
+
+    white-space:
+        nowrap !important;
+
+    border:
+        0 !important;
+
+    opacity:
+        0 !important;
+
+    pointer-events:
+        none !important;
+}
+
+
+.focus-room-actions-trigger {
+    position:
+        relative;
+
+    z-index:
+        3;
+
+    display:
+        grid !important;
+
+    place-items:
+        center;
+
+    width:
+        46px;
+
+    min-width:
+        46px;
+
+    height:
+        46px;
+
+    padding:
+        0 !important;
+
+    border:
+        1px solid
+        var(
+            --border,
+            #e7ded7
+        )
+        !important;
+
+    border-radius:
+        15px !important;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .82
+        )
+        !important;
+
+    color:
+        var(
+            --text,
+            #211b17
+        )
+        !important;
+
+    box-shadow:
+        0 6px 18px
+        rgba(
+            50,
+            34,
+            24,
+            .07
+        );
+
+    font-size:
+        17px;
+
+    font-weight:
+        950;
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+.focus-room-actions-trigger span {
+    transform:
+        translateY(
+            -2px
+        );
+
+    letter-spacing:
+        2px;
+}
+
+
+.focus-room-actions-trigger:active {
+    transform:
+        scale(.96);
+}
+
+
+/*
+   IMPORTANTE:
+   Este menu é anexado no <body>,
+   não dentro de .room-hero.
+
+   Logo, o overflow:hidden do cabeçalho NÃO consegue
+   cortá-lo nem quebrar a área clicável.
+*/
+.focus-room-actions-menu {
+    position:
+        fixed;
+
+    z-index:
+        30000;
+
+    display:
+        grid;
+
+    gap: 3px;
+
+    padding: 7px;
+
+    border:
+        1px solid
+        rgba(
+            225,
+            215,
+            207,
+            .96
+        );
+
+    border-radius:
+        17px;
+
+    background:
+        rgba(
+            255,
+            252,
+            249,
+            .98
+        );
+
+    box-shadow:
+        0 18px 55px
+        rgba(
+            34,
+            24,
+            18,
+            .22
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    opacity: 0;
+
+    transform:
+        translateY(-5px)
+        scale(.985);
+
+    transform-origin:
+        top right;
+
+    transition:
+        opacity .13s ease,
+        transform .13s ease;
+
+    isolation:
+        isolate;
+}
+
+
+.focus-room-actions-menu.hidden {
+    display:
+        none !important;
+}
+
+
+.focus-room-actions-menu.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.focus-room-menu-item {
+    width: 100%;
+
+    min-height:
+        45px;
+
+    display: grid;
+
+    grid-template-columns:
+        32px
+        1fr;
+
+    align-items:
+        center;
+
+    gap: 9px;
+
+    padding:
+        7px
+        10px;
+
+    border: 0;
+
+    border-radius:
+        11px;
+
+    background:
+        transparent;
+
+    color:
+        #2a221e;
+
+    font:
+        inherit;
+
+    text-align:
+        left;
+
+    cursor:
+        pointer;
+
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+
+.focus-room-menu-item:hover,
+.focus-room-menu-item:focus-visible {
+    background:
+        #f6eee8;
+
+    outline:
+        none;
+}
+
+
+.focus-room-menu-item:active {
+    background:
+        #f2e6dd;
+
+    transform:
+        scale(.985);
+}
+
+
+.focus-room-menu-icon {
+    width: 31px;
+    height: 31px;
+
+    display: grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        10px;
+
+    background:
+        #f5e8de;
+
+    color:
+        #dc7e37;
+
+    font-size:
+        15px;
+
+    font-weight:
+        900;
+}
+
+
+.focus-room-menu-copy {
+    display: block;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1.2;
+}
+
+
+.focus-room-menu-item.danger {
+    color:
+        #b94d4d;
+}
+
+
+.focus-room-menu-item.danger
+.focus-room-menu-icon {
+    background:
+        #fff0f0;
+
+    color:
+        #c45353;
+}
+
+
+/* =====================================
+   DARK
+===================================== */
+
+html[data-theme="dark"]
+.focus-room-tabs {
+    background:
+        rgba(
+            22,
+            20,
+            19,
+            .92
+        );
+
+    border-color:
+        #302c29;
+}
+
+
+html[data-theme="dark"]
+.focus-room-panel > header p,
+
+html[data-theme="dark"]
+.focus-room-cards span small {
+    color:
+        #aaa39d;
+}
+
+
+html[data-theme="dark"]
+.focus-room-actions-trigger {
+    background:
+        rgba(
+            30,
+            27,
+            25,
+            .92
+        )
+        !important;
+
+    border-color:
+        #3b342f
+        !important;
+
+    color:
+        #f4f1ed
+        !important;
+
+    box-shadow:
+        0 7px 22px
+        rgba(
+            0,
+            0,
+            0,
+            .22
+        );
+}
+
+
+html[data-theme="dark"]
+.focus-room-actions-menu {
+    border-color:
+        #3a342f;
+
+    background:
+        rgba(
+            29,
+            26,
+            24,
+            .98
+        );
+
+    box-shadow:
+        0 20px 55px
+        rgba(
+            0,
+            0,
+            0,
+            .42
+        );
+}
+
+
+html[data-theme="dark"]
+.focus-room-menu-item {
+    color:
+        #f2eeea;
+}
+
+
+html[data-theme="dark"]
+.focus-room-menu-item:hover,
+
+html[data-theme="dark"]
+.focus-room-menu-item:focus-visible,
+
+html[data-theme="dark"]
+.focus-room-menu-item:active {
+    background:
+        #292522;
+}
+
+
+html[data-theme="dark"]
+.focus-room-menu-icon {
+    background:
+        #3a2a20;
+
+    color:
+        #f1a063;
+}
+
+
+html[data-theme="dark"]
+.focus-room-menu-item.danger {
+    color:
+        #e17b7b;
+}
+
+
+html[data-theme="dark"]
+.focus-room-menu-item.danger
+.focus-room-menu-icon {
+    background:
+        #3a2222;
+
+    color:
+        #e77d7d;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (
+    max-width:
+    600px
+) {
+
+    .focus-room-panel {
+        padding-inline:
+            14px;
+    }
+
+
+    .focus-room-tabs {
+        width:
+            calc(
+                100% - 20px
+            );
+
+        margin-bottom:
+            12px;
+    }
+
+
+    .focus-room-tabs button {
+        font-size:
+            10px;
+    }
+
+
+    .focus-room-actions-trigger {
+        width:
+            45px;
+
+        min-width:
+            45px;
+
+        height:
+            45px;
+
+        border-radius:
+            14px
+            !important;
+    }
+
+
+    .focus-room-actions-menu {
+        max-width:
+            calc(
+                100vw - 20px
+            );
+    }
+
+}
