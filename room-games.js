@@ -1,7 +1,8 @@
 (function(){
 "use strict";
 const $=s=>document.querySelector(s), roomId=new URLSearchParams(location.search).get("id");
-let user=null,game=null,lobby=null,members=[],lobbyMembers=[],gameParticipants=[],profiles=new Map(),submissions=[],votes=[],myStats={xp:0,games_played:0,wins:0,equipped_frame:null},unlocks=new Set(),unlockDates=new Map(),usageMap=new Map(),shopFilter='featured',timer=null,lobbyTimer=null,selectedVote=null,lobbySchemaReady=true;
+let user=null,game=null,lobby=null,members=[],lobbyMembers=[],gameParticipants=[],profiles=new Map(),submissions=[],votes=[],vangoState=null,myStats={xp:0,games_played:0,wins:0,equipped_frame:null},unlocks=new Set(),unlockDates=new Map(),usageMap=new Map(),shopFilter='featured',timer=null,lobbyTimer=null,selectedVote=null,lobbySchemaReady=true,serverOffsetMs=0;
+let closeLobbyArmedUntil=0,closeLobbyBusy=false,lastLobbyPointerActionAt=0;
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const media=url=>window.VinciMedia?.resolveUrl?window.VinciMedia.resolveUrl(url):Promise.resolve(url);
 const FRAME_VISUAL_ALIAS={
@@ -41,7 +42,7 @@ const COSMETICS=[
  {key:'storm_circuit',name:'Storm Circuit',req:'200 partidas + 40 vitórias',desc:'Circuito elétrico de alta tensão com arcos de energia, nós neon e descargas sincronizadas.',category:'mythic',rarity:'Lendária',release:23},
  {key:'yakodev_core',name:'DEV//CORE',req:'EXCLUSIVA • @yakodevofc',desc:'Terminal vivo, código em órbita e halo verde de desenvolvedor.',category:'exclusive',rarity:'Fundador',release:100,exclusiveTo:'yakodevofc'}
 ];
-function gameName(t){return t==='flash'?'Vinci Flash':t==='who_took'?'Quem Tirou?':'Blind Caption'}
+function gameName(t){return t==='flash'?'Vinci Flash':t==='who_took'?'Quem Tirou?':t==='vango'?'VanGo':'Blind Caption'}
 async function loadProfiles(ids){const list=[...new Set(ids.filter(Boolean))];if(!list.length)return;const{data}=await db.from('profiles').select('id,username,name,avatar_url').in('id',list);for(const p of data||[])profiles.set(p.id,p)}
 async function loadMembers(){const{data}=await db.from('vinci_room_members').select('user_id,role').eq('room_id',roomId);members=data||[];await loadProfiles(members.map(x=>x.user_id))}
 function xpLevel(xp){const level=Math.floor((xp||0)/200)+1,start=(level-1)*200,within=(xp||0)-start;return{level,within,need:200,pct:Math.min(100,within/2)}}
@@ -63,121 +64,270 @@ function shopItems(){const username=String((profiles.get(user.id)||{}).username|
 function renderCosmetics(){const grid=$('#cosmeticsGrid');if(!grid)return;const list=shopItems();document.querySelectorAll('[data-shop-filter]').forEach(b=>b.classList.toggle('active',b.dataset.shopFilter===shopFilter));const title=$('#cosmeticsSectionTitle');if(title)title.textContent=({featured:'Destaques',recent:'Novidades',popular:'Mais usadas',classic:'Clássicas',rare:'Raras',mythic:'Míticas',exclusive:'Exclusivas'})[shopFilter]||'Coleção';grid.innerHTML=list.map(c=>{const open=unlocks.has(c.key),eq=myStats.equipped_frame===c.key,pop=usageMap.get(c.key)||0,date=unlockDates.get(c.key);return `<article class="cosmetic-card ${open?'':'locked'} ${eq?'equipped':''}"><div class="cosmetic-rarity">${esc(c.rarity)}</div><div class="cosmetic-preview">${previewFrame(c.key)}</div><h4>${esc(c.name)}</h4><p>${esc(c.desc)}</p><div class="cosmetic-meta"><span>${esc(c.req)}</span>${shopFilter==='popular'?`<b>${pop} usando</b>`:''}${date?`<b>✓ conquistada</b>`:''}</div><button type="button" data-equip-frame="${c.key}" ${open?'':'disabled'}>${open?(eq?'✓ Equipada':'Equipar'):'🔒 Bloqueada'}</button></article>`}).join('')+`<article class="cosmetic-card ${myStats.equipped_frame?'':'equipped'}"><div class="cosmetic-rarity">CLÁSSICO</div><div class="cosmetic-preview"><img src="${esc((profiles.get(user.id)||{}).avatar_url||'assets/default-avatar.png.png')}" style="width:55px;height:55px;border-radius:50%;object-fit:cover"></div><h4>Sem moldura</h4><p>Visual original do Vinci.</p><button type="button" data-equip-frame="">${myStats.equipped_frame?'Usar':'✓ Equipada'}</button></article>`;grid.querySelectorAll('[data-equip-frame]').forEach(b=>b.onclick=()=>equipFrame(b.dataset.equipFrame))}
 async function equipFrame(key){const dbKey=dbFrameKey(key);const{error}=await db.rpc('vinci_equip_game_frame',{p_frame:dbKey});if(error){alert(error.message);return}myStats.equipped_frame=key||null;renderCosmetics();renderProgress();window.dispatchEvent(new CustomEvent('vinci-cosmetics-changed'))}
 
+
+/* ============================================================
+   VINCI PLAY — GAME ENGINE V2
+   Snapshot atômico + Realtime + polling de segurança.
+   ============================================================ */
+
+let syncBusy=false;
+let syncQueued=false;
+let syncTimer=null;
+let syncDebounce=null;
+let realtimeChannel=null;
+let realtimeReconnectTimer=null;
+let lastStateFingerprint='';
+let appliedGameId=null;
+let phaseTransitionBusy=false;
+let vangoCanvasSession=null;
+let lastSyncAt=0;
+
+function serverNow(){
+ return Date.now()+serverOffsetMs;
+}
+
 function gameIsActive(){
- return !!(game&&game.status==='active'&&Date.now()<new Date(game.ends_at).getTime())
+ return !!(game&&game.status==='active'&&serverNow()<new Date(game.ends_at).getTime());
 }
 function lobbyIsOpen(){
- return !!(lobby&&lobby.status==='open'&&Date.now()<new Date(lobby.expires_at).getTime())
+ return !!(lobby&&lobby.status==='open'&&serverNow()<new Date(lobby.expires_at).getTime());
 }
 function isLobbyMember(uid=user?.id){
- return !!uid&&lobbyMembers.some(x=>x.user_id===uid)
+ return !!uid&&lobbyMembers.some(x=>x.user_id===uid);
 }
 function isGameParticipant(uid=user?.id){
- return !!uid&&gameParticipants.some(x=>x.user_id===uid)
+ return !!uid&&gameParticipants.some(x=>x.user_id===uid);
 }
 function lobbyTimeLeft(){
- return lobby?Math.max(0,new Date(lobby.expires_at).getTime()-Date.now()):0
+ return lobby?Math.max(0,new Date(lobby.expires_at).getTime()-serverNow()):0;
 }
 function playerWord(n){return n===1?'pessoa':'pessoas'}
+function fmt(ms){
+ const s=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(s/60),r=s%60;
+ return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
+}
+function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 
-async function loadLatestGame(){
- const{data,error}=await db.from('vinci_room_games').select('*').eq('room_id',roomId).order('created_at',{ascending:false}).limit(1).maybeSingle();
- if(error&&error.code!=='PGRST116'){showInstall(error);return}
- game=data||null;
- gameParticipants=[];
- if(game){
-  await loadGameParticipants();
-  await loadGameData();
-  await maybeFinalize();
- }
- await renderGame();
- renderCooldown();
+function setSyncStatus(state,message=''){
+ const el=$('#gameSyncStatus');
+ if(!el)return;
+ el.dataset.state=state;
+ if(state==='live')el.textContent='● AO VIVO';
+ else if(state==='syncing')el.textContent='↻ sincronizando';
+ else if(state==='offline')el.textContent='○ sem conexão';
+ else if(state==='error')el.textContent=message||'↻ reconectando';
+ else el.textContent=message||'';
 }
 
-function showInstall(error){
+function stateFingerprint(){
+ const data={
+  lobby:lobby?{id:lobby.id,status:lobby.status,game_type:lobby.game_type,expires_at:lobby.expires_at}:null,
+  lobbyMembers:lobbyMembers.map(x=>`${x.user_id}:${x.joined_at}`),
+  game:game?{id:game.id,status:game.status,game_type:game.game_type,submit_ends_at:game.submit_ends_at,ends_at:game.ends_at,winner_user_id:game.winner_user_id}:null,
+  participants:gameParticipants.map(x=>x.user_id),
+  submissions:submissions.map(x=>`${x.id}:${x.user_id}:${x.is_correct}`),
+  votes:votes.map(x=>`${x.id}:${x.voter_id}:${x.submission_id}`),
+  vango:vangoState?{
+   game_id:vangoState.game_id,
+   phase:vangoState.phase,
+   deadline:vangoState.deadline,
+   drawing_url:vangoState.drawing_url,
+   photo_url:vangoState.photo_url,
+   target_word:vangoState.target_word,
+   guesses:(vangoState.guesses||[]).map(x=>`${x.id}:${x.is_correct}`)
+  }:null
+ };
+ return JSON.stringify(data);
+}
+
+function snapshotProfileIds(){
+ return [
+  ...members.map(x=>x.user_id),
+  ...lobbyMembers.map(x=>x.user_id),
+  ...gameParticipants.map(x=>x.user_id),
+  ...submissions.map(x=>x.user_id),
+  game?.winner_user_id,
+  lobby?.host_user_id,
+  vangoState?.drawer_user_id,
+  ...(vangoState?.guesses||[]).map(x=>x.user_id)
+ ].filter(Boolean);
+}
+
+function showEngineInstall(error){
  const message=String(error?.message||'');
- const missingLobby=message.includes('vinci_room_game_lobbies')||message.includes('vinci_room_game_lobby_members')||message.includes('vinci_room_game_participants')||message.includes('vinci_open_room_game_lobby');
+ const missing=message.includes('vinci_room_game_state')||message.includes('vinci_vango_state')||message.includes('Could not find the function');
+ lobbySchemaReady=!missing;
+ setSyncStatus('error',missing?'PATCH 15 necessário':'↻ reconectando');
  const target=$('#gameLobbyArea')||$('#activeGameArea');
- if(target)target.innerHTML=`<div class="game-toast bad">${esc(missingLobby?'Rode VINCI_1_1_FOCUS_PATCH_13_GAME_LOBBIES.sql no Supabase para ativar as salas multiplayer.':message.includes('vinci_room_games')?'Instale VINCI_1_0_ROOMS_PATCH_06_GAMES.sql no Supabase.':message||'Erro ao carregar jogos.')}</div>`;
-}
-
-async function loadGameParticipants(){
- if(!game){gameParticipants=[];return}
- const{data,error}=await db.from('vinci_room_game_participants').select('user_id,joined_at').eq('game_id',game.id).order('joined_at');
- if(error){
-  const message=String(error.message||'');
-  if(message.includes('vinci_room_game_participants')){
-   lobbySchemaReady=false;
-   gameParticipants=[];
-   return;
-  }
-  console.warn('Vinci Play: participantes da partida',error);
-  gameParticipants=[];
-  return;
+ if(missing&&target){
+  target.innerHTML='<div class="game-toast bad"><strong>Game Engine v2 ainda não está no Supabase.</strong><br>Rode <b>VINCI_1_1_FOCUS_PATCH_15_GAME_ENGINE_V2_VANGO.sql</b> uma vez.</div>';
  }
- gameParticipants=data||[];
- await loadProfiles(gameParticipants.map(x=>x.user_id));
 }
 
-async function loadGameData(){
- if(!game)return;
- const[{data:s},{data:v}]=await Promise.all([
-  db.from('vinci_room_game_submissions').select('*').eq('game_id',game.id).order('created_at'),
-  db.from('vinci_room_game_votes').select('*').eq('game_id',game.id)
- ]);
- submissions=s||[];
- votes=v||[];
- await loadProfiles([...submissions.map(x=>x.user_id),game.winner_user_id].filter(Boolean));
-}
+async function syncGameState(reason='manual',forceRender=false){
+ if(!roomId||!user)return false;
+ if(syncBusy){syncQueued=true;return false}
+ syncBusy=true;
+ setSyncStatus(navigator.onLine===false?'offline':'syncing');
+ const previousGameId=game?.id||null;
+ const previousParticipant=previousGameId?isGameParticipant():false;
+ const preservedGuess=$('#vangoGuessInput')?.value||'';
+ try{
+  const{data,error}=await db.rpc('vinci_room_game_state',{p_room_id:roomId});
+  if(error)throw error;
+  if(!data)throw new Error('O Supabase não retornou o estado da partida.');
 
-async function loadLobby(){
- if(!roomId||!user)return;
- const nowISO=new Date().toISOString();
- const{data,error}=await db.from('vinci_room_game_lobbies').select('*').eq('room_id',roomId).eq('status','open').gt('expires_at',nowISO).order('created_at',{ascending:false}).limit(1).maybeSingle();
- if(error){
-  const message=String(error.message||'');
-  if(message.includes('vinci_room_game_lobbies')){
-   lobbySchemaReady=false;
-   lobby=null;
-   lobbyMembers=[];
+  if(data.server_now){
+   serverOffsetMs=new Date(data.server_now).getTime()-Date.now();
+  }
+
+  lobby=data.lobby||null;
+  lobbyMembers=Array.isArray(data.lobby_members)?data.lobby_members:[];
+  game=data.game||null;
+  gameParticipants=Array.isArray(data.participants)?data.participants:[];
+  submissions=Array.isArray(data.submissions)?data.submissions:[];
+  votes=Array.isArray(data.votes)?data.votes:[];
+  vangoState=data.vango||null;
+  lobbySchemaReady=true;
+
+  await loadProfiles(snapshotProfileIds());
+
+  const fingerprint=stateFingerprint();
+  const changed=forceRender||fingerprint!==lastStateFingerprint;
+
+  if(changed){
+   lastStateFingerprint=fingerprint;
    renderLobby();
    renderRoomLobbyNotice();
    renderGameButtons();
-   showInstall(error);
+   renderCooldown();
+   await renderGame();
+
+   if(preservedGuess&&$('#vangoGuessInput')&&!$('#vangoGuessInput').value){
+    $('#vangoGuessInput').value=preservedGuess;
+   }
+  }
+
+  const newGameStarted=!!(
+   game?.id&&
+   game.status==='active'&&
+   game.id!==previousGameId&&
+   isGameParticipant()
+  );
+
+  const participantRecovered=!!(
+   game?.id&&
+   game.status==='active'&&
+   !previousParticipant&&
+   isGameParticipant()
+  );
+
+  if(newGameStarted||participantRecovered){
+   appliedGameId=game.id;
+   openGamesTab('game');
+  }
+
+  lastSyncAt=Date.now();
+  setSyncStatus('live');
+  return true;
+ }catch(error){
+  console.warn(`Vinci Play sync (${reason})`,error);
+  if(navigator.onLine===false)setSyncStatus('offline');
+  else showEngineInstall(error);
+  return false;
+ }finally{
+  syncBusy=false;
+  if(syncQueued){
+   syncQueued=false;
+   queueMicrotask(()=>syncGameState('queued'));
+  }
+  schedulePoll();
+ }
+}
+
+function requestSync(reason='realtime',delay=90){
+ clearTimeout(syncDebounce);
+ syncDebounce=setTimeout(()=>syncGameState(reason),delay);
+}
+
+function schedulePoll(){
+ clearTimeout(syncTimer);
+ if(!roomId||!user)return;
+ const active=lobbyIsOpen()||gameIsActive();
+ const delay=document.hidden?(active?5000:10000):(active?1400:4500);
+ syncTimer=setTimeout(async()=>{
+  await syncGameState('poll');
+ },delay);
+}
+
+async function syncUntil(predicate,attempts=10,delay=240){
+ for(let i=0;i<attempts;i++){
+  await syncGameState(`confirm-${i}`,true);
+  if(predicate())return true;
+  await sleep(delay+(i*45));
+ }
+ return false;
+}
+
+async function connectRealtime(){
+ clearTimeout(realtimeReconnectTimer);
+ if(!roomId||!user)return;
+
+ if(realtimeChannel){
+  try{await db.removeChannel(realtimeChannel)}catch(_){ }
+  realtimeChannel=null;
+ }
+
+ const channel=db.channel(`room-games-v2-${roomId}-${user.id.slice(0,8)}`);
+ const event=()=>requestSync('realtime');
+
+ channel
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_lobbies',filter:`room_id=eq.${roomId}`},event)
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_lobby_members',filter:`room_id=eq.${roomId}`},event)
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_games',filter:`room_id=eq.${roomId}`},event)
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_participants',filter:`room_id=eq.${roomId}`},event)
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_submissions',filter:`room_id=eq.${roomId}`},event)
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_votes',filter:`room_id=eq.${roomId}`},event)
+  .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_vango_guesses',filter:`room_id=eq.${roomId}`},event);
+
+ realtimeChannel=channel;
+ channel.subscribe(status=>{
+  if(status==='SUBSCRIBED'){
+   setSyncStatus('live');
+   requestSync('realtime-subscribed',0);
    return;
   }
-  console.warn('Vinci Play: sala de partida',error);
-  return;
- }
- lobbySchemaReady=true;
- lobby=data||null;
- lobbyMembers=[];
- if(lobby){
-  const{data:lm,error:lmError}=await db.from('vinci_room_game_lobby_members').select('user_id,joined_at').eq('lobby_id',lobby.id).order('joined_at');
-  if(lmError){
-   showInstall(lmError);
-  }else{
-   lobbyMembers=lm||[];
-   await loadProfiles([lobby.host_user_id,...lobbyMembers.map(x=>x.user_id)]);
+  if(['CHANNEL_ERROR','TIMED_OUT','CLOSED'].includes(status)){
+   setSyncStatus('error');
+   clearTimeout(realtimeReconnectTimer);
+   realtimeReconnectTimer=setTimeout(connectRealtime,1600);
   }
- }
- renderLobby();
- renderRoomLobbyNotice();
- renderGameButtons();
- renderCooldown();
- startLobbyClock();
+ });
+}
+
+function startLifecycleSync(){
+ document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden){
+   requestSync('visible',0);
+   connectRealtime();
+  }
+ });
+ window.addEventListener('pageshow',()=>requestSync('pageshow',0));
+ window.addEventListener('focus',()=>requestSync('focus',0));
+ window.addEventListener('online',()=>{setSyncStatus('syncing');requestSync('online',0);connectRealtime()});
+ window.addEventListener('offline',()=>setSyncStatus('offline'));
 }
 
 function startLobbyClock(){
  clearInterval(lobbyTimer);
  if(!lobbyIsOpen())return;
- lobbyTimer=setInterval(async()=>{
+ lobbyTimer=setInterval(()=>{
   const el=$('#lobbyExpiry');
   const left=lobbyTimeLeft();
   if(el)el.textContent=fmt(left);
   if(left<=0){
    clearInterval(lobbyTimer);
-   await loadLobby();
+   requestSync('lobby-expired',0);
   }
  },1000);
 }
@@ -195,11 +345,11 @@ function renderLobby(){
  const area=$('#gameLobbyArea');
  if(!area)return;
  if(!lobbySchemaReady){
-  area.innerHTML='<div class="game-toast bad">As salas multiplayer ainda não estão instaladas. Rode o PATCH 13 no Supabase.</div>';
+  area.innerHTML='<div class="game-toast bad">Rode o PATCH 15 do Game Engine v2 no Supabase.</div>';
   return;
  }
  if(!lobbyIsOpen()){
-  area.innerHTML=`<section class="game-lobby-empty"><span>SALAS DE PARTIDA</span><h3>Primeiro junta a galera.</h3><p>Abra uma sala de um jogo. A partida só libera quando pelo menos 2 pessoas entrarem.</p></section>`;
+  area.innerHTML='<section class="game-lobby-empty"><span>SALAS DE PARTIDA</span><h3>Primeiro junta a galera.</h3><p>Abra uma sala. Com 2 pessoas ou mais, o host pode iniciar e o Vinci sincroniza todo mundo automaticamente.</p></section>';
   return;
  }
  const count=lobbyMembers.length;
@@ -207,20 +357,25 @@ function renderLobby(){
  const host=lobby.host_user_id===user.id;
  const hostProfile=profiles.get(lobby.host_user_id)||{};
  const ready=count>=2;
+ const closeArmed=host&&Date.now()<closeLobbyArmedUntil;
  const controls=host
-  ? `<div class="game-lobby-actions"><button id="startLobbyGame" class="game-action-primary" type="button" ${ready?'':'disabled'}>${ready?`Iniciar partida · ${count}`:'Esperando +1 pessoa'}</button><button id="closeLobbyGame" class="game-action-soft danger" type="button">Fechar sala</button></div>`
+  ? `<div class="game-lobby-actions"><button id="startLobbyGame" data-lobby-action="start" class="game-action-primary" type="button" ${ready?'':'disabled'}>${ready?`Iniciar partida · ${count}`:'Esperando +1 pessoa'}</button><button id="closeLobbyGame" data-lobby-action="close" class="game-action-soft danger ${closeArmed?'confirming':''}" type="button">${closeArmed?'Confirmar fechamento':'Fechar sala'}</button></div>`
   : joined
-   ? `<div class="game-lobby-actions"><div class="game-lobby-wait">${ready?`Tudo pronto. Esperando @${esc(hostProfile.username||'host')} iniciar.`:'Esperando mais alguém entrar...'}</div><button id="leaveLobbyGame" class="game-action-soft" type="button">Sair da sala</button></div>`
-   : `<div class="game-lobby-actions"><button id="joinLobbyGame" class="game-action-primary" type="button">Entrar na sala</button></div>`;
+   ? `<div class="game-lobby-actions"><div class="game-lobby-wait">${ready?`Tudo pronto. Esperando @${esc(hostProfile.username||'host')} iniciar.`:'Esperando mais alguém entrar...'}</div><button id="leaveLobbyGame" data-lobby-action="leave" class="game-action-soft" type="button">Sair da sala</button></div>`
+   : `<div class="game-lobby-actions"><button id="joinLobbyGame" data-lobby-action="join" class="game-action-primary" type="button">Entrar na sala</button></div>`;
+
  area.innerHTML=`<article class="game-lobby-card">
    <header class="game-lobby-head"><div><span>SALA DE PARTIDA · ABERTA</span><h3>${esc(gameName(lobby.game_type))}</h3><p>@${esc(hostProfile.username||'usuario')} abriu esta sala</p></div><div class="game-lobby-expire"><small>fecha em</small><strong id="lobbyExpiry">${fmt(lobbyTimeLeft())}</strong></div></header>
    <div class="game-lobby-status"><div class="game-lobby-avatars">${lobbyAvatars()}</div><strong>${count} ${playerWord(count)} na sala</strong><small>${ready?'✓ Mínimo atingido. A partida pode começar.':'É preciso pelo menos 2 pessoas para iniciar.'}</small></div>
    ${controls}
   </article>`;
- const join=$('#joinLobbyGame');if(join)join.onclick=()=>joinLobby();
- const leave=$('#leaveLobbyGame');if(leave)leave.onclick=()=>leaveLobby();
- const close=$('#closeLobbyGame');if(close)close.onclick=()=>closeLobby();
- const start=$('#startLobbyGame');if(start)start.onclick=()=>startLobbyGame();
+
+ /*
+    Os controles do lobby usam delegação em #gameLobbyArea.
+    Isso evita perder toques no mobile quando uma sincronização
+    substitui o conteúdo do lobby durante pointerdown/click.
+ */
+ startLobbyClock();
 }
 
 function renderRoomLobbyNotice(){
@@ -239,28 +394,22 @@ function renderRoomLobbyNotice(){
  const action=$('#roomGameNoticeAction');
  if(action)action.onclick=async()=>{
   if(!joined)await joinLobby(false);
-  openGamesTab();
+  openGamesTab('lobby');
  };
 }
 
-function openGamesTab(){
+function openGamesTab(target='lobby'){
  document.querySelector('.room-tabs [data-tab="games"]')?.click();
- setTimeout(()=>$('#gameLobbyArea')?.scrollIntoView({behavior:'smooth',block:'center'}),80);
+ setTimeout(()=>{
+  const el=target==='game'?$('#activeGameArea'):$('#gameLobbyArea');
+  el?.scrollIntoView({behavior:'smooth',block:'center'});
+ },90);
 }
 
 function renderGameButtons(){
  const buttons=document.querySelectorAll('[data-start-game]');
  const active=gameIsActive();
  const open=lobbyIsOpen();
-
- /*
-    Sem cooldown:
-    terminou uma partida, a Room pode abrir outra sala imediatamente.
-    Continuam valendo:
-    - uma sala aberta por vez;
-    - uma partida ativa por vez;
-    - mínimo de 2 pessoas para iniciar.
- */
  buttons.forEach(button=>{
   const same=open&&button.dataset.startGame===lobby.game_type;
   button.disabled=!lobbySchemaReady||active||open;
@@ -268,87 +417,184 @@ function renderGameButtons(){
  });
 }
 
+function renderCooldown(){
+ const box=$('#gamesCooldown');
+ if(box){box.classList.add('hidden');box.textContent=''}
+ renderGameButtons();
+}
+
 async function openLobby(type){
- if(!lobbySchemaReady){alert('Rode VINCI_1_1_FOCUS_PATCH_13_GAME_LOBBIES.sql no Supabase.');return}
+ if(!lobbySchemaReady){alert('Rode VINCI_1_1_FOCUS_PATCH_15_GAME_ENGINE_V2_VANGO.sql no Supabase.');return}
  document.querySelectorAll('[data-start-game]').forEach(b=>b.disabled=true);
  const{data,error}=await db.rpc('vinci_open_room_game_lobby',{p_room_id:roomId,p_game_type:type});
  if(error){
-  const msg=String(error.message||'');
-  alert(msg.includes('vinci_open_room_game_lobby')?'Rode VINCI_1_1_FOCUS_PATCH_13_GAME_LOBBIES.sql no Supabase.':msg);
-  await loadLobby();
-  renderCooldown();
+  alert(error.message);
+  await syncGameState('open-lobby-error',true);
   return;
  }
- lobby=Array.isArray(data)?data[0]:data;
- await loadLobby();
- openGamesTab();
+ const opened=Array.isArray(data)?data[0]:data;
+ await syncUntil(()=>lobby?.id===opened?.id&&isLobbyMember(),8,180);
+ openGamesTab('lobby');
 }
 
 async function joinLobby(openTab=true){
  if(!lobby)return false;
- const{error}=await db.rpc('vinci_join_room_game_lobby',{p_lobby_id:lobby.id});
- if(error){alert(error.message);await loadLobby();return false}
- await loadLobby();
- if(openTab)openGamesTab();
+ const targetId=lobby.id;
+ const{error}=await db.rpc('vinci_join_room_game_lobby',{p_lobby_id:targetId});
+ if(error){
+  await syncGameState('join-lobby-error',true);
+  if(gameIsActive()){
+   alert(isGameParticipant()?'A partida já começou e você entrou nela.':'A partida começou antes da sua entrada. Você acompanha esta rodada e entra na próxima.');
+   if(openTab)openGamesTab('game');
+   return isGameParticipant();
+  }
+  alert(error.message);
+  return false;
+ }
+ const confirmed=await syncUntil(()=>isLobbyMember()||(gameIsActive()&&isGameParticipant()),10,160);
+ if(!confirmed){
+  setSyncStatus('error','confirmando entrada…');
+  requestSync('join-confirm-late',500);
+ }
+ if(openTab)openGamesTab(gameIsActive()?'game':'lobby');
  return true;
 }
 
 async function leaveLobby(){
  if(!lobby)return;
- const{error}=await db.rpc('vinci_leave_room_game_lobby',{p_lobby_id:lobby.id});
+ const target=lobby.id;
+ const{error}=await db.rpc('vinci_leave_room_game_lobby',{p_lobby_id:target});
  if(error){alert(error.message);return}
- await loadLobby();
+ await syncUntil(()=>!lobby||lobby.id!==target||!isLobbyMember(),7,170);
+}
+
+function armCloseLobby(button){
+ closeLobbyArmedUntil=Date.now()+4500;
+
+ if(button){
+  button.classList.add('confirming');
+  button.textContent='Confirmar fechamento';
+  button.setAttribute('aria-label','Toque novamente para fechar a sala');
+ }
+
+ setTimeout(()=>{
+  if(Date.now()<closeLobbyArmedUntil)return;
+
+  const current=$('#closeLobbyGame');
+
+  if(current){
+   current.classList.remove('confirming');
+   current.textContent='Fechar sala';
+   current.setAttribute('aria-label','Fechar sala');
+  }
+ },4600);
 }
 
 async function closeLobby(){
- if(!lobby)return;
- if(!confirm('Fechar esta sala de partida?'))return;
- const{error}=await db.rpc('vinci_close_room_game_lobby',{p_lobby_id:lobby.id});
- if(error){alert(error.message);return}
- await loadLobby();
+ if(!lobby||closeLobbyBusy)return false;
+
+ if(Date.now()>=closeLobbyArmedUntil){
+  armCloseLobby($('#closeLobbyGame'));
+  return false;
+ }
+
+ closeLobbyBusy=true;
+ closeLobbyArmedUntil=0;
+
+ const target=lobby.id;
+ const button=$('#closeLobbyGame');
+
+ if(button){
+  button.disabled=true;
+  button.textContent='Fechando sala...';
+ }
+
+ try{
+  const{error}=await db.rpc('vinci_close_room_game_lobby',{p_lobby_id:target});
+
+  if(error)throw error;
+
+  const confirmed=await syncUntil(
+   ()=>!lobby||lobby.id!==target,
+   9,
+   150
+  );
+
+  if(!confirmed){
+   setSyncStatus('error','confirmando fechamento…');
+   requestSync('close-lobby-confirm-late',250);
+  }
+
+  return true;
+ }catch(error){
+  alert(error.message||error);
+  await syncGameState('close-lobby-error',true);
+  return false;
+ }finally{
+  closeLobbyBusy=false;
+ }
 }
 
 async function startLobbyGame(){
  if(!lobby)return;
  if(lobbyMembers.length<2){alert('A partida precisa de pelo menos 2 pessoas na sala.');return}
+ const targetLobby=lobby.id;
  const button=$('#startLobbyGame');
- if(button){button.disabled=true;button.textContent='Iniciando...'}
- const{data,error}=await db.rpc('vinci_start_room_game_lobby',{p_lobby_id:lobby.id});
- if(error){alert(error.message);await loadLobby();return}
- game=Array.isArray(data)?data[0]:data;
- lobby=null;
- lobbyMembers=[];
- submissions=[];
- votes=[];
- await Promise.all([loadGameParticipants(),loadGameData()]);
- renderRoomLobbyNotice();
- renderLobby();
- renderCooldown();
- await renderGame();
- openGamesTab();
+ if(button){button.disabled=true;button.textContent='Sincronizando jogadores...'}
+ const{data,error}=await db.rpc('vinci_start_room_game_lobby',{p_lobby_id:targetLobby});
+ if(error){
+  alert(error.message);
+  await syncGameState('start-error',true);
+  return;
+ }
+ const started=Array.isArray(data)?data[0]:data;
+ const confirmed=await syncUntil(()=>game?.id===started?.id&&isGameParticipant(),12,170);
+ if(!confirmed){
+  setSyncStatus('error','recuperando partida…');
+  requestSync('start-confirm-late',350);
+ }
+ openGamesTab('game');
 }
 
 function allSubmitted(){
  const total=gameParticipants.length;
  return total>0&&submissions.length>=total;
 }
-function submissionPhase(){return game&&game.status==='active'&&Date.now()<new Date(game.submit_ends_at).getTime()&&!allSubmitted()}
-function votingPhase(){return game&&game.status==='active'&&game.game_type!=='who_took'&&!submissionPhase()&&Date.now()<new Date(game.ends_at).getTime()}
-function timeLeft(){if(!game)return 0;const target=submissionPhase()?game.submit_ends_at:game.ends_at;return Math.max(0,new Date(target).getTime()-Date.now())}
-function fmt(ms){const s=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(s/60),r=s%60;return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`}
-
-function renderCooldown(){
- /*
-    Mantemos o nome da função para compatibilidade com as chamadas
-    antigas do arquivo, mas o cooldown não existe mais.
- */
- const box=$('#gamesCooldown');
- if(box){
-  box.classList.add('hidden');
-  box.textContent='';
+function submissionPhase(){
+ return game&&game.status==='active'&&serverNow()<new Date(game.submit_ends_at).getTime()&&!allSubmitted();
+}
+function votingPhase(){
+ return game&&game.status==='active'&&game.game_type!=='who_took'&&game.game_type!=='vango'&&!submissionPhase()&&serverNow()<new Date(game.ends_at).getTime();
+}
+function timeLeft(){
+ if(!game)return 0;
+ if(game.game_type==='vango'&&vangoState?.deadline){
+  return Math.max(0,new Date(vangoState.deadline).getTime()-serverNow());
  }
+ const target=submissionPhase()?game.submit_ends_at:game.ends_at;
+ return Math.max(0,new Date(target).getTime()-serverNow());
+}
 
- renderGameButtons();
+function gamePhaseLabel(participant){
+ if(game?.status==='finished')return 'FINALIZADO';
+ if(game?.game_type==='vango'){
+  const map={
+   photo:'MISSÃO SECRETA',
+   waiting_photo:'FOTO EM ANDAMENTO',
+   memorize:'MEMORIZE · 10 SEGUNDOS',
+   waiting_draw:'DESENHO EM ANDAMENTO',
+   draw:'DESENHE DE MEMÓRIA',
+   guess:'ADIVINHE AGORA',
+   watch_guesses:'A ROOM ESTÁ TENTANDO',
+   spectator:'ESPECTADOR',
+   draw_expired:'TEMPO ESGOTADO',
+   guess_expired:'TEMPO ESGOTADO'
+  };
+  return map[vangoState?.phase]||'VANGO';
+ }
+ if(!participant)return 'EM ANDAMENTO';
+ if(submissionPhase())return 'PARTICIPE AGORA';
+ return game.game_type==='who_took'?'RESULTADO':'VOTAÇÃO';
 }
 
 async function renderGame(){
@@ -363,8 +609,11 @@ async function renderGame(){
  const winner=game.winner_user_id?profiles.get(game.winner_user_id):null;
  const participant=isGameParticipant();
  let body='';
- if(game.status==='active'&&!participant){
-  body=`<div class="game-spectator"><span>👀 ESPECTADOR</span><h3>Esta rodada já começou.</h3><p>Você não entrou na sala antes do início, então pode acompanhar a partida, mas participa só da próxima.</p></div>`;
+
+ if(game.game_type==='vango'){
+  body=await vangoBody();
+ }else if(game.status==='active'&&!participant){
+  body='<div class="game-spectator"><span>👀 ESPECTADOR</span><h3>Esta rodada já começou.</h3><p>Você não entrou na sala antes do início, então acompanha esta partida e joga na próxima.</p></div>';
  }else if(game.game_type==='flash'){
   body=await flashBody(mine);
  }else if(game.game_type==='who_took'){
@@ -372,11 +621,22 @@ async function renderGame(){
  }else{
   body=await captionBody(mine);
  }
- const phase=game.status==='finished'?'FINALIZADO':!participant?'EM ANDAMENTO':submissionPhase()?'PARTICIPE AGORA':game.game_type==='who_took'?'RESULTADO':'VOTAÇÃO';
+
+ const phase=gamePhaseLabel(participant);
  const participantsLabel=gameParticipants.length?`${gameParticipants.length} ${playerWord(gameParticipants.length)}`:'';
- area.innerHTML=`<article class="active-game-card"><header class="active-game-head"><div><span>${phase}${participantsLabel?` · ${participantsLabel.toUpperCase()}`:''}</span><h3>${esc(gameName(game.game_type))}</h3></div><strong id="gameTimer" class="game-timer">${game.status==='finished'?'FIM':fmt(timeLeft())}</strong></header><div class="active-game-body">${body}${game.status==='finished'?`<div class="game-result-banner"><span>🏆 VENCEDOR</span><strong>${winner?'@'+esc(winner.username||'usuário'):'Sem vencedor'}</strong><p>${winner?'Recebeu +60 XP e progresso para novas molduras.':'A partida terminou sem uma resposta vencedora.'}</p></div>`:''}</div></article>`;
- if(participant)bindGameActions();
- if(game.status==='active')timer=setInterval(tick,1000);
+ const vangoAnswer=game.game_type==='vango'&&game.status==='finished'&&vangoState?.target_word?`<p class="vango-answer-reveal">O objeto era <strong>${esc(vangoState.target_word)}</strong>.</p>`:'';
+ const winnerText=winner
+  ? `<div class="game-result-banner"><span>🏆 VENCEDOR</span><strong>@${esc(winner.username||'usuário')}</strong><p>${game.game_type==='vango'?'Foi a primeira pessoa a adivinhar o desenho.':'Recebeu +60 XP e progresso para novas molduras.'}</p>${vangoAnswer}</div>`
+  : game.status==='finished'
+   ? `<div class="game-result-banner"><span>FIM DA RODADA</span><strong>Sem vencedor</strong><p>Ninguém levou esta.</p>${vangoAnswer}</div>`
+   : '';
+
+ area.innerHTML=`<article class="active-game-card ${game.game_type==='vango'?'vango-active':''}"><header class="active-game-head"><div><span>${phase}${participantsLabel?` · ${participantsLabel.toUpperCase()}`:''}</span><h3>${esc(gameName(game.game_type))}</h3></div><strong id="gameTimer" class="game-timer">${game.status==='finished'?'FIM':fmt(timeLeft())}</strong></header><div class="active-game-body">${body}${winnerText}</div></article>`;
+
+ if(game.game_type==='vango')bindVangoActions();
+ else if(participant)bindGameActions();
+
+ if(game.status==='active')timer=setInterval(tick,500);
 }
 
 async function flashBody(mine){
@@ -409,21 +669,79 @@ async function captionBody(mine){
  return `<div class="game-image-stage"><img src="${esc(img||'')}" alt="Foto do Blind Caption"></div><h3 class="game-prompt">Qual é a melhor legenda?</h3><div class="game-submissions">${cards}</div>${myVote?'<div class="game-toast good">✓ Voto registrado.</div>':'<button id="confirmGameVote" class="game-action-primary" type="button" disabled style="margin-top:10px">Confirmar voto</button>'}`;
 }
 
+function vangoGuessesHTML(){
+ const list=vangoState?.guesses||[];
+ if(!list.length)return '<div class="vango-guess-empty">Nenhum palpite ainda.</div>';
+ return `<div class="vango-guess-feed">${list.slice(-10).map(g=>{
+  const p=profiles.get(g.user_id)||{};
+  return `<div class="vango-guess-row ${g.is_correct?'correct':''}"><strong>@${esc(p.username||'usuario')}</strong><span>${esc(g.guess_text)}</span>${g.is_correct?'<b>✓</b>':''}</div>`;
+ }).join('')}</div>`;
+}
+
+async function vangoDrawingImage(){
+ if(!vangoState?.drawing_url)return '';
+ const url=await media(vangoState.drawing_url);
+ return `<div class="vango-drawing-preview"><img src="${esc(url||'')}" alt="Desenho do VanGo"></div>`;
+}
+
+async function vangoBody(){
+ if(!vangoState)return '<div class="game-toast">Sincronizando a rodada do VanGo...</div>';
+ const drawer=profiles.get(vangoState.drawer_user_id)||{};
+ const phase=vangoState.phase;
+
+ if(phase==='spectator'){
+  const drawing=await vangoDrawingImage();
+  return `<div class="game-spectator"><span>👀 ESPECTADOR</span><h3>O VanGo já começou.</h3><p>@${esc(drawer.username||'alguém')} é o desenhista desta rodada. Você joga na próxima.</p></div>${drawing}`;
+ }
+
+ if(phase==='finished'){
+  const drawing=await vangoDrawingImage();
+  return `${drawing}<div class="vango-finished-copy"><span>VANGO</span><h3>Fim da rodada.</h3><p>O objeto era <strong>${esc(vangoState.target_word||'???')}</strong>.</p></div>${vangoGuessesHTML()}`;
+ }
+
+ if(phase==='photo'){
+  return `<section class="vango-role-card secret"><span>VOCÊ É O DESENHISTA</span><h3>Fotografe: <strong>${esc(vangoState.target_word||'objeto')}</strong></h3><p>Essa foto é só sua referência. Depois você terá exatamente <b>10 segundos</b> para olhar e então desenhar de memória.</p><button id="vangoTakePhoto" class="game-action-primary" type="button">📷 Tirar foto do objeto</button></section>`;
+ }
+
+ if(phase==='waiting_photo'){
+  return `<section class="vango-role-card waiting"><span>AGUARDE</span><h3>@${esc(drawer.username||'o desenhista')} está procurando o objeto.</h3><p>Quando a foto for feita, começa a fase de memória e desenho.</p><div class="vango-pulse"><i></i><i></i><i></i></div></section>`;
+ }
+
+ if(phase==='memorize'){
+  const photo=await media(vangoState.photo_url);
+  return `<section class="vango-memorize"><span>OLHE BEM · 10 SEGUNDOS</span><h3>${esc(vangoState.target_word||'Memorize o objeto')}</h3><div class="vango-photo-memory"><img src="${esc(photo||'')}" alt="Sua referência"></div><p>Quando o relógio zerar, a foto desaparece e você desenha sem olhar de novo.</p></section>`;
+ }
+
+ if(phase==='waiting_draw'){
+  return `<section class="vango-role-card waiting"><span>DESENHO EM ANDAMENTO</span><h3>@${esc(drawer.username||'o desenhista')} está desenhando de memória.</h3><p>Assim que o desenho for enviado, todo mundo tenta descobrir o objeto.</p><div class="vango-pulse"><i></i><i></i><i></i></div></section>`;
+ }
+
+ if(phase==='draw'){
+  return `<section class="vango-draw-wrap"><span class="vango-kicker">SEM OLHAR A FOTO</span><h3>Desenhe de memória.</h3><p class="game-helper">Você tem 60 segundos. O objeto não aparece mais na tela.</p><div class="vango-canvas-shell"><canvas id="vangoCanvas" width="900" height="900"></canvas></div><div class="vango-tools"><button type="button" data-vango-color="#1f1b18" class="active" aria-label="Preto"></button><button type="button" data-vango-color="#ef8b3d" aria-label="Laranja"></button><button type="button" data-vango-color="#367bd6" aria-label="Azul"></button><button type="button" data-vango-color="#d94a4a" aria-label="Vermelho"></button><button type="button" id="vangoEraser">Borracha</button><button type="button" id="vangoClear">Limpar</button></div><button id="vangoSubmitDrawing" class="game-action-primary vango-send-drawing" type="button">Enviar desenho</button></section>`;
+ }
+
+ if(phase==='draw_expired'){
+  return '<div class="game-toast bad">O tempo do desenho terminou. Finalizando a rodada...</div>';
+ }
+
+ const drawing=await vangoDrawingImage();
+
+ if(phase==='watch_guesses'){
+  return `${drawing}<section class="vango-role-card"><span>AGORA É COM ELES</span><h3>A Room está tentando adivinhar.</h3><p>Você desenhou <strong>${esc(vangoState.target_word||'o objeto')}</strong>. Não entrega a resposta KKKK.</p></section>${vangoGuessesHTML()}`;
+ }
+
+ if(phase==='guess'){
+  return `${drawing}<section class="vango-guess-box"><span>O QUE FOI FOTOGRAFADO?</span><h3>Adivinhe pelo desenho.</h3><div class="vango-guess-form"><input id="vangoGuessInput" class="game-input" maxlength="80" autocomplete="off" placeholder="Seu palpite..."><button id="vangoSendGuess" class="game-action-primary" type="button">Adivinhar</button></div></section>${vangoGuessesHTML()}`;
+ }
+
+ return `${drawing}<div class="game-toast">Tempo encerrado. Sincronizando resultado...</div>${vangoGuessesHTML()}`;
+}
+
 function bindGameActions(){
  const fp=$('#sendFlashPhoto');
  if(fp)fp.onclick=()=>{
   const input=$('#flashPhotoInput');
   if(!input)return;
-
-  /*
-     VINCI FLASH:
-     este jogo é captura em tempo real, não upload de galeria.
-
-     O atributo capture="environment" pede ao Android/Chrome/PWA
-     para abrir diretamente a câmera traseira.
-     Reaplicamos os atributos antes do click porque alguns WebViews
-     recriam/normalizam atributos de inputs de arquivo.
-  */
   input.setAttribute('accept','image/*');
   input.setAttribute('capture','environment');
   input.click();
@@ -433,7 +751,7 @@ function bindGameActions(){
  document.querySelectorAll('[data-guess-user]').forEach(b=>b.onclick=()=>{
   guess=b.dataset.guessUser;
   document.querySelectorAll('[data-guess-user]').forEach(x=>x.classList.toggle('selected',x===b));
-  $('#confirmGuess').disabled=false;
+  if($('#confirmGuess'))$('#confirmGuess').disabled=false;
  });
  if($('#confirmGuess'))$('#confirmGuess').onclick=()=>guess&&submitGame({p_guess_user_id:guess});
  selectedVote=null;
@@ -446,15 +764,162 @@ function bindGameActions(){
  if($('#confirmGameVote'))$('#confirmGameVote').onclick=()=>voteGame();
 }
 
+function bindVangoActions(){
+ if(vangoState?.phase==='draw')setupVangoCanvas();
+ const photo=$('#vangoTakePhoto');
+ if(photo)photo.onclick=()=>{
+  const input=$('#vangoPhotoInput');
+  if(!input)return;
+  input.setAttribute('accept','image/*');
+  input.setAttribute('capture','environment');
+  input.click();
+ };
+ const drawing=$('#vangoSubmitDrawing');
+ if(drawing)drawing.onclick=()=>submitVangoDrawing(false);
+ const guess=$('#vangoSendGuess');
+ if(guess)guess.onclick=()=>submitVangoGuess();
+ const input=$('#vangoGuessInput');
+ if(input)input.addEventListener('keydown',event=>{
+  if(event.key==='Enter')submitVangoGuess();
+ });
+}
+
+function setupVangoCanvas(){
+ const canvas=$('#vangoCanvas');
+ if(!canvas)return;
+ const ctx=canvas.getContext('2d',{alpha:false});
+ ctx.fillStyle='#ffffff';
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.lineCap='round';
+ ctx.lineJoin='round';
+ let drawing=false;
+ let color='#1f1b18';
+ let width=14;
+
+ function point(event){
+  const rect=canvas.getBoundingClientRect();
+  return {
+   x:(event.clientX-rect.left)*(canvas.width/rect.width),
+   y:(event.clientY-rect.top)*(canvas.height/rect.height)
+  };
+ }
+ function start(event){
+  event.preventDefault();
+  drawing=true;
+  const p=point(event);
+  ctx.beginPath();ctx.moveTo(p.x,p.y);
+  canvas.setPointerCapture?.(event.pointerId);
+ }
+ function move(event){
+  if(!drawing)return;
+  event.preventDefault();
+  const p=point(event);
+  ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineTo(p.x,p.y);ctx.stroke();
+ }
+ function end(){drawing=false;ctx.closePath()}
+
+ canvas.addEventListener('pointerdown',start);
+ canvas.addEventListener('pointermove',move);
+ canvas.addEventListener('pointerup',end);
+ canvas.addEventListener('pointercancel',end);
+
+ document.querySelectorAll('[data-vango-color]').forEach(button=>button.onclick=()=>{
+  color=button.dataset.vangoColor;
+  width=14;
+  document.querySelectorAll('[data-vango-color]').forEach(x=>x.classList.toggle('active',x===button));
+  $('#vangoEraser')?.classList.remove('active');
+ });
+ const eraser=$('#vangoEraser');
+ if(eraser)eraser.onclick=()=>{
+  color='#ffffff';width=34;eraser.classList.add('active');
+  document.querySelectorAll('[data-vango-color]').forEach(x=>x.classList.remove('active'));
+ };
+ const clear=$('#vangoClear');
+ if(clear)clear.onclick=()=>{ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height)};
+
+ vangoCanvasSession={gameId:game.id,canvas,ctx,submitting:false};
+}
+
+async function uploadGameImage(file,prefixName){
+ const ext=(file.name?.split('.').pop()||'jpg').replace(/[^a-z0-9]/gi,'').toLowerCase()||'jpg';
+ const path=`${user.id}/rooms/${roomId}/games/${game.id}/${prefixName}-${crypto.randomUUID()}.${ext}`;
+ const{error}=await db.storage.from('vinci-images').upload(path,file,{contentType:file.type||'image/jpeg'});
+ if(error)throw error;
+ const{data}=db.storage.from('vinci-images').getPublicUrl(path);
+ return {path,url:data.publicUrl};
+}
+
 async function uploadFlash(file){
  if(!file||!game||!isGameParticipant())return;
- const ext=(file.name.split('.').pop()||'jpg').replace(/[^a-z0-9]/gi,'').toLowerCase()||'jpg';
- const path=`${user.id}/rooms/${roomId}/games/${game.id}/${crypto.randomUUID()}.${ext}`;
- const{error}=await db.storage.from('vinci-images').upload(path,file,{contentType:file.type||'image/jpeg'});
- if(error){alert(error.message);return}
- const{data}=db.storage.from('vinci-images').getPublicUrl(path);
- const ok=await submitGame({p_image_url:data.publicUrl,p_storage_path:path});
- if(!ok)await db.storage.from('vinci-images').remove([path]);
+ let uploaded=null;
+ try{
+  uploaded=await uploadGameImage(file,'flash');
+  const ok=await submitGame({p_image_url:uploaded.url,p_storage_path:uploaded.path});
+  if(!ok)throw new Error('A foto não foi registrada.');
+ }catch(error){
+  if(uploaded?.path)await db.storage.from('vinci-images').remove([uploaded.path]);
+  alert(error.message||error);
+ }
+}
+
+async function submitVangoPhoto(file){
+ if(!file||game?.game_type!=='vango'||!vangoState?.is_drawer)return;
+ let uploaded=null;
+ try{
+  setSyncStatus('syncing');
+  uploaded=await uploadGameImage(file,'vango-photo');
+  const{error}=await db.rpc('vinci_vango_submit_photo',{p_game_id:game.id,p_image_url:uploaded.url,p_storage_path:uploaded.path});
+  if(error)throw error;
+  await syncUntil(()=>['memorize','draw','waiting_draw'].includes(vangoState?.phase),10,150);
+  openGamesTab('game');
+ }catch(error){
+  if(uploaded?.path)await db.storage.from('vinci-images').remove([uploaded.path]);
+  alert(error.message||error);
+  await syncGameState('vango-photo-error',true);
+ }
+}
+
+function canvasBlob(canvas){
+ return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('Não consegui preparar o desenho.')),'image/webp',.9));
+}
+
+async function submitVangoDrawing(auto=false){
+ if(!vangoCanvasSession||vangoCanvasSession.gameId!==game?.id||vangoCanvasSession.submitting)return;
+ vangoCanvasSession.submitting=true;
+ const button=$('#vangoSubmitDrawing');
+ if(button){button.disabled=true;button.textContent=auto?'Tempo! Enviando...':'Enviando desenho...'}
+ let uploaded=null;
+ try{
+  const blob=await canvasBlob(vangoCanvasSession.canvas);
+  const file=new File([blob],'vango-drawing.webp',{type:'image/webp',lastModified:Date.now()});
+  uploaded=await uploadGameImage(file,'vango-drawing');
+  const{error}=await db.rpc('vinci_vango_submit_drawing',{p_game_id:game.id,p_image_url:uploaded.url,p_storage_path:uploaded.path});
+  if(error)throw error;
+  vangoCanvasSession=null;
+  await syncUntil(()=>['guess','watch_guesses','finished'].includes(vangoState?.phase),10,150);
+ }catch(error){
+  if(uploaded?.path)await db.storage.from('vinci-images').remove([uploaded.path]);
+  if(vangoCanvasSession)vangoCanvasSession.submitting=false;
+  if(button){button.disabled=false;button.textContent='Enviar desenho'}
+  if(!auto)alert(error.message||error);
+  requestSync('vango-drawing-error',120);
+ }
+}
+
+async function submitVangoGuess(){
+ const input=$('#vangoGuessInput');
+ const value=input?.value.trim();
+ if(!value||game?.game_type!=='vango')return;
+ const button=$('#vangoSendGuess');
+ if(button){button.disabled=true;button.textContent='Enviando...'}
+ const{data,error}=await db.rpc('vinci_vango_guess',{p_game_id:game.id,p_guess:value});
+ if(error){
+  if(button){button.disabled=false;button.textContent='Adivinhar'}
+  alert(error.message);
+  return;
+ }
+ if(input)input.value='';
+ await syncGameState(data?.correct?'vango-correct':'vango-guess',true);
 }
 
 async function submitCaption(){
@@ -466,11 +931,9 @@ async function submitCaption(){
 async function submitGame(extra){
  if(!isGameParticipant()){alert('Você não entrou na sala desta partida.');return false}
  const payload={p_game_id:game.id,p_content:null,p_image_url:null,p_storage_path:null,p_guess_user_id:null,...extra};
- const{data,error}=await db.rpc('vinci_submit_room_game',payload);
- if(error){alert(error.message);return false}
- await Promise.all([loadGameData(),loadProgress()]);
- await maybeFinalize();
- await renderGame();
+ const{error}=await db.rpc('vinci_submit_room_game',payload);
+ if(error){alert(error.message);await syncGameState('submit-error',true);return false}
+ await Promise.all([loadProgress(),syncGameState('submit',true)]);
  return true;
 }
 
@@ -478,55 +941,125 @@ async function voteGame(){
  if(!selectedVote)return;
  if(!isGameParticipant()){alert('Você não participa desta partida.');return}
  const{error}=await db.rpc('vinci_vote_room_game',{p_game_id:game.id,p_submission_id:selectedVote});
- if(error){alert(error.message);return}
- await loadGameData();
- await maybeFinalize();
- await renderGame();
+ if(error){alert(error.message);await syncGameState('vote-error',true);return}
+ await syncGameState('vote',true);
 }
 
 async function maybeFinalize(){
  if(!game||game.status==='finished')return;
- const{data,error}=await db.rpc('vinci_finalize_room_game',{p_game_id:game.id});
- if(!error&&data){
-  const g=Array.isArray(data)?data[0]:data;
-  if(g?.status==='finished'){
-   game=g;
-   await Promise.all([loadGameData(),loadProgress()]);
-  }
- }
+ const{error}=await db.rpc('vinci_finalize_room_game',{p_game_id:game.id});
+ if(error)console.warn('Vinci Play finalize',error);
+ await syncGameState('finalize',true);
 }
 
 async function tick(){
  if(!game)return;
- const el=$('#gameTimer');if(el)el.textContent=fmt(timeLeft());
- renderCooldown();
- if(timeLeft()<=0){
-  clearInterval(timer);
-  await loadGameData();
-  await maybeFinalize();
-  await renderGame();
+ const el=$('#gameTimer');
+ if(el)el.textContent=fmt(timeLeft());
+ if(timeLeft()>0)return;
+ if(phaseTransitionBusy)return;
+ phaseTransitionBusy=true;
+ try{
+  if(game.game_type==='vango'&&vangoState?.phase==='draw'&&vangoState?.is_drawer&&vangoCanvasSession){
+   await submitVangoDrawing(true);
+  }else{
+   await sleep(120);
+   await syncGameState('phase-deadline',true);
+   if(game?.status==='active'&&timeLeft()<=0)await maybeFinalize();
+  }
+ }finally{
+  phaseTransitionBusy=false;
  }
 }
 
-async function refreshGame(){
- if(!game){
-  await loadLatestGame();
+async function runLobbyAction(action,button){
+ if(!action)return;
+
+ if(action==='join'){
+  await joinLobby();
   return;
  }
- const{data}=await db.from('vinci_room_games').select('*').eq('id',game.id).maybeSingle();
- if(data)game=data;
- await loadGameParticipants();
- await loadGameData();
- await maybeFinalize();
- await renderGame();
- renderCooldown();
+
+ if(action==='leave'){
+  await leaveLobby();
+  return;
+ }
+
+ if(action==='start'){
+  await startLobbyGame();
+  return;
+ }
+
+ if(action==='close'){
+  await closeLobby();
+ }
 }
 
-async function refreshLobby(){
- await loadLobby();
+function bindLobbyActions(){
+ const area=$('#gameLobbyArea');
+
+ if(!area||area.dataset.lobbyActionsBound==='1')return;
+
+ area.dataset.lobbyActionsBound='1';
+
+ const resolveAction=event=>{
+  const button=event.target.closest?.('[data-lobby-action]');
+
+  if(!button||!area.contains(button)||button.disabled)return null;
+
+  return {
+   button,
+   action:button.dataset.lobbyAction
+  };
+ };
+
+ /*
+    Touch/Pen:
+    executa em pointerup, sem esperar o click sintético do navegador.
+    Isso evita o botão desaparecer se o Game Engine renderizar o
+    lobby de novo entre o toque e o evento click.
+ */
+ area.addEventListener('pointerup',event=>{
+  if(event.pointerType==='mouse')return;
+
+  const target=resolveAction(event);
+  if(!target)return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  lastLobbyPointerActionAt=Date.now();
+
+  runLobbyAction(
+   target.action,
+   target.button
+  );
+ },{passive:false});
+
+ /*
+    Mouse/Desktop e fallback de navegadores sem Pointer Events.
+    Ignora o click sintético que costuma vir logo depois do pointerup.
+ */
+ area.addEventListener('click',event=>{
+  const target=resolveAction(event);
+  if(!target)return;
+
+  if(Date.now()-lastLobbyPointerActionAt<700){
+   event.preventDefault();
+   return;
+  }
+
+  event.preventDefault();
+
+  runLobbyAction(
+   target.action,
+   target.button
+  );
+ });
 }
 
 function bindGamesUI(){
+ bindLobbyActions();
  document.querySelectorAll('[data-shop-filter]').forEach(b=>b.onclick=()=>{shopFilter=b.dataset.shopFilter;renderCosmetics()});
  const open=$('#openCosmeticsButton'),panel=$('#cosmeticsPanel'),close=$('#closeCosmeticsButton');
  if(open&&panel)open.onclick=()=>{panel.classList.remove('hidden');document.body.classList.add('cosmetics-open')};
@@ -541,33 +1074,30 @@ async function init(){
  user=data?.user;
  if(!user)return;
  await loadProfiles([user.id]);
- if(!roomId){
-  await loadProgress();
-  return;
- }
+ if(!roomId){await loadProgress();return}
  await loadMembers();
  if(!members.some(m=>m.user_id===user.id))return;
  await loadProgress();
- await Promise.all([loadLatestGame(),loadLobby()]);
+
  document.querySelectorAll('[data-start-game]').forEach(b=>b.onclick=()=>openLobby(b.dataset.startGame));
- const photo=$('#flashPhotoInput');
- if(photo){
-  photo.setAttribute('accept','image/*');
-  photo.setAttribute('capture','environment');
- }
- if(photo)photo.onchange=e=>{
-  const f=e.target.files?.[0];
-  e.target.value='';
-  if(f)uploadFlash(f);
+
+ const flash=$('#flashPhotoInput');
+ if(flash){flash.setAttribute('accept','image/*');flash.setAttribute('capture','environment')}
+ if(flash)flash.onchange=e=>{
+  const f=e.target.files?.[0];e.target.value='';if(f)uploadFlash(f);
  };
- db.channel(`room-games-${roomId}`)
- .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_lobbies',filter:`room_id=eq.${roomId}`},refreshLobby)
- .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_lobby_members',filter:`room_id=eq.${roomId}`},refreshLobby)
- .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_games',filter:`room_id=eq.${roomId}`},async()=>{await loadLatestGame();await loadLobby()})
- .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_participants',filter:`room_id=eq.${roomId}`},refreshGame)
- .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_submissions',filter:`room_id=eq.${roomId}`},refreshGame)
- .on('postgres_changes',{event:'*',schema:'public',table:'vinci_room_game_votes',filter:`room_id=eq.${roomId}`},refreshGame)
- .subscribe();
+
+ const vangoPhoto=$('#vangoPhotoInput');
+ if(vangoPhoto){vangoPhoto.setAttribute('accept','image/*');vangoPhoto.setAttribute('capture','environment')}
+ if(vangoPhoto)vangoPhoto.onchange=e=>{
+  const f=e.target.files?.[0];e.target.value='';if(f)submitVangoPhoto(f);
+ };
+
+ startLifecycleSync();
+ await syncGameState('init',true);
+ await connectRealtime();
+ schedulePoll();
 }
+
 init();
 })();

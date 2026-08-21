@@ -5,7 +5,33 @@ const { createClient } = supabase;
 
 const db = createClient(
   SUPABASE_URL,
-  SUPABASE_KEY
+  SUPABASE_KEY,
+  {
+    auth: {
+
+      /*
+         VINCI 1.1 FOCUS — LOGIN PERSISTENTE
+
+         O Vinci NÃO salva a senha.
+         O Supabase salva somente a sessão e o refresh token
+         no armazenamento persistente do navegador/PWA.
+      */
+
+      persistSession: true,
+
+      autoRefreshToken: true,
+
+      detectSessionInUrl: true,
+
+      /*
+         Explicitamos localStorage para manter a sessão
+         entre páginas, fechamentos do navegador e abertura
+         do PWA.
+      */
+      storage: window.localStorage
+
+    }
+  }
 );
 
 /* =====================================
@@ -19,7 +45,8 @@ const VinciMedia = (() => {
   const DEFAULT_BUCKET = "vinci-images";
   const PRIVATE_BUCKETS = new Set([
     "vinci-images",
-    "vinci-audio"
+    "vinci-audio",
+    "vinci-lumes"
   ]);
 
   const SIGNED_URL_TTL = 60 * 60; // 1 hora

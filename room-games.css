@@ -317,3 +317,308 @@ html[data-theme="dark"] .game-toast.bad {
     color: #e69b9b !important;
 }
 
+
+/* ==========================================================
+   VINCI PLAY — GAME ENGINE V2 + VANGO
+   ========================================================== */
+
+.games-top-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.game-sync-status{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:0 9px;
+  border:1px solid #e8e0da;
+  border-radius:999px;
+  background:#fff;
+  color:#8e8279;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.game-sync-status[data-state="live"]{color:#3f7550;background:#eff9f1;border-color:#d7eadc}
+.game-sync-status[data-state="syncing"]{color:#98633c;background:#fff7ef;border-color:#f1dac5}
+.game-sync-status[data-state="offline"],
+.game-sync-status[data-state="error"]{color:#a14d4d;background:#fff1f1;border-color:#f0d5d5}
+
+.games-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.game-card.vango{background:linear-gradient(155deg,#f4f0ff,#fff 62%)}
+.game-card.vango .game-card-icon{background:linear-gradient(145deg,#f0e9ff,#ffe9dd)}
+
+.vango-active .active-game-head{
+  background:linear-gradient(135deg,#211b17,#473226 58%,#6a4127);
+}
+.vango-role-card,
+.vango-memorize,
+.vango-draw-wrap,
+.vango-guess-box,
+.vango-finished-copy{
+  border:1px solid #ece3dc;
+  border-radius:20px;
+  padding:17px;
+  background:#fffaf6;
+}
+.vango-role-card>span,
+.vango-memorize>span,
+.vango-kicker,
+.vango-guess-box>span,
+.vango-finished-copy>span{
+  display:block;
+  color:#dd7d35;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.vango-role-card h3,
+.vango-memorize h3,
+.vango-draw-wrap h3,
+.vango-guess-box h3,
+.vango-finished-copy h3{
+  margin:5px 0 7px;
+  font-size:22px;
+  line-height:1.15;
+}
+.vango-role-card p,
+.vango-memorize p,
+.vango-finished-copy p{
+  margin:0 0 13px;
+  color:#80746c;
+  font-size:12px;
+  line-height:1.5;
+}
+.vango-role-card.secret{
+  background:linear-gradient(145deg,#fff5eb,#fff);
+  border-color:#f1d6c0;
+}
+.vango-role-card.waiting{
+  text-align:center;
+  padding:24px 18px;
+  background:#f8f5f2;
+}
+.vango-pulse{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:14px;
+}
+.vango-pulse i{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ef9854;
+  animation:vangoPulse 1.15s ease-in-out infinite;
+}
+.vango-pulse i:nth-child(2){animation-delay:.14s}
+.vango-pulse i:nth-child(3){animation-delay:.28s}
+@keyframes vangoPulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+
+.vango-photo-memory{
+  position:relative;
+  overflow:hidden;
+  margin:12px 0;
+  aspect-ratio:4/3;
+  border-radius:18px;
+  background:#e9e4df;
+  box-shadow:0 12px 28px rgba(40,28,20,.09);
+}
+.vango-photo-memory img,
+.vango-drawing-preview img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.vango-photo-memory img{object-fit:cover}
+
+.vango-canvas-shell{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  aspect-ratio:1;
+  border:1px solid #ddd4cd;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.02);
+}
+#vangoCanvas{
+  display:block;
+  width:100%;
+  height:100%;
+  background:#fff;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.vango-tools{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin:10px 0;
+}
+.vango-tools [data-vango-color]{
+  width:31px;
+  height:31px;
+  padding:0;
+  border:3px solid #fff;
+  border-radius:50%;
+  box-shadow:0 0 0 1px #d9d0c9;
+}
+.vango-tools [data-vango-color].active{box-shadow:0 0 0 2px #211b17}
+.vango-tools [data-vango-color="#1f1b18"]{background:#1f1b18}
+.vango-tools [data-vango-color="#ef8b3d"]{background:#ef8b3d}
+.vango-tools [data-vango-color="#367bd6"]{background:#367bd6}
+.vango-tools [data-vango-color="#d94a4a"]{background:#d94a4a}
+.vango-tools #vangoEraser,
+.vango-tools #vangoClear{
+  border:1px solid #ded6cf;
+  border-radius:10px;
+  padding:8px 10px;
+  background:#f6f2ef;
+  color:#4c423b;
+  font:inherit;
+  font-size:10px;
+  font-weight:800;
+}
+.vango-tools #vangoEraser.active{border-color:#ef9854;background:#fff3e8;color:#c96923}
+.vango-send-drawing{width:100%;margin-top:2px}
+
+.vango-drawing-preview{
+  overflow:hidden;
+  width:min(100%,520px);
+  margin:0 auto 14px;
+  aspect-ratio:1;
+  border:1px solid #e5ddd7;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 12px 28px rgba(45,31,22,.07);
+}
+.vango-guess-form{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+  margin-top:12px;
+}
+.vango-guess-form .game-input{margin:0}
+.vango-guess-feed{
+  display:grid;
+  gap:6px;
+  margin-top:12px;
+}
+.vango-guess-row{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:8px;
+  align-items:center;
+  padding:9px 11px;
+  border:1px solid #ebe4df;
+  border-radius:12px;
+  background:#faf8f6;
+  font-size:11px;
+}
+.vango-guess-row strong{font-size:10px;color:#8c7d72}
+.vango-guess-row span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.vango-guess-row.correct{background:#eff9f1;border-color:#d7eadc;color:#397048}
+.vango-guess-row.correct strong{color:#397048}
+.vango-guess-empty{
+  margin-top:12px;
+  padding:12px;
+  border:1px dashed #ddd4cd;
+  border-radius:13px;
+  color:#93867c;
+  text-align:center;
+  font-size:10px;
+}
+.vango-answer-reveal strong{color:#ffc08d}
+
+html[data-theme="dark"] .game-sync-status{background:#211e1c;border-color:#37312d;color:#aaa099}
+html[data-theme="dark"] .game-sync-status[data-state="live"]{background:#18271d;border-color:#2e4837;color:#8ed0a3}
+html[data-theme="dark"] .game-sync-status[data-state="syncing"]{background:#2c241e;border-color:#473528;color:#e4a978}
+html[data-theme="dark"] .game-sync-status[data-state="offline"],
+html[data-theme="dark"] .game-sync-status[data-state="error"]{background:#2d1c1c;border-color:#4a2929;color:#e69b9b}
+html[data-theme="dark"] .game-card.vango{background:linear-gradient(155deg,#201c28,#1b1918)}
+html[data-theme="dark"] .vango-role-card,
+html[data-theme="dark"] .vango-memorize,
+html[data-theme="dark"] .vango-draw-wrap,
+html[data-theme="dark"] .vango-guess-box,
+html[data-theme="dark"] .vango-finished-copy{background:#211e1c;border-color:#39322e;color:#f4f1ed}
+html[data-theme="dark"] .vango-role-card.secret{background:linear-gradient(145deg,#2d211a,#201d1b);border-color:#533827}
+html[data-theme="dark"] .vango-role-card.waiting{background:#1d1a18}
+html[data-theme="dark"] .vango-role-card p,
+html[data-theme="dark"] .vango-memorize p,
+html[data-theme="dark"] .vango-finished-copy p{color:#aaa099}
+html[data-theme="dark"] .vango-drawing-preview{border-color:#3b342f;background:#fff}
+html[data-theme="dark"] .vango-guess-row{background:#211e1c;border-color:#39322e;color:#f4f1ed}
+html[data-theme="dark"] .vango-guess-row strong{color:#b9aea5}
+html[data-theme="dark"] .vango-guess-row.correct{background:#18271d;border-color:#2e4837;color:#8ed0a3}
+html[data-theme="dark"] .vango-guess-row.correct strong{color:#8ed0a3}
+html[data-theme="dark"] .vango-guess-empty{border-color:#403833;color:#aaa099}
+html[data-theme="dark"] .vango-tools #vangoEraser,
+html[data-theme="dark"] .vango-tools #vangoClear{background:#26211e;border-color:#403833;color:#eee8e3}
+
+@media(max-width:720px){
+  .games-grid{grid-template-columns:1fr}
+  .games-top-actions{justify-content:flex-start}
+  .vango-guess-form{grid-template-columns:1fr}
+  .vango-guess-form .game-action-primary{width:100%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .vango-pulse i{animation:none}
+}
+
+
+/* ==========================================================
+   VINCI — LOBBY MOBILE TAP FIX
+   Mantém os controles clicáveis mesmo com re-render do Engine.
+   ========================================================== */
+
+.game-lobby-actions button[data-lobby-action]{
+    position:relative;
+    z-index:4;
+    min-height:44px;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+.game-lobby-actions .game-action-soft.danger.confirming{
+    background:#c84e4e !important;
+    color:#fff !important;
+    border-color:#c84e4e !important;
+    box-shadow:0 8px 20px rgba(170,52,52,.18);
+}
+
+html[data-theme="dark"] .game-lobby-actions .game-action-soft.danger{
+    background:#352020;
+    color:#efa0a0;
+}
+
+html[data-theme="dark"] .game-lobby-actions .game-action-soft.danger.confirming{
+    background:#b94444 !important;
+    color:#fff !important;
+}
+
+@media(max-width:620px){
+    .game-lobby-actions{
+        position:relative;
+        z-index:5;
+    }
+
+    .game-lobby-actions button[data-lobby-action]{
+        min-height:48px;
+        padding-top:12px;
+        padding-bottom:12px;
+    }
+}
