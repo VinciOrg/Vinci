@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#f8f1eb">
+    <title>Convite para um Lume — Vinci</title>
+
+    <script src="theme.js?v=focus1"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css?v=dark-text-post-fix1">
+    <link rel="stylesheet" href="lume-invite.css?v=lume1">
+</head>
+
+<body>
+
+<main id="invitePage" class="lume-invite-page">
+
+    <section class="lume-invite-shell">
+
+        <header class="lume-invite-brand">
+            <span class="lume-orbit"><i></i><i></i></span>
+
+            <div>
+                <strong>VINCI</strong>
+                <span>LUME</span>
+            </div>
+        </header>
+
+        <article id="inviteCard" class="lume-invite-card">
+
+            <span class="invite-kicker">VOCÊ FOI CONVIDADO</span>
+
+            <h1 id="inviteName">Abrindo Lume...</h1>
+
+            <p id="inviteDescription">
+                Carregando o momento.
+            </p>
+
+            <div class="invite-meta">
+
+                <div>
+                    <strong id="inviteDate">—</strong>
+                    <span>data</span>
+                </div>
+
+                <div>
+                    <strong id="invitePeople">—</strong>
+                    <span>pessoas</span>
+                </div>
+
+                <div>
+                    <strong id="invitePhotos">—</strong>
+                    <span>fotos</span>
+                </div>
+
+            </div>
+
+            <div id="inviteActions" class="invite-actions hidden">
+
+                <div id="guestArea" class="invite-guest-area hidden">
+
+                    <label>
+                        Como devemos chamar você?
+
+                        <input
+                            id="guestName"
+                            maxlength="60"
+                            placeholder="Seu nome"
+                            autocomplete="name"
+                        >
+                    </label>
+
+                    <button id="joinAsGuest" class="invite-primary" type="button">
+                        Entrar como convidado
+                    </button>
+
+                    <small>
+                        Sem criar perfil público. Só para participar deste Lume.
+                    </small>
+
+                </div>
+
+                <button id="joinWithAccount" class="invite-secondary" type="button">
+                    Entrar com minha conta Vinci
+                </button>
+
+                <button id="joinCurrentAccount" class="invite-primary hidden" type="button">
+                    Entrar no Lume
+                </button>
+
+            </div>
+
+            <p id="inviteMessage" class="invite-message"></p>
+
+            <footer>
+                <span id="inviteOwner">criado no Vinci</span>
+            </footer>
+
+        </article>
+
+    </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js?v=lume1"></script>
+<script src="lume-invite.js?v=lume1"></script>
+<script src="zoom-lock.js?v=1"></script>
+
+</body>
+</html>

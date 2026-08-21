@@ -8,15 +8,31 @@
             outputWidth: 640,
             outputHeight: 640,
             title: "Enquadrar foto de perfil",
-            help: "Arraste a foto dentro do quadrado. O arquivo será salvo em formato 1:1."
+            help: "Arraste a foto dentro do quadrado. O arquivo será salvo em formato 1:1.",
+            formatLabel: "FOTO DE PERFIL · 1:1",
+            fileName: "avatar.webp"
         },
+
         banner: {
             kind: "banner",
             aspect: 3.5,
             outputWidth: 1750,
             outputHeight: 500,
             title: "Enquadrar banner",
-            help: "Arraste a imagem dentro do banner. O arquivo será salvo no formato horizontal do perfil."
+            help: "Arraste a imagem dentro do banner. O arquivo será salvo no formato horizontal do perfil.",
+            formatLabel: "BANNER · 3.5:1",
+            fileName: "banner.webp"
+        },
+
+        lumeCover: {
+            kind: "lume-cover",
+            aspect: 2,
+            outputWidth: 1600,
+            outputHeight: 800,
+            title: "Enquadrar capa do Lume",
+            help: "Arraste e aproxime a foto. O enquadramento mostrado aqui será o mesmo usado na capa do Lume.",
+            formatLabel: "CAPA DO LUME · 2:1",
+            fileName: "lume-cover.webp"
         }
     };
 
@@ -52,9 +68,19 @@
     }
 
     function getPreset(kind) {
-        return kind === "banner"
-            ? PRESETS.banner
-            : PRESETS.avatar;
+
+        if (
+            kind === "lume-cover" ||
+            kind === "lumeCover"
+        ) {
+            return PRESETS.lumeCover;
+        }
+
+        if (kind === "banner") {
+            return PRESETS.banner;
+        }
+
+        return PRESETS.avatar;
     }
 
     async function open(file, options = {}) {
@@ -92,7 +118,7 @@
                         </div>
 
                         <p class="vinci-cropper-format">
-                            ${kind === "avatar" ? "FOTO DE PERFIL · 1:1" : "BANNER · 3.5:1"}
+                            ${preset.formatLabel}
                         </p>
 
                         <p class="vinci-cropper-help">${help}</p>
@@ -429,7 +455,7 @@
                     finish(
                         new File(
                             [blob],
-                            kind === "banner" ? "banner.webp" : "avatar.webp",
+                            preset.fileName,
                             {
                                 type: "image/webp",
                                 lastModified: Date.now()
@@ -457,10 +483,15 @@
         return open(file, { kind: "banner" });
     }
 
+    function openLumeCover(file) {
+        return open(file, { kind: "lume-cover" });
+    }
+
     window.VinciImageCropper = {
         open,
         openAvatar,
         openBanner,
+        openLumeCover,
         presets: PRESETS
     };
 

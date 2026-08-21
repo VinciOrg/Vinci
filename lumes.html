@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#faf9f7">
+    <title>Lumes — Vinci</title>
+    <script src="theme.js?v=focus1"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css?v=dark-text-post-fix1">
+    <link rel="stylesheet" href="focus-nav.css?v=focus1">
+    <link rel="stylesheet" href="image-cropper.css?v=lume-cover2">
+    <link rel="stylesheet" href="lumes.css?v=lume1">
+</head>
+<body>
+
+<main class="lumes-page">
+
+    <header class="lumes-header">
+        <div>
+            <span class="lume-kicker">VINCI · LUME</span>
+            <h1>Lumes</h1>
+            <p>Um momento. Todas as perspectivas.</p>
+        </div>
+
+        <button id="openLumeCreate" class="lume-primary" type="button">
+            + Novo Lume
+        </button>
+    </header>
+
+    <section class="lume-intro">
+        <div class="lume-intro-mark">
+            <i></i><i></i><i></i>
+        </div>
+
+        <div>
+            <span>O QUE É UM LUME?</span>
+            <strong>Um lugar para o momento inteiro.</strong>
+            <p>
+                Casamento, viagem, aniversário ou qualquer encontro.
+                Quem estava lá coloca suas fotos no mesmo mural.
+            </p>
+        </div>
+    </section>
+
+    <section class="lumes-section">
+        <div class="lumes-section-title">
+            <div>
+                <span>SEUS LUMES</span>
+                <h2>Onde suas histórias estão</h2>
+            </div>
+        </div>
+
+        <div id="lumesList" class="lumes-grid">
+            <div class="lumes-empty">Carregando Lumes...</div>
+        </div>
+    </section>
+
+</main>
+
+<div id="lumeCreateModal" class="lume-modal hidden" aria-hidden="true">
+    <section class="lume-modal-card">
+
+        <header>
+            <div>
+                <span>NOVO LUME</span>
+                <h2>Qual momento vocês vão guardar?</h2>
+            </div>
+
+            <button id="closeLumeCreate" type="button" aria-label="Fechar">
+                ×
+            </button>
+        </header>
+
+        <label>
+            Nome do Lume
+            <input id="lumeName" maxlength="80" placeholder="Ex.: Casamento da Ana & Lucas">
+        </label>
+
+        <label>
+            Data
+            <input id="lumeDate" type="date">
+        </label>
+
+        <label>
+            Descrição
+            <textarea id="lumeDescription" maxlength="280" placeholder="Uma frase sobre esse momento..."></textarea>
+        </label>
+
+        <label>
+            Capa
+            <input id="lumeCover" type="file" accept="image/*">
+            <small>Opcional. Dá para criar sem capa.</small>
+        </label>
+
+        <img id="lumeCoverPreview" class="lume-cover-preview hidden" alt="Prévia da capa">
+
+        <label>
+            Cor do Lume
+            <input id="lumeColor" type="color" value="#f4a261">
+        </label>
+
+        <p id="lumeCreateMessage" class="lume-message"></p>
+
+        <button id="createLumeButton" class="lume-primary lume-full" type="button">
+            Criar Lume
+        </button>
+    </section>
+</div>
+
+<nav class="bottom-nav">
+    <a href="index.html">
+        <span><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3.5 10.5L12 3.75l8.5 6.75"></path><path d="M6 9.75V20h12V9.75"></path><path d="M10 20v-5h4v5"></path></svg></span>
+        Posts
+    </a>
+
+    <button type="button" class="nav-create" onclick="location.href='index.html#create'">
+        <span class="nav-post"><svg class="nav-plus-icon" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span>
+        Postar
+    </button>
+
+    <a href="rooms.html" class="active">
+        <span><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="8" cy="9" r="2.5"></circle><circle cx="16" cy="9" r="2.5"></circle><path d="M3.5 19c.9-3 2.8-4.5 5-4.5s4.1 1.5 5 4"></path><path d="M11 18.5c.9-2.7 2.7-4 4.8-4 2 0 3.8 1.3 4.7 4"></path></svg></span>
+        Rooms
+    </a>
+
+    <a href="profile.html">
+        <span><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.25"></circle><path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path></svg></span>
+        Perfil
+    </a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js?v=lume1"></script>
+<script src="auth-guard.js?v=session-persist1"></script>
+<script src="image-cropper.js?v=lume-cover2"></script>
+<script src="lumes.js?v=lume-cover2"></script>
+<script src="zoom-lock.js?v=1"></script>
+<script src="focus-nav.js?v=focus1"></script>
+
+</body>
+</html>

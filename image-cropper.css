@@ -81,3 +81,19 @@ html[data-theme=dark] .vinci-cropper-stage{background-color:#171514;background-i
     }
 
 }
+
+
+/* CAPA DO LUME · 2:1 */
+.vinci-cropper-stage--lume-cover .vinci-cropper-mask{
+    position:absolute;
+    inset:0;
+    border:2px solid rgba(255,255,255,.98);
+    border-radius:17px;
+    box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,.14);
+    pointer-events:none;
+}
+
+.vinci-cropper-stage--lume-cover{
+    border-radius:17px;
+}

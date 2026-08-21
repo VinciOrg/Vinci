@@ -156,6 +156,29 @@ if (signupForm) {
 // LOGIN
 // -------------------------------
 
+function vinciLoginNext() {
+
+    const raw =
+        new URLSearchParams(
+            window.location.search
+        ).get("next");
+
+    if (!raw) {
+        return "profile.html";
+    }
+
+    if (
+        raw.includes("://") ||
+        raw.startsWith("//") ||
+        raw.startsWith("javascript:") ||
+        raw.startsWith("data:")
+    ) {
+        return "profile.html";
+    }
+
+    return raw;
+}
+
 const loginForm =
     document.getElementById("loginForm");
 
@@ -181,7 +204,7 @@ if (loginForm) {
             ) {
 
                 window.location.replace(
-                    "profile.html"
+                    vinciLoginNext()
                 );
 
             }
@@ -253,7 +276,7 @@ if (loginForm) {
 
 
                 window.location.href =
-                    "profile.html";
+                    vinciLoginNext();
 
 
             } catch (error) {

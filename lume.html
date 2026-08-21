@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#faf9f7">
+    <title>Lume — Vinci</title>
+
+    <script src="theme.js?v=focus1"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css?v=dark-text-post-fix1">
+    <link rel="stylesheet" href="focus-nav.css?v=focus1">
+    <link rel="stylesheet" href="lume.css?v=gallery-dump1">
+</head>
+
+<body>
+
+<main class="lume-page">
+
+    <header class="lume-topbar">
+        <a href="lumes.html" class="lume-back">‹</a>
+
+        <div>
+            <span>VINCI</span>
+            <strong>LUME</strong>
+        </div>
+
+        <button id="shareLumeTop" type="button">
+            Compartilhar
+        </button>
+    </header>
+
+    <section id="lumeHero" class="lume-hero">
+
+        <div id="lumeCover" class="lume-cover"></div>
+
+        <div class="lume-hero-copy">
+
+            <div class="lume-hero-meta">
+                <span id="lumeStatus" class="lume-status">CARREGANDO</span>
+                <span id="lumeDate">—</span>
+            </div>
+
+            <h1 id="lumeName">Lume</h1>
+
+            <p id="lumeDescription">
+                Carregando momento...
+            </p>
+
+            <div class="lume-stats">
+                <button id="showLumePeople" type="button">
+                    <strong id="lumePeopleCount">—</strong>
+                    <span>pessoas</span>
+                </button>
+
+                <div>
+                    <strong id="lumePhotoCount">—</strong>
+                    <span>fotos</span>
+                </div>
+            </div>
+
+            <div class="lume-actions">
+                <button id="openLumeUpload" class="lume-primary" type="button">
+                    + Adicionar foto
+                </button>
+
+                <button id="shareLume" class="lume-secondary" type="button">
+                    Convidar
+                </button>
+
+                <button id="manageLume" class="lume-secondary hidden" type="button">
+                    Gerenciar
+                </button>
+
+                <button
+                    id="archiveLume"
+                    class="lume-primary hidden"
+                    type="button"
+                >
+                    Criar retrospectiva
+                </button>
+            </div>
+
+            <button id="guestExit" class="lume-guest-exit hidden" type="button">
+                Sair do Lume
+            </button>
+
+        </div>
+    </section>
+
+    <section class="lume-mural-section">
+
+        <header>
+            <div>
+                <span>MURAL COLETIVO</span>
+                <h2>Pelos olhos de quem estava lá</h2>
+            </div>
+
+            <small id="lumeLiveStatus">ao vivo</small>
+        </header>
+
+        <div id="lumeMural" class="lume-mural">
+            <div class="lume-empty">Carregando fotos...</div>
+        </div>
+
+    </section>
+
+</main>
+
+<!-- UPLOAD -->
+<div id="lumeUploadModal" class="lume-modal hidden">
+    <section class="lume-modal-card">
+        <header>
+            <div>
+                <span>ADICIONAR AO LUME</span>
+                <h2>Sua perspectiva</h2>
+            </div>
+
+            <button id="closeLumeUpload" type="button">×</button>
+        </header>
+
+        <div class="lume-file-pick">
+
+            <input
+                id="lumePhotoInput"
+                class="lume-file-input-native"
+                type="file"
+                accept="image/*"
+                tabindex="-1"
+                aria-hidden="true"
+            >
+
+            <button
+                id="pickLumePhoto"
+                class="lume-file-pick-button"
+                type="button"
+            >
+                <strong>Escolher ou tirar foto</strong>
+                <small>JPG, PNG, HEIC ou WebP.</small>
+            </button>
+
+        </div>
+
+        <img id="lumePhotoPreview" class="lume-upload-preview hidden" alt="Prévia">
+
+        <label>
+            Legenda
+            <textarea id="lumePhotoCaption" maxlength="180" placeholder="Opcional..."></textarea>
+        </label>
+
+        <p id="lumeUploadMessage" class="lume-message"></p>
+
+        <button id="sendLumePhoto" class="lume-primary lume-full" type="button" disabled>
+            Adicionar ao mural
+        </button>
+    </section>
+</div>
+
+<!-- COMPARTILHAR -->
+<div id="lumeShareModal" class="lume-modal hidden">
+    <section class="lume-modal-card lume-share-card lume-share-card-wide">
+
+        <header>
+            <div>
+                <span>COMPARTILHAR LUME</span>
+                <h2>Como você quer convidar?</h2>
+            </div>
+
+            <button id="closeLumeShare" type="button">×</button>
+        </header>
+
+
+        <div class="lume-share-mode-switch">
+
+            <button
+                type="button"
+                class="active"
+                data-lume-share-mode="link"
+            >
+                <strong>Link</strong>
+                <small>Rápido e simples</small>
+            </button>
+
+            <button
+                type="button"
+                data-lume-share-mode="card"
+            >
+                <strong>Convite com QR</strong>
+                <small>Arte pronta para compartilhar</small>
+            </button>
+
+        </div>
+
+
+        <!-- APENAS LINK -->
+
+        <section
+            id="lumeShareLinkPanel"
+            class="lume-share-panel"
+        >
+
+            <div class="lume-share-copy-block">
+                <strong>Apenas o link do Lume</strong>
+                <p>
+                    Ideal para mandar no WhatsApp, bio, grupo ou mensagem.
+                </p>
+            </div>
+
+            <div class="lume-link-box">
+
+                <input
+                    id="lumeInviteLink"
+                    readonly
+                >
+
+                <button
+                    id="copyLumeInvite"
+                    type="button"
+                >
+                    Copiar
+                </button>
+
+            </div>
+
+            <button
+                id="nativeShareLume"
+                class="lume-primary lume-full"
+                type="button"
+            >
+                Compartilhar link
+            </button>
+
+        </section>
+
+
+        <!-- CONVITE COM QR -->
+
+        <section
+            id="lumeShareCardPanel"
+            class="lume-share-panel hidden"
+        >
+
+            <div
+                id="lumeInviteEditor"
+                class="lume-invite-editor hidden"
+            >
+
+                <div class="lume-share-copy-block">
+                    <strong>Monte o convite</strong>
+                    <p>
+                        Escolha até 3 fotos da sua galeria e a frase que vai aparecer na arte.
+                    </p>
+                </div>
+
+
+                <label class="lume-invite-text-label">
+
+                    Texto do convite
+
+                    <textarea
+                        id="lumeInviteText"
+                        maxlength="180"
+                        placeholder="Ex.: Você fez parte desse dia. Entre no nosso Lume e coloque suas fotos."
+                    ></textarea>
+
+                    <small>
+                        Até 180 caracteres.
+                    </small>
+
+                </label>
+
+
+                <div class="lume-invite-picker-head">
+
+                    <div>
+                        <strong>Fotos do convite</strong>
+                        <span id="lumeInvitePhotoCount">0/3</span>
+                    </div>
+
+                    <small>
+                        Escolhidas da sua galeria.
+                    </small>
+
+                </div>
+
+
+                <input
+                    id="lumeInviteGalleryInput"
+                    class="lume-file-input-native"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    tabindex="-1"
+                    aria-hidden="true"
+                >
+
+
+                <div class="lume-invite-gallery-actions">
+
+                    <button
+                        id="pickLumeInviteGallery"
+                        class="lume-secondary"
+                        type="button"
+                    >
+                        Escolher da galeria
+                    </button>
+
+                    <button
+                        id="clearLumeInviteGallery"
+                        class="lume-secondary"
+                        type="button"
+                    >
+                        Remover fotos
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="lumeInvitePhotoPicker"
+                    class="lume-invite-photo-picker lume-invite-gallery-preview"
+                ></div>
+
+
+                <div class="lume-invite-editor-actions">
+
+                    <button
+                        id="saveLumeInviteDesign"
+                        class="lume-secondary"
+                        type="button"
+                    >
+                        Salvar composição
+                    </button>
+
+                    <button
+                        id="refreshLumeInvitePreview"
+                        class="lume-primary"
+                        type="button"
+                    >
+                        Atualizar prévia
+                    </button>
+
+                </div>
+
+                <p
+                    id="lumeInviteDesignMessage"
+                    class="lume-message"
+                ></p>
+
+            </div>
+
+
+            <div class="lume-invite-preview-block">
+
+                <div class="lume-invite-preview-head">
+
+                    <div>
+                        <span>PRÉVIA</span>
+                        <strong>Convite 1080 × 1350</strong>
+                    </div>
+
+                    <small>
+                        pronto para Story, WhatsApp e Instagram
+                    </small>
+
+                </div>
+
+
+                <div class="lume-invite-card-preview-shell">
+
+                    <div
+                        id="lumeInviteCardLoading"
+                        class="lume-invite-card-loading"
+                    >
+                        Preparando convite...
+                    </div>
+
+                    <img
+                        id="lumeInviteCardPreview"
+                        class="hidden"
+                        alt="Prévia do convite do Lume"
+                    >
+
+                </div>
+
+
+                <div class="lume-invite-share-actions">
+
+                    <button
+                        id="shareLumeInviteImage"
+                        class="lume-primary"
+                        type="button"
+                    >
+                        Compartilhar imagem
+                    </button>
+
+                    <button
+                        id="downloadLumeInviteImage"
+                        class="lume-secondary"
+                        type="button"
+                    >
+                        Salvar imagem
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+</div>
+
+<!-- PESSOAS -->
+<div id="lumePeopleModal" class="lume-modal hidden">
+    <section class="lume-modal-card">
+        <header>
+            <div>
+                <span>QUEM ESTÁ AQUI</span>
+                <h2>Pessoas do Lume</h2>
+            </div>
+
+            <button id="closeLumePeople" type="button">×</button>
+        </header>
+
+        <div id="lumePeopleList" class="lume-people-list"></div>
+    </section>
+</div>
+
+<!-- GERENCIAR -->
+<div id="lumeManageModal" class="lume-modal hidden">
+    <section class="lume-modal-card">
+        <header>
+            <div>
+                <span>CRIADOR</span>
+                <h2>Gerenciar Lume</h2>
+            </div>
+
+            <button id="closeLumeManage" type="button">×</button>
+        </header>
+
+        <div class="lume-manage-copy">
+            <strong id="lumeManageTitle">Encerrar este Lume?</strong>
+            <p id="lumeManageText">
+                As fotos continuam guardadas, mas ninguém poderá adicionar novas.
+            </p>
+        </div>
+
+        <button id="toggleLumeStatus" class="lume-danger lume-full" type="button">
+            Encerrar e arquivar
+        </button>
+    </section>
+</div>
+
+<!-- RETROSPECTIVA / DUMP -->
+<div id="lumeArchiveModal" class="lume-modal hidden">
+
+    <section class="lume-modal-card lume-archive-card">
+
+        <header>
+            <div>
+                <span>LUME ARQUIVADO</span>
+                <h2>Transforme o momento em post</h2>
+            </div>
+
+            <button id="closeLumeArchive" type="button">×</button>
+        </header>
+
+
+        <div class="lume-archive-mode-switch">
+
+            <button
+                type="button"
+                class="active"
+                data-lume-archive-mode="carousel"
+            >
+                <strong>Carrossel Dump</strong>
+                <small>1080 × 1350 · contínuo</small>
+            </button>
+
+            <button
+                type="button"
+                data-lume-archive-mode="stories"
+            >
+                <strong>Stories</strong>
+                <small>1080 × 1920 · vertical</small>
+            </button>
+
+        </div>
+
+
+        <div class="lume-archive-explainer">
+
+            <strong id="lumeArchiveModeTitle">
+                Carrossel contínuo
+            </strong>
+
+            <p id="lumeArchiveModeDescription">
+                O Vinci cria uma composição larga e corta em páginas.
+                Algumas fotos atravessam a divisão e se completam no próximo post.
+            </p>
+
+        </div>
+
+
+        <div
+            id="lumeArchiveCarouselOptions"
+            class="lume-archive-options"
+        >
+
+            <label>
+                Quantidade de páginas
+
+                <select id="lumeArchiveSlideCount">
+                    <option value="2">2 páginas</option>
+                    <option value="3">3 páginas</option>
+                    <option value="4" selected>4 páginas</option>
+                    <option value="5">5 páginas</option>
+                </select>
+            </label>
+
+        </div>
+
+
+        <div class="lume-archive-photo-head">
+
+            <div>
+                <strong>Escolha as fotos</strong>
+                <span id="lumeArchivePhotoCount">0/10</span>
+            </div>
+
+            <small>
+                A ordem da seleção vira a ordem da retrospectiva.
+            </small>
+
+        </div>
+
+
+        <div
+            id="lumeArchivePhotoPicker"
+            class="lume-archive-photo-picker"
+        ></div>
+
+
+        <div class="lume-archive-generate-row">
+
+            <button
+                id="generateLumeArchive"
+                class="lume-primary"
+                type="button"
+            >
+                Gerar retrospectiva
+            </button>
+
+            <p
+                id="lumeArchiveMessage"
+                class="lume-message"
+            ></p>
+
+        </div>
+
+
+        <section
+            id="lumeArchiveResult"
+            class="lume-archive-result hidden"
+        >
+
+            <div class="lume-archive-preview-head">
+
+                <div>
+                    <span>PRÉVIA</span>
+                    <strong id="lumeArchivePreviewLabel">
+                        página 1
+                    </strong>
+                </div>
+
+                <div class="lume-archive-preview-nav">
+
+                    <button
+                        id="lumeArchivePrev"
+                        type="button"
+                    >
+                        ‹
+                    </button>
+
+                    <span id="lumeArchivePreviewCount">
+                        1/1
+                    </span>
+
+                    <button
+                        id="lumeArchiveNext"
+                        type="button"
+                    >
+                        ›
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="lume-archive-preview-shell">
+
+                <img
+                    id="lumeArchivePreview"
+                    alt="Prévia da retrospectiva"
+                >
+
+            </div>
+
+
+            <div class="lume-archive-result-actions">
+
+                <button
+                    id="shareLumeArchive"
+                    class="lume-primary"
+                    type="button"
+                >
+                    Compartilhar
+                </button>
+
+                <button
+                    id="downloadLumeArchive"
+                    class="lume-secondary"
+                    type="button"
+                >
+                    Salvar imagens
+                </button>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</div>
+
+<!-- FOTO -->
+<div id="lumePhotoModal" class="lume-photo-modal hidden">
+
+    <button id="closeLumePhoto" class="lume-photo-close" type="button">
+        ×
+    </button>
+
+    <section class="lume-photo-view">
+        <img id="lumePhotoFull" alt="">
+
+        <div>
+            <strong id="lumePhotoAuthor">—</strong>
+            <p id="lumePhotoFullCaption"></p>
+            <small id="lumePhotoTime">—</small>
+
+            <button id="deleteLumePhoto" class="lume-delete-photo hidden" type="button">
+                Remover foto
+            </button>
+        </div>
+    </section>
+</div>
+
+<nav class="bottom-nav">
+    <a href="index.html">
+        <span><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3.5 10.5L12 3.75l8.5 6.75"></path><path d="M6 9.75V20h12V9.75"></path><path d="M10 20v-5h4v5"></path></svg></span>
+        Posts
+    </a>
+
+    <button type="button" class="nav-create" onclick="location.href='index.html#create'">
+        <span class="nav-post"><svg class="nav-plus-icon" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span>
+        Postar
+    </button>
+
+    <a href="rooms.html" class="active">
+        <span><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="8" cy="9" r="2.5"></circle><circle cx="16" cy="9" r="2.5"></circle><path d="M3.5 19c.9-3 2.8-4.5 5-4.5s4.1 1.5 5 4"></path><path d="M11 18.5c.9-2.7 2.7-4 4.8-4 2 0 3.8 1.3 4.7 4"></path></svg></span>
+        Rooms
+    </a>
+
+    <a href="profile.html">
+        <span><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.25"></circle><path d="M5.5 19c1.65-2.85 4.1-4.25 6.5-4.25S16.85 16.15 18.5 19"></path></svg></span>
+        Perfil
+    </a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="supabase.js?v=lume1"></script>
+<script src="auth-guard.js?v=session-persist1"></script>
+<script src="lume.js?v=gallery-dump1"></script>
+<script src="zoom-lock.js?v=1"></script>
+<script src="focus-nav.js?v=focus1"></script>
+
+</body>
+</html>
