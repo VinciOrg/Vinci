@@ -1,0 +1,32 @@
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",sans-serif}
+body{background:#f8f1eb;color:#201a17}
+button,a{font:inherit}
+.install-page{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:max(22px,env(safe-area-inset-top)) 16px max(22px,env(safe-area-inset-bottom));overflow:hidden;position:relative}
+.install-page:before{content:"";position:fixed;width:440px;height:440px;right:-190px;top:-190px;border-radius:50%;background:radial-gradient(circle,#f3a467 0,#f6c9a8 42%,rgba(246,201,168,0) 72%);opacity:.72}
+.install-page:after{content:"";position:fixed;width:330px;height:330px;left:-190px;bottom:-190px;border-radius:50%;border:1px solid rgba(206,129,74,.18);box-shadow:0 0 0 48px rgba(206,129,74,.05),0 0 0 96px rgba(206,129,74,.03)}
+.install-shell{position:relative;z-index:2;width:min(100%,540px)}
+.install-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:17px}
+.install-brand{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:900;letter-spacing:.08em}
+.install-brand img{width:34px;height:34px;border-radius:10px;box-shadow:0 7px 18px rgba(65,38,22,.12)}
+.install-version{padding:6px 9px;border:1px solid rgba(179,137,108,.22);border-radius:999px;background:rgba(255,255,255,.45);font-size:8px;font-weight:850;letter-spacing:.12em;color:#9a7961}
+.install-card{position:relative;overflow:hidden;padding:31px 27px 25px;border:1px solid rgba(219,197,181,.9);border-radius:31px;background:rgba(255,250,246,.88);box-shadow:0 30px 90px rgba(71,43,26,.13);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.install-eyebrow{display:flex;align-items:center;gap:8px;color:#df792b;font-size:9px;font-weight:950;letter-spacing:.15em}
+.install-eyebrow:before{content:"";width:19px;height:2px;border-radius:10px;background:currentColor}
+.install-title{max-width:430px;margin:16px 0 11px;font-size:clamp(46px,11vw,68px);line-height:.91;letter-spacing:-3.1px}
+.install-title em{display:block;color:#ed8b43;font-style:normal}
+.install-copy{max-width:390px;margin:0;color:#87766a;font-size:13px;line-height:1.55}
+.install-app-preview{display:flex;align-items:center;gap:13px;margin:23px 0 17px;padding:12px;border:1px solid #eee0d5;border-radius:18px;background:rgba(255,255,255,.72)}
+.install-app-preview img{width:58px;height:58px;border-radius:16px;box-shadow:0 8px 18px rgba(56,35,23,.12)}
+.install-app-preview strong,.install-app-preview span{display:block}
+.install-app-preview strong{font-size:15px}
+.install-app-preview span{margin-top:3px;color:#9a887b;font-size:10px}
+.install-status{margin-left:auto;width:9px;height:9px;border-radius:50%;background:#ed934f;box-shadow:0 0 0 5px rgba(237,147,79,.12)}
+.install-primary{width:100%;min-height:49px;border:0;border-radius:15px;background:#211b17;color:#fff;font-weight:850;font-size:12px;box-shadow:0 12px 25px rgba(33,27,23,.15);cursor:pointer}
+.install-primary[data-install-state=ready]{background:#dd7d35}
+.install-primary[data-install-state=installed]{background:#486c51}
+.install-secondary{width:100%;margin-top:7px;padding:11px;border:0;background:transparent;color:#8f7f73;font-size:10px;font-weight:750;cursor:pointer}
+.install-note{display:grid;grid-template-columns:28px 1fr;gap:9px;align-items:start;margin-top:17px;padding-top:16px;border-top:1px solid #eee1d7;color:#95857a;font-size:9px;line-height:1.5}
+.install-note i{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:#f5e7dc;color:#da7f3c;font-style:normal;font-weight:900}
+.install-platform{margin-top:12px;text-align:center;color:#a08f82;font-size:8px;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:520px){.install-card{padding:27px 20px 22px;border-radius:28px}.install-title{font-size:50px;letter-spacing:-2.5px}}

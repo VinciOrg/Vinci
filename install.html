@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f8f1eb"
+    >
+
+    <meta
+        name="description"
+        content="Instale o Vinci no seu celular e abra como um aplicativo."
+    >
+
+    <meta
+        property="og:title"
+        content="Instale o Vinci"
+    >
+
+    <meta
+        property="og:description"
+        content="Leve suas memórias com você. Instale o Vinci como aplicativo."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <title>Instalar Vinci</title>
+
+    <link
+        rel="manifest"
+        href="manifest.json?v=install1"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="assets/apple-touch-icon.png?v=install1"
+    >
+
+    <link
+        rel="icon"
+        href="assets/icon-vinci-192.png?v=install1"
+    >
+
+    <link
+        rel="stylesheet"
+        href="install-page.css?v=install1"
+    >
+
+    <link
+        rel="stylesheet"
+        href="vinci-install.css?v=install1"
+    >
+
+    <script
+        defer
+        src="vinci-install.js?v=install1"
+    ></script>
+</head>
+
+<body>
+
+    <main class="install-page">
+
+        <section class="install-shell">
+
+            <header class="install-top">
+
+                <div class="install-brand">
+
+                    <img
+                        src="assets/icon-vinci-192.png"
+                        alt=""
+                    >
+
+                    <span>
+                        VINCI
+                    </span>
+
+                </div>
+
+                <span class="install-version">
+                    1.1 FOCUS
+                </span>
+
+            </header>
+
+
+            <article class="install-card">
+
+                <span class="install-eyebrow">
+                    SEU VINCI, MAIS PERTO
+                </span>
+
+                <h1 class="install-title">
+                    Leve suas
+                    <em>memórias.</em>
+                </h1>
+
+                <p class="install-copy">
+                    Instale o Vinci no seu celular e abra direto
+                    da tela inicial, como um aplicativo.
+                </p>
+
+
+                <div class="install-app-preview">
+
+                    <img
+                        src="assets/icon-vinci-192.png"
+                        alt="Ícone do Vinci"
+                    >
+
+                    <div>
+
+                        <strong>
+                            Vinci
+                        </strong>
+
+                        <span>
+                            Memórias, amigos e Rooms.
+                        </span>
+
+                    </div>
+
+                    <i
+                        class="install-status"
+                        aria-hidden="true"
+                    ></i>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="install-primary"
+                    data-vinci-install-button
+                    data-ready-label="Instalar Vinci"
+                    data-waiting-label="Instalar Vinci"
+                    data-external-label="Abrir no Chrome"
+                    data-ios-label="Como instalar no iPhone"
+                    data-installed-label="Vinci já está instalado ✓"
+                >
+                    Instalar Vinci
+                </button>
+
+
+                <button
+                    type="button"
+                    class="install-secondary"
+                    data-vinci-copy-install
+                >
+                    Copiar link desta página
+                </button>
+
+
+                <div class="install-note">
+
+                    <i>
+                        ↓
+                    </i>
+
+                    <span id="installPageHint">
+                        No Android compatível, o botão abre a janela
+                        nativa de instalação. No iPhone, mostramos o
+                        caminho pelo Safari.
+                    </span>
+
+                </div>
+
+                <div
+                    id="installPlatform"
+                    class="install-platform"
+                >
+                    Detectando seu dispositivo...
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+
+    <script>
+        window.addEventListener(
+            "vinci-install-state",
+            event => {
+
+                const state =
+                    event.detail ||
+                    {};
+
+                const label =
+                    document.getElementById(
+                        "installPlatform"
+                    );
+
+                const hint =
+                    document.getElementById(
+                        "installPageHint"
+                    );
+
+
+                if (!label) {
+                    return;
+                }
+
+
+                if (state.installed) {
+
+                    label.textContent =
+                        "VINCI JÁ INSTALADO NESTE DISPOSITIVO";
+
+                    hint.textContent =
+                        "Você já está usando a experiência instalada do Vinci.";
+
+                    return;
+
+                }
+
+
+                if (
+                    state.inApp &&
+                    state.android
+                ) {
+
+                    label.textContent =
+                        "NAVEGADOR INTERNO · ANDROID";
+
+                    hint.textContent =
+                        "Toque em Abrir no Chrome. Fora do navegador do Instagram, o Android pode mostrar a instalação nativa.";
+
+                    return;
+
+                }
+
+
+                if (
+                    state.inApp &&
+                    state.ios
+                ) {
+
+                    label.textContent =
+                        "NAVEGADOR INTERNO · IPHONE";
+
+                    hint.textContent =
+                        "Abra esta página no Safari para usar Adicionar à Tela de Início.";
+
+                    return;
+
+                }
+
+
+                if (state.ios) {
+
+                    label.textContent =
+                        "IPHONE · SAFARI";
+
+                    hint.textContent =
+                        "No iPhone, o Safari instala pelo menu Compartilhar → Adicionar à Tela de Início.";
+
+                    return;
+
+                }
+
+
+                if (
+                    state.android &&
+                    state.promptReady
+                ) {
+
+                    label.textContent =
+                        "ANDROID · PRONTO PARA INSTALAR";
+
+                    hint.textContent =
+                        "Toque em Instalar Vinci para abrir a janela nativa do Android.";
+
+                    return;
+
+                }
+
+
+                if (state.android) {
+
+                    label.textContent =
+                        "ANDROID";
+
+                    hint.textContent =
+                        "Assim que o navegador liberar o prompt de instalação, este mesmo botão abre a janela nativa.";
+
+                    return;
+
+                }
+
+
+                label.textContent =
+                    "VINCI · WEB APP";
+
+            }
+        );
+    </script>
+
+</body>
+</html>

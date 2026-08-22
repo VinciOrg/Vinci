@@ -1,0 +1,2 @@
+Use VINCI_1_1_FOCUS_PATCH_20_ANDROID_UPDATE_NOTICE_FIX.sql.
+O Patch 20 anterior foi substituído porque o PostgreSQL exige DROP FUNCTION antes de alterar os OUT parameters de vinci_get_android_update().

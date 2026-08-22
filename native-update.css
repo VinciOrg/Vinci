@@ -1,0 +1,266 @@
+/* ============================================================
+   VINCI — NATIVE ANDROID UPDATE GATE
+   Só é exibido pelo JS quando Capacitor está em modo nativo.
+   ============================================================ */
+
+html.vinci-update-locked,
+body.vinci-update-locked{
+    overflow:hidden !important;
+    overscroll-behavior:none;
+}
+
+.vinci-native-update-host{
+    position:fixed;
+    inset:0;
+    z-index:2147483000;
+    display:grid;
+    place-items:center;
+    padding:
+        max(20px,env(safe-area-inset-top))
+        18px
+        max(20px,env(safe-area-inset-bottom));
+    background:
+        rgba(15,12,10,.72);
+    backdrop-filter:
+        blur(18px);
+    -webkit-backdrop-filter:
+        blur(18px);
+}
+
+.vinci-native-update-host.optional{
+    background:
+        rgba(15,12,10,.48);
+}
+
+.vinci-native-update-card{
+    width:min(100%,430px);
+    max-height:calc(100dvh - 40px);
+    overflow:auto;
+    padding:28px 24px 22px;
+    border:
+        1px solid rgba(255,255,255,.62);
+    border-radius:30px;
+    background:
+        linear-gradient(
+            150deg,
+            rgba(255,255,255,.98),
+            rgba(250,246,242,.97)
+        );
+    color:#211b17;
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.30);
+    text-align:center;
+}
+
+.vinci-native-update-mark{
+    width:68px;
+    height:68px;
+    margin:0 auto 16px;
+    overflow:hidden;
+    border-radius:20px;
+    box-shadow:
+        0 10px 30px rgba(72,45,28,.15);
+}
+
+.vinci-native-update-mark img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.vinci-native-update-kicker{
+    display:block;
+    margin-bottom:7px;
+    color:#e77d2f;
+    font-size:10px;
+    font-weight:950;
+    letter-spacing:.14em;
+}
+
+.vinci-native-update-card h1{
+    margin:0;
+    font-size:25px;
+    line-height:1.08;
+    letter-spacing:-.025em;
+}
+
+.vinci-native-update-copy{
+    margin:11px auto 18px;
+    max-width:340px;
+    color:#766b64;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.vinci-native-update-version-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin:0 0 13px;
+}
+
+.vinci-native-update-version-grid>div{
+    display:grid;
+    gap:2px;
+    padding:13px 12px;
+    border:
+        1px solid #ebe2dc;
+    border-radius:16px;
+    background:#fff;
+    text-align:left;
+}
+
+.vinci-native-update-version-grid>div.latest{
+    border-color:
+        rgba(231,125,47,.32);
+    background:
+        rgba(231,125,47,.07);
+}
+
+.vinci-native-update-version-grid span{
+    color:#93877f;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:.08em;
+}
+
+.vinci-native-update-version-grid strong{
+    font-size:18px;
+}
+
+.vinci-native-update-version-grid small{
+    color:#8a7e76;
+    font-size:9px;
+    font-weight:700;
+}
+
+.vinci-native-update-release{
+    margin:0 0 15px;
+    padding:15px 16px;
+    border-radius:18px;
+    background:#f5efea;
+    text-align:left;
+}
+
+.vinci-native-update-release>strong{
+    display:block;
+    margin-bottom:8px;
+    font-size:11px;
+}
+
+.vinci-native-update-notes{
+    display:grid;
+    gap:6px;
+    margin:0;
+    padding:0 0 0 17px;
+    color:#6f645d;
+    font-size:11px;
+    line-height:1.4;
+}
+
+.vinci-native-update-notes-empty{
+    margin:0;
+    color:#6f645d;
+    font-size:11px;
+    line-height:1.4;
+}
+
+.vinci-native-update-action,
+.vinci-native-update-later{
+    width:100%;
+    min-height:48px;
+    border-radius:15px;
+    font:inherit;
+    font-size:13px;
+    font-weight:900;
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+.vinci-native-update-action{
+    border:0;
+    background:#ed873c;
+    color:#fff;
+    box-shadow:
+        0 10px 24px rgba(237,135,60,.24);
+}
+
+.vinci-native-update-later{
+    margin-top:8px;
+    border:1px solid #e7ddd6;
+    background:#fff;
+    color:#655a53;
+}
+
+.vinci-native-update-required{
+    margin:11px 4px 0;
+    color:#9a8d85;
+    font-size:9px;
+    line-height:1.4;
+}
+
+html[data-theme="dark"]
+.vinci-native-update-card{
+    border-color:#403932;
+    background:
+        linear-gradient(
+            150deg,
+            #25211e,
+            #1b1917
+        );
+    color:#f5efeb;
+}
+
+html[data-theme="dark"]
+.vinci-native-update-copy,
+html[data-theme="dark"]
+.vinci-native-update-notes,
+html[data-theme="dark"]
+.vinci-native-update-notes-empty{
+    color:#b9ada5;
+}
+
+html[data-theme="dark"]
+.vinci-native-update-version-grid>div{
+    border-color:#403832;
+    background:#191715;
+}
+
+html[data-theme="dark"]
+.vinci-native-update-version-grid>div.latest{
+    border-color:
+        rgba(237,135,60,.42);
+    background:
+        rgba(237,135,60,.10);
+}
+
+html[data-theme="dark"]
+.vinci-native-update-release{
+    background:#171513;
+}
+
+html[data-theme="dark"]
+.vinci-native-update-later{
+    border-color:#433b35;
+    background:#171513;
+    color:#ded5cf;
+}
+
+@media(max-width:420px){
+    .vinci-native-update-host{
+        padding:
+            max(12px,env(safe-area-inset-top))
+            10px
+            max(12px,env(safe-area-inset-bottom));
+    }
+
+    .vinci-native-update-card{
+        padding:22px 17px 18px;
+        border-radius:24px;
+    }
+
+    .vinci-native-update-card h1{
+        font-size:22px;
+    }
+}
