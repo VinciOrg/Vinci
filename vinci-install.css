@@ -1,0 +1,201 @@
+/* =========================================
+   VINCI — INSTALAÇÃO PWA
+========================================= */
+
+.focus-install-button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 86px;
+    margin: 0 !important;
+    padding-inline: 13px !important;
+    white-space: nowrap;
+}
+
+.focus-install-button[data-install-state="ready"] {
+    border-color: rgba(239,139,61,.45) !important;
+    background: rgba(244,162,97,.10) !important;
+    color: var(--orange-dark, #d97930) !important;
+}
+
+.focus-install-button[data-install-state="installed"] {
+    opacity: .62;
+}
+
+.vinci-install-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60000;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding:
+        18px
+        18px
+        max(18px, env(safe-area-inset-bottom));
+
+    background: rgba(18,15,13,.48);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.vinci-install-modal-card {
+    width: min(100%, 520px);
+    max-height: 84vh;
+    overflow: auto;
+
+    padding: 20px;
+
+    border: 1px solid var(--border, #e5ded8);
+    border-radius: 26px;
+
+    background: var(--white, #fff);
+    color: var(--text, #1f1b18);
+
+    box-shadow: 0 28px 85px rgba(0,0,0,.26);
+}
+
+.vinci-install-modal-card > header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.vinci-install-modal-card > header span {
+    display: block;
+
+    color: var(--orange-dark, #d97930);
+
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .14em;
+}
+
+.vinci-install-modal-card > header h2 {
+    margin: 4px 0 0;
+
+    font-size: 25px;
+    letter-spacing: -.5px;
+}
+
+.vinci-install-modal-close {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 auto;
+
+    border: 1px solid var(--border, #e5ded8);
+    border-radius: 12px;
+
+    background: transparent;
+    color: var(--muted, #8b817a);
+
+    font-size: 22px;
+}
+
+.vinci-install-modal-copy {
+    margin: 11px 0 17px;
+
+    color: var(--muted, #8b817a);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.vinci-install-steps {
+    display: grid;
+    gap: 7px;
+}
+
+.vinci-install-steps article {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 10px;
+    align-items: center;
+
+    padding: 11px;
+
+    border: 1px solid var(--border, #e8e1db);
+    border-radius: 14px;
+
+    background: rgba(244,162,97,.045);
+}
+
+.vinci-install-steps i {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: rgba(244,162,97,.14);
+    color: var(--orange-dark, #d97930);
+
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.vinci-install-steps strong,
+.vinci-install-steps small {
+    display: block;
+}
+
+.vinci-install-steps strong {
+    font-size: 12px;
+}
+
+.vinci-install-steps small {
+    margin-top: 2px;
+
+    color: var(--muted, #8b817a);
+
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+.vinci-install-modal-done {
+    width: 100%;
+
+    margin-top: 15px;
+    padding: 12px;
+
+    border: 0;
+    border-radius: 13px;
+
+    background: var(--text, #211b17);
+    color: var(--white, #fff);
+
+    font: inherit;
+    font-size: 11px;
+    font-weight: 850;
+}
+
+.vinci-install-modal-open {
+    overflow: hidden !important;
+}
+
+html[data-theme="dark"] .vinci-install-modal {
+    background: rgba(0,0,0,.62);
+}
+
+html[data-theme="dark"] .vinci-install-steps article {
+    background: #211e1c;
+}
+
+@media (max-width: 430px) {
+    .focus-install-button {
+        min-width: 78px;
+        padding-inline: 10px !important;
+        font-size: 10px !important;
+    }
+
+    .vinci-install-modal {
+        padding-inline: 10px;
+    }
+}

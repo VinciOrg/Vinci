@@ -288,3 +288,60 @@ const VinciMedia = (() => {
 })();
 
 window.VinciMedia = VinciMedia;
+
+
+/* ============================================================
+   VINCI_NATIVE_UPDATE_LOADER_ANDROID_110
+
+   Este loader existe tanto no site quanto no APK.
+   native-update.js encerra imediatamente no navegador comum.
+   ============================================================ */
+
+(() => {
+    if (
+        document.getElementById(
+            "vinciNativeUpdateScript"
+        )
+    ) {
+        return;
+    }
+
+    const style =
+        document.createElement(
+            "link"
+        );
+
+    style.id =
+        "vinciNativeUpdateStyle";
+
+    style.rel =
+        "stylesheet";
+
+    style.href =
+        "native-update.css?v=android110";
+
+    document.head
+        .appendChild(
+            style
+        );
+
+
+    const script =
+        document.createElement(
+            "script"
+        );
+
+    script.id =
+        "vinciNativeUpdateScript";
+
+    script.src =
+        "native-update.js?v=android110";
+
+    script.async =
+        true;
+
+    document.head
+        .appendChild(
+            script
+        );
+})();
